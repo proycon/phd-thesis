@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   width="345"
+   height="293"
+   sodipodi:docname="The_vauquois_triangle.svg">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow2Lend"
+       style="overflow:visible;">
+      <path
+         id="path3717"
+         style="font-size:12.0;fill-rule:evenodd;stroke-width:0.62500000;stroke-linejoin:round;"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(1.1) rotate(180) translate(1,0)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       id="perspective10" />
+    <inkscape:perspective
+       id="perspective3630"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective5454"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective5479"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1120"
+     inkscape:window-height="725"
+     id="namedview4"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="1.3075636"
+     inkscape:cx="140.25902"
+     inkscape:cy="177.09125"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2">
+    <sodipodi:guide
+       orientation="0,1"
+       position="221.78653,36.709495"
+       id="guide3594" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="26.002559,121.6002"
+       id="guide3596" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="304.38289,64.241616"
+       id="guide3598" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="-96.362424,273.02687"
+       id="guide3600" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="165.95751,214.9035"
+       id="guide3602" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="292.91118,50.475555"
+       id="guide3681" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="95.597643,97.127205"
+       id="guide3685" />
+  </sodipodi:namedview>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="M 26.002559,256.2905 165.19273,24.56182 304.38289,256.2905 l -278.380331,0 z"
+     id="path3604" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+     d="m 146.83798,19.97313 40.5334,0"
+     id="path3610" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+     d="M 200.37266,43.681348 339.56283,247.87791"
+     id="path3614" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+     d="M 2.2943434,247.11313 134.60148,40.622224"
+     id="path3616" />
+  <text
+     xml:space="preserve"
+     style="font-size:11px;font-style:normal;font-weight:normal;fill:#0000ff;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+     x="-123.48101"
+     y="124.38933"
+     id="text3618"
+     transform="matrix(0.54674513,-0.83729909,0.83729909,0.54674513,0,0)"><tspan
+       sodipodi:role="line"
+       id="tspan3620"
+       x="-123.48101"
+       y="124.38933">Brontaal analyse</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:11px;font-style:normal;font-weight:normal;fill:#800080;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+     x="198.40685"
+     y="-160.05191"
+     id="text3618-3"
+     transform="matrix(0.54252949,0.84003676,-0.84003676,0.54252949,0,0)"><tspan
+       sodipodi:role="line"
+       x="198.40685"
+       y="-160.05191"
+       id="tspan3647">Doeltaal generatie</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:10px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+     x="112.42284"
+     y="11.560539"
+     id="text3651"><tspan
+       sodipodi:role="line"
+       id="tspan3653"
+       x="112.42284"
+       y="11.560539"
+       style="font-size:11px">Tussenrepresentatie</tspan></text>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-start:none;marker-end:url(#Arrow2Lend)"
+     d="m 44.357306,242.52445 237.846934,0"
+     id="path3683" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+     d="m 86.420269,195.87279 160.604041,0"
+     id="path3689" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+     d="m 117.7763,134.6903 100.18633,0.76479"
+     id="path3691" />
+  <text
+     xml:space="preserve"
+     style="font-size:11px;font-style:normal;font-weight:normal;fill:#225500;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+     x="145.30843"
+     y="233.34706"
+     id="text5442"><tspan
+       sodipodi:role="line"
+       id="tspan5444"
+       x="145.30843"
+       y="233.34706"
+       style="font-size:12px;fill:#225500">Direct</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:11px;font-style:normal;font-weight:normal;fill:#800000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+     x="113.89354"
+     y="182.38367"
+     id="text5442-6"><tspan
+       sodipodi:role="line"
+       id="tspan5444-3"
+       x="113.89354"
+       y="182.38367"
+       style="font-size:10px;fill:#800000">Syntactische omzetting</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:11px;font-style:normal;font-weight:normal;fill:#aa0000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+     x="136.47878"
+     y="116.31109"
+     id="text5442-6-2"><tspan
+       sodipodi:role="line"
+       id="tspan5444-3-0"
+       x="136.47878"
+       y="116.31109"
+       style="font-size:10px;fill:#aa0000">Semantische</tspan><tspan
+       sodipodi:role="line"
+       x="136.47878"
+       y="128.81108"
+       style="font-size:10px;fill:#aa0000"
+       id="tspan3143"> omzetting</tspan></text>
+  <rect
+     style="fill:#b5b0ff;fill-opacity:1;stroke:#000000;stroke-width:1.13699996;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="rect3145"
+     width="24.472996"
+     height="28.296902"
+     x="1.5295628"
+     y="256.2905" />
+  <rect
+     style="fill:#b5b0ff;fill-opacity:1;stroke:#000000;stroke-width:1.13699996;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+     id="rect3145-8"
+     width="24.472996"
+     height="28.296902"
+     x="304.3829"
+     y="256.2905" />
+  <text
+     xml:space="preserve"
+     style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+     x="6.8830304"
+     y="278.46918"
+     id="text3165"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan3167"
+       x="6.8830304"
+       y="278.46918">A</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:24px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+     x="307.65149"
+     y="280.33417"
+     id="text3165-6"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan3167-4"
+       x="307.65149"
+       y="280.33417">B</tspan></text>
+</svg>
