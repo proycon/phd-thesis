@@ -1,0 +1,44 @@
+- stylistic and typo fixes as recommended by the reviewers
+
+
+
+
+> In the last paragraph of section 3.5 Metadata, you mention that the
+> distinction between data and metadata is fuzzy. To me, there is a
+> clear distinction. Could you clarify?
+
+I was referring mainly to the notions of 'annotator' and 'annotatortype' being arguably a kind of metadata, but I agree this point may be weak and unnecessary. I removed it entirely.
+
+> This article aims to give a general description of FoLiA, summing up
+> its features. However, as far as I can see, there is no description of
+> the FoLiA schema used. It would be nice to find out in what kind of
+> schema has been used, and to what extent the validation can help the
+> user to better format XML documents, keeping in mind the flexibility
+> the FoLiA developers have in mind.
+
+There is a short reference to a RelaxNG schema for validation. 
+%TODO: write more about validation
+
+> In Figure 3, an example of the offset structure is given, but the
+> notion of "relative" offsets is not explained. As far as I can see,
+> there is an offset error in element xml:id="example.p.1.s.1.w.3, where
+> the offset of "Mr." should be 8; or did I get it wrong?
+
+Very true, there was an error
+%TODO: explain offset
+
+
+
+> Section 3.2: does "offset" refer to character or word offset? Describe
+> what you mean with "text" and "start" (especially if "offset" refers to
+> character offset).
+
+Same point as above
+
+
+> Sections 3.4 and 3.6 are quite short and could be expanded or incorporated
+> in other sections.
+
+> Section 3.7 is unclear. Are the concepts "set" and "subset" the best way
+> to describe the difference between annotation and features?
+
