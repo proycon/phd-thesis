@@ -1,0 +1,259 @@
+\documentclass[compress]{beamer}
+\useoutertheme[footline=authorinstitutetitle]{miniframes}
+\usecolortheme{whale}
+\usecolortheme{orchid}
+\useinnertheme{rounded}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{placeins}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\lstset{ 
+    language=Python, % choose the language of the code
+    basicstyle=\footnotesize\color{black},
+    keywordstyle=\color{black}\bfseries, % style for keywords
+    commentstyle=\color{blue},
+	stringstyle=\color{magenta},
+    numbers=none, % where to put the line-numbers
+    numberstyle=\tiny, % the size of the fonts that are used for the line-numbers     
+    backgroundcolor=\color{white},
+    showspaces=false, % show spaces adding particular underscores
+    showstringspaces=false, % underline spaces within strings
+    showtabs=false, % show tabs within strings adding particular underscores
+    frame=single, % adds a frame around the code
+    tabsize=2, % sets default tabsize to 2 spaces
+    rulesepcolor=\color{gray},
+    rulecolor=\color{black},
+    captionpos=b, % sets the caption-position to bottom
+    breaklines=true, % sets automatic line breaking
+    breakatwhitespace=false, 
+}
+
+
+
+\setbeamerfont{block title}{size={}}
+
+\def\raccoon{
+\makebox[\linewidth][c]{\includegraphics[width=70pt]{/home/proycon/Pictures/Local/raccoon.pdf}\FloatBarrier}
+}
+\def\smallraccoon{
+\makebox[\linewidth][c]{\includegraphics[width=30pt]{/home/proycon/Pictures/Local/raccoon.pdf}\FloatBarrier}
+}
+
+\newcommand{\myurl}[1]{ { \footnotesize\textcolor{blue}{\url{#1}}  } }
+
+\title{Colibri Core}
+\author{Maarten van Gompel \\ 
+\emph{Centre for Language Studies} \\ \emph{Radboud University Nijmegen}}
+\date{
+\begin{center}
+\includegraphics[width=15.0mm]{ru-beeldmerk-zwart.eps}
+\end{center}
+August 28th, 2014}
+
+
+
+\begin{document}
+
+\section{Introduction}
+
+\begin{frame}
+\maketitle
+\end{frame}
+%\setbeamercolor{background canvas}{bg=black}
+
+
+%\hypersetup{
+%  colorlinks=true,
+%  linkcolor=white,
+%  urlcolor=blue           % color of external links
+%}
+
+\section{Introduction}
+
+
+\begin{frame}
+  \begin{block}{What is colibri-core?}
+    \begin{itemize}
+     \item Software for the \textbf{extraction}, \textbf{modelling} and
+       \textbf{querying} of patterns aka constructions (n-grams, skip-grams, flex-grams)
+     \item Low-level (hence the ``core''), more specific software can be build
+       on top of it
+     \item Highly configurable, many parameters
+     \item Designed with memory and speed efficiency in mind, but memory-based
+       (lossless)
+     \item Binary data formats (quick loading, smaller files)
+     \item Three interfaces:
+      \begin{itemize}
+        \item command-line tools (colibri-patternmodeller,
+          colibri-classencode, colibri-classdecode)
+        \item C++ API
+        \item Python API (binding with native code)
+      \end{itemize}
+     \item Input: plain-text (utf-8), one ``entity'' per line
+       (sentence/paragraph/tweet/document), basic conversion from FoLiA supported too.
+  \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}
+
+  \begin{block}{Types of patterns}
+    \begin{enumerate}
+      \item N-grams: \verb|to be or not to be|
+      \item Skip-grams (one or more fixed-sized gaps): \verb|to be {*2*} to be|
+      \item Flex-grams (one or more gaps of flexibile/undetermined length): \verb|to be {*} to be|
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}
+  \begin{block}{Extraction}
+    \begin{itemize}
+      \item What patterns are in a corpus? 
+      \item How many times do they occur?
+      \item Where do they occur in the corpus? (= Indexed modelling)
+      \item Extraction constrained by another model (train/test paradigm)
+    \end{itemize}
+
+    Result of such extraction is a \textbf{Pattern Model}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Modelling}
+    \begin{itemize}
+      \item How many patterns are there?
+      \begin{itemize}
+        \item for a specific pattern
+        \item of a particular pattern type and/or length?
+        \item how much of the corpus is covered?
+        \item basic statistics
+      \end{itemize}
+      \item How do patterns relate to others?
+      \begin{itemize}
+        \item What patterns subsume others? (parent/child relations)  What fits
+          in a gap of a skipgram?
+        \item What patterns follow each-other in the text? 
+        \item What patterns co-occur, how often? (Jaccard, nPMI) 
+      \end{itemize}
+      \item How do two corpora compare?
+      \begin{itemize}
+        \item How many/which patterns of the training corpus occur in the
+          test corpus as well?
+      \end{itemize}
+      \item Reverse indexing
+      \begin{itemize}
+          \item What patterns can be found for a certain position in the corpus?
+          \item Easy context extraction
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+
+\begin{frame}
+
+  \begin{block}{Compression through class encoding}
+    \begin{itemize}
+      \item All word types in a corpus are ranked (frequent to rare)
+      \item Each word is encoded by its rank/class number
+      \item Variable-width encoding: Frequent words (high up in the ranking)
+        take less bytes to represent than rare word types
+      \item Results in roughly $50\%$ compression
+      \item Integer comparison (by token) much quicker than string comparison
+        (by character)
+      \item On large data, Colibri-core will be faster and smaller than naive string-based representation
+      \item Stored on disk in binary format for quick loading
+      \item Caveat: Corpora are only comparable if they use the same class
+        encoding!
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+
+\begin{frame}
+
+  \begin{block}{High-level Data structures}
+    \begin{itemize}
+      \item \texttt{Pattern}: Encoded representation of a pattern, the core
+        building block
+      \item \texttt{PatternModel}: ${pattern} \mapsto {occurrencecount}$
+      \begin{itemize}
+        \item \texttt{IndexedPatternModel} ${pattern} \mapsto {indexreferences}$
+      \end{itemize}
+      \item \texttt{PatternAlignmentModel}:  ${pattern}_1 \mapsto {pattern}_2 \mapsto {value(s)}$
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Low-level Data structures}
+     C++ library is set up in such a way (templating) that you can exchange the
+      underlying data structure whilst maintaining the same interface
+
+    \begin{itemize}
+      \item \texttt{PatternStore} \emph{(abstract)}
+      \begin{itemize}
+        \item \texttt{PatternMap}: Hash-map \emph{(C++11 unordered\_map)}:
+          ${pattern} \mapsto {value(s)}$
+        \item \texttt{PatternSet}: Set \emph{(C++11 unordered\_set)}
+      \end{itemize}
+      \item \texttt{IndexedCorpus}: ${indexreference} \mapsto {unigram}$
+      \begin{itemize}
+        \item \ldots as \textbf{Reverse Index} with a Pattern Model: ${indexreference} \mapsto {patterns}$
+      \end{itemize}
+    \end{itemize}
+\end{block}
+
+\end{frame}
+
+
+
+\begin{frame}
+  \begin{block}{Open-ended}
+    \begin{itemize}
+      \item Colibri-core is just the foundation for more specific tools
+      \item Lots of possible use-cases
+      \item Things build on top of colibri core:
+      \begin{itemize}
+        \item \textbf{Colibri-MT}: Modelling of source-side context for Machine
+          Translation, through classifiers
+        \begin{itemize}
+          \item \textbf{Colibrita}: Modelling of L2 context for L1 fragments, SemEval
+            2014 Task 5, through classifiers
+        \end{itemize}
+        \item \textbf{cococpyp}: Nonparametric Bayesian modeling with Pitman-Yor process priors
+        \item \textbf{DEvents} event pair extraction
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+
+
+
+
+\section{The End}
+
+\begin{frame}
+
+\raccoon
+
+\begin{center}
+
+\medskip
+
+\Large{Questions?}
+
+
+\end{center}
+
+\end{frame}
+
+
+
+\end{document}
