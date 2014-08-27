@@ -73,7 +73,7 @@ August 28th, 2014}
 \section{Introduction}
 
 
-\begin{frame}
+\begin{frame}{Introduction}
   \begin{block}{What is colibri-core?}
     \begin{itemize}
      \item Software for the \textbf{extraction}, \textbf{modelling} and
@@ -84,20 +84,27 @@ August 28th, 2014}
      \item Designed with memory and speed efficiency in mind, but memory-based
        (lossless)
      \item Binary data formats (quick loading, smaller files)
-     \item Three interfaces:
-      \begin{itemize}
-        \item command-line tools (colibri-patternmodeller,
-          colibri-classencode, colibri-classdecode)
-        \item C++ API
-        \item Python API (binding with native code)
-      \end{itemize}
     \end{itemize}
   \end{block}
 \end{frame}
 
 
-
 \begin{frame}
+  \begin{block}{Interfaces}
+     Three interfaces:
+      \begin{itemize}
+        \item command-line tools (colibri-patternmodeller,
+          colibri-classencode, colibri-classdecode)
+        \item C++ API
+        \item Python API (binding with native code, written in cython)
+      \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\section{Patterns}
+
+\begin{frame}{Patterns}
   \begin{block}{Types of patterns}
     \begin{enumerate}
       \item N-grams: to be or not to be
@@ -141,7 +148,9 @@ August 28th, 2014}
 
 \end{frame}
 
-\begin{frame}
+\section{Extraction \& Modelling}
+
+\begin{frame}{Extraction \& Modelling}
   \begin{block}{Extraction}
     \begin{itemize}
       \item What patterns are in a corpus? 
@@ -178,15 +187,15 @@ August 28th, 2014}
       \item Reverse indexing
       \begin{itemize}
           \item What patterns can be found for a certain position in the corpus?
-          \item Easy context extraction
       \end{itemize}
     \end{itemize}
   \end{block}
 \end{frame}
 
 
+\section{Data structures}
 
-\begin{frame}
+\begin{frame}{Data structures}
 
   \begin{block}{High-level Data structures}
     \begin{itemize}
@@ -223,9 +232,70 @@ August 28th, 2014}
     \end{itemize}
   \end{block}
 
+
 \end{frame}
 
 
+\section{Algorithms}
+
+\begin{frame}[fragile]{Algorithms}
+  \begin{block}{Algorithms}
+      \textbf{N-gram extraction with threshold $>1$}: Iterative with sub-n-gram checks to conserve memory, multiple passes over corpus
+\begin{lstlisting}
+def countngrams(model, corpus, threshold):
+  for n in 1...maxn:
+    for line in corpus:
+      for ngram in getngrams(line,n):
+        include = True
+        for subngram in getngrams(ngram,n-1):
+          if model[subngram] < threshold:
+            include = False; break
+        if include:
+          model[ngram] += 1 
+\end{lstlisting}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \begin{block}{Algorithms}
+      \textbf{Skip-gram extraction with threshold $>1$}
+\begin{lstlisting}
+def extractskipgrams(model,corpus, threshold, ngram, n):
+  for skipgram in allpossibleskipgrams(ngram):
+    include = False
+    for subngram in consecutiveparts(parts)
+      if model[subngram] < threshold:
+        include = False; break
+    if include:
+      model[skipgram] += 1 
+\end{lstlisting}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+  \begin{block}{Algorithms}
+    \textbf{Flex-gram extraction}
+    \begin{enumerate}
+      \item Generalisation over skipgrams: Are there skipgrams which differ only in length of the gaps?
+      \item Directly from co-occurrence: Compute co-occurence, co-occuring patterns are flexgrams (preserving order)
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \begin{block}{Algorithms}
+    \textbf{Relation extraction}
+    \begin{enumerate}
+      \item Given a pattern,
+      \item find all the indexes where it occurs (forward index),
+      \item find all other patterns occuring at or near these indexes, depending relation criteria (reverse index)
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+\section{The End}
 
 \begin{frame}
   \begin{block}{Open-ended}
@@ -252,7 +322,6 @@ August 28th, 2014}
 
 
 
-\section{The End}
 
 \begin{frame}
 
