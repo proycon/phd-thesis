@@ -1,4 +1,5 @@
 \documentclass[compress]{beamer}
+
 \useoutertheme[footline=authorinstitutetitle]{miniframes}
 \usecolortheme{whale}
 \usecolortheme{orchid}
@@ -8,7 +9,7 @@
 \usepackage{placeins}
 \usepackage{hyperref}
 \usepackage{graphicx}
-\lstset{ 
+\lstset{
     language=Python, % choose the language of the code
     basicstyle=\footnotesize\color{black},
     keywordstyle=\color{black}\bfseries, % style for keywords
@@ -57,7 +58,7 @@ August 28th, 2014}
 
 \section{Introduction}
 
-\begin{frame}
+\begin{frame}[fragile]
 \maketitle
 \end{frame}
 %\setbeamercolor{background canvas}{bg=black}
@@ -77,7 +78,7 @@ August 28th, 2014}
     \begin{itemize}
      \item Software for the \textbf{extraction}, \textbf{modelling} and
        \textbf{querying} of patterns aka constructions (n-grams, skip-grams, flex-grams)
-     \item Low-level (hence the ``core''), more specific software can be build
+     \item Low-level (hence the ``core''), more specific software can be built
        on top of it
      \item Highly configurable, many parameters
      \item Designed with memory and speed efficiency in mind, but memory-based
@@ -90,24 +91,55 @@ August 28th, 2014}
         \item C++ API
         \item Python API (binding with native code)
       \end{itemize}
-     \item Input: plain-text (utf-8), one ``entity'' per line
-       (sentence/paragraph/tweet/document), basic conversion from FoLiA supported too.
-  \end{itemize}
+    \end{itemize}
+  \end{block}
 \end{frame}
 
 
 
 \begin{frame}
-
   \begin{block}{Types of patterns}
     \begin{enumerate}
-      \item N-grams: \verb|to be or not to be|
-      \item Skip-grams (one or more fixed-sized gaps): \verb|to be {*2*} to be|
-      \item Flex-grams (one or more gaps of flexibile/undetermined length): \verb|to be {*} to be|
+      \item N-grams: to be or not to be
+      \item Skip-grams (one or more fixed-sized gaps): to be {*2*} to be
+      \item Flex-grams (one or more gaps of flexibile/undetermined length): to be {*} to be
     \end{enumerate}
   \end{block}
 \end{frame}
 
+
+\begin{frame}
+  \begin{block}{Input}
+    \begin{enumerate}
+      \item Input: plain-text (utf-8), one ``entity'' per line
+       (sentence/paragraph/tweet/document), basic conversion from FoLiA supported too.
+     \item Input first has to be class-encoded: \texttt{colibri-classencode},
+       \texttt{ClassEncoder}.
+      \item Output has to be class-decoded: \texttt{colibri-classdecode},
+        \texttt{ClassDecoder}
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+
+  \begin{block}{Compression through class encoding}
+    \begin{itemize}
+      \item All word types in a corpus are ranked (frequent to rare)
+      \item Each word is encoded by its rank/class number
+      \item Variable-width encoding: Frequent words (high up in the ranking)
+        take less bytes to represent than rare word types
+      \item Results in roughly $50\%$ compression
+      \item Integer comparison (by token) much quicker than string comparison
+        (by character)
+      \item On large data, Colibri-core will be faster and smaller than naive string-based representation
+      \item Stored on disk in binary format for quick loading
+      \item Caveat: Corpora are only comparable if they use the same class
+        encoding!
+    \end{itemize}
+  \end{block}
+
+\end{frame}
 
 \begin{frame}
   \begin{block}{Extraction}
@@ -117,7 +149,6 @@ August 28th, 2014}
       \item Where do they occur in the corpus? (= Indexed modelling)
       \item Extraction constrained by another model (train/test paradigm)
     \end{itemize}
-
     Result of such extraction is a \textbf{Pattern Model}
   \end{block}
 \end{frame}
@@ -157,27 +188,6 @@ August 28th, 2014}
 
 \begin{frame}
 
-  \begin{block}{Compression through class encoding}
-    \begin{itemize}
-      \item All word types in a corpus are ranked (frequent to rare)
-      \item Each word is encoded by its rank/class number
-      \item Variable-width encoding: Frequent words (high up in the ranking)
-        take less bytes to represent than rare word types
-      \item Results in roughly $50\%$ compression
-      \item Integer comparison (by token) much quicker than string comparison
-        (by character)
-      \item On large data, Colibri-core will be faster and smaller than naive string-based representation
-      \item Stored on disk in binary format for quick loading
-      \item Caveat: Corpora are only comparable if they use the same class
-        encoding!
-    \end{itemize}
-  \end{block}
-
-\end{frame}
-
-
-\begin{frame}
-
   \begin{block}{High-level Data structures}
     \begin{itemize}
       \item \texttt{Pattern}: Encoded representation of a pattern, the core
@@ -189,6 +199,11 @@ August 28th, 2014}
       \item \texttt{PatternAlignmentModel}:  ${pattern}_1 \mapsto {pattern}_2 \mapsto {value(s)}$
     \end{itemize}
   \end{block}
+
+\end{frame}
+
+
+\begin{frame}
 
   \begin{block}{Low-level Data structures}
      C++ library is set up in such a way (templating) that you can exchange the
@@ -206,7 +221,7 @@ August 28th, 2014}
         \item \ldots as \textbf{Reverse Index} with a Pattern Model: ${indexreference} \mapsto {patterns}$
       \end{itemize}
     \end{itemize}
-\end{block}
+  \end{block}
 
 \end{frame}
 
@@ -217,7 +232,7 @@ August 28th, 2014}
     \begin{itemize}
       \item Colibri-core is just the foundation for more specific tools
       \item Lots of possible use-cases
-      \item Things build on top of colibri core:
+      \item Things built on top of colibri core:
       \begin{itemize}
         \item \textbf{Colibri-MT}: Modelling of source-side context for Machine
           Translation, through classifiers
