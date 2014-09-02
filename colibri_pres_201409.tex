@@ -1,0 +1,431 @@
+\documentclass[compress]{beamer}
+%\useoutertheme[footline=authorinstitutetitle]{miniframes}
+%\usecolortheme{whale}
+%\usecolortheme{orchid}
+%\usetheme{CambridgeUS}
+\usecolortheme{seagull}
+\useoutertheme{infolines}
+\usefonttheme[onlymath]{serif}
+%\setbeamertemplate{headline}[default]
+\setbeamertemplate{headline}{
+\begin{beamercolorbox}[ht=2.25ex,dp=3.75ex]{section in head/foot}
+    \insertsectionnavigationhorizontal{\paperwidth}{}{\hfill\hfill}
+\end{beamercolorbox}
+}
+\usepackage{xcolor}
+\setbeamertemplate{navigation symbols}{}
+\mode<beamer>{\setbeamertemplate{blocks}[rounded][shadow=true]}
+\setbeamercovered{transparent}
+%\setbeamercolor{block body example}{fg=blue, bg=black!20}
+%\setbeamercolor{title}{fg=darkgreen}
+%\setbeamercolor{section}{fg=darkgreen}
+%\setbeamercolor{subsection}{fg=darkgreen}
+
+
+
+
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{placeins}
+\usepackage{hyperref}
+\lstset{ 
+    language=Python, % choose the language of the code
+    basicstyle=\footnotesize\color{black},
+    keywordstyle=\color{black}\bfseries, % style for keywords
+    commentstyle=\color{blue},
+	stringstyle=\color{magenta},
+    numbers=none, % where to put the line-numbers
+    numberstyle=\tiny, % the size of the fonts that are used for the line-numbers     
+    backgroundcolor=\color{white},
+    showspaces=false, % show spaces adding particular underscores
+    showstringspaces=false, % underline spaces within strings
+    showtabs=false, % show tabs within strings adding particular underscores
+    frame=single, % adds a frame around the code
+    tabsize=2, % sets default tabsize to 2 spaces
+    rulesepcolor=\color{gray},
+    rulecolor=\color{black},
+    captionpos=b, % sets the caption-position to bottom
+    breaklines=true, % sets automatic line breaking
+    breakatwhitespace=false, 
+}
+
+
+
+\setbeamerfont{block title}{size={}}
+
+\def\raccoon{
+\makebox[\linewidth][c]{\includegraphics[width=70pt]{/home/proycon/Pictures/Local/raccoon.pdf}\FloatBarrier}
+}
+\def\smallraccoon{
+\makebox[\linewidth][c]{\includegraphics[width=30pt]{/home/proycon/Pictures/Local/raccoon.pdf}\FloatBarrier}
+}
+
+\newcommand{\myurl}[1]{ { \footnotesize\textcolor{blue}{\url{#1}}  } }
+
+\title{Classifier-based modelling of source-side context in Machine Translation}
+\subtitle{The current state of my Ph.D research}
+\author{Maarten van Gompel}
+\institute{Centre for Language Studies, Radboud University Nijmegen}
+\date{September 3rd, 2014}
+\titlegraphic{\includegraphics[width=15.0mm]{ru-beeldmerk-zwart.eps}}
+
+
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\section{Introduction}
+
+
+\begin{frame}{Introduction}
+
+
+  \begin{block}{Translation}
+    \begin{enumerate}
+      \item Choose the right translations of words/phrases/expressions
+      \item Put them in a natural order
+    \end{enumerate}
+  \end{block}
+
+  \begin{block}<2->{Phrase-based Statistical Machine Translation}
+    Combination of two models:
+    \begin{enumerate}
+      \item Translation Model: $P(target|source)$ (bilingual)
+      \item Language Model: $P(nextword|previouswords)$  (monolingual, this
+        models target-side context)
+    \end{enumerate}
+
+    An MT decoder optimises a log-linear equation to seek the best translation
+    hypothesis amongst a vast pool of possibilities.
+  \end{block}
+
+\end{frame}
+
+\begin{frame}
+
+  \begin{block}{Observation}
+    \begin{enumerate}
+      \item SMT does not explicitly model source-side context..
+      \item ...yet context intuitively seems informative for disambiguation:
+      \begin{itemize}
+        \item (English to Dutch): The \textbf{bank} went bankrupt $\rightarrow$ De bank
+          ging failliet.
+        \item (English to Dutch): The ship departed from the \textbf{bank} of
+          the river  $\rightarrow$ Het schip vertrok van de oever van de
+          rivier.
+      \end{itemize}
+      \item Machine Translation overlaps with Word Sense Disambiguation here
+    \end{enumerate}
+  \end{block}
+
+  \begin{block}<2->{Research Hypothesis}
+    \begin{enumerate}[<+->]
+      \item Does modelling source-side context improve translation?
+      \item Limited to surface forms, not using linguistic features!
+    \end{enumerate}
+  \end{block}
+
+
+\end{frame}
+
+
+\begin{frame}
+  \begin{block}{Two lines of Research}
+    \begin{enumerate}
+    \item Source-side context modelling in full Statistical Machine Translation tasks
+    \item Source-side context modelling in a narrower scope, closer to WSD: Translation Assistance
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+
+
+\section{Context Modelling in SMT}
+\begin{frame}{Context Modelling in SMT}
+
+  \begin{block}{Training pipeline}
+    \begin{enumerate}
+      \item Given a sentence-aligned parallel corpus:
+      \item Compute word alignments (GIZA++, uses Expectation Maximisation)
+      \item Extract probable phrases (grow-diag-final) from word alignments,
+        results in a phrase-translation table
+      \item Build a classifier mapping a phrase (from the phrasetable) in all of
+        the contexts it occurs, to its translation.
+    \end{enumerate}
+  \end{block}
+
+\end{frame}
+\begin{frame}
+  
+  \begin{block}{Test pipeline}
+    \begin{enumerate}
+      \item Given an input sentence to translate:
+      \item Find all words/phrases in the input sentence for which we built a
+        classifier
+      \item Classify all fragments given their contexts,  store results in an
+        intermediate phrase-table, one per sentence
+      \begin{itemize}
+        \item This effectively alters the distribution of possible translations
+      \end{itemize}
+      \item Translate the sentence using the intermediate phrase-table using the
+      Moses SMT Decoder
+      \item Evaluate output using standard MT metrics (BLEU et al), against
+        human reference translations
+    \end{enumerate}
+  \end{block}
+
+\end{frame}
+
+
+\begin{frame}
+
+
+  \begin{block}{Classifiers}
+    \begin{itemize}
+      \item Classifiers are memory-based classifiers (k-nn) (proven method in WSD)
+      \item \textbf{Classifier Experts:} one classifier per
+        source-side phrase  vs. \textbf{Monolithic Classifier:} one classifier for all
+      \item Feature vector consists of local context, $x$ words to the left,
+        $y$ to the right.
+      \item Experiments with global keywords also attempted
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+
+\begin{frame}
+
+
+  \begin{block}{Results}
+
+    \begin{itemize}
+      \item Baseline: non-context informed, standard MT
+      \item No gain above baseline for most general corpora
+        (Europarl, OpenSubtitles, TED talks).
+      \item \textbf{But:} Modest gain above baseline in highly formulaic
+        corpora (EMEA, JRC-Acquis)
+      %\item Results from earlier similar studies hard to reproduce or verify
+    \end{itemize}
+
+  \end{block}
+\end{frame}
+
+
+\begin{frame}
+
+  \begin{block}{Discussion}
+    \begin{itemize}
+      \item Our edits are quite local and limited
+      \item Reference translations are often too different; translations too
+        free.
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+
+\section{Context Modelling: Zooming in}
+
+
+\begin{frame}{Context Modelling: Zooming in}
+
+  \begin{block}{Translation of L1 Fragments in an L2 Context}
+    \begin{itemize}
+      \item Evaluating the translation of fragments as such: closer to Word
+        Sense Disambiguation
+      \item Side-tracking the full complexity of MT: single fragment,  no full sentential
+        translation (no long distance word reordering)
+      \item In an interesting new setting aimed at language learning
+    \end{itemize}
+  \end{block}
+
+
+  \begin{block}{Problem setting}
+    \begin{enumerate}[<+->]
+      \item Sometimes you don't know the proper expression in the language you
+      are writing in
+      \item ... especially if you're not fluent in the language
+      \item Fall back to your native language! \emph{(code switching)}
+    \end{enumerate}
+  \end{block}
+
+\end{frame}
+
+\subsection{Setup}
+\begin{frame}
+
+  \begin{block}{Translation Assistance System}
+    \begin{enumerate}
+      \item Given an L1 fragment in an L2 context..
+      \item ... translate the fragment in its context, to L2
+    \end{enumerate}
+  \end{block}
+
+  \begin{block}<2->{Intended audience}
+    \begin{itemize}
+      \item<2-> Language learners (Computer Aided Language Learning)
+      \item<2-> ...  intermediate level
+      \item<2-> ...  usage of the language is encouraged as it facilitates learning
+      \item<2-> Translation Assistance for professional translators
+    \end{itemize}
+  \end{block}
+
+
+\end{frame}
+
+
+\begin{frame}{Examples}
+
+{\footnotesize
+  \begin{itemize}
+    \item 
+      Input (L1=English,L2=Spanish): \emph{“Hoy vamos a \textbf{the swimming
+      pool}.”} \\
+      Desired output: \emph{“Hoy vamos a \textbf{la piscina}.”}
+    \item
+      Input (L1-English, L2=German): \emph{“Das wetter ist wirklich
+      \textbf{abominable}.”} \\
+      Desired output: \emph{“Das wetter ist wirklich \textbf{ekelhaft}.”}
+    \item
+      Input (L1=French,L2=English): \emph{“I \textbf{rentre \`a la maison} because
+      I am tired.”} \\
+      Desired output: \emph{“I \textbf{return home} because I am tired.”}
+    \item
+      Input (L1=Dutch, L2=English): \emph{“Workers are facing a massive \textbf{aanval
+      op} their employment and social rights.”} \\
+      Desired output: \emph{“Workers are facing a massive \textbf{attack on}
+      their employment and social rights.”}
+  \end{itemize}
+}
+
+\end{frame}
+
+
+\begin{frame}
+  \begin{block}{A new Task}
+
+    \begin{enumerate}
+      \item Participated as a new task in SemEval 2014
+      \item Six teams participated and wrote a translation assistance system
+      \item Prior, to this, we did a pilot study with our own system (presented at ACL 2014)
+    \end{enumerate}
+  \end{block}
+
+  \begin{block}{Test set creation}
+    \begin{itemize}
+      \item Manual collection of test sentences from learner resources and
+        general resources
+      \item Translation of fragments
+      \item Adding of alternative translations
+      \item Verification by natives or professionals
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{System}
+
+\begin{block}{System}
+  \begin{enumerate}
+    \item On the basis of the training set, classifier experts are constructed
+    for each L1 fragment:
+    \begin{itemize}
+      \item<2-> Features: Local context window ($x$ words left, $y$ words right)
+      %\item Global context features in binary bag-of-words configuration
+      \item<2-> Using k-Nearest Neighbours in Timbl
+    \end{itemize}
+    \item<3-> On testing, the corresponding classifier is called to translate the L1
+    fragment
+    \item<4-> An extra L2 Language Model can be included and a simple log
+      linear search seeks the optimum solution: 
+      $\hat{H} = \arg\max_H \lambda_1 score_T(H) + \lambda_2 score_{lm}(H)$
+  \end{enumerate}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}{Evaluation}
+  \begin{block}{Baselines}
+    \begin{itemize}
+      \item Most Frequent Translation baseline {\footnotesize (non-context informed)} 
+      \item LM Baseline (L2)
+    \end{itemize}
+  \end{block}
+  
+  \begin{block}<2->{Evaluation metrics}
+    \begin{itemize}
+      \item \textbf{Accuracy}: Exact matches
+      \item \textbf{Word Accuracy}: Partial matches, credits partial solutions
+      \item \textbf{MT Metrics}: BLEU, METEOR, NIST, WER, PER
+      \item \textbf{Recall}: Ratio of L1 fragments that yielded \emph{a} solution
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Output sample}
+    \begin{example}
+        {\footnotesize
+        \textbf{Input:} Es la \textbf{last} vez que me dirijo a esta C\'amara . \\
+        \textbf{MLF baseline:} Es la \textbf{pasado} vez que me dirijo a esta C\'amara .\\
+        \textbf{l1r1:} Es la \textbf{\'ultima} vez que me dirijo a esta C\'amara .\\
+        }
+    \end{example}
+\end{frame}
+
+\subsection{Conclusion...or not?}
+
+\begin{frame}{Conclusions}
+    \begin{block}{Conclusions}
+        Conclusion from the pilot study and later application of our system on our
+        SemEval test set:
+        \begin{itemize}
+            \item Context-aware solutions improve results!
+            \item Language Model and classifiers complement each other: use both
+            \item Small improvement with feature optimisation
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+
+\begin{frame}{\ldots or not?}
+    \begin{block}{De-conclusion}
+        \begin{itemize}
+            \item Later experiments with better-integrated MT-based solutions 
+              again cast doubts on our results: non-context informed baseline wins again
+        \end{itemize}
+    \end{block}
+
+    \begin{block}<2->{Re-conclusion or Discussion}
+        \begin{itemize}
+            \item Explicit modelling of source-side context provides little
+              hope for improvements over SMT.
+            \item Information is already implicitly available through
+              translation model and (target-side) language model
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\section{The End}
+
+\begin{frame}
+
+\raccoon
+
+\begin{center}
+
+\medskip
+
+\Large{Questions?}
+
+
+\end{center}
+
+\end{frame}
+
+
+\end{document}
+
