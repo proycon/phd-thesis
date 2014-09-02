@@ -84,8 +84,8 @@
 
   \begin{block}{Translation}
     \begin{enumerate}
-      \item Choose the right translations of words/phrases/expressions
-      \item Put them in a natural order
+      \item Faithfully convey the meaning of all words from source to target
+      \item Fluent target sentence
     \end{enumerate}
   \end{block}
 
@@ -151,9 +151,25 @@
       \item Compute word alignments (GIZA++, uses Expectation Maximisation)
       \item Extract probable phrases (grow-diag-final) from word alignments,
         results in a phrase-translation table
-      \item Build a classifier mapping a phrase (from the phrasetable) in all of
-        the contexts it occurs, to its translation.
+      \item Build classifiers mapping all phrases (from the phrasetable) in all of
+        the contexts they occur, to their translations
     \end{enumerate}
+  \end{block}
+
+\end{frame}
+
+\begin{frame}
+
+
+  \begin{block}{Classifiers}
+    \begin{itemize}
+      \item Classifiers are memory-based classifiers (k-nn) (proven method in WSD)
+      \item \textbf{Classifier Experts:} one classifier per
+        source-side phrase  vs. \textbf{Monolithic Classifier:} one classifier for all
+      \item Feature vector consists of local context, $x$ words to the left,
+        $y$ to the right.
+      \item Experiments with global keywords also attempted
+    \end{itemize}
   \end{block}
 
 \end{frame}
@@ -179,21 +195,6 @@
 \end{frame}
 
 
-\begin{frame}
-
-
-  \begin{block}{Classifiers}
-    \begin{itemize}
-      \item Classifiers are memory-based classifiers (k-nn) (proven method in WSD)
-      \item \textbf{Classifier Experts:} one classifier per
-        source-side phrase  vs. \textbf{Monolithic Classifier:} one classifier for all
-      \item Feature vector consists of local context, $x$ words to the left,
-        $y$ to the right.
-      \item Experiments with global keywords also attempted
-    \end{itemize}
-  \end{block}
-
-\end{frame}
 
 
 \begin{frame}
@@ -216,7 +217,7 @@
 
 \begin{frame}
 
-  \begin{block}{Discussion}
+  \begin{block}{Observations}
     \begin{itemize}
       \item Our edits are quite local and limited
       \item Reference translations are often too different; translations too
@@ -311,6 +312,7 @@
       \item Participated as a new task in SemEval 2014
       \item Six teams participated and wrote a translation assistance system
       \item Prior, to this, we did a pilot study with our own system (presented at ACL 2014)
+      \item Afterwards, we ran our system on our new test set
     \end{enumerate}
   \end{block}
 
@@ -330,8 +332,9 @@
 
 \begin{block}{System}
   \begin{enumerate}
-    \item On the basis of the training set, classifier experts are constructed
-    for each L1 fragment:
+    \item Construct a training set from a parallel corpus and a phrase-table
+      (L1/L2 substitutions)
+    \item Build classifier experts for each L1 fragment:
     \begin{itemize}
       \item<2-> Features: Local context window ($x$ words left, $y$ words right)
       %\item Global context features in binary bag-of-words configuration
@@ -395,15 +398,15 @@
     \begin{block}{De-conclusion}
         \begin{itemize}
             \item Later experiments with better-integrated MT-based solutions 
-              again cast doubts on our results: non-context informed baseline wins again
+              again cast doubts on our results: new pure-MT non-context informed baseline wins again
         \end{itemize}
     \end{block}
 
     \begin{block}<2->{Re-conclusion or Discussion}
         \begin{itemize}
             \item Explicit modelling of source-side context provides little
-              hope for improvements over SMT.
-            \item Information is already implicitly available through
+              or no added value for SMT
+            \item Why? Information is already implicitly available through
               translation model and (target-side) language model
         \end{itemize}
     \end{block}
