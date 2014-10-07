@@ -1,0 +1,120 @@
+\documentclass[11pt]{article}
+%\usepackage{acl2014}
+\usepackage{times}
+\usepackage{url}
+\usepackage{latexsym}
+\special{papersize=210mm,297mm} % to avoid having to use "-t a4" with dvips 
+%\setlength\titlebox{6.5cm}  % You can expand the title box if you really have to
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{framed}
+\usepackage{pbox}
+\usepackage{supertabular}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+\usepackage{gb4e}
+
+\title{Classifier-based modelling of source-side context information for Statistical Machine Translation}
+
+
+\author{Maarten van Gompel \& Antal van den Bosch \\
+ Centre for Language Studies \\
+  Radboud University Nijmegen \\
+  {\tt proycon@anaproy.nl}}
+
+%\date{}
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract} 
+We present in-depth research into the modelling of source-side
+context to improve Phrase-based Statistical Machine Translation. Statistical
+Machine Translation systems typically consist of a translation model and a
+language model. The former maps phrases in the source language to the target
+language, without regard for the context in which the source phrases occur. The
+latter models just the target language, and acts as a target-side model of
+context information after translation. We test whether considering context
+information directly in the translation model has a positive effect on
+translation quality. We will use proven techniques from Word Sense
+Disambiguation, effectively integrating WSD techniques in Statistical Machine
+Translation. Our approach is classifier-based and our focus is exclusively on
+surface forms, not including any additional linguistic features.
+\end{abstract}
+
+\section{Introduction}
+
+In Phrase-based Statistical Machine Translation (SMT) the problem of
+translating an input sentence from a source language to a target language is
+perceived as a game of probabilities and a search for the most probable
+translation option.  These probabilities are expressed in a number of models
+that specialize in a certain aspect relevant to the translation process. The
+``phrase-based'' characteristic is due to phrases being the building blocks of
+the translation model. This can be contrasted to earlier approaches in
+Statistical Machine Translation which started as word-based \cite{OCHNEY?}.
+Phrases in this sense have to be perceived simply one or more words, i.e. n-grams of variable
+length (including unigrams). Moreover, they are not at all required to form a proper
+linguistic constituent of any kind.
+
+Two models are at the core of phrase-based SMT: first there is the translation
+model which maps the translation phrases in the source language ($s$) to
+phrases in target language ($t$), this mapping is expressed as a vector of
+probabilities, most notably $P({phrase}_s|{phrase}_t)$ and
+$P({phrase}_t|{phrase}_s)$. This component can be seen to model the notion of
+``semantic faithfullness''; if you translate a phrase from one language to
+another, you want the meaning to be preserved as accurately as possible. The
+second core model is the language model, this model in monolingual in nature
+and models \emph{the target language}. It models what words are likely to
+follow others and can be interpreted as modelling the ``syntactic fluency''
+notion of translation; a translation should be in a natural word-order and
+sound natural. A Machine Translation \emph{decoder} optimises a log-linear
+model of these two, and additional other, models. Given an input sentence in
+the source language, it searches through a vast space of all ``possible''
+translation options, most non-sensical, for a path maximising the probabilities
+according to each of the models, taking into account different weights they may
+be assigned.
+
+The study we currently present focusses on the role of context information in
+this SMT process. The Language Model effectively models context for the target
+language, it makes sure that a translated phrase fits nicely along other
+translated phrases. But in SMT there is no component modelling context for the
+source-language, whereas intuitively source-side context may provide a powerful
+cue for translation. Consider the word ``bank'' and its Spanish translation in
+examples \ref{ex:bank1} and \ref{ex:bank2}.
+
+\begin{exe}
+\ex \textbf{English:} I don't trust the bank. \\
+    \textbf{Spanish:} No me fio del banco.
+\label{ex:bank1}
+
+\ex \textbf{English:} The boat headed towards the bank of the river.
+    \textbf{Spanish:} El barco se dirigó hacia la orilla del río.
+\label{ex:bank2}
+\end{exe}
+
+The same word, ``bank'' may express multiple semantic senses, some of which are
+expressed by different words in Spanish. Source-side context information may
+provide valuable clues to what sense is being employed, and therefore what
+translation is correct.  The words ``boat'' and the phrase ``of the river'' in
+example \ref{ex:bank2} make it pretty clear that we are using bank in its
+maritime sense. Example \ref{ex:bank1} is less obvious, but the word ``trust''
+would seem to be most likely when the noun ``bank'' denotes a financial
+institution.
+
+
+
+
+
+
+
+
+
+
+Phrase-based Statistical Machine Translation models two main components, 
+
+
+\section{Previous research}
+
+
+\end{document}
