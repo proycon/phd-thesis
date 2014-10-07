@@ -81,40 +81,82 @@ language, it makes sure that a translated phrase fits nicely along other
 translated phrases. But in SMT there is no component modelling context for the
 source-language, whereas intuitively source-side context may provide a powerful
 cue for translation. Consider the word ``bank'' and its Spanish translation in
-examples \ref{ex:bank1} and \ref{ex:bank2}.
+examples~\ref{ex:bank1} and \ref{ex:bank2}.
 
-\begin{exe}
+\begin{exe} %gb4e package
 \ex \textbf{English:} I don't trust the bank. \\
     \textbf{Spanish:} No me fio del banco.
 \label{ex:bank1}
 
-\ex \textbf{English:} The boat headed towards the bank of the river.
-    \textbf{Spanish:} El barco se dirigó hacia la orilla del río.
+\ex \textbf{English:} The boat headed towards the bank of the river. \\
+    \textbf{Spanish:} El barco se dirigió hacia la orilla del río.
 \label{ex:bank2}
 \end{exe}
 
-The same word, ``bank'' may express multiple semantic senses, some of which are
-expressed by different words in Spanish. Source-side context information may
-provide valuable clues to what sense is being employed, and therefore what
-translation is correct.  The words ``boat'' and the phrase ``of the river'' in
-example \ref{ex:bank2} make it pretty clear that we are using bank in its
-maritime sense. Example \ref{ex:bank1} is less obvious, but the word ``trust''
-would seem to be most likely when the noun ``bank'' denotes a financial
-institution.
+The same English word, ``bank'' may express multiple semantic senses, some of
+which are expressed by different words in Spanish. Source-side context
+information may provide valuable clues to what sense is being employed, and
+therefore what translation is correct.  The words ``boat'' and the phrase ``of
+the river'' in example \ref{ex:bank2} make it pretty clear that we are using
+bank in its maritime sense. Example \ref{ex:bank1} is less obvious, but the
+word ``trust'' would seem to be most likely when the noun ``bank'' denotes a
+financial institution.
 
+These examples are meant to illustrate the intuition that is behind our
+research hypothesis. We hypothesise that the inclusion of source-side context
+information in the translation model improves translation results, as the
+context helps in providing a more accurate disambiguation. A counter-hypothesis
+to this would be that whilst source-side context information is not modelled
+explicitly, it is implicitly captured by the combination of translation model
+and language model, and explicit modelling has no added value.
 
+There is clear and obvious overlap between what we do here and the field of
+Word Sense Disambiguation (WSD). We effectively test an integration of proven
+techniques from WSD in Statistical Machine Translation, and apply these to
+phrases rather than just words.
 
-
-
-
-
-
-
-
-Phrase-based Statistical Machine Translation models two main components, 
-
+WSD systems often employ a variety of linguistic features, our study
+deliberately does not do so and we focus primarily on the surface forms to stay
+as close as possible to vanilla Phrase-Based Statistical Machine Translation,
+not using any language-specific external resources, and assess the merit of
+source-side context as it is in its unmodified form. 
 
 \section{Previous research}
+
+The idea to integrate WSD approaches in SMT is not new. Various studies have
+been conducted with mixed results. \cite{CarpuatWu05} were the first to
+directly tackle the question whether WSD models were beneficial to translation
+quality when integrated in SMT systems, and thus forms important groundwork for
+our own study. Their approach uses an ensemble classification model that
+integrates position-sensitive, syntactic, and local collocational features.
+This includes linguistic features such as part-of-speech tags and lemmas, as
+well as more complex syntactic relations. They test for Chinese-to-English
+translation only, which raises some questions on how their conclusions would
+hold on different language pairs.
+
+\cite{CarpuatWu05} place focus on the WSD model rather than the SMT model,
+whereas we place more focus on the SMT model and the integration method, and
+keep the ``WSD-model'' relatively simple. Furthermore, the method they employ
+uses a simpler word-based form of Statistical Machine Translation.
+
+Despite their efforts, they reach the surprising conclusion that inclusion of
+WSD techniques does \emph{not} yield better translation quality. Will these
+results hold in a more modern Phrase-based Statistical Machine Translation
+approach?
+
+Two years later they expanded their study to full phrasal units
+\citep{CarpuatWu07} and, for the first time, found results that did support the
+hypothesis that SMT benefits from the integration of WSD techniques.
+
+
+
+
+
+
+
+
+Our intention here is to settle some of the conflicting reports and attempt to independently come to a conclusion regarding the incorporation of source-side context in SMT.
+
 
 
 \end{document}
