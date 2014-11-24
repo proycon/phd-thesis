@@ -42,7 +42,7 @@ We furthermore investigate various ways classifier-based models can be
 integrated into Statical Machine Translation.  We will use proven techniques
 from Word Sense Disambiguation, effectively integrating WSD techniques in
 Statistical Machine Translation. Our approach is classifier-based and our focus
-is exclusively on surface forms, not including any additional linguistic
+is exclusively unsupervised, we therefore do not include any additional linguistic
 features. 
 \end{abstract}
 
@@ -56,9 +56,9 @@ that specialize in a certain aspect relevant to the translation process. The
 ``phrase-based'' characteristic is due to phrases being the building blocks of
 the translation model. This can be contrasted to earlier approaches in
 Statistical Machine Translation which started as word-based \cite{OCHNEY?}.
-Phrases in this sense have to be perceived simply one or more words, i.e. n-grams of variable
-length (including unigrams). Moreover, they are not at all required to form a proper
-linguistic constituent of any kind.
+Phrases in this sense have to be perceived simply one or more words, i.e.
+n-grams of variable length (including unigrams). Moreover, they are not at all
+required to form a proper linguistic constituent of any kind.
 
 Two models are at the core of phrase-based SMT: first there is the translation
 model which maps the translation phrases in the source language ($s$) to
@@ -78,13 +78,13 @@ translation options, most non-sensical, for a path maximising the probabilities
 according to each of the models, taking into account different weights they may
 be assigned.
 
-The study we currently present focusses on the role of context information in
-this SMT process. The Language Model effectively models context for the target
-language, it makes sure that a translated phrase fits nicely along other
-translated phrases. But in SMT there is no component modelling context for the
-source-language, whereas intuitively source-side context may provide a powerful
-cue for translation. Consider the word ``bank'' and its Spanish translation in
-examples~\ref{ex:bank1} and \ref{ex:bank2}.
+The study we currently present focusses on the role of surface-form context
+information in this SMT process. The Language Model effectively models context
+for the target language, it makes sure that a translated phrase fits nicely
+along other translated phrases. But in SMT there is no component modelling
+context for the source-language, whereas intuitively source-side context may
+provide a powerful cue for translation. Consider the word ``bank'' and its
+Spanish translation in examples~\ref{ex:bank1} and \ref{ex:bank2}.
 
 \begin{exe} %gb4e package
 \ex \textbf{English:} I don't trust the bank. \\
@@ -102,7 +102,7 @@ information may provide valuable clues to what sense is being employed, and
 therefore what translation is correct.  The words ``boat'' and the phrase ``of
 the river'' in example \ref{ex:bank2} make it pretty clear that we are using
 bank in its maritime sense. Example \ref{ex:bank1} is less obvious, but the
-word ``trust'' would seem to be most likely when the noun ``bank'' denotes a
+word ``trust'' could be seen to be a cue when the noun ``bank'' denotes a
 financial institution.
 
 These examples are meant to illustrate the intuition that is behind our
@@ -118,11 +118,16 @@ Word Sense Disambiguation (WSD). We effectively test an integration of proven
 techniques from WSD in Statistical Machine Translation, and apply these to
 phrases rather than just words.
 
-WSD systems often employ a variety of linguistic features, our study
-deliberately does not do so and we focus primarily on the surface forms to stay
-as close as possible to vanilla Phrase-Based Statistical Machine Translation,
-not using any language-specific external resources, and assess the merit of
-source-side context as it is in its unmodified form. 
+WSD systems often employ a variety of linguistic features. The focus of our
+study, however, is fully unsupervised. We are interested only in the surface
+forms, the text as-is, and stay as close as possible to vanilla Phrase-Based
+Statistical Machine Translation, without using any language-specific external
+resources. In this fashion, we attempt to assess the merit of source-side
+context information as it is in its unmodified form. 
+
+Not introducing extra data for the translation system means our goals have to
+be set more modest as well. We do not expect as much gains as 
+
 
 \section{Previous research}
 
@@ -133,16 +138,16 @@ have been conducted with mixed results. In the early days of SMT,
 maximum entropy model for word-based SMT, and report slightly improved error
 rates on a translation task.
 
-\cite{CarpuatWu05} were the first to
-directly tackle the question whether full-scale WSD models were beneficial to translation
-quality when integrated in SMT systems, and thus forms important groundwork for
-our own study. Their approach uses an ensemble classification model that
-integrates position-sensitive, syntactic, and local collocational features,
-which has proven itself in competitive WSD tasks. This includes linguistic
-features such as part-of-speech tags and lemmas, as well as more complex
-syntactic relations. They test for a single Chinese-to-English test-set only, and
-only use BLEU, which raises some questions on whether their conclusions would hold
-on different language pairs, test sets, and using different evaluation metrics.
+\cite{CarpuatWu05} were the first to directly tackle the question whether
+full-scale WSD models were beneficial to translation quality when integrated in
+SMT systems, and thus their work forms important foundation for our own study.
+Their approach uses an ensemble classification model that integrates
+position-sensitive, syntactic, and local collocational features, which has
+proven itself in competitive WSD tasks. This includes linguistic features such
+as part-of-speech tags and lemmas, as well as more complex syntactic relations.
+They test for a single Chinese-to-English test-set only, and only use BLEU,
+which raises some questions on whether their conclusions would hold on
+different language pairs, test sets, and using different evaluation metrics.
 
 \cite{CarpuatWu05} place strong focus on the WSD model rather than the SMT
 model, whereas we place more focus on the SMT model and the integration method,
@@ -164,7 +169,19 @@ training and the WSD predictions are integrated into the phrase-based SMT
 framework.'' \citep{CarpuatWu07}. They also broaden their use of evaluation
 metrics, yet still test on only Chinese to English.
 
-The most important and complete study we build upon is \cite{}
+Another influential study 
+
+
+The most important and complete study we build upon is \cite{Rejwanul+11}. The
+main difference is that they focus on a variety of linguistically-informed
+contextual features, whereas we focus purely on unsupervised local context.
+Their study finds that including linguistically-informed contextual features in
+general produces improvements.
+
+important.
+
+In
+their work, \cite{Rejwanul+11} focus on a variety of contextual features.
 
 , and effectively attempt to reproduce to a large degree, is \cite{}.
 
