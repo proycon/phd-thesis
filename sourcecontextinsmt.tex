@@ -169,14 +169,32 @@ training and the WSD predictions are integrated into the phrase-based SMT
 framework.'' \citep{CarpuatWu07}. They also broaden their use of evaluation
 metrics, yet still test on only Chinese to English.
 
-Another influential study 
+The work of \cite{Gimenez+07} is similar, they use support vector machines to
+predict the phrase translation probabilities for the phrase-translation table
+component of SMT, rather than relying on the context-unaware Maximum Likehood
+Estimate the statistical process produces. The feature vector for their
+classifiers consists of both local context as well as global context features.
+In addition to the surface forms of the words, they do rely on shallow
+linguistic features such as Part-of-Speech tags and lemmas. They conduct a
+manual evaluation judged on fluency and adequacy, and conclude that considering
+context improves adequacy, yet does not benefit fluency. They remark that the
+integration of the classifier probabilities in an SMT framework needs further
+study, which is something that will indeed be a focus in our present study.
 
+Source-context aware translation has also been attempted outside of the
+predominant statistical machine translation framework. \cite{Stroppa+07}
+implement a form of example-based machine translation that is word-based and
+relies chiefly on classifiers for the translation model component.
+\cite{PBMBMT} extend this approach to phrases. Although positive results are
+achieved in both studies, state-of-the-art SMT remains unmatched.
 
-The most important and complete study we build upon is \cite{Rejwanul+11}. The
-main difference is that they focus on a variety of linguistically-informed
-contextual features, whereas we focus purely on unsupervised local context.
-Their study finds that including linguistically-informed contextual features in
-general produces improvements.
+The most important and complete study we build upon is \cite{Rejwanul+11},
+which in turn draws from the majority of the aforementioned studies, and
+provides an extensive comparison between them. The main
+difference between our study and theirs is that they focus on a variety of
+linguistically-informed contextual features, whereas we focus purely on
+unsupervised local context.  Their study finds that including
+linguistically-informed contextual features in general produces improvements.
 
 important.
 
