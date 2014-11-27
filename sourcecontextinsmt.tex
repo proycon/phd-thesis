@@ -181,12 +181,22 @@ context improves adequacy, yet does not benefit fluency. They remark that the
 integration of the classifier probabilities in an SMT framework needs further
 study, which is something that will indeed be a focus in our present study.
 
+The year 2007 saw a culmination of various studies integrating WSD techiques in
+SMT using classifiers. A third study in this trend was \cite{Stroppa+07}. They
+have a strong focus on the word form, as does this present study, and add only
+part-of-speech features. On IWSLT 2006 data for Chinese-English and
+Italian-English, they achieve a significant improvement for the former, whereas
+the BLEU score for the latter fails to pass the significance test. We will
+attempt to reproduce these experiments in this study.
+
 Source-context aware translation has also been attempted outside of the
-predominant statistical machine translation framework. \cite{Stroppa+07}
-implement a form of example-based machine translation that is word-based and
-relies chiefly on classifiers for the translation model component.
-\cite{PBMBMT} extend this approach to phrases. Although positive results are
-achieved in both studies, state-of-the-art SMT remains unmatched.
+predominant statistical machine translation framework. \cite{MBMT} implement a
+simple form of example-based machine translation that is word-based and relies
+chiefly on classifiers for the translation model component. Two studies derive
+from the same concept while transcending a word-based paradigm:
+\cite{MARKERBASED} use chunks delimited by common markers. and \cite{PBMBMT}
+attempts a full extension to phrases similar to SMT. Although positive results
+are achieved in the latter study, it does not rival state-of-the-art SMT.
 
 The most important and complete study we build upon is \cite{Rejwanul+11},
 which in turn draws from the majority of the aforementioned studies, and
