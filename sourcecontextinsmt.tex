@@ -210,6 +210,91 @@ quality. A notable focus in our study will be possible methods of integrating th
 classifier probabilities in the SMT, as recommended also by \cite{Gimenez+07}.
 
 
+\section{Methodology}
+
+\subsection{Modelling source-side context with classifiers}
+
+In line with several previous studies \cite{Rejwanul+11,PBMBMT,
+Stroppa+07,MARKEDBASED}, we make use of memory-based classifiers to build a
+translation model informed by source-side context information. More
+specifically, we will be using IB1 \cite{IB1}, an implementation of k-Nearest
+Neighbours; IGTree, an optimised and lossless tree-based approximation thereof;
+and TRIBL2, a mixture of the two. These algorithms are implemented in the
+software Timbl \cite{TIMBL}.\footnote{\url{http://ilk.uvt.nl/timbl}} These
+algorithms are well-suited for symbolic data and highly multivariate classes.
+Moreover, memory-based classification has been a proven solution in the field
+of Word Sense Disambiguation \cite{SENSEVAL2,WSD2}
+
+
+
+\subsection{Integration in an SMT Decoder}
+
+The task of an SMT decoder is to find the best translation amongst
+a vast pool of possible translation hypotheses. The best translation hypothesis
+is the translation hypothesis that maximises a log linear equation. This
+log-linear equation draws from various models, such as a translation model
+(i.e. the phrase-translation table), a target-language model optionally
+additional models such as a distortion model or word-reordering model.
+
+The translation model is a mapping of the set of source phrases ($S$) to the
+set of target phrases ($T$). Each phrase-pair $(s,t)$ where $s \elem S$ and $t
+\elem T$ is in described by a score vector indicating the likelihood of
+translation. This score vector most notably consists of the probababilities
+$p(s|t)$ and $p(t|s)$. In addition, lexical weighting probabilities $lex(s|t)$
+and $lex(t|s)$ express the probability of a phrase-pair word-by-word, and are
+often included as components in the score vector. During decoding, the total
+score of the translation model and other models is expressed as a log-linear
+combination, in which different weights can be assigned to each of the
+components of the score vector. These weights are parameters to the task and
+are typically optimised automatically on development data using for instance
+Minimum Error Rate Reduction \cite{MERT}.
+
+
+For the modelling source-side context the component of the score
+vector that 
+
+
+The state-of-the art SMT decoder used in a majority of MT studies is Moses
+\citep{MOSES}. However, it offers no facilities to take source-side context
+information in account. We had to consider three options to achieve our goal of
+integrating source-side context : 1) creating a new decoder; 2) enhancing
+Moses; or 3) using a bypass method. We decided, in line with most of the
+literature, to follow the third option, as it was the easiest and allows us to
+use Moses as a black box.
+
+
+immediately immediately draws our interest is $p(t|s)$. 
+
+For the modelling source-side context the component of the score
+vector that 
+
+immediately immediately draws our interest is $p(t|s)$. 
+
+
+
+Each of the components of the
+score vector
+
+
+
+The phrase-translation table embodies the translation model, and is 
+
+
+
+
+
+
+
+
+Moses features, amongst others, a stack-based decoder. For each
+decoding run, there are as many stacks as there are words in the source
+sentence. Translation proceeds by translating 
+
+charged with the tasked 
+
+Integrating source-side context in 
+
+
 
 
 \end{document}
