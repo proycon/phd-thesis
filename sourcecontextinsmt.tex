@@ -126,8 +126,10 @@ resources. In this fashion, we attempt to assess the merit of source-side
 context information as it is in its unmodified form. 
 
 Not introducing extra data for the translation system means our goals have to
-be set more modest as well. We do not expect as much gains as 
+be set more modest as well. We can not expect the same gains as are achieved by
+introducing extra data from supervised sources.
 
+%TODO: write how paper is structured
 
 \section{Previous research}
 
@@ -212,6 +214,20 @@ classifier probabilities in the SMT, as recommended also by \cite{Gimenez+07}.
 
 \section{Methodology}
 
+Like most of the latest studies before us, we approach the machine translation
+problem in a phrase-based fashion, which has superseded the simpler word-based
+based paradigm for quite some time. This means that phrases, defined as a
+sequence of one or more words (that need not form a linguistic entity in any
+way!), form the basic building blocks of our translation model. The problem of
+translating a sentence is decomposed into the problem of translating its phrasal
+subparts and combining the results in the best order.
+
+In describing our methodology, we first focus on the problem of phrasal
+translation, adding in the source-side context component. This shall be done
+using classifiers. Then we address how this can be integrated into a
+phrase-based Stastical Machine Translation decoder, which also takes care of
+ordering aspect.
+
 \subsection{Modelling source-side context with classifiers}
 
 In line with several previous studies \cite{Rejwanul+11,PBMBMT,
@@ -219,22 +235,34 @@ Stroppa+07,MARKEDBASED}, we make use of memory-based classifiers to build a
 translation model informed by source-side context information. More
 specifically, we will be using IB1 \cite{IB1}, an implementation of k-Nearest
 Neighbours; IGTree, an optimised and lossless tree-based approximation thereof;
-and TRIBL2, a mixture of the two. These algorithms are implemented in the
-software Timbl \cite{TIMBL}.\footnote{\url{http://ilk.uvt.nl/timbl}} These
-algorithms are well-suited for symbolic data and highly multivariate classes.
+and TRIBL2, a mixture model of the two. These algorithms are implemented in the
+software Timbl \cite{TIMBL}\footnote{\url{http://ilk.uvt.nl/timbl}} and
+are well-suited for symbolic data and highly multivariate classes.
 Moreover, memory-based classification has been a proven solution in the field
-of Word Sense Disambiguation \cite{SENSEVAL2,WSD2}
+of Word Sense Disambiguation \cite{SENSEVAL2,WSD2}.
 
+In our classifier-based translation model we will be modelling the probability
+of a target phrase ($t$) given a source phrase ($s$) and context
+information ($c$). We can thus express this as $P(t|s,c)$.
+\cite{Stroppa+07} state that direct estimation of this probability using
+relative frequencies would result in overestimation of large phrases, and that
+therefore a smoothing factor is required. They proceed to say through memory-based
+classification we implicitly introduce precisely such a smoothing factor.
 
+Given a source phrase and context information, the classifier yields classes
+corresponding to target phrases, with an associated weight. After
+normalization, these can be considered a posterior distribution of
+target phrases. 
 
 \subsection{Integration in an SMT Decoder}
 
-The task of an SMT decoder is to find the best translation amongst
-a vast pool of possible translation hypotheses. The best translation hypothesis
-is the translation hypothesis that maximises a log linear equation. This
-log-linear equation draws from various models, such as a translation model
-(i.e. the phrase-translation table), a target-language model optionally
-additional models such as a distortion model or word-reordering model.
+The task of an SMT decoder is to find the best translation amongst a vast pool
+of possible translation hypotheses. The best translation hypothesis is the
+translation hypothesis that maximises a log linear combination and is sought
+after in a beam-search algorithm. This log-linear combination draws from
+various models, such as a translation model (i.e. the phrase-translation
+table), a target-language model optionally additional models such as a
+distortion model or word-reordering model.
 
 The translation model is a mapping of the set of source phrases ($S$) to the
 set of target phrases ($T$). Each phrase-pair $(s,t)$ where $s \elem S$ and $t
