@@ -245,7 +245,7 @@ of Word Sense Disambiguation \cite{SENSEVAL2,WSD2}.
 
 When speaking of the $k$ nearest neighbours in the implementation of IB1,
 IGTree and TRIBL2, we are actually referring to the neighbours at nearest
-distance $k$. So even with $k=1$ we may may talking about multiple data points
+distance $k$. So even with $k=1$ we may be talking about multiple data points
 that are all at equal distance.
 
 %(these two paragraphs are paraphrased from my PBMBMT thesis, not sure to cite
@@ -267,17 +267,48 @@ In this study, we therefore opt to use TRIBL2 over plain IGTree, but only when
 using IB1 would have a prohibitively large impact on performance.
 
 In our classifier-based translation model we will be modelling the probability
-of a target phrase ($t$) given a source phrase ($s$) and context
-information ($c$). We can thus express this as $P(t|s,c)$.
-\cite{Stroppa+07} state that direct estimation of this probability using
-relative frequencies would result in overestimation of large phrases, and that
-therefore a smoothing factor is required. They proceed to say through memory-based
-classification we implicitly introduce precisely such a smoothing factor.
+of a target phrase ($t$) given a source phrase ($s$) and context information
+($c$). We can thus express this as $P(t|s,c)$.  \cite{Stroppa+07} state that
+direct estimation of this probability using relative frequencies would result
+in overestimation of large phrases, and that therefore a smoothing factor is
+required. They proceed to say that through memory-based classification we
+implicitly introduce precisely such a smoothing factor.
 
 Given a source phrase and context information, the classifier yields classes
 corresponding to target phrases, with an associated weight. After
 normalization, these can be considered a posterior distribution of
 target phrases. 
+
+We primarily focus on the modelling of local context, i.e. words in the
+immediate vicitinity of the source phrase. Take $w_0$ to be the first word of
+the source phrase $s$, then for a local context size of $n$ words to the left and
+$m$ to the right we construct the feature vector as follows:
+
+\begin{equation}
+  \langle w_{-n} .. w_{-1} , s , w_{|s|+1} .. w_{|s|+m} \rangle
+\end{equation}
+
+Now there are two ways in which we can construct a classifier:
+
+\begin{itemize}
+  \item \textbf{Monolithic classifier} -- One aggregated classifier for all
+    source phrases.
+  \item \textbf{Classifier experts} -- One classifier per source phrase.
+\end{itemize}
+
+In this study we will use and compare both methods, which is, for the task at
+hand, the first such a comparison in the literature as far as we know.
+
+For the monolithic classifier, the first feature in the ranking will always be
+$s$. Nevertheless, it is conceivable that a match for the context is not found
+and the classifier proceeds to match on another feature. To prevent situations
+in where the classifier falls back to a completely different source phrase, and
+thus comes up with unrelated translation options, we enforce that the source
+phrases need to match exactly.
+
+For the classifier experts, on the other hand, the source phrase is the least
+powerful feature in the ranking, as it is shared amongst all instances. We
+therefore simply omit it from the feature vector.
 
 \subsection{Integration in an SMT Decoder}
 
