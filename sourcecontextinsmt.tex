@@ -343,27 +343,35 @@ losslessly compressed in-memory representation for all phrases, and allows us
 to cope with large corpora.
 
 Given these two pattern models $M_{source}$ and $M_{target}$ we can quickly and
-efficiently extract the context for each phrase pair, as shown in pseudo-code
-in Algorithm~\ref{alg:featureextra}. Take $n$ again to be the left context, $m$
-to be the size of the right context, and $w_{(i,j)}$ to denote the word in the
-source corpus in sentence $i$, token $j$. The algorithm will return a list
-containing two-tuples $(feature vector, translation)$.
+efficiently extract the context for each phrase pair, as shown in simplified
+form in Algorithm~\ref{alg:featureextra}. Take $n$ again to be the left
+context, $m$ to be the size of the right context, and $w_{(i,j)}$ to denote the
+word in the source corpus in sentence $i$, token $j$. The algorithm will return
+a list containing two-tuples $(feature vector, translation)$.
 
 \begin{lstlisting}
 instances = []
-for (s \elem M_{source}, t \elem_{target}):
+for (s \elem M\_{source}, t \elem M\_{target}):
   for i in sourceindex(s) \cap targetindex(t):
       j = getsourcetoken(s, i)
-      features = \langle w_{i,j-n} \ldots w_{i,j-1}, s, w_{i,j+|s|+1} \ldots w_{i,j+|s|+m} 
+      features = \langle w\_{i,j-n} \ldots w\_{i,j-1}, s, w\_{i,j+|s|+1} \ldots
+      w\_{i,j+|s|+m} 
       instances.append( (features, t) ) 
 return instances
 \end{lstlisting}
     
-These instances can be stored directly, either in a single model for the
+This algorithm is implemented in \emph{colibri-mt}
+\footnote{https://github.com/proycon/colibri-mt}.
+
+The return instances can be stored directly, either in a single model for the
 monolithic approach or in separate models for each $s$ for the classifier
-expert approach. An extra training phase computes the feature ranking and
+expert approach. A final training phase then computes the feature ranking and
 transforms this data into the instance base format required for Timbl.
 
+When extra training data for the classifier(s), it may well happen that either
+1) an $(s,t)$ pair only occurs once, or 2) a pattern $s$ occurs in multiple
+context but all map to the same $t$. In such cases, a context-informed
+classifier clearly has no added value and therefore such instances are omitted from the training data.  
 
 \subsection{Integration in an SMT Decoder}
 
