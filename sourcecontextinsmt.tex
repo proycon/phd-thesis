@@ -213,6 +213,7 @@ classifier probabilities in the SMT, as recommended also by \cite{Gimenez+07}.
 
 
 \section{Methodology}
+\label{ref:methodology}
 
 Like most of the latest studies before us, we approach the machine translation
 problem in a phrase-based fashion, which has superseded the simpler word-based
@@ -226,7 +227,8 @@ In describing our methodology, we first focus on the problem of phrasal
 translation, adding in the source-side context component. This shall be done
 using classifiers. Then we address how this can be integrated into a
 phrase-based Stastical Machine Translation decoder, which also takes care of
-ordering aspect.
+ordering aspect. 
+
 
 \subsection{Modelling source-side context with classifiers}
 
@@ -300,17 +302,72 @@ In this study we will use and compare both methods, which is, for the task at
 hand, the first such a comparison in the literature as far as we know.
 
 For the monolithic classifier, the first feature in the ranking will always be
-$s$. Nevertheless, it is conceivable that a match for the context is not found
-and the classifier proceeds to match on another feature. To prevent situations
-in where the classifier falls back to a completely different source phrase, and
-thus comes up with unrelated translation options, we enforce that the source
-phrases need to match exactly.
+$s$. Nevertheless, it is quite conceivable that a match for the context is not
+found and the classifier proceeds to match on another feature. To prevent
+situations in where the classifier falls back to a completely different source
+phrase, and thus comes up with unrelated translation options, we enforce that
+the source phrases need to match exactly, which is what \cite{Stroppa+07} do as
+well.
 
 For the classifier experts, on the other hand, the source phrase is the least
 powerful feature in the ranking, as it is shared amongst all instances. We
 therefore simply omit it from the feature vector.
 
+\subsection{Training}
+
+The translation model is trained on parallel corpus data. We follow a common
+MT pipeline and at the end derive classifier training data.
+
+Given an a tokenised and sentence-aligned parallel corpus, we iteratively learn
+word alignments using GIZA++ \citep{GIZA}. Then we identify and extract phrase
+pairs using the {\em grow-diag-final}\/ algorithm \citep{OchNey2003}. The
+result is a phrase-translation table mapping source phrases to target
+phrases, along with associates scores which we will discuss in the next
+section. This phrase-translation table effectively constitutes the translation
+model.
+
+The translation model would be finished if we would want to leave it to be
+non-context-informed. We have some additional steps to perform to train our
+context-informed classifiers. We take the phrase-translation table, along with
+the parallel corpus, as a basis for extracting training instances.
+
+We build indexed pattern models of all source phrases and target phrases that
+occur in both their respective side the parallel corpus, as well as the
+phrase-translation table. An indexed pattern model maps each distinct phrase to
+the locations in the corpus where it occurs.  Additionaly, a reverse index is
+included in the model for the target-side of the corpus, which maps any given
+$(sentence, token)$ position to a set phrases that begins at that position.
+This is computed using the software \emph{colibri-core}
+\footnote{http://proycon.github.io/colibri-core}, which takes care of a
+losslessly compressed in-memory representation for all phrases, and allows us
+to cope with large corpora.
+
+Given these two pattern models $M_{source}$ and $M_{target}$ we can quickly and
+efficiently extract the context for each phrase pair, as shown in pseudo-code
+in Algorithm~\ref{alg:featureextra}. Take $n$ again to be the left context, $m$
+to be the size of the right context, and $w_{(i,j)}$ to denote the word in the
+source corpus in sentence $i$, token $j$. The algorithm will return a list
+containing two-tuples $(feature vector, translation)$.
+
+\begin{lstlisting}
+instances = []
+for (s \elem M_{source}, t \elem_{target}):
+  for i in sourceindex(s) \cap targetindex(t):
+      j = getsourcetoken(s, i)
+      features = \langle w_{i,j-n} \ldots w_{i,j-1}, s, w_{i,j+|s|+1} \ldots w_{i,j+|s|+m} 
+      instances.append( (features, t) ) 
+return instances
+\end{lstlisting}
+    
+These instances can be stored directly, either in a single model for the
+monolithic approach or in separate models for each $s$ for the classifier
+expert approach. An extra training phase computes the feature ranking and
+transforms this data into the instance base format required for Timbl.
+
+
 \subsection{Integration in an SMT Decoder}
+
+%TODO: mention discriminative translation filtering (Rejwanul)
 
 The task of an SMT decoder is to find the best translation amongst a vast pool
 of possible translation hypotheses. The best translation hypothesis is the
@@ -377,6 +434,14 @@ sentence. Translation proceeds by translating
 charged with the tasked 
 
 Integrating source-side context in 
+
+
+\section{System}
+\label{ref:system}
+
+
+
+
 
 
 
