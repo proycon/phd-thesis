@@ -126,7 +126,12 @@ source-side context as it is in its unmodified form.
 
 \section{Previous research}
 
-The idea to integrate WSD approaches in SMT is not new, nor is the idea to use source-side context information to disambiguate in translation. Various studies have been conducted with mixed results. In the early days of SMT, \cite{GarciaVarea+02} already explicitly modelled source-side context in a maximum entropy model for word-based SMT, and report slightly improved error rates on a translation task.
+The idea to integrate WSD approaches in SMT is not new, nor is the idea to use
+source-side context information to disambiguate in translation. Various studies
+have been conducted with mixed results. In the early days of SMT,
+\cite{GarciaVarea+02} already explicitly modelled source-side context in a
+maximum entropy model for word-based SMT, and report slightly improved error
+rates on a translation task.
 
 \cite{CarpuatWu05} were the first to
 directly tackle the question whether full-scale WSD models were beneficial to translation
@@ -139,9 +144,11 @@ syntactic relations. They test for a single Chinese-to-English test-set only, an
 only use BLEU, which raises some questions on whether their conclusions would hold
 on different language pairs, test sets, and using different evaluation metrics.
 
-\cite{CarpuatWu05} place strong focus on the WSD model rather than the SMT model,
-whereas we place more focus on the SMT model and the integration method, and
-keep the ``WSD-model'' relatively simple. Furthermore, the method they employ a simpler word-based form of Statistical Machine Translation and the level of integration seems limited.
+\cite{CarpuatWu05} place strong focus on the WSD model rather than the SMT
+model, whereas we place more focus on the SMT model and the integration method,
+and keep the ``WSD-model'' relatively simple. Furthermore, the method they
+employ a simpler word-based form of Statistical Machine Translation and the
+level of integration seems limited.
 
 Despite their efforts, they reach the surprising conclusion that inclusion of
 WSD techniques does \emph{not} yield better translation quality. Will these
@@ -150,7 +157,12 @@ approach?
 
 Two years later they expanded their study to full phrasal units
 \citep{CarpuatWu07} and, for the first time, found results that did support the
-hypothesis that SMT benefits from the integration of WSD techniques. They now focus on better integration in \emph{phrase-based} SMT: ``Rather than using a generic SenseEval model as we did in \cite{CarpuatWu05}, here both the WSD training and the WSD predictions are integrated into the phrase-based SMT framework.'' \citep{CarpuatWu07}. They also broaden their use of evaluation metrics, yet still test on only Chinese to English.
+hypothesis that SMT benefits from the integration of WSD techniques. They now
+focus on better integration in \emph{phrase-based} SMT: ``Rather than using a
+generic SenseEval model as we did in \cite{CarpuatWu05}, here both the WSD
+training and the WSD predictions are integrated into the phrase-based SMT
+framework.'' \citep{CarpuatWu07}. They also broaden their use of evaluation
+metrics, yet still test on only Chinese to English.
 
 The most important and complete study we build upon is \cite{}
 
@@ -171,5 +183,6 @@ this has been done in previous studies as well. We closely reproduced techniques
 Our intention here is to settle some of the conflicting reports and attempt to independently come to a conclusion regarding the incorporation of source-side context in SMT.
 
 
+%cross-domain testing
 
 \end{document}
