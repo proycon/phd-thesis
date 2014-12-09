@@ -9,10 +9,25 @@
 \usepackage{placeins}
 \usepackage{framed}
 \usepackage{pbox}
+\usepackage{amsmath}
 \usepackage{supertabular}
-\usepackage{listings}
+\usepackage{algorithm} 
+\usepackage{algpseudocode} 
+\usepackage{caption}
 \usepackage[utf8]{inputenc}
 \usepackage{gb4e}
+\usepackage{natbib}
+
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amsthm}
+\newtheoremstyle{break}
+  {\topsep}{\topsep}%
+  {\itshape}{}%
+  {\bfseries}{}%
+  {\newline}{}%
+\theoremstyle{break}
+\newtheorem{exmp}{Example}[section]
 
 \title{Classifier-based modelling of source-side context information for Statistical Machine Translation}
 
@@ -342,22 +357,28 @@ to cope with large corpora.
 
 Given these two pattern models $M_{source}$ and $M_{target}$ we can quickly and
 efficiently extract the context for each phrase pair, as shown in simplified
-form in Algorithm~\ref{alg:featureextract}. Take $n$ again to be the left
-context, $m$ to be the size of the right context, and $w_{(i,j)}$ to denote the
-word in the source corpus in sentence $i$, token $j$. The vector $C$ represents
-the context information and constitutes the feature vector. The algorithm will
-return a list containing two-tuples $(feature vector, translation)$.
+form in Algorithm~\ref{alg:featureextract}.  
 
-\begin{lstlisting}
-instances = $[]$
-for $(s \elem M_{source}, t \elem M\_{target})$:
-  for $i \elem (M_{source}[s] \cap M_{target}[t])$:
-      for $j \elem M_{source}[s][i]$:
-        $C \leftarrow \langle w\_{i,j-n} \ldots w\_{i,j-1}, s, w\_{i,j+|s|+1} \ldots w\_{i,j+|s|+m} $
-        instances.append( $(C, t)$ ) 
-return instances
+\begin{algorithm}
+\caption{Algorithm for feature extraction for training classifiers.  Take $n$
+again to be the left context, $m$ to be the size of the right context, and
+$w{(i,j)}$ to denote the word in the source corpus in sentence $i$, token $j$.
+The vector $C$ represents the context information and constitutes the feature
+vector.  The algorithm will return a list containing two-tuples $(C,t)$.  }
 \label{alg:featureextract}
-\end{lstlisting}
+\begin{algorithmic}
+\State instances $\gets []$
+\For {$(s \in M_{\text{source}}, t \in M_{\text{target}})$}
+  \For {$i \in (M_{\text{source}}[s] \cap M_{\text{target}}[t])$}
+    \For{$j \in M_{\text{source}}[s][i]$}
+        \State $C \gets \langle w_{i,j-n} \ldots w_{i,j-1}, s, w_{i,j+|s|+1} \ldots w_{i,j+|s|+m} \rangle$
+        \State \Call{instances.append}{$(C, t)$} 
+      \EndFor
+  \EndFor
+\EndFor \\
+\Return{instances}
+\end{algorithmic}
+\end{algorithm}
     
 This algorithm is implemented in \emph{colibri-mt}
 \footnote{https://github.com/proycon/colibri-mt}.
@@ -383,8 +404,8 @@ table), a target-language model, and optionally additional models such as a
 distortion model or word-reordering model.
 
 The translation model is a mapping of the set of source phrases ($S$) to the
-set of target phrases ($T$). Each phrase-pair $(s,t)$ where $s \elem S$ and $t
-\elem T$ is in described by a score vector indicating the likelihood of
+set of target phrases ($T$). Each phrase-pair $(s,t)$ where $s \in S$ and $t
+\in T$ is in described by a score vector indicating the likelihood of
 translation. This score vector most notably consists of the probababilities
 $p(s|t)$ and $p(t|s)$. In addition, lexical weighting probabilities $lex(s|t)$
 and $lex(t|s)$ express the probability of a phrase-pair word-by-word, and are
@@ -409,7 +430,7 @@ We therefore decided, in line also with most of the literature, to follow the
 third option, it is easiest and allows us to use Moses as a black box.
 
 The bypass method is our \emph{discriminative translation filtering}
-\cite{Rejwanuk_11} step, it performs context-aware classification in a
+\cite{Rejwanul+11} step, it performs context-aware classification in a
 pre-processing step, namely through alteration of the phrase-translation table,
 and bypasses the need to alter the decoder in any way. We effectively take each
 sentence individually and ensure that the entries in the phrase-translation
@@ -428,21 +449,28 @@ source phrases in the phrase-translation table to the indices in the test
 corpus that are instances of these phrases.
 
 Subsequently we invoke the classifier(s) and construct the altered
-phrase-translation table as shown in Algorithm~\ref{alg:contextmoses}, take $M_{test}$ to be the aforementioned patternmodel, a map of source phrases occuring in the test
-data, and $[(t,p(t|s,C))]$ to be a list of translation options ($t$) with
-associationed probability $p(t|s,C)$.
+phrase-translation table as shown in Algorithm~\ref{alg:contextmoses}.
 
-\begin{lstlisting}
-for $s \elem M_{test}$:
-  for $(i,j) \elem M_{test}[s]$:
-    $C \leftarrow \langle w\_{i,j-n} \ldots w\_{i,j-1}, s, w\_{i,j+|s|+1} \ldots w\_{i,j+|s|+m}$
-    $[(t, p(t|s,C) )] \leftarrow classify(s,i,j,C)$
-    appendtophrasetable$(s,i,j,[(t, p(t|s,c)])$
+\begin{algorithm}
+\begin{algorithmic}
+  \For {$s \in M_{\text{test}}$}
+  \For {$(i,j) \in M_{\text{test}}[s]$}
+    \State $C \gets \langle w_{i,j-n} \ldots w_{i,j-1}, s, w_{i,j+|s|+1} \ldots w_{i,j+|s|+m} \rangle$
+    \State $[(t, p(t|s,C) )] \gets$ \Call{classify}{$s,i,j,C$}
+    \State {\Call {appendtophrasetable}{$s,i,j,[(t, p(t|s,c)]$}}
+  \EndFor
+\EndFor
+\end{algorithmic}
+\caption{Classifier invocation on test data. Take $M{\text{test}}$ to be the pattern
+model of the test data, i.e. a map of source phrases occuring in the test
+data, and $[(t,p(t|s,C))]$ to be a list of translation options ($t$) with
+associationed probability $p(t|s,C)$.}
 \label{alg:contextmoses}
-\end{lstlisting}
+\end{algorithm}
 
 In Algorithm\ref{alg:contextmoses} we examine each source phrase in turn, find
-where it occurs in the test data ($i,j$) using the pattern model ($M_{test}$),
+where it occurs in the test data ($i,j$) using the pattern model
+($M_{\text{test}}$),
 and extract context information ($C$). The context information constitutes our
 feature vector, with which we invoke the appropriate classifier. This is either
 the monolithic classifier, or the classifier expert pertaining to the source
@@ -466,9 +494,8 @@ uninterrupted.
 
 
 
-
-
-
+\bibliographystyle{spbasic}
+\bibliography{sourcecontextinsmt}
 
 
 
