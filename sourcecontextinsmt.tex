@@ -374,8 +374,6 @@ classifier clearly has no added value and therefore such instances are omitted f
 
 \subsection{Integration in an SMT Decoder}
 
-%TODO: mention discriminative translation filtering (Rejwanul)
-
 The task of an SMT decoder is to find the best translation amongst a vast pool
 of possible translation hypotheses. The best translation hypothesis is the
 translation hypothesis that maximises a log linear combination and is sought
@@ -410,11 +408,16 @@ new decoder, it proved to be too difficult to attain the same quality as Moses.
 We therefore decided, in line also with most of the literature, to follow the
 third option, it is easiest and allows us to use Moses as a black box.
 
-The bypass method effectively takes each sentence individually and ensures that
-the entries in the phrase-translation table are explicitly tuned to the source
-context using the output from the classifier(s). Each instance of a source
-phrase will get a separate entry in the phrase-translation table, as opposed to
-one source phrase applying to all instances in the test data. 
+The bypass method is our \emph{discriminative translation filtering}
+\cite{Rejwanuk_11} step, it performs context-aware classification in a
+pre-processing step, namely through alteration of the phrase-translation table,
+and bypasses the need to alter the decoder in any way. We effectively take each
+sentence individually and ensure that the entries in the phrase-translation
+table are explicitly tuned to the source-side context. The output of the
+classifier(s) acts as the filter and constrains the translations options, as
+well as adjusts the score vector. Each instance of a source phrase will get a
+separate entry in the phrase-translation table, as opposed to one source phrase
+applying to all instances in the test data. 
 
 To achieve this, each source phrase in the phrase-translation table is replaced
 by a representation of its position in the test data, e.g.  $(1,0)$ for first
@@ -443,11 +446,11 @@ where it occurs in the test data ($i,j$) using the pattern model ($M_{test}$),
 and extract context information ($C$). The context information constitutes our
 feature vector, with which we invoke the appropriate classifier. This is either
 the monolithic classifier, or the classifier expert pertaining to the source
-phrase under consideration. The result of this classification is a
-distribution of translation options for that source phrase in the given
-context, along with a classifier score for each option. After normalisation,
-this score is $p(t|s,C)$. We now have two options for integrating this
-in the score vector for the phrase pair:
+phrase under consideration. The result of this classification is a distribution
+of translation options for that source phrase in the given context, along with
+a classifier score for each option. After normalisation, this score is
+$p(t|s,C)$. We now have two score weighting methods for integrating this in the
+score vector for the phrase pair:
 
 \begin{itemize}
   \item \textbf{Replace} - Replace the $p(t|s)$ probability with $p(t|s,C)$
@@ -455,7 +458,7 @@ in the score vector for the phrase pair:
     $p(t|s,c)$ as a new score to the score vector.
 \end{itemize}
 
-The method of choice is applied and the data is entered into the altered
+The score weighting of choice is applied and the data is entered into the altered
 phrasetable. The source phrase takes the form of a sequence of $(i,j)$ indices.
 The test data is replaced with a series of consecutive positions as well. These
 two altered data sets are now the input to Moses, which can now run
