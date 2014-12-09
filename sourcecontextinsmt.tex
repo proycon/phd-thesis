@@ -268,7 +268,7 @@ using IB1 would have a prohibitively large impact on performance.
 
 In our classifier-based translation model we will be modelling the probability
 of a target phrase ($t$) given a source phrase ($s$) and context information
-($c$). We can thus express this as $P(t|s,c)$.  \cite{Stroppa+07} state that
+($C$). We can thus express this as $P(t|s,C)$.  \cite{Stroppa+07} state that
 direct estimation of this probability using relative frequencies would result
 in overestimation of large phrases, and that therefore a smoothing factor is
 required. They proceed to say that through memory-based classification we
@@ -330,9 +330,9 @@ context-informed classifiers. We take the phrase-translation table, along with
 the parallel corpus, as a basis for extracting training instances.
 
 We build indexed pattern models of all source phrases and target phrases that
-occur in both their respective side the parallel corpus, as well as the
+occur on their respective side the parallel corpus, and which also occur in the 
 phrase-translation table. An indexed pattern model maps each distinct phrase to
-the locations in the corpus where it occurs.  Additionaly, a reverse index is
+the locations in the corpus where it occurs.  Additionally, a reverse index is
 included in the model for the target-side of the corpus, which maps any given
 $(sentence, token)$ position to a set phrases that begins at that position.
 This is computed using the software \emph{colibri-core}
@@ -342,20 +342,21 @@ to cope with large corpora.
 
 Given these two pattern models $M_{source}$ and $M_{target}$ we can quickly and
 efficiently extract the context for each phrase pair, as shown in simplified
-form in Algorithm~\ref{alg:featureextra}. Take $n$ again to be the left
+form in Algorithm~\ref{alg:featureextract}. Take $n$ again to be the left
 context, $m$ to be the size of the right context, and $w_{(i,j)}$ to denote the
-word in the source corpus in sentence $i$, token $j$. The algorithm will return
-a list containing two-tuples $(feature vector, translation)$.
+word in the source corpus in sentence $i$, token $j$. The vector $C$ represents
+the context information and constitutes the feature vector. The algorithm will
+return a list containing two-tuples $(feature vector, translation)$.
 
 \begin{lstlisting}
-instances = []
-for (s \elem M\_{source}, t \elem M\_{target}):
-  for i in sourceindex(s) \cap targetindex(t):
-      j = getsourcetoken(s, i)
-      features = \langle w\_{i,j-n} \ldots w\_{i,j-1}, s, w\_{i,j+|s|+1} \ldots
-      w\_{i,j+|s|+m} 
-      instances.append( (features, t) ) 
+instances = $[]$
+for $(s \elem M_{source}, t \elem M\_{target})$:
+  for $i \elem (M_{source}[s] \cap M_{target}[t])$:
+      for $j \elem M_{source}[s][i]$:
+        $C \leftarrow \langle w\_{i,j-n} \ldots w\_{i,j-1}, s, w\_{i,j+|s|+1} \ldots w\_{i,j+|s|+m} $
+        instances.append( $(C, t)$ ) 
 return instances
+\label{alg:featureextract}
 \end{lstlisting}
     
 This algorithm is implemented in \emph{colibri-mt}
@@ -380,7 +381,7 @@ of possible translation hypotheses. The best translation hypothesis is the
 translation hypothesis that maximises a log linear combination and is sought
 after in a beam-search algorithm. This log-linear combination draws from
 various models, such as a translation model (i.e. the phrase-translation
-table), a target-language model optionally additional models such as a
+table), a target-language model, and optionally additional models such as a
 distortion model or word-reordering model.
 
 The translation model is a mapping of the set of source phrases ($S$) to the
@@ -392,59 +393,75 @@ and $lex(t|s)$ express the probability of a phrase-pair word-by-word, and are
 often included as components in the score vector. During decoding, the total
 score of the translation model and other models is expressed as a log-linear
 combination, in which different weights can be assigned to each of the
-components of the score vector. These weights are parameters to the task and
+components of the score vector. These weights are meta-parameters to the task and
 are typically optimised automatically on development data using for instance
 Minimum Error Rate Reduction \cite{MERT}.
 
+The probability that draws our interest here is $p(t|s)$. After all, we attempt
+to model $p(t|s,C)$ using the classifiers, where $C$ constitutes the vector of context information.
 
-For the modelling source-side context the component of the score
-vector that 
 
-
-The state-of-the art SMT decoder used in a majority of MT studies is Moses
+The state-of-the art SMT decoder used in the majority of MT studies is Moses
 \citep{MOSES}. However, it offers no facilities to take source-side context
 information in account. We had to consider three options to achieve our goal of
 integrating source-side context : 1) creating a new decoder; 2) enhancing
-Moses; or 3) using a bypass method. We decided, in line with most of the
-literature, to follow the third option, as it was the easiest and allows us to
-use Moses as a black box.
+Moses; or 3) using a bypass method. Although we initially set out to create a
+new decoder, it proved to be too difficult to attain the same quality as Moses.
+We therefore decided, in line also with most of the literature, to follow the
+third option, it is easiest and allows us to use Moses as a black box.
+
+The bypass method effectively takes each sentence individually and ensures that
+the entries in the phrase-translation table are explicitly tuned to the source
+context using the output from the classifier(s). Each instance of a source
+phrase will get a separate entry in the phrase-translation table, as opposed to
+one source phrase applying to all instances in the test data. 
+
+To achieve this, each source phrase in the phrase-translation table is replaced
+by a representation of its position in the test data, e.g.  $(1,0)$ for first
+sentence, first word.  This is done using the software \texttt{colibri-mt}. It
+creates an indexed pattern model on the test data, constrained by the phrases
+in the phrase-translation table. This thus constitutes a mapping of all distinct
+source phrases in the phrase-translation table to the indices in the test
+corpus that are instances of these phrases.
+
+Subsequently we invoke the classifier(s) and construct the altered
+phrase-translation table as shown in Algorithm~\ref{alg:contextmoses}, take $M_{test}$ to be the aforementioned patternmodel, a map of source phrases occuring in the test
+data, and $[(t,p(t|s,C))]$ to be a list of translation options ($t$) with
+associationed probability $p(t|s,C)$.
+
+\begin{lstlisting}
+for $s \elem M_{test}$:
+  for $(i,j) \elem M_{test}[s]$:
+    $C \leftarrow \langle w\_{i,j-n} \ldots w\_{i,j-1}, s, w\_{i,j+|s|+1} \ldots w\_{i,j+|s|+m}$
+    $[(t, p(t|s,C) )] \leftarrow classify(s,i,j,C)$
+    appendtophrasetable$(s,i,j,[(t, p(t|s,c)])$
+\label{alg:contextmoses}
+\end{lstlisting}
+
+In Algorithm\ref{alg:contextmoses} we examine each source phrase in turn, find
+where it occurs in the test data ($i,j$) using the pattern model ($M_{test}$),
+and extract context information ($C$). The context information constitutes our
+feature vector, with which we invoke the appropriate classifier. This is either
+the monolithic classifier, or the classifier expert pertaining to the source
+phrase under consideration. The result of this classification is a
+distribution of translation options for that source phrase in the given
+context, along with a classifier score for each option. After normalisation,
+this score is $p(t|s,C)$. We now have two options for integrating this
+in the score vector for the phrase pair:
+
+\begin{itemize}
+  \item \textbf{Replace} - Replace the $p(t|s)$ probability with $p(t|s,C)$
+  \item \textbf{Append} - Leave the existing $p(t|s)$ as it was, but append
+    $p(t|s,c)$ as a new score to the score vector.
+\end{itemize}
+
+The method of choice is applied and the data is entered into the altered
+phrasetable. The source phrase takes the form of a sequence of $(i,j)$ indices.
+The test data is replaced with a series of consecutive positions as well. These
+two altered data sets are now the input to Moses, which can now run
+uninterrupted. 
 
 
-immediately immediately draws our interest is $p(t|s)$. 
-
-For the modelling source-side context the component of the score
-vector that 
-
-immediately immediately draws our interest is $p(t|s)$. 
-
-
-
-Each of the components of the
-score vector
-
-
-
-The phrase-translation table embodies the translation model, and is 
-
-
-
-
->>>>>>> 4745b7c788601ab46d776fcb69c9b9639c0b3395
-
-
-
-
-Moses features, amongst others, a stack-based decoder. For each
-decoding run, there are as many stacks as there are words in the source
-sentence. Translation proceeds by translating 
-
-charged with the tasked 
-
-Integrating source-side context in 
-
-
-\section{System}
-\label{ref:system}
 
 
 
