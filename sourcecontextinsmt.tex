@@ -70,10 +70,10 @@ translation option.  These probabilities are expressed in a number of models
 that specialize in a certain aspect relevant to the translation process. The
 ``phrase-based'' characteristic is due to phrases being the building blocks of
 the translation model. This can be contrasted to earlier approaches in
-Statistical Machine Translation which started as word-based \cite{OCHNEY?}.
-Phrases in this sense have to be perceived simply one or more words, i.e.
-n-grams of variable length (including unigrams). Moreover, they are not at all
-required to form a proper linguistic constituent of any kind.
+Statistical Machine Translation which started as word-based.  Phrases in this
+sense have to be perceived simply one or more words, i.e.  n-grams of variable
+length (including unigrams). Moreover, they are not at all required to form a
+proper linguistic constituent of any kind.
 
 Two models are at the core of phrase-based SMT: first there is the translation
 model which maps the translation phrases in the source language ($s$) to
@@ -245,18 +245,18 @@ ordering aspect.
 
 \subsection{Modelling source-side context with classifiers}
 
-In line with several previous studies \cite{Rejwanul+11,PBMBMT,
-Stroppa+07,MARKEDBASED}, we make use of memory-based classifiers to build a
+In line with several previous studies \citep{Rejwanul+11,PBMBMT,
+Stroppa+07,MARKERBASED}, we make use of memory-based classifiers to build a
 translation model informed by source-side context information. More
-specifically, we will be using IB1 \cite{IB1}, an implementation of k-Nearest
-Neighbours; IGTree \cite{IGTree}, an optimised and lossless tree-based approximation thereof;
+specifically, we will be using IB1 \citep{IB1}, an implementation of k-Nearest
+Neighbours; IGTree \citep{IGTree}, an optimised and lossless tree-based approximation thereof;
 and TRIBL2, a mixture model of the two. 
 
 These algorithms are all implemented in the
-software Timbl \cite{TIMBL}\footnote{\url{http://ilk.uvt.nl/timbl}} and
+software Timbl \citep{TIMBL}\footnote{\url{http://ilk.uvt.nl/timbl}} and
 are well-suited for symbolic data and highly multivariate classes.
 Moreover, memory-based classification has been a proven solution in the field
-of Word Sense Disambiguation \cite{SENSEVAL2,WSD2}.
+of Word Sense Disambiguation \citep{SENSEVAL2,WSD2}.
 
 When speaking of the $k$ nearest neighbours in the implementation of IB1,
 IGTree and TRIBL2, we are actually referring to the neighbours at nearest
@@ -297,11 +297,13 @@ target phrases.
 We primarily focus on the modelling of local context, i.e. words in the
 immediate vicitinity of the source phrase. Take $w_0$ to be the first word of
 the source phrase $s$, then for a local context size of $n$ words to the left and
-$m$ to the right we construct the feature vector as follows:
+$m$ to the right we construct the feature vector $C$ as follows:
 
 \begin{equation}
-  \langle w_{-n} .. w_{-1} , s , w_{|s|+1} .. w_{|s|+m} \rangle
+  C = \langle w_{-n} .. w_{-1} , s , w_{|s|+1} .. w_{|s|+m} \rangle
 \end{equation}
+
+For context words out of the sentence's bounds, placeholders are used instead.
 
 Now there are two ways in which we can construct a classifier:
 
@@ -416,9 +418,10 @@ components of the score vector. These weights are meta-parameters to the task an
 are typically optimised automatically on development data using for instance
 Minimum Error Rate Reduction \cite{MERT}.
 
-The probability that draws our interest here is $p(t|s)$. After all, we attempt
-to model $p(t|s,C)$ using the classifiers, where $C$ constitutes the vector of context information.
-
+The probability $p(t|s)$ is the one we are interested in. Recall that the
+classifiers attempt to model $p(t|s,C)$, where $C$ constitutes the vector of
+context information. The hypothesis under investigation in the present study is
+that $p(t|s,C)$ is a more accurate measure than $p(t|s)$.
 
 The state-of-the art SMT decoder used in the majority of MT studies is Moses
 \citep{MOSES}. However, it offers no facilities to take source-side context
@@ -430,7 +433,7 @@ We therefore decided, in line also with most of the literature, to follow the
 third option, it is easiest and allows us to use Moses as a black box.
 
 The bypass method is our \emph{discriminative translation filtering}
-\cite{Rejwanul+11} step, it performs context-aware classification in a
+step \citep{Rejwanul+11}, it performs context-aware classification in a
 pre-processing step, namely through alteration of the phrase-translation table,
 and bypasses the need to alter the decoder in any way. We effectively take each
 sentence individually and ensure that the entries in the phrase-translation
@@ -468,17 +471,16 @@ associationed probability $p(t|s,C)$.}
 \label{alg:contextmoses}
 \end{algorithm}
 
-In Algorithm\ref{alg:contextmoses} we examine each source phrase in turn, find
+In Algorithm~\ref{alg:contextmoses} we examine each source phrase in turn, find
 where it occurs in the test data ($i,j$) using the pattern model
-($M_{\text{test}}$),
-and extract context information ($C$). The context information constitutes our
-feature vector, with which we invoke the appropriate classifier. This is either
-the monolithic classifier, or the classifier expert pertaining to the source
-phrase under consideration. The result of this classification is a distribution
-of translation options for that source phrase in the given context, along with
-a classifier score for each option. After normalisation, this score is
-$p(t|s,C)$. We now have two score weighting methods for integrating this in the
-score vector for the phrase pair:
+($M_{\text{test}}$), and extract context information ($C$). The context
+information constitutes our feature vector, with which we invoke the
+appropriate classifier. This is either the monolithic classifier, or the
+classifier expert pertaining to the source phrase under consideration. The
+result of this classification is a distribution of translation options for that
+source phrase in the given context, along with a classifier score for each
+option. After normalisation, this score is $p(t|s,C)$. We now have two score
+weighting methods for integrating this in the score vector for the phrase pair:
 
 \begin{itemize}
   \item \textbf{Replace} - Replace the $p(t|s)$ probability with $p(t|s,C)$
@@ -486,11 +488,14 @@ score vector for the phrase pair:
     $p(t|s,c)$ as a new score to the score vector.
 \end{itemize}
 
-The score weighting of choice is applied and the data is entered into the altered
-phrasetable. The source phrase takes the form of a sequence of $(i,j)$ indices.
-The test data is replaced with a series of consecutive positions as well. These
-two altered data sets are now the input to Moses, which can now run
-uninterrupted. 
+The score weighting of choice is applied and the data is entered into the
+altered phrase-translation table. The source phrase takes the form of a
+sequence of $(i,j)$ indices, rather than the actual words..  The test data is
+replaced with a series of consecutive positions as well. These two altered data
+sets are now the input to Moses, which can now run unmodified. 
+
+\section{Experiments}
+
 
 
 
