@@ -496,6 +496,23 @@ sets are now the input to Moses, which can now run unmodified.
 
 \section{Experiments}
 
+We conduct a number of experiments to assess whether integration of
+context-informed classifiers in Statistical Machine Translation leads to
+an improvement in translation quality.
+
+Translation quality will be assessed along five widely-used metrics:
+
+\begin{enumerate} %paraphrased from PBMBMT thesis
+\item \textbf{BLEU} - BLEU \citep{BLEU} is one of the most widely-used metrics in Machine Translation. It computes a weighted average of $n$-gram overlap between the system output and reference output. The score thus increases as more $n$-grams reference are found in the system output.
+\item \textbf{NIST} - NIST intends to improve upon BLEU, it takes into account how informative a particular $n$-gram is by assigning more weight to rare $n$-grams and less to highly-frequent $n$-grams.
+\item \textbf{METEOR} - METEOR \citep{METEOR} attempts to outperform BLEU and attempts to emulate human judgement tasks.
+\item \textbf{Word-Error Rate (WER)} - This is a simple metric derived from the minimum edit-distance, i.e. Levenshtein, algorithm. It counts the number of substitutions, insertions and deletions necessary to transform the translation into the reference sentence. Here words are used as the basic unit. The lower the score, the more similar the translation is to the reference.
+\item \textbf{Position Independent Word Error Rate (PER)} - This is a variant of the metric above, but here the order of the words is not taken into account. Any ordering of the same words will have the same score. The lower the score, the more similar the translation is to the reference.
+\end{enumerate}
+
+
+
+
 
 
 
