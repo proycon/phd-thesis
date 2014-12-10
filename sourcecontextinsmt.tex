@@ -29,7 +29,10 @@
 \theoremstyle{break}
 \newtheorem{exmp}{Example}[section]
 
-\title{Unsupervised classifier-based modelling of source-side context information for Statistical Machine Translation}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\title{Unsupervised classifier-based modelling of source-side context information in Statistical Machine Translation}
 
 
 \author{Maarten van Gompel \& Antal van den Bosch \\
@@ -404,7 +407,19 @@ translation hypothesis that maximises a log linear combination and is sought
 after in a beam-search algorithm. This log-linear combination draws from
 various models, such as a translation model (i.e. the phrase-translation
 table), a target-language model, and optionally additional models such as a
-distortion model or word-reordering model.
+distortion model or word-reordering model. 
+
+The SMT model is generally expressed as in equation~\ref{eq:smtmodel}, take $e$
+to be the translation in the target language, and $f$ to be the sentence to be
+translated, in the source language.
+
+\begin{equation}
+\argmax_e p(e|f) = \argmax_e p(e|f)p(e)
+\label{eq:smtmodel}
+\end{equation}
+
+Bayes' rule inverts the problem into two factors, the former corresponding to
+the translation model, and the latter corresponding to the language model. 
 
 The translation model is a mapping of the set of source phrases ($S$) to the
 set of target phrases ($T$). Each phrase-pair $(s,t)$ where $s \in S$ and $t
@@ -420,7 +435,7 @@ are typically optimised automatically on development data using for instance
 Minimum Error Rate Reduction \citep{MERT}.
 
 The probability $p(t|s)$ is the one we are interested in. Recall that the
-classifiers attempt to model $p(t|s,C)$, where $C$ constitutes the vector of
+classifiers seek to model $p(t|s,C)$, where $C$ constitutes the vector of
 context information. The hypothesis under investigation in the present study is
 that $p(t|s,C)$ is a more accurate measure than $p(t|s)$.
 
@@ -501,7 +516,32 @@ We conduct a number of experiments to assess whether integration of
 context-informed classifiers in Statistical Machine Translation leads to
 an improvement in translation quality. 
 
-We will use various corpora and various language pairs.
+\subsection{Data sets}
+
+For the translation model, we rely on a parallel corpus as our main source of
+input. Whenever the source is untokenised, we tokenise the data using \emph{ucto}
+\footnote{http://ilk.uvt.nl/ucto}. For the language
+model, we simply reuse the target-side portion of the parallel corpus. We thus do not
+introduce additional data for the language model in our experiments.
+
+We use various corpora\footnote{Most can be obtained from
+\url{http://opus.lingfil.uu.se/}} and test various language pairs as we hope to come to a general conclusion.
+
+\begin{enumerate}
+  \item \textbf{Europarl} - The proceeding of the European Parliament
+    \citep{EUROPARL,OPUS2012}.
+  \item \textbf{EMEA} - Documents of the European Medicines Agency
+    \citep{OPUS2012}
+  \item \textbf{Fryske Akademy Parallel Corpus} - A collection of texts in
+    Frisian and Dutch, contains numerous books and other sources. \citep{OERSETTER}
+    \footnote{This corpus is not publicly available unfortunately} 
+  \item \textbf{JRC-Acquis} - A collection of legislative documents of the
+    European Union \citep{OPUS2012}
+  \item \textbf{IWLST 2012 TED Talks} - Transcripts and translations of TED
+    talks, used for subtitling, as used in the IWSLT 2012 Evaluation Campaign \citep{WIT3,IWSLT12}.
+\end{enumerate}
+
+%TODO: add language pairs used
 
 \subsection{Evaluation}
 
@@ -539,6 +579,21 @@ classifiers.  We do this to ensure the only difference is the actual
 integration of context information, and that differences in result can not be
 attributed to minor ideosyncracies of the implementation.
 
+\subsection{Parameter optimisation}
+
+An SMT system relies heavily on parameter optimisation. Each component of the
+score vector is weighted by a separate parameter. These parameters are
+experimentally determined on development data using Minimum Error Rate
+Reduction \citep{MERT}, in which we optimise on the BLEU score. MERT is,
+however, known to have high variance across multiple runs, due to many local
+optima in the search space. We therefore do not run MERT independently on each
+experimental run, but only on the baseline run, and use those weights for
+subsequent runs as well. Again, the motivation here is to keep all variables
+equal except for the integration of context information, so we can make a fair
+assessment.
+
+%TODO: look at feature weights from MERT
+%TODO: parameter optimisation in classifier
 
 
 
