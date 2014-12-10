@@ -396,6 +396,7 @@ context but all map to the same $t$. In such cases, a context-informed
 classifier clearly has no added value and therefore such instances are omitted from the training data.  
 
 \subsection{Integration in an SMT Decoder}
+\label{sec:smtintegration}
 
 The task of an SMT decoder is to find the best translation amongst a vast pool
 of possible translation hypotheses. The best translation hypothesis is the
@@ -416,7 +417,7 @@ score of the translation model and other models is expressed as a log-linear
 combination, in which different weights can be assigned to each of the
 components of the score vector. These weights are meta-parameters to the task and
 are typically optimised automatically on development data using for instance
-Minimum Error Rate Reduction \cite{MERT}.
+Minimum Error Rate Reduction \citep{MERT}.
 
 The probability $p(t|s)$ is the one we are interested in. Recall that the
 classifiers attempt to model $p(t|s,C)$, where $C$ constitutes the vector of
@@ -498,17 +499,49 @@ sets are now the input to Moses, which can now run unmodified.
 
 We conduct a number of experiments to assess whether integration of
 context-informed classifiers in Statistical Machine Translation leads to
-an improvement in translation quality.
+an improvement in translation quality. 
 
-Translation quality will be assessed along five widely-used metrics:
+We will use various corpora and various language pairs.
+
+\subsection{Evaluation}
+
+Translation quality will be assessed along five widely-used automated metrics,
+as human evaluation is prohibitively expensive:
 
 \begin{enumerate} %paraphrased from PBMBMT thesis
-\item \textbf{BLEU} - BLEU \citep{BLEU} is one of the most widely-used metrics in Machine Translation. It computes a weighted average of $n$-gram overlap between the system output and reference output. The score thus increases as more $n$-grams reference are found in the system output.
-\item \textbf{NIST} - NIST intends to improve upon BLEU, it takes into account how informative a particular $n$-gram is by assigning more weight to rare $n$-grams and less to highly-frequent $n$-grams.
-\item \textbf{METEOR} - METEOR \citep{METEOR} attempts to outperform BLEU and attempts to emulate human judgement tasks.
-\item \textbf{Word-Error Rate (WER)} - This is a simple metric derived from the minimum edit-distance, i.e. Levenshtein, algorithm. It counts the number of substitutions, insertions and deletions necessary to transform the translation into the reference sentence. Here words are used as the basic unit. The lower the score, the more similar the translation is to the reference.
-\item \textbf{Position Independent Word Error Rate (PER)} - This is a variant of the metric above, but here the order of the words is not taken into account. Any ordering of the same words will have the same score. The lower the score, the more similar the translation is to the reference.
+\item \textbf{BLEU} - BLEU \citep{BLEU} is probably the most widely-used metric
+in Machine Translation. It computes a weighted average of $n$-gram overlap
+between the system output and reference output. The score thus increases as
+more $n$-grams reference are found in the system output.
+\item \textbf{NIST} - NIST intends to improve upon BLEU, it takes into account
+how informative a particular $n$-gram is by assigning more weight to rare
+$n$-grams and less to highly-frequent $n$-grams.  \item \textbf{METEOR} -
+METEOR \citep{METEOR} attempts to outperform BLEU and attempts to emulate human
+judgement tasks. Unlike the prior metrics, it places emphasis on recall rather
+than precision.
+\item \textbf{Word-Error Rate (WER)} - This is a simple metric derived from the
+minimum edit-distance, i.e. Levenshtein, algorithm. It counts the number of
+substitutions, insertions and deletions necessary to transform the translation
+into the reference sentence. Here words are used as the basic unit. The lower
+the score, the more similar the translation is to the reference.  
+\item \textbf{Position Independent Word Error Rate (PER)} - This is a variant of the
+metric above, but here the order of the words is not taken into account. Any
+ordering of the same words will have the same score. The lower the score, the
+more similar the translation is to the reference.
 \end{enumerate}
+
+\subsection{Baseline}
+
+For each experiment, we construct a non-context informed baseline. This
+baseline does make use of our full pipeline, i.e. the bypass method described
+in Section~\ref{sec:smtintegration}, but it simply does not invoke the
+classifiers.  We do this to ensure the only difference is the actual
+integration of context information, and that differences in result can not be
+attributed to minor ideosyncracies of the implementation.
+
+
+
+
 
 
 
