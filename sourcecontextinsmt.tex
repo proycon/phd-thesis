@@ -29,7 +29,7 @@
 \theoremstyle{break}
 \newtheorem{exmp}{Example}[section]
 
-\title{Classifier-based modelling of source-side context information for Statistical Machine Translation}
+\title{Unsupervised classifier-based modelling of source-side context information for Statistical Machine Translation}
 
 
 \author{Maarten van Gompel \& Antal van den Bosch \\
@@ -460,7 +460,7 @@ phrase-translation table as shown in Algorithm~\ref{alg:contextmoses}.
   \For {$(i,j) \in M_{\text{test}}[s]$}
     \State $C \gets \langle w_{i,j-n} \ldots w_{i,j-1}, s, w_{i,j+|s|+1} \ldots w_{i,j+|s|+m} \rangle$
     \State $[(t, p(t|s,C) )] \gets$ \Call{classify}{$s,i,j,C$}
-    \State {\Call {appendtophrasetable}{$s,i,j,[(t, p(t|s,c)]$}}
+    \State {\Call {appendtophrasetable}{$s,i,j,[(t, p(t|s,C)]$}}
   \EndFor
 \EndFor
 \end{algorithmic}
