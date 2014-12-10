@@ -519,12 +519,13 @@ an improvement in translation quality.
 \subsection{Data sets}
 
 For the translation model, we rely on a parallel corpus as our main source of
-input. Whenever the source is untokenised, we tokenise the data using \emph{ucto}
-\footnote{http://ilk.uvt.nl/ucto}. For the language
-model, we simply reuse the target-side portion of the parallel corpus. We thus do not
+input. Whenever the source is untokenised, we tokenise the data using
+\emph{ucto} \footnote{An open-source regular-expression based tokeniser with
+unicode support, \url{http://ilk.uvt.nl/ucto}}. For the language model, we
+simply reuse the target-side portion of the parallel corpus. We thus do not
 introduce additional data for the language model in our experiments.
 
-We use various corpora\footnote{Most can be obtained from
+We use various corpora\footnote{Europarl, EMEA and JRC-Acquis can be obtained through
 \url{http://opus.lingfil.uu.se/}} and test various language pairs as we hope to come to a general conclusion.
 
 \begin{enumerate}
@@ -539,9 +540,11 @@ We use various corpora\footnote{Most can be obtained from
     European Union \citep{OPUS2012}
   \item \textbf{IWLST 2012 TED Talks} - Transcripts and translations of TED
     talks, used for subtitling, as used in the IWSLT 2012 Evaluation Campaign \citep{WIT3,IWSLT12}.
+  \item \textbf{IWLST 2006} - Chinese$-$English data form the  IWSLT 2006 Evaluation Campaign.
 \end{enumerate}
 
 %TODO: add language pairs used
+%TODO: add torrent link 
 
 \subsection{Evaluation}
 
