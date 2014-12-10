@@ -485,7 +485,7 @@ weighting methods for integrating this in the score vector for the phrase pair:
 \begin{itemize}
   \item \textbf{Replace} - Replace the $p(t|s)$ probability with $p(t|s,C)$
   \item \textbf{Append} - Leave the existing $p(t|s)$ as it was, but append
-    $p(t|s,c)$ as a new score to the score vector.
+    $p(t|s,C)$ as a new score to the score vector.
 \end{itemize}
 
 The score weighting of choice is applied and the data is entered into the
@@ -495,6 +495,7 @@ replaced with a series of consecutive positions as well. These two altered data
 sets are now the input to Moses, which can now run unmodified. 
 
 \section{Experiments}
+
 
 
 
