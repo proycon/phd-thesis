@@ -595,8 +595,23 @@ subsequent runs as well. Again, the motivation here is to keep all variables
 equal except for the integration of context information, so we can make a fair
 assessment.
 
-%TODO: look at feature weights from MERT
-%TODO: parameter optimisation in classifier
+%TODO: look at feature weights from MERT (later on)
+%TODO: talk about parameter optimisation in classifier
+
+
+\subsection{Results: source-side context vs. no context}
+
+The primary objective of our study is to assess the role of source-side context
+information. When running our experiments, it became apparent that
+different corpora, language pairs, and weights, painted a different picture.
+This makes it hard to quickly draw conclusions, and instead demands further analysis.
+
+Table~\ref{tab:iwslt2006zhen} shows a clear positive result on IWSLT 2006 data,
+Chinese to English. This dataset\footnote{Due to this dataset not being
+publicly available. Moreover, we no longer having means of comparing the exact set used by
+\cite{Stroppa+07}, we have to assume our training and test sets, whilst drawn
+from the same source, are distinct subsets from the ones used by \cite{Stroppa+07}}.
+
 
 
 
