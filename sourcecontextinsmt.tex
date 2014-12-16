@@ -620,6 +620,7 @@ are distinct subsets from the ones used by \cite{Stroppa+07}} was used in
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
 \multicolumn{7}{c}{IWSLT 2005 -- Chinese$\rightarrow$English} \\
+\hline
 Baseline (replace/M/opt) & 0.2877 & 0.532 & 5.3809 & 57.33 & 47.66 \\ 
 l1r1 (monolithic/replace/opt/tribl2) & 0.2959 & 0.5306 & 5.5294 & 55.69 & 46.41 \\ 
 l1r1 (experts/replace/opt/ib1) & 0.2978 & \textbf{0.5339} & 5.5313 & 55.66 & 46.33 \\ 
@@ -850,15 +851,16 @@ each of the larger samples contains the smaller samples as a subset.
 Figure~\ref{fig:emealc} shows the learning curve for EMEA, English to Spanish, measured along the BLEU metric. All other metrics follow the same trend. Figure~\ref{fig:jrclc} shows the same for JRC Acquis, English to Spanish, here we see BLEU is only about to converge. We therefore also show NIST which converges earlier. For this corpus, the METEOR metric, not shown for brevity, shows a similar late convergence as BLEU, whereas WER and PER confirm trend followed by NIST.
 
 \begin{figure}
-\includegraphics[width=180.00mm]{emealcbleu.png}
+\includegraphics[width=120.00mm]{emealcbleu.png}
 \caption{Learning curve on EMEA, English to Spanish, measuring BLEU score, logarithmic scale}
 \label{fig:emealc}
 \end{figure}
 
 
 \begin{figure}
-\includegraphics[width=90.00mm]{jrclcbleu.png}\includegraphics[width=90.00mm]{jrclcnist.png}
-\caption{Learning curve on JRC Acquis, English to Spanish, measuring BLEU score (left) and NIST (right), logarithmic scale}
+\includegraphics[width=120.00mm]{jrclcbleu.png}
+\includegraphics[width=120.00mm]{jrclcnist.png}
+\caption{Learning curve on JRC Acquis, English to Spanish, measuring BLEU score (top) and NIST (bottom), logarithmic scale}
 \label{fig:emealc}
 \end{figure}
 
