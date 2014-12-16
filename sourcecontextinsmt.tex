@@ -591,9 +591,10 @@ Reduction \citep{MERT}, in which we optimise on the BLEU score. MERT is,
 however, known to have high variance across multiple runs, due to many local
 optima in the search space. We therefore do not run MERT independently on each
 experimental run, but only on the baseline run, and use those weights for
-subsequent runs as well. Again, the motivation here is to keep all variables
-equal except for the integration of context information, so we can make a fair
-assessment.
+subsequent runs using the replace method\footnote{The append method would
+require an extra weight that the baseline does not have}. Again, the motivation
+here is to keep all variables equal except for the integration of context
+information, so we can make a fair assessment.
 
 %TODO: look at feature weights from MERT (later on)
 %TODO: talk about parameter optimisation in classifier
@@ -606,11 +607,157 @@ information. When running our experiments, it became apparent that
 different corpora, language pairs, and weights, painted a different picture.
 This makes it hard to quickly draw conclusions, and instead demands further analysis.
 
-Table~\ref{tab:iwslt2006zhen} shows a clear positive result on IWSLT 2006 data,
-Chinese to English. This dataset\footnote{Due to this dataset not being
-publicly available. Moreover, we no longer having means of comparing the exact set used by
-\cite{Stroppa+07}, we have to assume our training and test sets, whilst drawn
-from the same source, are distinct subsets from the ones used by \cite{Stroppa+07}}.
+Table~\ref{tab:iwslt2006zhen} shows a clear positive result on the data set of
+the IWSLT 2006 Evaluation Campaign, Chinese to English. A dataset from the same
+source \footnote{Due to this dataset not being publicly available. Moreover, we
+no longer having means of comparing the exact set used by \cite{Stroppa+07}, we
+have to assume our training and test sets, whilst drawn from the same source,
+are distinct subsets from the ones used by \cite{Stroppa+07}} was used in
+\cite{Stroppa+07}, who also reported positive results.
+
+\begin{table}
+\begin{tabular}{|l|ccccc|}
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\hline
+\multicolumn{7}{c}{IWSLT 2005 -- Chinese$\rightarrow$English} \\
+Baseline (replace/M/opt) & 0.2877 & 0.532 & 5.3809 & 57.33 & 47.66 \\ 
+l1r1 (monolithic/replace/opt/tribl2) & 0.2959 & 0.5306 & 5.5294 & 55.69 & 46.41 \\ 
+l1r1 (experts/replace/opt/ib1) & 0.2978 & \textbf{0.5339} & 5.5313 & 55.66 & 46.33 \\ 
+l2r1 (monolithic/replace/opt/tribl2) & 0.2941 & 0.5305 & 5.5192 & 55.29 & 46.23 \\ 
+l2r1 (experts/replace/opt/ib1) & 0.2955 & 0.5338 & 5.5391 & 55.53 & 46.23 \\ 
+l2r2 (monolithic/replace/opt/tribl2) & 0.2968 & 0.5281 & \textbf{5.5493} & \textbf{55.1} & \textbf{46.09} \\ 
+l2r2 (experts/replace/opt/ib1) & \textbf{0.2986} & 0.5304 & 5.5467 & 55.47 & 46.36 \\ 
+l3r3 (monolithic/replace/opt/tribl2) & 0.2962 & 0.5275 & 5.5364 & 55.26 & 46.36 \\ 
+l3r3 (experts/replace/opt/ib1) & 0.2950 & 0.5328 & 5.5433 & 55.66 & 46.41 \\ 
+\hline
+\end{tabular}
+\caption{Positive results for Chinese to English on IWSLT 2006 Evaluation Campaign data}
+\label{tab:iwslt2006zhen}
+\end{table}
+%TODO: add significance
+
+Several local context sizes have been attempted, the number after \texttt{l}
+refers to the numbers of words to the left of the source phrase, the number
+after \texttt{r} denotes the right context size. Further parameters to the
+system are enclosed within parentheses.  Recall that our the classifiers may be
+built in two distinct ways, a single \emph{monolithic} configuration (with
+\emph{tribl2}), as is used here, or a classifier \emph{expert} configuration
+(with \emph{ib1}).  Secondly, score weighting can be done either through the
+\emph{replace} or the \emph{append} method. In this experiment, only the former
+was used. The weights to the SMT decoder have been optimised (\emph{opt}) using
+MERT, on the baseline.
+
+For this experiment, we draw the conclusion that the integration of source-side
+context-informed classifiers is indeed beneficial.  The highest results are
+attained with a configuration of two words to the left, and two words to the
+right, but the various context configurations are fairly close. It is likely
+that using different data results in a different ranking.
+
+This positive conclusion, however, can not be easily generalised.
+Table~\ref{tab:europarl250k}, for example, presents a more scattered image,
+with results primarily below baseline. This experiment was conducted on 250,000
+training instances of the Europarl corpus, and translated from Dutch to
+English.
+
+\begin{table}
+\begin{tabular}{|l|ccccc|}
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\hline
+\multicolumn{7}{c}{europarl250k-nl-en} \\
+\hline 
+Baseline (replace/M/opt) & \textbf{0.2801} & \textbf{0.5181} & 7.4274 & 63.4 & 45.0 \\ 
+%TODO: l1r1
+l2r1 (monolithic/replace/opt/tribl2) & 0.2713 & 0.509 & 7.4168 & 63.08 & 45.01 \\ 
+l2r1 (experts/replace/opt/ib1) & 0.2722 & 0.5105 & \textbf{7.4344} & 63.05 & \textbf{44.94} \\ 
+l2r2 (monolithic/replace/opt/tribl2) & 0.2696 & 0.5078 & 7.4025 & 63.18 & 45.07 \\ 
+l2r2 (experts/replace/opt/ib1) & 0.271 & 0.5095 & 7.423 & \textbf{63.04} & 44.98 \\ 
+l3r3 (monolithic/replace/opt/tribl2) & 0.2673 & 0.5061 & 7.3826 & 63.29 & 45.16 \\ 
+l3r3 (experts/replace/opt/ib1) & 0.268 & 0.5069 & 7.3879 & \textbf{63.18} & 45.1 \\ 
+\hline
+\end{tabular}
+\caption{Negative results on Europarl 250k, Dutch to English}
+\label{tab:europarl250k}
+\end{table}
+
+In Table~\ref{tab:iwslt2012} we see results on the IWSLT 2012 corpus, for the
+same language pair, which paint a similar picture, albeit closer to the
+baseline.
+
+\begin{table}
+\begin{tabular}{|l|ccccc|}
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\hline
+\multicolumn{7}{c}{IWSLT 2012 -- Dutch$\rightarrow$English} \\
+\hline 
+\hline 
+Baseline (replace/M/opt) & 0.3014 & \textbf{0.5577} & 7.2676 & 52.91 & 39.98 \\ 
+l1r1 (monolithic/replace/opt/tribl2) & 0.3008 & 0.5526 & 7.3201 & 52.17 & 39.57 \\ 
+l1r1 (experts/replace/opt/ib1) & \textbf{0.3018} & 0.5536 & 7.3195 & 52.23 & 39.52 \\ 
+l2r1 (monolithic/replace/opt/tribl2) & 0.2997 & 0.5521 & 7.3253 & 52.1 & 39.48 \\ 
+l2r1 (experts/replace/opt/ib1) & 0.3007 & 0.5532 & 7.3286 & 52.14 & 39.5 \\ 
+l2r2 (monolithic/replace/opt/tribl2) & 0.3000 & 0.5516 & 7.3303 & 51.99 & 39.49 \\ 
+l2r2 (experts/replace/opt/ib1) & 0.3009 & 0.5529 & \textbf{7.3355} & 51.98 & \textbf{39.44} \\ 
+l3r3 (monolithic/replace/opt/tribl2) & 0.2994 & 0.5497 & 7.3264 & \textbf{51.92} & 39.57 \\ 
+l3r3 (experts/replace/opt/ib1) & 0.2995 & 0.5498 & 7.3243 & 51.96 & 39.57 \\ 
+\hline
+\end{tabular}
+\caption{Negative results on IWSLT 2012, Dutch to English}
+\label{tab:iwslt2012}
+\end{table}
+
+
+The below-baseline results for Dutch-English on two corpora may suggest that
+the efficacy of source-side context modelling depends strongly on the language
+pair. A possibly intuitive hypothesis here is that source-side context
+modelling stands to gain most when translation from morphologically simpler
+languages to morphologically richer languages, as the source-side context
+information may help in determining the proper morphological form.
+At the least, and more generally put, we can posit that it depends a lot
+on the particular data used, as we note a lot of variability in our
+experiments. Further experiments in this section will underline this
+ observation. 
+
+
+
+
+
+
+Table~\ref{tab:negative} shows that for the Frisian-Dutch corpus,
+we were completely unable to exceed the non-context-informed baseline. 
+
+
+\begin{table}
+\begin{tabular}{|l|ccccc|}
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\hline
+\multicolumn{7}{c}{Fryske Akademy -- Frisian$\rightarrow$Dutch} \\
+\hline 
+Baseline (replace/M/opt) & \textbf{0.5572} & \textbf{0.7084} & \textbf{10.3162} & \textbf{29.86} & \textbf{24.73} \\ 
+l1r1 (monolithic/replace/opt/tribl2) & 0.5544 & 0.7066 & 10.2967 & 30.08 & 24.91 \\ 
+l1r1 (experts/replace/opt/ib1) & 0.5566 & 0.7077 & 10.3136 & 29.96 & 24.81 \\ 
+\hline
+\multicolumn{7}{c}{Frysje Akademy -- Dutch$\rightarrow$Frisian} \\
+Baseline (replace/M/opt) & \textbf{0.5222} & \textbf{0.6911} & \textbf{9.9762} & \textbf{32.68} & \textbf{27.28} \\ 
+l1r1 (monolithic/replace/opt/tribl2) & 0.5154 & 0.6857 & 9.9122 & 33.09 & 27.71 \\ 
+l1r1 (experts/replace/opt/ib1) & 0.5164 & 0.6869 & 9.9258 & 33.0 & 27.59 \\ 
+l2r1 (monolithic/replace/opt/tribl2) & 0.5145 & 0.6849 & 9.8992 & 33.16 & 27.78 \\ 
+l2r1 (experts/replace/opt/ib1) & 0.5155 & 0.6864 & 9.911 & 33.05 & 27.65 \\ 
+l2r2 (monolithic/replace/opt/tribl2) & 0.513 & 0.6841 & 9.8885 & 33.28 & 27.84 \\ 
+l2r2 (experts/replace/opt/ib1) & 0.5157 & 0.6866 & 9.9159 & 33.05 & 27.61 \\ 
+l3r3 (monolithic/replace/opt/tribl2) & 0.5114 & 0.6832 & 9.8656 & 33.41 & 27.97 \\ 
+l3r3 (experts/replace/opt/ib1) & 0.5134 & 0.6852 & 9.8908 & 33.21 & 27.79 \\ 
+\hline
+\end{tabular}
+\caption{Negative results}
+\label{tab:negative}
+\end{table}
+
+
+
+\subsection{Results: classifier type}
+
+\subsection{Results: weighting method}
+ 
 
 
 
