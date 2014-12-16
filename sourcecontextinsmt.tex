@@ -708,21 +708,30 @@ l3r3 (experts/replace/opt/ib1) & 0.2995 & 0.5498 & 7.3243 & 51.96 & 39.57 \\
 
 The below-baseline results for Dutch-English on two corpora may suggest that
 the efficacy of source-side context modelling depends strongly on the language
-pair. A possibly intuitive hypothesis here is that source-side context
-modelling stands to gain most when translation from morphologically simpler
-languages to morphologically richer languages, as the source-side context
-information may help in determining the proper morphological form.
-At the least, and more generally put, we can posit that it depends a lot
-on the particular data used, as we note a lot of variability in our
-experiments. Further experiments in this section will underline this
- observation. 
+pair. A possible hypothesis here is that source-side context modelling stands to gain
+most when translation from morphologically simpler languages to morphologically
+richer languages, as the source-side context information may help in
+determining the proper morphological form.  At the least, and more generally
+put, we can posit that it depends a lot on the particular data used, as we note
+a lot of variability in our experiments. Further experiments in this section
+will underline this observation. 
+
+%TODO: english-spanish
+
+
+
+
+
+%TODO: english-russian
 
 
 
 
 
 
-Table~\ref{tab:negative} shows that for the Frisian-Dutch corpus,
+
+
+Table~\ref{tab:fa2} shows that for the Frisian-Dutch corpus,
 we were completely unable to exceed the non-context-informed baseline. 
 
 
@@ -736,7 +745,7 @@ Baseline (replace/M/opt) & \textbf{0.5572} & \textbf{0.7084} & \textbf{10.3162} 
 l1r1 (monolithic/replace/opt/tribl2) & 0.5544 & 0.7066 & 10.2967 & 30.08 & 24.91 \\ 
 l1r1 (experts/replace/opt/ib1) & 0.5566 & 0.7077 & 10.3136 & 29.96 & 24.81 \\ 
 \hline
-\multicolumn{7}{c}{Frysje Akademy -- Dutch$\rightarrow$Frisian} \\
+\multicolumn{7}{c}{Fryske Akademy -- Dutch$\rightarrow$Frisian} \\
 Baseline (replace/M/opt) & \textbf{0.5222} & \textbf{0.6911} & \textbf{9.9762} & \textbf{32.68} & \textbf{27.28} \\ 
 l1r1 (monolithic/replace/opt/tribl2) & 0.5154 & 0.6857 & 9.9122 & 33.09 & 27.71 \\ 
 l1r1 (experts/replace/opt/ib1) & 0.5164 & 0.6869 & 9.9258 & 33.0 & 27.59 \\ 
@@ -749,8 +758,122 @@ l3r3 (experts/replace/opt/ib1) & 0.5134 & 0.6852 & 9.8908 & 33.21 & 27.79 \\
 \hline
 \end{tabular}
 \caption{Negative results}
-\label{tab:negative}
+\label{tab:fa2}
 \end{table}
+
+
+
+We see clear positive results on the EMEA corpus (Table~\ref{tab:emea}), and by
+a smaller margin also on the JRC Acquis corpus (Table~\ref{tab:jrc}). Both
+experiments were done for English to Spanish, and an English to Dutch
+experiment was added for EMEA. In these experiments, we did not conduct
+parameter optimisation, we instead used a uniform (uni) distribution of weights for the
+translation model.
+
+\begin{table}
+\begin{tabular}{|l|ccccc|}
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\hline
+\multicolumn{7}{c}{EMEA-en-es} \\
+\hline
+Baseline (replace/M/uni) & 0.6771 & 0.7617 & 12.0214 & 30.87 & 24.23 \\ 
+l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.6935} & \textbf{0.7726} & \textbf{12.3003} & \textbf{29.39} & \textbf{22.97} \\ 
+l1r1 (experts/replace/uni/ib1) & 0.6895 & 0.7698 & 12.2273 & 29.76 & 23.34 \\ 
+\hline 
+Baseline (append/M/uni) & 0.6826 & 0.7651 & 12.1423 & 30.1 & 23.64 \\ 
+l1r1 (monolithic/append/uni/tribl2) & \textbf{0.6973} & \textbf{0.7747} & \textbf{12.3746} & \textbf{28.77} & \textbf{22.58} \\ 
+l1r1 (experts/append/uni/ib1) & 0.6938 & 0.7723 & 12.317 & 29.13 & 22.85 \\ 
+\hline
+\multicolumn{7}{c}{EMEA-en-nl} \\
+\hline
+Baseline (replace/M/uni) & 0.6612 & 0.7502 & 11.5287 & 32.77 & 26.22 \\ 
+l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.6725} & \textbf{0.7572} & \textbf{11.7539} & \textbf{31.62} & \textbf{25.27} \\ 
+l1r1 (experts/replace/uni/ib1) & 0.6697 & 0.7552 & 11.7028 & 31.88 & 25.52 \\ 
+\hline 
+Baseline (append/M/uni) & 0.6646 & 0.7525 & 11.6214 & 32.27 & 25.81 \\ 
+l1r1 (monolithic/append/uni/tribl2) & \textbf{0.6743} & \textbf{0.7587} & \textbf{11.8008} & \textbf{31.38} & \textbf{25.07} \\ 
+l1r1 (experts/append/uni/ib1) & 0.6718 & 0.7567 & 11.7539 & 31.6 & 25.32 \\ 
+\hline
+\end{tabular}
+\caption{Results on EMEA, English to Spanish and English to Dutch}}
+\label{tab:jrc250k}
+\end{table}
+
+
+\begin{table}
+\begin{tabular}{|l|ccccc|}
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\hline
+\multicolumn{7}{c}{JRC250k-en-es} \\
+\hline 
+Reference baseline (moses only) & 0.4519 & 0.6248 & 9.6531 & 46.94 & 31.35 \\ 
+\hline 
+Baseline (replace/M/uni) & 0.451 & 0.6241 & 9.6386 & 47.02 & 31.41 \\ 
+l1r1 (monolithic/replace/uni/tribl2) & 0.4503 & 0.624 & \textbf{9.7726} & \textbf{46.25} & \textbf{30.88} \\ 
+l1r1 (experts/replace/uni/ib1) & \textbf{0.4513} & \textbf{0.6243} & 9.7619 & 46.31 & 30.91 \\ 
+\hline 
+Baseline (append/M/uni) & 0.4526 & 0.6242 & 9.8183 & 45.82 & 30.78 \\ 
+l1r1 (monolithic/append/uni/tribl2) & 0.4513 & 0.6237 & 9.8741 & 45.54 & 30.66 \\ 
+l1r1 (experts/append/uni/ib1) & \textbf{0.4527} & \textbf{0.6244} & \textbf{9.8839} & \textbf{45.48} & \textbf{30.61} \\ 
+\hline
+\multicolumn{7}{c}{JRC250k-en-es} \\
+\hline
+Baseline (replace/M/uni) & 0.5268 & 0.6718 & 10.7683 & 40.37 & 26.73 \\ 
+l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.5309} & \textbf{0.6755} & \textbf{10.9422} & \textbf{39.55} & \textbf{26.07} \\ 
+l1r1 (experts/replace/uni/ib1) & 0.5293 & 0.6744 & 10.9004 & 39.73 & 26.19 \\ 
+\hline 
+Baseline (append/M/uni) & 0.5289 & 0.6733 & 10.905 & 39.6 & 26.28 \\ 
+l1r1 (monolithic/append/uni/tribl2) & \textbf{0.5307} & \textbf{0.6755} & \textbf{11.0163} & \textbf{39.12} & \textbf{25.91} \\ 
+l1r1 (experts/append/uni/ib1) & 0.5304 & 0.6749 & 10.9971 & 39.18 & 25.99 \\ 
+\end{tabular}
+\caption{Results on two independent samples of JRC-Acquis (both containing 250000 sentences), English to Spanish}}
+\label{tab:jrc250k}
+\end{table}
+
+
+Table~\ref{tab:jrc250k} again clearly illustrates our point that there is
+significant variation between data sets; even a different sample from the same
+dataset results in very different scores. Nevertheless, the conclusion that
+source-side context is beneficial is upheld by both, with the second sample
+doing so more by a larger margin. 
+
+This variability makes it hard to draw generic conclusions.  We may speculate
+that below-baseline results, such as the earlier results on Dutch-to-English
+Europarl and IWSLT2012 data, may be caused by a lack of trainings data. To
+investigate this hypothesis we construct a learning curve on the EMEA and JRC
+data, and expect there to be a tipping point where context-informed systems
+surpass the baseline.
+
+The samples for the learning curve were not sampled independently, as that
+would only give rise to the variability problem we just illustrated.  Instead,
+each of the larger samples contains the smaller samples as a subset.
+Figure~\ref{fig:emealc} shows the learning curve for EMEA, English to Spanish, measured along the BLEU metric. All other metrics follow the same trend. Figure~\ref{fig:jrclc} shows the same for JRC Acquis, English to Spanish, here we see BLEU is only about to converge. We therefore also show NIST which converges earlier. For this corpus, the METEOR metric, not shown for brevity, shows a similar late convergence as BLEU, whereas WER and PER confirm trend followed by NIST.
+
+\begin{figure}
+\includegraphics[width=180.00mm]{emealcbleu.png}
+\caption{Learning curve on EMEA, English to Spanish, measuring BLEU score, logarithmic scale}
+\label{fig:emealc}
+\end{figure}
+
+
+\begin{figure}
+\includegraphics[width=90.00mm]{emealcbleu.png}\includegraphics[width=90.00mm]{emealcnist.png}
+\caption{Learning curve on JRC Acquis, English to Spanish, measuring BLEU score (left) and NIST (right), logarithmic scale}
+\label{fig:emealc}
+\end{figure}
+
+
+In the EMEA learning curve in Table\ref~{fig:emealc}, we included an analysis of different context sizes.
+Wider context seems to be beneficial for this data set, but these results have
+already been shown not to generalise easily.
+
+
+
+
+
+
+
+ 
 
 
 
