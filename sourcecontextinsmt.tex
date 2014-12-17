@@ -603,20 +603,21 @@ information, so we can make a fair assessment.
 \subsection{Results: source-side context vs. no context}
 
 The primary objective of our study is to assess the role of source-side context
-information. When running our experiments, it became apparent that
-different corpora, language pairs, and weights, painted a different picture.
-This makes it hard to quickly draw conclusions, and instead demands further analysis.
+information. To this end we conducted a series of experiments on various
+corpora and language pairs.
 
-Table~\ref{tab:iwslt2006zhen} shows a clear positive result on the data set of
-the IWSLT 2006 Evaluation Campaign, Chinese to English. A dataset from the same
-source \footnote{Due to this dataset not being publicly available. Moreover, we
-no longer having means of comparing the exact set used by \cite{Stroppa+07}, we
-have to assume our training and test sets, whilst drawn from the same source,
-are distinct subsets from the ones used by \cite{Stroppa+07}} was used in
-\cite{Stroppa+07}, who also reported positive results.
+We start with Table~\ref{tab:iwslt2006zhen}, which  shows a clear positive
+result on the data set of the IWSLT 2006 Evaluation Campaign, Chinese to
+English. A dataset from the same source \footnote{Due to this dataset not being
+publicly available. Moreover, we no longer having means of comparing the exact
+set used by \cite{Stroppa+07}, we have to assume our training and test sets,
+whilst drawn from the same source, are distinct subsets from the ones used by
+\cite{Stroppa+07}} was used in \cite{Stroppa+07}, who also reported positive
+results.
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
+\hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
 \multicolumn{6}{|c|}{IWSLT 2005 -- Chinese$\rightarrow$English} \\
@@ -645,8 +646,7 @@ built in two distinct ways, a single \emph{monolithic} configuration (with
 \emph{tribl2}), as is used here, or a classifier \emph{expert} configuration
 (with \emph{ib1}).  Secondly, score weighting can be done either through the
 \emph{replace} or the \emph{append} method. In this experiment, only the former
-was used. The weights to the SMT decoder have been optimised (\emph{opt}) using
-MERT, on the baseline.
+was used.  In this section we focus exclusively on the question whether context-informed systems are beneficial, and if so, with what context size; a comparison of the score weighting methods and classifier configurations is postponed until a later section.  For the current and most of our experiments, weights to the SMT decoder have been optimised (\emph{opt}) using MERT, on the baseline.
 
 For this experiment, we draw the conclusion that the integration of source-side
 context-informed classifiers is indeed beneficial.  The highest results are
@@ -662,6 +662,7 @@ English.
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
+\hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
 \multicolumn{6}{|c|}{europarl250k-nl-en} \\
@@ -686,6 +687,7 @@ baseline.
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
+\hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
 \multicolumn{6}{|c|}{IWSLT 2012 -- Dutch$\rightarrow$English} \\
@@ -727,45 +729,8 @@ will underline this observation.
 
 
 
-
-
-
-
-
-Table~\ref{tab:fa2} shows that for the Frisian-Dutch corpus,
-we were completely unable to exceed the non-context-informed baseline. 
-
-
-\begin{table}
-\begin{tabular}{|l|ccccc|}
-\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
-\hline
-\multicolumn{6}{|c|}{Fryske Akademy -- Frisian$\rightarrow$Dutch} \\
-\hline 
-Baseline (replace/M/opt) & \textbf{0.5572} & \textbf{0.7084} & \textbf{10.3162} & \textbf{29.86} & \textbf{24.73} \\ 
-l1r1 (monolithic/replace/opt/tribl2) & 0.5544 & 0.7066 & 10.2967 & 30.08 & 24.91 \\ 
-l1r1 (experts/replace/opt/ib1) & 0.5566 & 0.7077 & 10.3136 & 29.96 & 24.81 \\ 
-\hline
-\multicolumn{6}{|c|}{Fryske Akademy -- Dutch$\rightarrow$Frisian} \\
-Baseline (replace/M/opt) & \textbf{0.5222} & \textbf{0.6911} & \textbf{9.9762} & \textbf{32.68} & \textbf{27.28} \\ 
-l1r1 (monolithic/replace/opt/tribl2) & 0.5154 & 0.6857 & 9.9122 & 33.09 & 27.71 \\ 
-l1r1 (experts/replace/opt/ib1) & 0.5164 & 0.6869 & 9.9258 & 33.0 & 27.59 \\ 
-l2r1 (monolithic/replace/opt/tribl2) & 0.5145 & 0.6849 & 9.8992 & 33.16 & 27.78 \\ 
-l2r1 (experts/replace/opt/ib1) & 0.5155 & 0.6864 & 9.911 & 33.05 & 27.65 \\ 
-l2r2 (monolithic/replace/opt/tribl2) & 0.513 & 0.6841 & 9.8885 & 33.28 & 27.84 \\ 
-l2r2 (experts/replace/opt/ib1) & 0.5157 & 0.6866 & 9.9159 & 33.05 & 27.61 \\ 
-l3r3 (monolithic/replace/opt/tribl2) & 0.5114 & 0.6832 & 9.8656 & 33.41 & 27.97 \\ 
-l3r3 (experts/replace/opt/ib1) & 0.5134 & 0.6852 & 9.8908 & 33.21 & 27.79 \\ 
-\hline
-\end{tabular}
-\caption{Negative results}
-\label{tab:fa2}
-\end{table}
-
-
-
 We see clear positive results on the EMEA corpus (Table~\ref{tab:emea}), and by
-a smaller margin also on the JRC Acquis corpus (Table~\ref{tab:jrc}). Both
+a smaller margin also on the JRC Acquis corpus (Table~\ref{tab:jrc250}). Both
 experiments were done for English to Spanish, and an English to Dutch
 experiment was added for EMEA. In these experiments, we did not conduct
 parameter optimisation, we instead used a uniform (uni) distribution of weights
@@ -773,6 +738,7 @@ for the translation model.
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
+\hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
 \multicolumn{6}{|c|}{EMEA-en-es} \\
@@ -797,12 +763,13 @@ l1r1 (experts/append/uni/ib1) & 0.6718 & 0.7567 & 11.7539 & 31.6 & 25.32 \\
 \hline
 \end{tabular}
 \caption{Results on EMEA, English to Spanish and English to Dutch}
-\label{tab:jrc250k}
+\label{tab:emea}
 \end{table}
 
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
+\hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
 \multicolumn{6}{|c|}{JRC250k-en-es} \\
@@ -826,6 +793,7 @@ l1r1 (experts/replace/uni/ib1) & 0.5293 & 0.6744 & 10.9004 & 39.73 & 26.19 \\
 Baseline (append/M/uni) & 0.5289 & 0.6733 & 10.905 & 39.6 & 26.28 \\ 
 l1r1 (monolithic/append/uni/tribl2) & \textbf{0.5307} & \textbf{0.6755} & \textbf{11.0163} & \textbf{39.12} & \textbf{25.91} \\ 
 l1r1 (experts/append/uni/ib1) & 0.5304 & 0.6749 & 10.9971 & 39.18 & 25.99 \\ 
+\hline
 \end{tabular}
 \caption{Results on two independent samples of JRC-Acquis (both containing 250000 sentences), English to Spanish}
 \label{tab:jrc250k}
@@ -871,21 +839,136 @@ the trend followed by NIST.
 \end{figure}
 
 
-In the EMEA learning curve in Table~\ref{fig:emealc}, we included an analysis of different context sizes.
-Wider context seems to be beneficial for this data set, but these results have
-already been shown not to generalise easily.
+In the EMEA learning curve in Table~\ref{fig:emealc}, we included an analysis
+of different context sizes.  An enlargment of the context size seems to be
+beneficial for this data set each step along the way, but these results have
+already been shown not to generalise easily, nor is this trend likely to
+continue if ever more context were to be added.
+
+The positive results on the EMEA and JRC data needs to be contrasted to the
+earlier negative results. Can we identify why these corpora, with these
+language pairs, perform well?
+
+We can observe that the nature of these two corpora consists of highly
+formulaic language, medical language in the case of EMEA, and judicial language
+in the case of JRC-Acquis.  This is implies the language is generally more
+rigidly stuctured, predictable, and therefore easier to translate than corpora
+from more diverse domains. The fact that the scores for these corpora are
+higher than those for the corpora we've seen before illustrates this point.
+
+As hypothesised earlier, it may be possible that a certain quality of
+translation is needed before the source-side context information is able to
+make an impact. The learning curve experiments suggest this, but it is at odds
+with the positive results on the Chinese-English IWSLT 2006 data
+(Table~\ref{tab:iwslt2006}), which shows lower scores. We dive further into
+this hypothesis with a series of experiments on a Dutch-Frisian corpus. The
+high similarity between these two germanic languages of The Netherlands makes
+translation easier, and has been shown to achieve high scores
+\citep{OERSETTER}. Table~\ref{tab:fa2} shows our findings. Although high scores
+were obtained as expected, we were completely unable to exceed the
+non-context-informed baseline. 
+
+\begin{table}
+\begin{tabular}{|l|ccccc|}
+\hline
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\hline
+\multicolumn{6}{|c|}{Fryske Akademy -- Frisian$\rightarrow$Dutch} \\
+\hline 
+Baseline (replace/M/opt) & \textbf{0.5572} & \textbf{0.7084} & \textbf{10.3162} & \textbf{29.86} & \textbf{24.73} \\ 
+l1r1 (monolithic/replace/opt/tribl2) & 0.5544 & 0.7066 & 10.2967 & 30.08 & 24.91 \\ 
+l1r1 (experts/replace/opt/ib1) & 0.5566 & 0.7077 & 10.3136 & 29.96 & 24.81 \\ 
+\hline
+\multicolumn{6}{|c|}{Fryske Akademy -- Dutch$\rightarrow$Frisian} \\
+\hline
+Baseline (replace/M/opt) & \textbf{0.5222} & \textbf{0.6911} & \textbf{9.9762} & \textbf{32.68} & \textbf{27.28} \\ 
+l1r1 (monolithic/replace/opt/tribl2) & 0.5154 & 0.6857 & 9.9122 & 33.09 & 27.71 \\ 
+l1r1 (experts/replace/opt/ib1) & 0.5164 & 0.6869 & 9.9258 & 33.0 & 27.59 \\ 
+l2r1 (monolithic/replace/opt/tribl2) & 0.5145 & 0.6849 & 9.8992 & 33.16 & 27.78 \\ 
+l2r1 (experts/replace/opt/ib1) & 0.5155 & 0.6864 & 9.9110 & 33.05 & 27.65 \\ 
+l2r2 (monolithic/replace/opt/tribl2) & 0.5130 & 0.6841 & 9.8885 & 33.28 & 27.84 \\ 
+l2r2 (experts/replace/opt/ib1) & 0.5157 & 0.6866 & 9.9159 & 33.05 & 27.61 \\ 
+l3r3 (monolithic/replace/opt/tribl2) & 0.5114 & 0.6832 & 9.8656 & 33.41 & 27.97 \\ 
+l3r3 (experts/replace/opt/ib1) & 0.5134 & 0.6852 & 9.8908 & 33.21 & 27.79 \\ 
+\hline
+\end{tabular}
+\caption{Results on the Frisian-Dutch parallel corpus}
+\label{tab:fa2}
+\end{table}
+
+
+
+
+We further address the issue of domain in a cross-domain experiment, to assess
+whether introducing a differentiation between domains has a positive impact
+when source-side context information is included. We did this for Dutch to
+English, trained on 250,000 instances of the Europarl parallel corpus, and
+tested on the IWSLT 2012 TED data. We find the context-informed
+system\footnote{l1r1 (monolithic/replace/uni/tribl2)} scoring the
+same\footnote{BLEU 0.2137, METEOR 0.4798, NIST 6.2172, WER 57.99, PER 46.01} as
+the baseline, and thus not providing any added value. Unsurprisingly, scores
+are considerably lower than when tested on the same domain (c.f
+Table~\ref{tab:europarl250k}).
+
+
+
+
+\subsection{Results: classifier type and classifier parameter optimisation}
+
+We have introduced two types of classifier, integrated in an Statistical
+Machine Translation framework by means of the ``bypass'' method described in
+Section~\ref{sec:TODO}. The monolithic classifier, modelling all phrase-pairs
+in a single classifier, is used also by \cite{Stroppa+07} and
+\cite{Rejwanul+11}, whereas the classifiers experts, one classifier per
+source-phrase, is a new addition that more closely resembles how such
+classifiers are employed in Word Sense Disambiguation.
+
+Classifier experts were built using the IB1 algorithm, whereas we choose for
+TRIBL2 for the monolithic classifier. This was done because the monolithic
+classifier is a lot bigger by definition, and therefore the high performance of
+the algorithm IGTree becomes imperative, a pure IB1 approach would be too slow
+and TRIBL2 seeks to combine the best of both worlds.
+
+Most of the tables in the previous section list results for both classifier
+types.  We find the classifier experts outperforming the monolithic classifier
+for Chinese-English (Table~\ref{tab:iwslt2006} (for all context sizes except
+\texttt{l3r3}), for  IWSTL 2012 TED Dutch-English (Table~\ref{tab:iwslt2012},
+mostly below baseline), Europarl250k Dutch-English
+(Table~\ref{tab:europarl250k}, mostly below baseline), and Frisian-Dutch
+(Table~\ref{tab:fa2}, all below baseline)).
+
+These results suggest that the classifier experts perform better than the
+monolithic classifier. When looking at our two 250,000 instance samples of
+JRC-Acquis (Table~\ref{tab:jrc250k}), we see a conflicting image. One sample
+confirms our hypothesis that the classifier experts are better, whereas in the
+other the monolithic classifier has the upper-hand. Moreover, when we look at
+the EMEA data (Table~\ref{tab:emea}, where we had the most significant gains
+above baseline, we find the monolithic system strongest. 
+
+Despite the results not being unanymous, the case for the classifier experts is
+strong and can be motivated by the fact that feature weights are computed o a per-
+source-phrase basis, rather than on the conjunction of all. It can be considered as a
+kind of optimisation step. The counterside is that such systems may therefore
+be more prone to overfitting on one hand, which might well be the case in the
+EMEA experiment, as well as sparsity problems for smaller classifier experts on
+the other hand.
+
+Whilst we conducted parameter optimisation for the parameter of the SMT
+decoder, we did not yet do so \emph{for the classifiers}. Yet, these too can be
+optimised. This is only feasible for the classifier experts; recall that the
+monolithic classifier necessarily has extra constraints imposed on it to
+prevent translations that do not occur in the phrase-translation table. This
+has the disadvantage of making it hard to run standard parameter optimisation
+algorithms. 
+
+The experiments conducted until now have not seen their classifier's optimised
+in such way, because this comes with a number of challenges.
 
 
 
 
 
 
-
- 
-
-
-
-\subsection{Results: classifier type}
 
 \subsection{Results: weighting method}
  
