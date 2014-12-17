@@ -619,7 +619,7 @@ are distinct subsets from the ones used by \cite{Stroppa+07}} was used in
 \begin{tabular}{|l|ccccc|}
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
-\multicolumn{7}{c}{IWSLT 2005 -- Chinese$\rightarrow$English} \\
+\multicolumn{6}{|c|}{IWSLT 2005 -- Chinese$\rightarrow$English} \\
 \hline
 Baseline (replace/M/opt) & 0.2877 & 0.532 & 5.3809 & 57.33 & 47.66 \\ 
 l1r1 (monolithic/replace/opt/tribl2) & 0.2959 & 0.5306 & 5.5294 & 55.69 & 46.41 \\ 
@@ -664,7 +664,7 @@ English.
 \begin{tabular}{|l|ccccc|}
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
-\multicolumn{7}{c}{europarl250k-nl-en} \\
+\multicolumn{6}{|c|}{europarl250k-nl-en} \\
 \hline 
 Baseline (replace/M/opt) & \textbf{0.2801} & \textbf{0.5181} & 7.4274 & 63.4 & 45.0 \\ 
 %TODO: l1r1
@@ -688,7 +688,7 @@ baseline.
 \begin{tabular}{|l|ccccc|}
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
-\multicolumn{7}{c}{IWSLT 2012 -- Dutch$\rightarrow$English} \\
+\multicolumn{6}{|c|}{IWSLT 2012 -- Dutch$\rightarrow$English} \\
 \hline 
 \hline 
 Baseline (replace/M/opt) & 0.3014 & \textbf{0.5577} & 7.2676 & 52.91 & 39.98 \\ 
@@ -740,13 +740,13 @@ we were completely unable to exceed the non-context-informed baseline.
 \begin{tabular}{|l|ccccc|}
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
-\multicolumn{7}{c}{Fryske Akademy -- Frisian$\rightarrow$Dutch} \\
+\multicolumn{6}{|c|}{Fryske Akademy -- Frisian$\rightarrow$Dutch} \\
 \hline 
 Baseline (replace/M/opt) & \textbf{0.5572} & \textbf{0.7084} & \textbf{10.3162} & \textbf{29.86} & \textbf{24.73} \\ 
 l1r1 (monolithic/replace/opt/tribl2) & 0.5544 & 0.7066 & 10.2967 & 30.08 & 24.91 \\ 
 l1r1 (experts/replace/opt/ib1) & 0.5566 & 0.7077 & 10.3136 & 29.96 & 24.81 \\ 
 \hline
-\multicolumn{7}{c}{Fryske Akademy -- Dutch$\rightarrow$Frisian} \\
+\multicolumn{6}{|c|}{Fryske Akademy -- Dutch$\rightarrow$Frisian} \\
 Baseline (replace/M/opt) & \textbf{0.5222} & \textbf{0.6911} & \textbf{9.9762} & \textbf{32.68} & \textbf{27.28} \\ 
 l1r1 (monolithic/replace/opt/tribl2) & 0.5154 & 0.6857 & 9.9122 & 33.09 & 27.71 \\ 
 l1r1 (experts/replace/opt/ib1) & 0.5164 & 0.6869 & 9.9258 & 33.0 & 27.59 \\ 
@@ -768,14 +768,14 @@ We see clear positive results on the EMEA corpus (Table~\ref{tab:emea}), and by
 a smaller margin also on the JRC Acquis corpus (Table~\ref{tab:jrc}). Both
 experiments were done for English to Spanish, and an English to Dutch
 experiment was added for EMEA. In these experiments, we did not conduct
-parameter optimisation, we instead used a uniform (uni) distribution of weights for the
-translation model.
+parameter optimisation, we instead used a uniform (uni) distribution of weights
+for the translation model.
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
-\multicolumn{7}{c}{EMEA-en-es} \\
+\multicolumn{6}{|c|}{EMEA-en-es} \\
 \hline
 Baseline (replace/M/uni) & 0.6771 & 0.7617 & 12.0214 & 30.87 & 24.23 \\ 
 l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.6935} & \textbf{0.7726} & \textbf{12.3003} & \textbf{29.39} & \textbf{22.97} \\ 
@@ -785,7 +785,7 @@ Baseline (append/M/uni) & 0.6826 & 0.7651 & 12.1423 & 30.1 & 23.64 \\
 l1r1 (monolithic/append/uni/tribl2) & \textbf{0.6973} & \textbf{0.7747} & \textbf{12.3746} & \textbf{28.77} & \textbf{22.58} \\ 
 l1r1 (experts/append/uni/ib1) & 0.6938 & 0.7723 & 12.317 & 29.13 & 22.85 \\ 
 \hline
-\multicolumn{7}{c}{EMEA-en-nl} \\
+\multicolumn{6}{|c|}{EMEA-en-nl} \\
 \hline
 Baseline (replace/M/uni) & 0.6612 & 0.7502 & 11.5287 & 32.77 & 26.22 \\ 
 l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.6725} & \textbf{0.7572} & \textbf{11.7539} & \textbf{31.62} & \textbf{25.27} \\ 
@@ -796,7 +796,7 @@ l1r1 (monolithic/append/uni/tribl2) & \textbf{0.6743} & \textbf{0.7587} & \textb
 l1r1 (experts/append/uni/ib1) & 0.6718 & 0.7567 & 11.7539 & 31.6 & 25.32 \\ 
 \hline
 \end{tabular}
-\caption{Results on EMEA, English to Spanish and English to Dutch}}
+\caption{Results on EMEA, English to Spanish and English to Dutch}
 \label{tab:jrc250k}
 \end{table}
 
@@ -805,7 +805,7 @@ l1r1 (experts/append/uni/ib1) & 0.6718 & 0.7567 & 11.7539 & 31.6 & 25.32 \\
 \begin{tabular}{|l|ccccc|}
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
-\multicolumn{7}{c}{JRC250k-en-es} \\
+\multicolumn{6}{|c|}{JRC250k-en-es} \\
 \hline 
 Reference baseline (moses only) & 0.4519 & 0.6248 & 9.6531 & 46.94 & 31.35 \\ 
 \hline 
@@ -817,7 +817,7 @@ Baseline (append/M/uni) & 0.4526 & 0.6242 & 9.8183 & 45.82 & 30.78 \\
 l1r1 (monolithic/append/uni/tribl2) & 0.4513 & 0.6237 & 9.8741 & 45.54 & 30.66 \\ 
 l1r1 (experts/append/uni/ib1) & \textbf{0.4527} & \textbf{0.6244} & \textbf{9.8839} & \textbf{45.48} & \textbf{30.61} \\ 
 \hline
-\multicolumn{7}{c}{JRC250k-en-es} \\
+\multicolumn{6}{|c|}{JRC250k2-en-es} \\
 \hline
 Baseline (replace/M/uni) & 0.5268 & 0.6718 & 10.7683 & 40.37 & 26.73 \\ 
 l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.5309} & \textbf{0.6755} & \textbf{10.9422} & \textbf{39.55} & \textbf{26.07} \\ 
@@ -827,16 +827,16 @@ Baseline (append/M/uni) & 0.5289 & 0.6733 & 10.905 & 39.6 & 26.28 \\
 l1r1 (monolithic/append/uni/tribl2) & \textbf{0.5307} & \textbf{0.6755} & \textbf{11.0163} & \textbf{39.12} & \textbf{25.91} \\ 
 l1r1 (experts/append/uni/ib1) & 0.5304 & 0.6749 & 10.9971 & 39.18 & 25.99 \\ 
 \end{tabular}
-\caption{Results on two independent samples of JRC-Acquis (both containing 250000 sentences), English to Spanish}}
+\caption{Results on two independent samples of JRC-Acquis (both containing 250000 sentences), English to Spanish}
 \label{tab:jrc250k}
 \end{table}
 
 
-Table~\ref{tab:jrc250k} again clearly illustrates our point that there is
-significant variation between data sets; even a different sample from the same
-dataset results in very different scores. Nevertheless, the conclusion that
-source-side context is beneficial is upheld by both, with the second sample
-doing so more by a larger margin. 
+Table~\ref{tab:jrc250k} again clearly illustrates our observation that there is
+significant variation between data sets. We have drawn two independent samples
+from the same dataset and find this results in very different scores.
+Nevertheless, the conclusion that source-side context is beneficial is upheld
+for both, with the second sample doing so more by a larger margin. 
 
 This variability makes it hard to draw generic conclusions.  We may speculate
 that below-baseline results, such as the earlier results on Dutch-to-English
@@ -848,7 +848,13 @@ surpass the baseline.
 The samples for the learning curve were not sampled independently, as that
 would only give rise to the variability problem we just illustrated.  Instead,
 each of the larger samples contains the smaller samples as a subset.
-Figure~\ref{fig:emealc} shows the learning curve for EMEA, English to Spanish, measured along the BLEU metric. All other metrics follow the same trend. Figure~\ref{fig:jrclc} shows the same for JRC Acquis, English to Spanish, here we see BLEU is only about to converge. We therefore also show NIST which converges earlier. For this corpus, the METEOR metric, not shown for brevity, shows a similar late convergence as BLEU, whereas WER and PER confirm trend followed by NIST.
+Figure~\ref{fig:emealc} shows the learning curve for EMEA, English to Spanish,
+measured along the BLEU metric. All other metrics follow the same trend for the
+EMEA corpus.  Figure~\ref{fig:jrclc} shows the same for JRC Acquis, English to
+Spanish, here we see BLEU is only just about to converge. We therefore also include
+NIST which converges earlier. For the JRC-Acquis corpus, the METEOR metric, not shown for
+brevity, shows a similar late convergence as BLEU, whereas WER and PER confirm
+the trend followed by NIST.
 
 \begin{figure}
 \includegraphics[width=120.00mm]{emealcbleu.png}
@@ -861,11 +867,11 @@ Figure~\ref{fig:emealc} shows the learning curve for EMEA, English to Spanish, m
 \includegraphics[width=120.00mm]{jrclcbleu.png}
 \includegraphics[width=120.00mm]{jrclcnist.png}
 \caption{Learning curve on JRC Acquis, English to Spanish, measuring BLEU score (top) and NIST (bottom), logarithmic scale}
-\label{fig:emealc}
+\label{fig:jrclc}
 \end{figure}
 
 
-In the EMEA learning curve in Table\ref~{fig:emealc}, we included an analysis of different context sizes.
+In the EMEA learning curve in Table~\ref{fig:emealc}, we included an analysis of different context sizes.
 Wider context seems to be beneficial for this data set, but these results have
 already been shown not to generalise easily.
 
