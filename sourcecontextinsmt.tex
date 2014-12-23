@@ -87,7 +87,7 @@ model which maps the translation phrases in the source language ($s$) to
 phrases in target language ($t$), this mapping is expressed as a vector of
 probabilities, most notably $P({phrase}_s|{phrase}_t)$ and
 $P({phrase}_t|{phrase}_s)$. This component can be seen to model the notion of
-``semantic faithfullness''; if you translate a phrase from one language to
+``semantic faithfulness''; if you translate a phrase from one language to
 another, you want the meaning to be preserved as accurately as possible. The
 second core model is the language model, this model in monolingual in nature
 and models \emph{the target language}. It models what words are likely to
@@ -208,7 +208,7 @@ context improves adequacy, yet does not benefit fluency. They remark that the
 integration of the classifier probabilities in an SMT framework needs further
 study, which is something that will indeed be a focus in our present study.
 
-The year 2007 saw a culmination of various studies integrating WSD techiques in
+The year 2007 saw a culmination of various studies integrating WSD techniques in
 SMT using classifiers. A third study in this trend was \cite{Stroppa+07}. They
 have a strong focus on the word form, as does this present study, and add only
 part-of-speech features. On IWSLT 2006 data for Chinese-English and
@@ -251,7 +251,7 @@ subparts and combining the results in the best order.
 In describing our methodology, we first focus on the problem of phrasal
 translation, adding in the source-side context component. This shall be done
 using classifiers. Then we address how this can be integrated into a
-phrase-based Stastical Machine Translation decoder, which also takes care of
+phrase-based Stastiscal Machine Translation decoder, which also takes care of
 ordering aspect. 
 
 
@@ -345,7 +345,7 @@ therefore simply omit it from the feature vector.
 The translation model is trained on parallel corpus data. We follow a common
 MT pipeline and at the end derive classifier training data.
 
-Given an a tokenised and sentence-aligned parallel corpus, we iteratively learn
+Given a tokenised and sentence-aligned parallel corpus, we iteratively learn
 word alignments using GIZA++ \citep{GIZA}. Then we identify and extract phrase
 pairs using the {\em grow-diag-final}\/ algorithm \citep{OchNey2003}. The
 result is a phrase-translation table mapping source phrases to target
@@ -433,7 +433,7 @@ the translation model, and the latter corresponding to the language model.
 The translation model is a mapping of the set of source phrases ($S$) to the
 set of target phrases ($T$). Each phrase-pair $(s,t)$ where $s \in S$ and $t
 \in T$ is in described by a score vector indicating the likelihood of
-translation. This score vector most notably consists of the probababilities
+translation. This score vector most notably consists of the probabilities
 $p(s|t)$ and $p(t|s)$. In addition, lexical weighting probabilities $lex(s|t)$
 and $lex(t|s)$ express the probability of a phrase-pair word-by-word, and are
 often included as components in the score vector. During decoding, the total
@@ -492,7 +492,7 @@ phrase-translation table as shown in Algorithm~\ref{alg:contextmoses}.
 \caption{Classifier invocation on test data. Take $M{\text{test}}$ to be the pattern
 model of the test data, i.e. a map of source phrases occuring in the test
 data, and $[(t,p(t|s,C))]$ to be a list of translation options ($t$) with
-associationed probability $p(t|s,C)$.}
+associated probability $p(t|s,C)$.}
 \label{alg:contextmoses}
 \end{algorithm}
 
@@ -612,7 +612,7 @@ baseline does make use of our full pipeline, i.e. the bypass method described
 in Section~\ref{sec:smtintegration}, but it simply does not invoke the
 classifiers.  We do this to ensure the only difference is the actual
 integration of context information, and that differences in result can not be
-attributed to minor ideosyncracies of the implementation.
+attributed to minor ideosyncrasies of the implementation.
 
 \subsection{Parameter optimisation}
 
@@ -883,7 +883,7 @@ the trend followed by NIST.
 
 
 In the EMEA learning curve in Table~\ref{fig:emealc}, we included an analysis
-of different context sizes.  An enlargment of the context size seems to be
+of different context sizes.  An enlargement of the context size seems to be
 beneficial for this data set each step along the way, but these results have
 already been shown not to generalise easily, nor is this trend likely to
 continue if ever more context were to be added.
@@ -895,7 +895,7 @@ language pairs, perform well?
 We can observe that the nature of these two corpora consists of highly
 formulaic language, medical language in the case of EMEA, and judicial language
 in the case of JRC-Acquis.  This is implies the language is generally more
-rigidly stuctured, predictable, and therefore easier to translate than corpora
+rigidly structured, predictable, and therefore easier to translate than corpora
 from more diverse domains. The fact that the scores for these corpora are
 higher than those for the corpora we've seen before illustrates this point.
 
@@ -906,7 +906,7 @@ with the positive results on the Chinese-English IWSLT 2006 data
 (Table~\ref{tab:iwslt2006}), which shows lower scores and is trained on a very
 small training set. We dive further into this hypothesis with a series of
 experiments on a Dutch-Frisian corpus. The high similarity between these two
-germanic languages of The Netherlands makes translation easier, and has been
+Germanic languages of The Netherlands makes translation easier, and has been
 shown to achieve high scores \citep{OERSETTER}. Table~\ref{tab:fa2} shows our
 findings. Although high scores were obtained as expected, we were completely
 unable to exceed the non-context-informed baseline. 
@@ -962,10 +962,10 @@ morphological form.
 We test this hypothesis by conducting two experiments. All of the positive
 results hitherto have been on language pairs in which the target language was
 morphologically richer.  In the first experiment we therefore take such a
-languare pair, the English to Spanish language pair, and use it for a corpus
+language pair, the English to Spanish language pair, and use it for a corpus
 that has performed poorly: the 250,000 sentence subset of Europarl.  If the
 results are better with English to Spanish than with Dutch to English then our
-hypothesis would be strenghtens our hypothesis. When we look at the results of
+hypothesis would be strengthens our hypothesis. When we look at the results of
 this experiment in Table~\ref{tab:europarl250k-es}, however, we immediately see
 that this is not the case; all results are below baseline. A possible
 explanation may be that more training data is needed, as suggested by the
@@ -1059,7 +1059,7 @@ above baseline, we find the monolithic system strongest.
 Despite the results not being unanimous, the case for the classifier experts is
 strong and can be motivated by the fact that feature weights are computed on a per-
 source-phrase basis, rather than on the aggregation of all. It can be considered as a
-kind of optimisation step. The counterside is that such systems may therefore
+kind of optimisation step. The disadvantage is that such systems may therefore
 be more prone to overfitting on one hand, which might well be the case in the
 EMEA experiment, as well as sparsity problems for smaller classifier experts on
 the other hand.
