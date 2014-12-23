@@ -773,33 +773,17 @@ l3r3 (experts/replace/opt/ib1) & 0.2995 & 0.5498 & 7.3243 & 51.96 & 39.57 \\
 \label{tab:iwslt2012}
 \end{table}
 
+We observe a high degree of variability between our various experiments.
+Conclusions drawn from one data-set are hard to generically apply to others.
+Further experiments in this section will underline this observation. 
 
-The below-baseline results for Dutch-English on two corpora may suggest that
-the efficacy of source-side context modelling depends strongly on the language
-pair. A possible hypothesis here is that source-side context modelling stands to gain
-most when translation from morphologically simpler languages to morphologically
-richer languages, as the source-side context information may help in
-determining the proper morphological form.  At the least, and more generally
-put, we can posit that it depends a lot on the particular data used, as we note
-a lot of variability in our experiments. Further experiments in this section
-will underline this observation. 
-
-%TODO: english-spanish
-
-
-
-
-
-%TODO: english-russian
-
-
-
-We see clear positive results on the EMEA corpus (Table~\ref{tab:emea}), and by
-a smaller margin also on the JRC Acquis corpus (Table~\ref{tab:jrc250}). Both
-experiments were done for English to Spanish, and an English to Dutch
-experiment was added for EMEA. In these experiments, we did not conduct
-parameter optimisation, we instead used a uniform (uni) distribution of weights
-for the translation model.
+The EMEA corpus (Table~\ref{tab:emea}) shows the most positive results, the JRC
+Acquis corpus (Table~\ref{tab:jrc250}) does so as well, although by a small
+margin. Both experiments were done for English to Spanish, and an English to
+Dutch experiment was added for EMEA, on which the results also hold. In these
+experiments, we did not conduct parameter optimisation, we instead used a
+uniform (uni) distribution of weights for the translation model, and similar
+defaults for the other components.
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
@@ -925,13 +909,13 @@ As hypothesised earlier, it may be possible that a certain quality of
 translation is needed before the source-side context information is able to
 make an impact. The learning curve experiments suggest this, but it is at odds
 with the positive results on the Chinese-English IWSLT 2006 data
-(Table~\ref{tab:iwslt2006}), which shows lower scores. We dive further into
-this hypothesis with a series of experiments on a Dutch-Frisian corpus. The
-high similarity between these two germanic languages of The Netherlands makes
-translation easier, and has been shown to achieve high scores
-\citep{OERSETTER}. Table~\ref{tab:fa2} shows our findings. Although high scores
-were obtained as expected, we were completely unable to exceed the
-non-context-informed baseline. 
+(Table~\ref{tab:iwslt2006}), which shows lower scores and is trained on a very
+small training set. We dive further into this hypothesis with a series of
+experiments on a Dutch-Frisian corpus. The high similarity between these two
+germanic languages of The Netherlands makes translation easier, and has been
+shown to achieve high scores \citep{OERSETTER}. Table~\ref{tab:fa2} shows our
+findings. Although high scores were obtained as expected, we were completely
+unable to exceed the non-context-informed baseline. 
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
@@ -962,8 +946,6 @@ l3r3 (experts/replace/opt/ib1) & 0.5134 & 0.6852 & 9.8908 & 33.21 & 27.79 \\
 \end{table}
 
 
-
-
 We further address the issue of domain in a cross-domain experiment, to assess
 whether introducing a differentiation between domains has a positive impact
 when source-side context information is included. We did this for Dutch to
@@ -975,6 +957,53 @@ the baseline, and thus not providing any added value. Unsurprisingly, scores
 are considerably lower than when tested on the same domain (c.f
 Table~\ref{tab:europarl250k}).
 
+The below-baseline results for Dutch-English on two corpora (Europarl and IWSLT
+2012 TED) may suggest that the efficacy of source-side context modelling
+depends strongly on the language pair. A possible hypothesis here is that
+source-side context modelling stands to gain most when translation from
+morphologically simpler languages to morphologically richer languages, as the
+source-side context information may help in determining the proper
+morphological form. 
+
+We test this hypothesis by conducting two experiments. All of the positive
+results hitherto have been on language pairs in which the target language was
+morphologically richer.  In the first experiment we therefore take such a
+languare pair, the English to Spanish language pair, and use it for a corpus
+that has performed poorly: the 250,000 sentence subset of Europarl.  If the
+results are better with English to Spanish than with Dutch to English then our
+hypothesis would be strenghtens our hypothesis. When we look at the results of
+this experiment in Table~\ref{tab:europarl250k-es}, however, we immediately see
+that this is not the case; all results are below baseline. A possible
+explanation may be that more training data is needed, as suggested by the
+earlier learning curves, but this too was an hypothesis we could not confirm on
+another data set.
+
+\begin{table}
+\begin{tabular}{|l|ccccc|}
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\hline
+\multicolumn{6}{c}{Europarl 250k - English $\rightarrow$ Spanish} \\
+\hline 
+Baseline (replace/M/opt) & \textbf{0.3424} & \textbf{0.5718} & 7.9896 & 53.64 & 39.2 \\ 
+l1r1 (monolithic/replace/opt/tribl2) & 0.336 & 0.5666 & 7.9981 & 53.6 & 39.27 \\ 
+l1r1 (experts/replace/opt/ib1) & 0.338 & 0.5677 & \textbf{8.0165} & \textbf{53.48} & \textbf{39.19} \\ 
+l2r1 (monolithic/replace/opt/tribl2) & 0.3344 & 0.5651 & 7.993 & 53.63 & 39.3 \\ 
+l2r1 (experts/replace/opt/ib1) & 0.3357 & 0.5664 & 8.0086 & 53.51 & 39.23 \\ 
+l2r2 (monolithic/replace/opt/tribl2) & 0.3325 & 0.5639 & 7.9843 & 53.6 & 39.36 \\ 
+l2r2 (experts/replace/opt/ib1) & 0.3345 & 0.5649 & 8.0 & 53.55 & 39.32 \\ 
+l3r3 (monolithic/replace/opt/tribl2) & 0.329 & 0.5611 & 7.9518 & 53.74 & 39.61 \\ 
+l3r3 (experts/replace/opt/ib1) & 0.3298 & 0.562 & 7.9593 & 53.79 & 39.57 \\ 
+\hline
+\end{tabular}
+\caption{Negative results on Europarl 250k - English to Spanish}
+\end{table}
+
+The second attempt to test this hypothesis focusses on English to Russian, a
+very morphologically rich language with three genders and six cases. Under our
+hypothesis, we would expect positive results here.  Table~\ref{tab:yandex1M}
+shows the results of this experiment.
+
+%TODO: wait for english-russian, process results and draw conclusion
 
 
 
@@ -1041,11 +1070,7 @@ be more prone to overfitting on one hand, which might well be the case in the
 EMEA experiment, as well as sparsity problems for smaller classifier experts on
 the other hand.
 
-%TODO: parameter optimisation experiment
-
-
-
-
+%TODO: parameter optimisation experiment (still to run and process)
 
 
 \subsection{Results: weighting method}
@@ -1056,19 +1081,19 @@ Two weighting methods have been implemented and used in our experiments, the
 and the \emph{replace} method, which replaces the existing $p(t|s)$ score with
 $p(t|s,C)$. 
 
+%TODO: draw comparisons and conclusions
 
+\subsection{Results: Qualitative Analysis}
 
- 
+In this section we will take a look at the translations themselves and see if
+we can discern patterns that can tell us what the effect of source-side context
+information is, when it pays off and when it is at fault.
 
+%TODO: write
 
+\section{Conclusion} 
 
-
-
-
-
-
-
-
+%TODO: write
 
 
 \bibliographystyle{spbasic}
