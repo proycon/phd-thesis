@@ -630,7 +630,28 @@ here is to keep all variables equal except for the integration of context
 information, so we can make a fair assessment.
 
 %TODO: look at feature weights from MERT (later on)
-%TODO: talk about parameter optimisation in classifier
+
+%talk about parameter optimisation in classifier
+Whilst we conduct parameter optimisation for the parameters of the SMT
+decoder, we do not yet do so \emph{for the classifiers}. 
+
+Yet, these too could be optimised. This is only feasible for the classifier
+experts; recall that the monolithic classifier necessarily has extra
+constraints imposed on it to prevent translations that do not occur in the
+phrase-translation table. This has the disadvantage of making it hard to run
+standard parameter optimisation algorithms. 
+
+Optimisation of classifier parameters comes with a number of challenges.
+Ideally, it should not be independent of the optimisation of the decoder
+parameters, and the classifier parameters should be evaluated on the
+end-result, i.e. the full sentential translations, according to one or more MT
+metrics. This, however, is prohibitively expensive as it vastly increases the
+parameter search space and thus the complexity of the problem. As a concession
+for the sake of computability, classifier parameter optimisation is considered
+independently and assessed through simpler cross-validation or leave-one-out
+methods (depending on the number of instances in the classifier expert).  This
+still introduces a significant computational bottleneck.  We will conduct an
+experiment in this way in Section~\ref{sec:typeopt}.
 
 
 \subsection{Results: source-side context vs. no context}
@@ -948,6 +969,7 @@ Table~\ref{tab:europarl250k}).
 
 
 \subsection{Results: classifier type and classifier parameter optimisation}
+\label{sec:typeopt}
 
 We have introduced two types of classifier, integrated in an Statistical
 Machine Translation framework by means of the ``bypass'' method described in
@@ -1009,27 +1031,7 @@ be more prone to overfitting on one hand, which might well be the case in the
 EMEA experiment, as well as sparsity problems for smaller classifier experts on
 the other hand.
 
-Whilst we conducted parameter optimisation for the parameters of the SMT
-decoder, we did not yet do so \emph{for the classifiers}. Yet, these too can be
-optimised. This is only feasible for the classifier experts; recall that the
-monolithic classifier necessarily has extra constraints imposed on it to
-prevent translations that do not occur in the phrase-translation table. This
-has the disadvantage of making it hard to run standard parameter optimisation
-algorithms. 
-
-The experiments conducted until now have not seen their classifiers optimised
-in such a way, because this comes with a number of challenges. Ideally,
-the optimisation of classifier parameters should not be independent of the
-optimisation of the decoder parameters, and the classifier parameters should be
-evaluated on the end-result, i.e. the full sentential translations according to
-one or more MT metrics. This, however, is prohibitively expensive as it vastly
-increases the parameter search space and thus the complexity of the problem. As
-a concession for the sake of computability, classifier parameter optimisation
-is considered independently and assessed through simpler cross-validation or
-leave-one-out methods (depending on the number of instances in the classifier
-expert). This still introduces a significant computational bottleneck.
-
-
+%TODO: parameter optimisation experiment
 
 
 
@@ -1037,6 +1039,15 @@ expert). This still introduces a significant computational bottleneck.
 
 
 \subsection{Results: weighting method}
+\label{sec:weighting}
+
+Two weighting methods have been implemented and used in our experiments, the
+\emph{append} method, adding $p(t|s,C)$ as an extra score to the score vector,
+and the \emph{replace} method, which replaces the existing $p(t|s)$ score with
+$p(t|s,C)$. 
+
+
+
  
 
 
