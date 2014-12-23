@@ -510,6 +510,8 @@ sequence of $(i,j)$ indices, rather than the actual words..  The test data is
 replaced with a series of consecutive positions as well. These two altered data
 sets are now the input to Moses, which can now run unmodified. 
 
+
+
 \section{Experiments}
 
 We conduct a number of experiments to assess whether integration of
@@ -601,6 +603,7 @@ information, so we can make a fair assessment.
 
 
 \subsection{Results: source-side context vs. no context}
+\label{sec:results1}
 
 The primary objective of our study is to assess the role of source-side context
 information. To this end we conducted a series of experiments on various
@@ -929,7 +932,29 @@ classifier is a lot bigger by definition, and therefore the high performance of
 the algorithm IGTree becomes imperative, a pure IB1 approach would be too slow
 and TRIBL2 seeks to combine the best of both worlds.
 
-Most of the tables in the previous section list results for both classifier
+Table~\ref{tab:expertcount} lists the number of classifier experts that were
+built for some of the data sets. The actual number of source phrases is always
+much higher, as classifiers are only built when there is ambiguity regarding
+the translation.
+
+\begin{table}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Corpus} & \textbf{Sentence pairs} & \textbf{Languages} & \textbf{Classifier Experts} \\
+\hline
+Europarl & 250,000 & English-Spanish & 828,326 \\
+JRC & 250,000 & English-Spanish & 635,547 \\
+IWSLT 2012 TED & 127,806 & Dutch-English & 193,811 \\
+IWSLT 2006 & 40,274 & Chinese-English & 22,212 \\
+Fryske Akademy & 137,937 & Dutch-Frisian & 276,819 \\
+Fryske Akademy & 137,937 & Frisian-Dutch & 213,573 \\
+\hline
+\end{tabular}
+\label{tab:expertcount}
+\caption{Number of classifier experts generated per data set}
+\end{table}
+
+Most of the tables in Section~\ref{sec:results1} list results for both classifier
 types.  We find the classifier experts outperforming the monolithic classifier
 for Chinese-English (Table~\ref{tab:iwslt2006} (for all context sizes except
 \texttt{l3r3}), for  IWSTL 2012 TED Dutch-English (Table~\ref{tab:iwslt2012},
@@ -945,15 +970,15 @@ other the monolithic classifier has the upper-hand. Moreover, when we look at
 the EMEA data (Table~\ref{tab:emea}, where we had the most significant gains
 above baseline, we find the monolithic system strongest. 
 
-Despite the results not being unanymous, the case for the classifier experts is
-strong and can be motivated by the fact that feature weights are computed o a per-
-source-phrase basis, rather than on the conjunction of all. It can be considered as a
+Despite the results not being unanimous, the case for the classifier experts is
+strong and can be motivated by the fact that feature weights are computed on a per-
+source-phrase basis, rather than on the aggregation of all. It can be considered as a
 kind of optimisation step. The counterside is that such systems may therefore
 be more prone to overfitting on one hand, which might well be the case in the
 EMEA experiment, as well as sparsity problems for smaller classifier experts on
 the other hand.
 
-Whilst we conducted parameter optimisation for the parameter of the SMT
+Whilst we conducted parameter optimisation for the parameters of the SMT
 decoder, we did not yet do so \emph{for the classifiers}. Yet, these too can be
 optimised. This is only feasible for the classifier experts; recall that the
 monolithic classifier necessarily has extra constraints imposed on it to
@@ -962,7 +987,17 @@ has the disadvantage of making it hard to run standard parameter optimisation
 algorithms. 
 
 The experiments conducted until now have not seen their classifiers optimised
-in such way, because this comes with a number of challenges:
+in such a way, because this comes with a number of challenges. Ideally,
+the optimisation of classifier parameters should not be independent of the
+optimisation of the decoder parameters, and the classifier parameters should be
+evaluated on the end-result, i.e. the full sentential translations according to
+one or more MT metrics. This, however, is prohibitively expensive as it vastly
+increases the parameter search space and thus the complexity of the problem. As
+a concession for the sake of computability, classifier parameter optimisation
+is considered independently and assessed through simpler cross-validation or
+leave-one-out methods (depending on the number of instances in the classifier
+expert). This still introduces a significant computational bottleneck.
+
 
 
 
@@ -989,6 +1024,5 @@ in such way, because this comes with a number of challenges:
 
 
 
-%cross-domain testing
 
 \end{document}
