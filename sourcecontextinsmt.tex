@@ -1,6 +1,8 @@
-\documentclass[11pt]{article}
-%\usepackage{acl2014}
+\documentclass[smallextended]{svjour3}       % onecolumn (second format)
+\smartqed  % flush right qed marks, e.g. at end of proof
+\usepackage{mathptmx}      % use Times fonts if available on your TeX system
 \usepackage{times}
+\usepackage[utf8]{inputenc}
 \usepackage{url}
 \usepackage{latexsym}
 \special{papersize=210mm,297mm} % to avoid having to use "-t a4" with dvips 
@@ -14,7 +16,6 @@
 \usepackage{algorithm} 
 \usepackage{algpseudocode} 
 \usepackage{caption}
-\usepackage[utf8]{inputenc}
 \usepackage{gb4e}
 \usepackage{natbib}
 
@@ -33,6 +34,7 @@
 \DeclareMathOperator*{\argmax}{arg\,max}
 
 \title{Unsupervised classifier-based modelling of source-side context information in Statistical Machine Translation}
+\titlerunning{Source-side context in SMT}
 
 
 \author{Maarten van Gompel \& Antal van den Bosch \\
@@ -528,24 +530,53 @@ simply reuse the target-side portion of the parallel corpus. We thus do not
 introduce additional data for the language model in our experiments.
 
 We use various corpora\footnote{Europarl, EMEA and JRC-Acquis can be obtained through
-\url{http://opus.lingfil.uu.se/}} and test various language pairs as we hope to come to a general conclusion.
+\url{http://opus.lingfil.uu.se/}} and test various language pairs as we hope to
+come to a general conclusion. Table~\ref{tab:datasets} lists them all, along with the amount of
+sentence pairs we used for training, development and testing.
 
-\begin{enumerate}
-  \item \textbf{Europarl} - The proceeding of the European Parliament
-    \citep{EUROPARL,OPUS2012}.
-  \item \textbf{EMEA} - Documents of the European Medicines Agency
-    \citep{OPUS2012}
-  \item \textbf{Fryske Akademy Parallel Corpus} - A collection of texts in
-    Frisian and Dutch, contains numerous books and other sources. \citep{OERSETTER}
-    \footnote{This corpus is not publicly available unfortunately} 
-  \item \textbf{JRC-Acquis} - A collection of legislative documents of the
-    European Union \citep{OPUS2012}
-  \item \textbf{IWLST 2012 TED Talks} - Transcripts and translations of TED
-    talks, used for subtitling, as used in the IWSLT 2012 Evaluation Campaign \citep{WIT3,IWSLT12}.
-  \item \textbf{IWLST 2006} - Chinese$-$English data form the  IWSLT 2006 Evaluation Campaign.
-\end{enumerate}
+\begin{table}
+\begin{tabular}{|lrr|}
+\hline
+& \textbf{Languages} & \textbf{Sentence Pairs}\footnote{train/development/test} \\
+\hline
+\multicolumn{3}{|l|}{\pbox{12cm}{\textbf{Europarl} -- \emph{The proceedings of the
+European Parliament} \citep{EUROPARL,OPUS2012}} } \\
+& English to Spanish & $250,000$ / $2000$ / $2000$ \\
+& English to Dutch & $250,000$ / $5000$ / $5000$ \\
+\hline
+\multicolumn{3}{|l|}{\textbf{EMEA} -- \emph{Documents of the European Medicines
+Agency} \citep{OPUS2012} } \\
+ & Spanish to English & $1,088,333$ / $5000$ / $5000$ \\
+ & English to Dutch & $1,080,894$ / $5000$ / $5000$ \\
+\hline
+\multicolumn{3}{|l|}{\pbox{12cm}{\textbf{Fryske Akademy Parallel Corpus} -
+\emph{A collection of texts in
+Frisian and Dutch, contains numerous books and other sources} \citep{OERSETTER}
+\footnote{This corpus is not publicly available unfortunately} } } \\
+ & Dutch to Frisian & $137,937$ / $2000$ / $2000$ \\
+ & Frisian to Dutch & $137,937$ / $2000$ / $2000$ \\
+\hline
+\multicolumn{3}{|l|}{\textbf{JRC-Acquis} - \emph{A collection of legislative documents of the
+European Union} \citep{OPUS2012} } \\
+ & English to Spanish & $1,233,670$ / $5000$ / $5000$ \\
+ & English to Spanish & $250,000$ / $5000$ / $5000$ \\
+\hline
+\multicolumn{3}{|l|}{\pbox{12cm}{\textbf{IWLST 2012 TED Talks} - \emph{Transcripts and translations of TED
+talks, used for subtitling, as used in the IWSLT 2012 Evaluation Campaign}
+    \citep{WIT3,IWSLT12} } } \\
+ & English to Dutch & $127,806$ / $885$ / $1569$ \\
+\hline
+\multicolumn{3}{|l|}{\pbox{12cm}{\textbf{IWLST 2006 Evaluation Campaign} } } \\
+ & Chinese to English & $40,274$ / $489$ / $486$ \\
+\hline
+\multicolumn{3}{|l|}{\pbox{12cm}{\textbf{Yandex 1M Web Corpus} } } \\
+ & English to Russian & $990,000$ / $5000$ / $5000$ \\
+\hline
+\end{tabular}
+\caption{Overview of parallel corpora used for experiments}
+\label{tab:datasets}
+\end{table}
 
-%TODO: add language pairs used
 %TODO: add torrent link 
 
 \subsection{Evaluation}
@@ -938,7 +969,7 @@ much higher, as classifiers are only built when there is ambiguity regarding
 the translation.
 
 \begin{table}
-\begin{tabular}{|l|l|l|}
+\begin{tabular}{|lll|l|}
 \hline
 \textbf{Corpus} & \textbf{Sentence pairs} & \textbf{Languages} & \textbf{Classifier Experts} \\
 \hline
