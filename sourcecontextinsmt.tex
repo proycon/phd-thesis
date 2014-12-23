@@ -33,7 +33,7 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
-\title{Unsupervised classifier-based modelling of source-side context information in Statistical Machine Translation}
+\title{Language-independent classifier-based modelling of source-side context information in Statistical Machine Translation}
 \titlerunning{Source-side context in SMT}
 
 
@@ -61,9 +61,9 @@ directly in the translation model has a positive effect on translation quality.
 We furthermore investigate various ways classifier-based models can be
 integrated into Statical Machine Translation.  We will use proven techniques
 from Word Sense Disambiguation, effectively integrating WSD techniques in
-Statistical Machine Translation. Our approach is classifier-based and our focus
-is exclusively unsupervised, we therefore do not include any additional linguistic
-features. 
+Statistical Machine Translation. Our approach is language-independent:
+we do not employ any explicit linguistic features computed by
+part-of-speech taggers, supertaggers, or parsers, as used by previous work.
 \end{abstract}
 
 \section{Introduction}
@@ -139,15 +139,20 @@ techniques from WSD in Statistical Machine Translation, and apply these to
 phrases rather than just words.
 
 WSD systems often employ a variety of linguistic features. The focus of our
-study, however, is fully unsupervised. We are interested only in the surface
-forms, the text as-is, and stay as close as possible to vanilla Phrase-Based
-Statistical Machine Translation, without using any language-specific external
-resources. In this fashion, we attempt to assess the merit of source-side
-context information as it is in its unmodified form. 
+study, however, is to be independent of the explicit computation of
+linguistically abstract features with language-dependent tools such as
+part-of-speech taggers, supertaggers, or dependency parsers
+\cite{Rejwanul+11}. 
+%We are interested only in the surface
+%forms, the text as-is, and stay as close as possible to vanilla Phrase-Based
+%Statistical Machine Translation, without using any language-specific external
+%resources. 
+In this fashion, we attempt to assess the merit of source-side
+context information as purely as possible.
 
 Not introducing extra data for the translation system means our goals have to
-be set more modest as well. We can not expect the same gains as are achieved by
-introducing extra data from supervised sources.
+be set more modest as well. We may not expect the same gains as are achieved by
+introducing extra data from linguistic preprocessors.
 
 \section{Previous research}
 
@@ -224,7 +229,7 @@ provides an extensive comparison between them. Their study finds that including
 such linguistically-informed contextual features in general produces
 improvements.  The main contrast between our study and theirs is that they
 focus on a variety of linguistically-informed contextual features, whereas we
-depart from a purely unsupervised angle and intend to settle some of the
+depart from a language-independent angle and intend to settle some of the
 conflicting reports whether this may lead to an improvement in translation
 quality. A notable focus in our study will be possible methods of integrating the
 classifier probabilities in the SMT, as recommended also by \cite{Gimenez+07}.
