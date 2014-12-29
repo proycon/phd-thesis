@@ -1021,7 +1021,9 @@ and TRIBL2 seeks to combine the best of both worlds.
 Table~\ref{tab:expertcount} lists the number of classifier experts that were
 built for some of the data sets. The actual number of source phrases is always
 much higher, as classifiers are only built when there is ambiguity regarding
-the translation.
+the translation. To see how these classifiers are typically distributed, based
+on the number of instances and classes, we zoom in on the IWSLT 2012 data and
+plot a histogram in Figure~\ref{fig:histogram}.
 
 \begin{table}
 \begin{tabular}{|lll|l|}
@@ -1039,6 +1041,13 @@ Fryske Akademy & 137,937 & Frisian-Dutch & 213,573 \\
 \label{tab:expertcount}
 \caption{Number of classifier experts generated per data set}
 \end{table}
+
+
+\begin{figure}
+\includegraphics[width=60.00mm]{classifierhistogram.png}
+\label{fig:histogram}
+\caption{Histogram showing the distribution of the number of instances (blue) and number of classes (green) in the classifier experts for IWSLT 2012 TED, Dutch to English}
+\end{figure}
 
 Most of the tables in Section~\ref{sec:results1} list results for both classifier
 types.  We find the classifier experts outperforming the monolithic classifier
