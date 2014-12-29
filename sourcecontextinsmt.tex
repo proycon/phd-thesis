@@ -1022,8 +1022,12 @@ Table~\ref{tab:expertcount} lists the number of classifier experts that were
 built for some of the data sets. The actual number of source phrases is always
 much higher, as classifiers are only built when there is ambiguity regarding
 the translation. To see how these classifiers are typically distributed, based
-on the number of instances and classes, we zoom in on the IWSLT 2012 data and
-plot a histogram in Figure~\ref{fig:histogram}.
+on the number of instances and classes, we zoom in on the IWSLT 2012 data for
+Dutch to English, and plot a histogram in Figure~\ref{fig:histogram}. As is
+ubiquitous in natural language processing, a zipf curve can be discerned from
+this figure, with the vast majority of classifier experts being very small and
+having few translations options, i.e classes, and an immediate sharp drop in
+frequency as the number of instances or classes increases.
 
 \begin{table}
 \begin{tabular}{|lll|l|}
@@ -1044,9 +1048,9 @@ Fryske Akademy & 137,937 & Frisian-Dutch & 213,573 \\
 
 
 \begin{figure}
-\includegraphics[width=60.00mm]{classifierhistogram.png}
+\includegraphics[width=80.00mm]{classifierhistogram.png}
 \label{fig:histogram}
-\caption{Histogram showing the distribution of the number of instances (blue) and number of classes (green) in the classifier experts for IWSLT 2012 TED, Dutch to English}
+\caption{Histogram showing the distribution of the number of instances (blue) and number of classes (green) in the classifier experts for IWSLT 2012 TED, Dutch to English (logarithmic)}
 \end{figure}
 
 Most of the tables in Section~\ref{sec:results1} list results for both classifier
