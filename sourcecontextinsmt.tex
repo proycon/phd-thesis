@@ -41,7 +41,7 @@
 
 \author{Maarten van Gompel \& Antal van den Bosch \\
  Centre for Language Studies \\
-  Radboud University Nijmegen \\
+  dboud University Nijmegen \\
   {\tt proycon@anaproy.nl}}
 
 %\date{}
@@ -907,7 +907,7 @@ As hypothesised earlier, it may be possible that a certain quality of
 translation is needed before the source-side context information is able to
 make an impact. The learning curve experiments suggest this, but it is at odds
 with the positive results on the Chinese-English IWSLT 2006 data
-(Table~\ref{tab:iwslt2006}), which shows lower scores and is trained on a very
+(Table~\ref{tab:iwslt2006zhen}), which shows lower scores and is trained on a very
 small training set. We dive further into this hypothesis with a series of
 experiments on a Dutch-Frisian corpus. The high similarity between these two
 Germanic languages of The Netherlands makes translation easier, and has been
@@ -970,7 +970,7 @@ language pair, the English to Spanish language pair, and use it for a corpus
 that has performed poorly: the 250,000 sentence subset of Europarl.  If the
 results are better with English to Spanish than with Dutch to English then our
 hypothesis would be strengthens our hypothesis. When we look at the results of
-this experiment in Table~\ref{tab:europarl250k-es}, however, we immediately see
+this experiment in Table~\ref{tab:europarl250k}, however, we immediately see
 that this is not the case; all results are below baseline. A possible
 explanation may be that more training data is needed, as suggested by the
 earlier learning curves, but this too was an hypothesis we could not confirm on
@@ -994,6 +994,7 @@ l3r3 (experts/replace/opt/ib1) & 0.3298 & 0.562 & 7.9593 & 53.79 & 39.57 \\
 \hline
 \end{tabular}
 \caption{Negative results on Europarl 250k - English to Spanish}
+\label{tab:europarl250k}
 \end{table}
 
 The second attempt to test this hypothesis focusses on English to Russian, a
@@ -1010,7 +1011,7 @@ shows the results of this experiment.
 
 We have introduced two types of classifier, integrated in an Statistical
 Machine Translation framework by means of the ``bypass'' method described in
-Section~\ref{sec:TODO}. The monolithic classifier, modelling all phrase-pairs
+Section~\ref{sec:smtintegration}. The monolithic classifier, modelling all phrase-pairs
 in a single classifier, is used also by \cite{Stroppa+07} and
 \cite{Rejwanul+11}, whereas the classifiers experts, one classifier per
 source-phrase, is a new addition that more closely resembles how such
@@ -1046,27 +1047,27 @@ Fryske Akademy & 137,937 & Dutch-Frisian & 276,819 \\
 Fryske Akademy & 137,937 & Frisian-Dutch & 213,573 \\
 \hline
 \end{tabular}
-\label{tab:expertcount}
 \caption{Number of classifier experts generated per data set}
+\label{tab:expertcount}
 \end{table}
 
 
 \begin{figure}
 \includegraphics[width=80.00mm]{classifierhistogram.png}
-\label{fig:histogram}
 \caption{Histogram showing the distribution of the number of instances (blue) and number of classes (green) in the classifier experts for IWSLT 2012 TED, Dutch to English (logarithmic)}
+\label{fig:histogram}
 \end{figure}
 
 Most of the tables in Section~\ref{sec:results1} list results for both classifier
 types.  We find the classifier experts outperforming the monolithic classifier
-for Chinese-English (Table~\ref{tab:iwslt2006} (for all context sizes except
+for Chinese-English (Table~\ref{tab:iwslt2006zhen} (for all context sizes except
 \texttt{l3r3}), for  IWSTL 2012 TED Dutch-English (Table~\ref{tab:iwslt2012},
 mostly below baseline), Europarl250k Dutch-English
 (Table~\ref{tab:europarl250k}, mostly below baseline), and Frisian-Dutch
 (Table~\ref{tab:fa2}, all below baseline)).
 
 These results suggest that the classifier experts perform better than the
-monolithic classifier. When looking at our two 250,000 instance samples of
+monolithic classifier. When looking at the two 250,000 instance samples of
 JRC-Acquis (Table~\ref{tab:jrc250k}), we see a conflicting image. One sample
 confirms our hypothesis that the classifier experts are better, whereas in the
 other the monolithic classifier has the upper-hand. Moreover, when we look at
@@ -1124,7 +1125,7 @@ completely identical?
 
 Such an analysis has been conducted on the test data of the JRC-Acquis
 corpus,from English to Spanish. This is shown in
-Figure~\ref{fig:scoredifference.png}. 
+Figure~\ref{fig:scoredifference}. 
 
 For each occurrence of each source phrase in the test-data, we gathered all
 possible translations and computed $\frac{P(t|s,C)}{P(t|s)}$. This ratio
@@ -1145,9 +1146,8 @@ noise in the graph.
 
 \begin{figure}
 \includegraphics[width=80.00mm]{scoredifference.png}
-\label{fig:scoredifference}
 \caption{Histogram in logarithmic scale showing the ratio $\frac{P(t|s,C)}{P(t|s)}$ for JRC250k English to Spanish test set, illustrating the difference between the classifier score and the original SMT score.}
-
+\label{fig:scoredifference}
 \end{figure}
 
 
