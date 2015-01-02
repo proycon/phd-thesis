@@ -1007,7 +1007,7 @@ results that do not support our hypothesis.
 \begin{tabular}{|l|ccccc|}
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
-\multicolumn{7}{c}{yandex1M-en-ru} \\
+\multicolumn{6}{c}{yandex1M - English $\rightarrow$ Russian} \\
 \hline
 Baseline (replace/M/opt) & \textbf{0.1179} & \textbf{0.5579} & \textbf{5.2793} & 74.65 & 63.9 \\ 
 l1r1 (monolithic/replace/opt/tribl2) & 0.1166 & 0.5568 & 5.2558 & \textbf{74.45} & \textbf{63.72} \\ 
@@ -1162,8 +1162,7 @@ noise in the graph.
 \label{fig:scoredifference}
 \end{figure}
 
-
-\todo{TODO: continue/rethink analysis of difference between  $P(t|s)$ and $P(t|s,C)$ scores}
+\todo{TODO: Is this interpretation and visualisation clear enough?}
 
 \subsection{Results: Qualitative Analysis}
 
@@ -1243,13 +1242,14 @@ In addition to the positive examples, there are also neutral and negative exampl
 
 \section{Conclusion \& Discussion} 
 
-We have conducted numerous experiments to assess whether source-side context
-information, without the use of any explicit linguistic features that require
-supervised parsers or taggers, can improve translation quality. Memory-based
-classifiers were used, and integrated in an SMT framework. The
-results of the experiments were mixed and there was a high degree of
-variability between different corpora and language pairs. Positive results were
-attained on EMEA and JRC-Acquis. 
+We have conducted numerous experiments to assess whether surface-form
+source-side context information, i.e. without the use of any explicit
+linguistic features that require supervised parsers or taggers, can improve
+translation quality. Memory-based classifiers were used, and integrated in an
+SMT framework, following techniques commonly employed in WSD. The results of
+the experiments were mixed and there was a high degree of variability between
+different corpora and language pairs. Positive results were attained on only
+EMEA and JRC-Acquis, highly formulaic corpora. 
 
 We replicated part of the work of \cite{Stroppa+07} and \cite{Rejwanul+11}, and
 found that results are fairly marginal. Inclusion of surface-form
@@ -1257,8 +1257,11 @@ source-side context information is clearly not the most obvious road for the
 improvement of MT quality. It is likely that improvement can be more easily
 achieved through simple improvement of the target-side language model.
 
-In this discussion, we would like to focus on why the results of our study are
-so marginal compared to baseline.  There is a theoretical foundation for this
+We hypothesised that source-side context information may contribute more when
+translating to a morpholigically more complex language, but were unable to
+prove this hypothesis. 
+
+In this discussion, we would like to focus on why the results of our study over-all do not make a good impression above baseline.  There is a theoretical foundation for this
 if we look at the interplay between the SMT decoder and the classifiers. For a
 source phrase $s$ with context $C$ and mapping to translation $t$ to be a
 strong fragment in the classifier, it has to have been observed multiple times
