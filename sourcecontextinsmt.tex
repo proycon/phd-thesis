@@ -1176,6 +1176,24 @@ though the baseline translation could be considered correct as well. This is
 the most common type of difference. Example~\ref{ex:QAdrop} shows the dropping
 of a word.
 
+
+\begin{exmp}
+\footnotesize
+\label{ex:QAsynonym}
+\textbf{Baseline:} El cambio continuo del lugar de inyección dentro de \underline{un área} determinada puede ayudar a \\
+\textbf{l1r1:} El cambio continuo del lugar de inyección dentro de \underline{una región} determinada puede ayudar a \\
+\textbf{Reference:} La contínua rotación de los puntos de inyección dentro de \underline{una región} determinada puede ayudar a reducir o prevenir estas reacciones \\
+\noindent\makebox[\linewidth]{\rule{\linewidth}{0.4pt}}
+\textbf{Baseline:} Baraclude reduce la cantidad de virus en su \underline{cuerpo} y mejora el estado del hígado . \\
+\textbf{l1r1:} Baraclude reduce la cantidad de virus en su \underline{organismo} y mejora el estado del hígado  \\
+\textbf{Reference:} Baraclude reduce la cantidad de virus en su \underline{organismo} y mejora el estado del hígado .
+\\ 
+\noindent\makebox[\linewidth]{\rule{\linewidth}{0.4pt}}
+\textbf{Baseline:} Como consecuencia , el fenilbutirato de sodio , reduce \underline{los niveles plasmáticos} de amonio y glutamina en pacientes con trastornos del ciclo de la urea . \\
+\textbf{l1r1:} Como consecuencia , el fenilbutirato de sodio reduce \underline{las concentraciones plasmáticas elevadas} de amonio y glutamina en pacientes con trastornos del ciclo de la urea .  \\
+\textbf{Reference:} Como consecuencia , el fenilbutirato de sodio reduce \underline{las concentraciones plasmáticas elevadas} de amoníaco y glutamina en pacientes con trastornos del ciclo de la urea .
+\end{exmp}
+
 \begin{exmp}
 \footnotesize
 \label{ex:QAdrop}
@@ -1183,23 +1201,6 @@ of a word.
 \textbf{l1r1:} \underline{Estudios} en animales , no pueden excluir el desarrollo potencial de toxicidad ( ver sección 5.3 ) . \\
 \textbf{Reference:} \underline{Estudios} en animales , no pueden excluir el desarrollo potencial de toxicidad ( ver sección 5.3 ) .
 \end{exmp}
-
-
-\begin{exmp}
-\footnotesize
-\label{ex:QAsynonym}
-\textbf{Baseline:} El cambio continuo del lugar de inyección dentro de \underline{un área} determinada puede ayudar a \\
-\textbf{l1r1:} El cambio continuo del lugar de inyección dentro de \underline{una región} determinada puede ayudar a \\
-\textbf{Reference:} La contínua rotación de los puntos de inyección dentro de \underline{una región} determinada puede ayudar a reducir o prevenir estas reacciones \\ \\
-\textbf{Baseline:} Baraclude reduce la cantidad de virus en su \underline{cuerpo} y mejora el estado del hígado . \\
-\textbf{l1r1:} Baraclude reduce la cantidad de virus en su \underline{organismo} y mejora el estado del hígado  \\
-\textbf{Reference:} Baraclude reduce la cantidad de virus en su \underline{organismo} y mejora el estado del hígado .
-\\
-\textbf{Baseline:} Como consecuencia , el fenilbutirato de sodio , reduce \underline{los niveles plasmáticos} de amonio y glutamina en pacientes con trastornos del ciclo de la urea . \\
-\textbf{l1r1:} Como consecuencia , el fenilbutirato de sodio reduce \underline{las concentraciones plasmáticas elevadas} de amonio y glutamina en pacientes con trastornos del ciclo de la urea .  \\
-\textbf{Reference:} Como consecuencia , el fenilbutirato de sodio reduce \underline{las concentraciones plasmáticas elevadas} de amoníaco y glutamina en pacientes con trastornos del ciclo de la urea .
-\end{exmp}
-
 
 \begin{exmp}
 \footnotesize
@@ -1222,13 +1223,13 @@ In addition to the positive examples, there are also neutral and negative exampl
 \begin{exmp}
 \footnotesize
 \label{ex:QAnegative}
-\textbf{Baseline:} Los pacientes \underline{se asignaron aleatoriamente} a recibir 500 μ g de Aranesp una vez cada tres semanas o 2,25 μ g / kg una vez a la semana . \\
-\textbf{l1r1:} Los pacientes \underline{fueron aleatorizados} a recibir 500 μ g de Aranesp una vez cada tres semanas o 2,25 μ g / kg una vez a la semana . \\
-\textbf{Reference:} Los pacientes \underline{se asignaron aleatoriamente} a recibir 500 μ g de Aranesp una vez cada tres semanas o 2,25 μ g / kg una vez a la semana .
+\textbf{Baseline:} Los pacientes \underline{se asignaron aleatoriamente} a recibir 500 $\mu$ g de Aranesp una vez cada tres semanas o 2,25 $\mu$ g / kg una vez a la semana . \\
+\textbf{l1r1:} Los pacientes \underline{fueron aleatorizados} a recibir 500 $\mu$ g de Aranesp una vez cada tres semanas o 2,25 $\mu$ g / kg una vez a la semana . \\
+\textbf{Reference:} Los pacientes \underline{se asignaron aleatoriamente} a recibir 500 $\mu$ g de Aranesp una vez cada tres semanas o 2,25 $\mu$ g / kg una vez a la semana .
 \end{exmp}
 
 
-\section{Conclusion} 
+\section{Conclusion \& Discussion} 
 
 \todo{TODO: write}
 
