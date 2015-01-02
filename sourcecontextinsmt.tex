@@ -1080,15 +1080,74 @@ the other hand.
 \todo{TODO: parameter optimisation experiment (still to run and process)}
 
 
-\subsection{Results: weighting method}
+\subsection{Results: Weighting methods and score analysis}
 \label{sec:weighting}
 
-Two weighting methods have been implemented and used in our experiments, the
-\emph{append} method, adding $p(t|s,C)$ as an extra score to the score vector,
-and the \emph{replace} method, which replaces the existing $p(t|s)$ score with
-$p(t|s,C)$. 
+Two weighting methods have been implemented, the \emph{append} method, adding
+$p(t|s,C)$ as an extra score to the score vector, and the \emph{replace}
+method, which replaces the existing $p(t|s)$ score with $p(t|s,C)$. Most
+experiments have been conducted with the \emph{replace} method, as it is the
+simplest one. For EMEA (Table~\ref{tab:emea}) and JRC-Acquis
+(Table~\ref{tab:jrc250k}), the \emph{append} method was tested as well.
 
-\todo{TODO: draw comparisons and conclusions}
+Comparing the two weighting methods, however, is far from trivial. When a
+discrepancy is found between a run with the replace method (4 scores) and the
+run with the append method (5 scores), we can not simply ascribe such a
+difference to the extra score, but must into account that the very act of
+adding a score shifts the weights for the score vector, even if uniformly
+distributed. Any shift may likely affect the outcome. This
+motivation is also the reason we included a separate baseline for the append
+method in the tables in which we reported it. Moreover, it explains why we can
+not just apply the results of the parameter optimisation of the replace method
+to the append method.
+
+Tables~\ref{tab:emea} (EMEA) and \ref{tab:jrc250k} (JRC) have been run without
+parameter optimisation. Even without context information, the baselines for the
+append method score better than those for the replace method. Effectively, the
+append method's baseline is simply a version with a double feature and
+functionally equivalent to just assigning double weight to the feature.
+
+A comparison is complicated by the fact that the $p(t|s,C)$ score is often simply
+equal to the $p(t|s)$ score, by definition so for any source phrases for which no
+classifier was needed, due to not being ambiguous in translation or context. 
+
+We can therefore not draw any satisfactory conclusions on the merit of the
+\emph{append} method versus the \emph{replace} method, given the experiments we
+conducted. We can, however, use the two different scoring methods to provide
+insight into the classifier results. How often does the classifier assign a
+$P(t|s,C)$ that significantly differs from $P(t|s)$? And how often are they
+completely identical?
+
+Such an analysis has been conducted on the test data of the JRC-Acquis
+corpus,from English to Spanish. This is shown in
+Figure~\ref{fig:scoredifference.png}. 
+
+For each occurrence of each source phrase in the test-data, we gathered all
+possible translations and computed $\frac{P(t|s,C)}{P(t|s)}$. This ratio
+expresses the difference between the context-informed translation probability
+and the non-context informed one.
+
+A value of one indicates there is no difference whatsoever, this includes all
+source phrases where either translation or context are unambigious. A spike can
+be observed at this point, this spike covers $9\%$ of phrase-pairs. The right
+hand side of the graph ($>1$), is of most interest, it covers the phrase-pairs
+for which the classifier increased the probability, we compute that $75\%$ of
+the phrase-pairs is in this region, which is reflected by the increased
+noise in the graph. 
+
+%A downward trend can be observed in the graph, downward adjustments are more
+%prevalent as it it is a logical consequence of increasing probability to one
+%translation over the others in a distribution.
+
+\begin{figure}
+\includegraphics[width=80.00mm]{scoredifference.png}
+\label{fig:scoredifference}
+\caption{Histogram in logarithmic scale showing the ratio $\frac{P(t|s,C)}{P(t|s)}$ for JRC250k English to Spanish test set, illustrating the difference between the classifier score and the original SMT score.}
+
+\end{figure}
+
+
+\todo{TODO: continue/rethink analysis of difference between  $P(t|s)$ and $P(t|s,C)$ scores}
 
 \subsection{Results: Qualitative Analysis}
 
