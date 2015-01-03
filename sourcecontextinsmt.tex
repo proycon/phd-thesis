@@ -708,7 +708,7 @@ l3r3 (experts/replace/opt/ib1) & 0.2950 & 0.5328 & 5.5433 & 55.66 & 46.41 \\
 \todo{TODO: compute and add significance, also to other tables}
 
 Several local context sizes have been attempted. The number after \texttt{l}
-refers to the numbers of words to the left of the source phrase, the number
+refers to the numbers of words to the left of the source phrase. The number
 after \texttt{r} denotes the right context size. Further parameters to the
 system are enclosed within parentheses.  Recall that our the classifiers may be
 built in two distinct ways, a single \emph{monolithic} configuration (with
@@ -722,16 +722,17 @@ postponed until a later section.  For the current and most of our experiments,
 weights to the SMT decoder have been optimised (\emph{opt}) using MERT, on the
 baseline.
 
-For this experiment, we draw the conclusion that the integration of source-side
-context-informed classifiers is indeed beneficial.  The highest results are
-attained with a configuration of two words to the left, and two words to the
-right, but the various context configurations are fairly close. It is likely
-that using different data results in a different ranking.
+For this experiment, we draw the conclusion that the integration of
+source-side context-informed classifiers may indeed be beneficial.
+The highest results are attained with a configuration of two words to
+the left and two words to the right, but the results from the various
+context configurations are fairly close. It is likely that using
+different data results in a different ranking.
 
 This positive conclusion, however, can not be easily generalised.
 Table~\ref{tab:europarl250k}, for example, presents a more scattered image,
 with results primarily below baseline. This experiment was conducted on 250,000
-training instances of the Europarl corpus, and translated from Dutch to
+training instances of the Europarl corpus, from Dutch to
 English.
 
 \begin{table}
@@ -783,14 +784,14 @@ l3r3 (experts/replace/opt/ib1) & 0.2995 & 0.5498 & 7.3243 & 51.96 & 39.57 \\
 \end{table}
 
 We observe a high degree of variability between our various experiments.
-Conclusions drawn from one data-set are hard to generically apply to others.
+Conclusions drawn from one dataset cannot be generalised.
 Further experiments in this section will underline this observation. 
 
 The EMEA corpus (Table~\ref{tab:emea}) shows the most positive results, the JRC
-Acquis corpus (Table~\ref{tab:jrc250}) does so as well, although by a small
+Acquis corpus (Table~\ref{tab:jrc250}) also shows positive results, although by a small
 margin. Both experiments were done for English to Spanish, and an English to
 Dutch experiment was added for EMEA, on which the results also hold. In these
-experiments, we did not conduct parameter optimisation, we instead used a
+experiments we did not conduct parameter optimisation; we instead used a
 uniform (uni) distribution of weights for the translation model, and similar
 defaults for the other components.
 
@@ -860,9 +861,9 @@ l1r1 (experts/append/uni/ib1) & 0.5304 & 0.6749 & 10.9971 & 39.18 & 25.99 \\
 
 Table~\ref{tab:jrc250k} again clearly illustrates our observation that there is
 significant variation between data sets. We have drawn two independent samples
-from the same dataset and find this results in very different scores.
+from the same dataset and observe that this results in rather different scores.
 Nevertheless, the conclusion that source-side context is beneficial is upheld
-for both, with the second sample doing so more by a larger margin. 
+for both, with the second sample doing so by a larger margin. 
 
 This variability makes it hard to draw generic conclusions.  We may speculate
 that below-baseline results, such as the earlier results on Dutch-to-English
