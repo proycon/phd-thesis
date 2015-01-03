@@ -623,7 +623,7 @@ more similar the translation is to the reference.
 
 \subsection{Baseline}
 
-For each experiment, we construct a non-context-informed baseline. This
+For each experiment we construct a non-context-informed baseline. This
 baseline does make use of our full pipeline, i.e. the bypass method described
 in Section~\ref{sec:smtintegration}, but it does not invoke the
 classifiers.  We do this to ensure the only difference is the actual
@@ -647,43 +647,42 @@ information, so we can make a fair assessment.
 \todo{TODO: look at feature weights from MERT (later on)}
 
 %talk about parameter optimisation in classifier
-Whilst we conduct parameter optimisation for the parameters of the SMT
-decoder, we do not yet do so \emph{for the classifiers}. 
-
-Yet, these too could be optimised. This is only feasible for the classifier
-experts; recall that the monolithic classifier necessarily has extra
-constraints imposed on it to prevent translations that do not occur in the
-phrase-translation table. This has the disadvantage of making it hard to run
-standard parameter optimisation algorithms. 
+While we conduct parameter optimisation for the parameters of the SMT
+decoder, we do not yet do so for the classifiers. Yet, these too could
+be optimised. This is only feasible for the classifier experts; recall
+that the monolithic classifier necessarily has extra constraints
+imposed on it to prevent translations that do not occur in the
+phrase-translation table. This has the disadvantage of making it hard
+to run standard parameter optimisation algorithms.
 
 Optimisation of classifier parameters comes with a number of challenges.
 Ideally, it should not be independent of the optimisation of the decoder
 parameters, and the classifier parameters should be evaluated on the
-end-result, i.e. the full sentential translations, according to one or more MT
+end result, i.e. the full sentential translations, according to one or more MT
 metrics. This, however, is prohibitively expensive as it vastly increases the
 parameter search space and thus the complexity of the problem. As a concession
 for the sake of computability, classifier parameter optimisation is considered
 independently and assessed through simpler cross-validation or leave-one-out
 methods (depending on the number of instances in the classifier expert).  This
-still introduces a significant computational bottleneck.  We will conduct an
-experiment in this way in Section~\ref{sec:typeopt}.
+still introduces a significant computational bottleneck.  We conduct an
+experiment in this way described in Section~\ref{sec:typeopt}.
 
 
 \subsection{Results: source-side context vs. no context}
 \label{sec:results1}
 
-The primary objective of our study is to assess the role of source-side context
-information. To this end we conducted a series of experiments on various
-corpora and language pairs.
-
-We start with Table~\ref{tab:iwslt2006zhen}, which  shows a clear positive
-result on the data set of the IWSLT 2006 Evaluation Campaign, Chinese to
-English. A dataset from the same source \footnote{Due to this dataset not being
-publicly available. Moreover, we no longer having means of comparing the exact
-set used by \cite{Stroppa+07}, we have to assume our training and test sets,
-whilst drawn from the same source, are distinct subsets from the ones used by
-\cite{Stroppa+07}} was used in \cite{Stroppa+07}, who also reported positive
-results.
+The primary objective of our study is to assess the role of
+source-side context information. To this end we conducted a series of
+experiments on various corpora and language pairs. The first results,
+on the IWSLT 2006 Evaluation Campaign, Chinese to English, are listed
+in Table~\ref{tab:iwslt2006zhen}. They show a consistent advantage of
+having the source-side classifiers. A dataset from the same source
+\footnote{This dataset is not publicly available. Moreover, as we no
+  longer having means of comparing the exact set used by
+  \cite{Stroppa+07}, we have to assume our training and test sets,
+  whilst drawn from the same source, are distinct subsets from the
+  ones used by \cite{Stroppa+07}} was used in \cite{Stroppa+07}, who
+also reported positive results.
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
@@ -708,7 +707,7 @@ l3r3 (experts/replace/opt/ib1) & 0.2950 & 0.5328 & 5.5433 & 55.66 & 46.41 \\
 \end{table}
 \todo{TODO: compute and add significance, also to other tables}
 
-Several local context sizes have been attempted, the number after \texttt{l}
+Several local context sizes have been attempted. The number after \texttt{l}
 refers to the numbers of words to the left of the source phrase, the number
 after \texttt{r} denotes the right context size. Further parameters to the
 system are enclosed within parentheses.  Recall that our the classifiers may be
