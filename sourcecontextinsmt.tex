@@ -179,7 +179,7 @@ Their approach uses an ensemble classification model that integrates
 position-sensitive, syntactic, and local collocational features, which has
 proven itself in competitive WSD tasks. This includes linguistic features such
 as part-of-speech tags and lemmas, as well as more complex syntactic relations.
-They test on a single Chinese-to-English test set only, and only
+They test on a single Chinese--English test set only, and only
 evaluate with BLEU,
 which raises some questions on whether their conclusions would hold on
 different language pairs, test sets, and using different evaluation metrics.
@@ -218,10 +218,10 @@ research, which is something that will indeed be a focus in our present study.
 
 The year 2007 saw a culmination of various studies integrating WSD techniques in
 SMT using classifiers. A third study in this trend was \cite{Stroppa+07}. They
-have a strong focus on the word form, as does this present study, and add only
-part-of-speech features. On IWSLT 2006 data for Chinese-English and
-Italian-English, they achieve a significant improvement for the former, whereas
-the BLEU score for the latter fails to pass the significance test. We will
+focus on the word form, as does this present study, and add only
+part-of-speech features. On IWSLT 2006 data for Chinese--English and
+Italian--English, they achieve a significant improvement for the former, whereas
+the BLEU score for the latter fails to pass the significance test. We 
 attempt to reproduce these experiments in this study.
 
 Source-context aware translation has also been attempted outside of the
@@ -233,16 +233,20 @@ from the same concept while transcending a word-based paradigm:
 attempts a full extension to phrases similar to SMT. Although positive results
 are achieved in the latter study, it does not rival state-of-the-art SMT.
 
-The most important and complete study we build upon is \cite{Rejwanul+11},
-which in turn draws from the majority of the aforementioned studies, and
-provides an extensive comparison between them. Their study finds that including
-such linguistically-informed contextual features in general produces
-improvements.  The main contrast between our study and theirs is that they
-focus on a variety of linguistically-informed contextual features, whereas we
-depart from a language-independent angle and intend to settle some of the
-conflicting reports whether this may lead to an improvement in translation
-quality. A notable focus in our study will be possible methods of integrating the
-classifier probabilities in the SMT, as recommended also by \cite{Gimenez+07}.
+The most important and complete study we build upon is
+\cite{Rejwanul+11}, which in turn draws from the majority of the
+aforementioned studies, and provides an extensive comparison between
+them. Their study finds that including linguistically-informed
+contextual features produces improvements, but not always; also,
+different contextual features have different, unpredictable results,
+some of which are positive. The main contrast between our study and
+theirs is that they focus on a variety of linguistically-informed
+contextual features, whereas we depart from a language-independent
+angle and intend to settle some of the conflicting reports whether
+this may lead to an improvement in translation quality. A notable
+focus in our study will be possible methods of integrating the
+classifier probabilities in the SMT, as recommended also by
+\cite{Gimenez+07}.
 
 
 \section{Methodology}
@@ -252,7 +256,7 @@ Like most of the latest studies before us, we approach the machine translation
 problem in a phrase-based fashion, which has superseded the simpler word-based
 based paradigm for quite some time. This means that phrases, defined as a
 sequence of one or more words (that need not form a linguistic entity in any
-way!), form the basic building blocks of our translation model. The problem of
+way), form the basic building blocks of our translation model. The problem of
 translating a sentence is decomposed into the problem of translating its phrasal
 subparts and combining the results in the best order.
 
@@ -270,13 +274,13 @@ Stroppa+07,MARKERBASED}, we make use of memory-based classifiers to build a
 translation model informed by source-side context information. More
 specifically, we will be using IB1 \citep{IB1}, an implementation of k-Nearest
 Neighbours; IGTree \citep{IGTree}, an optimised and lossless tree-based approximation thereof;
-and TRIBL2, a mixture model of the two. 
+and TRIBL2, a mixture of IB1 and IGTree. 
 
-These algorithms are all implemented in the
-software Timbl \citep{TIMBL}\footnote{\url{http://ilk.uvt.nl/timbl}} and
-are well-suited for symbolic data and highly multivariate classes.
-Moreover, memory-based classification has been a proven solution in the field
-of Word Sense Disambiguation \citep{SENSEVAL2,WSD2}.
+These algorithms are all implemented in the software package Timbl
+\citep{TIMBL}\footnote{\url{http://ilk.uvt.nl/timbl}} and are
+well-suited for symbolic data and highly multivariate class spaces.
+Moreover, memory-based classification has been a successful method in
+the field of Word Sense Disambiguation \citep{SENSEVAL2,WSD2}.
 
 When speaking of the $k$ nearest neighbours in the implementation of IB1,
 IGTree and TRIBL2, we are actually referring to the neighbours at nearest
@@ -285,13 +289,14 @@ that are all at equal distance.
 
 %(these two paragraphs are paraphrased from my PBMBMT thesis, not sure to cite
 %or prevent for risk of over-self-citation here)
+% [Antal] that's no problem.
 IGTree compresses the instance base into an ordered decision tree structure at
 training time, and issues look-ups in this tree structure at test time. Unlike
 other top-down induced decision tree methods such as C4.5, features in IGTree
-are tested in a fixed order. This is computed \emph{only once and in advance}
+are tested in a fixed order. This is computed only once 
 for all features. This order is determined using metrics such as
 \emph{information gain} or \emph{gain ratio}. They determine the relative
-informativeness or disambiguating power of the feature and provide a ranking of
+informativeness or disambiguating power of each feature and provide a ranking of
 all features. 
 
 IGTree's performance relies on the differences in information gain between
