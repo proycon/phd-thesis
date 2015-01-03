@@ -867,7 +867,7 @@ for both, with the second sample doing so by a larger margin.
 
 This variability makes it hard to draw generic conclusions.  We may speculate
 that below-baseline results, such as the earlier results on Dutch-to-English
-Europarl and IWSLT2012 data, may be caused by a lack of trainings data. To
+Europarl and IWSLT2012 data, may be caused by a lack of training data. To
 investigate this hypothesis we construct a learning curve on the EMEA and JRC
 data, and expect there to be a tipping point where context-informed systems
 surpass the baseline.
@@ -878,8 +878,8 @@ each of the larger samples contains the smaller samples as a subset.
 Figure~\ref{fig:emealc} shows the learning curve for EMEA, English to Spanish,
 measured along the BLEU metric. All other metrics follow the same trend for the
 EMEA corpus.  Figure~\ref{fig:jrclc} shows the same for JRC Acquis, English to
-Spanish, here we see BLEU is only just about to converge. We therefore also include
-NIST which converges earlier. For the JRC-Acquis corpus, the METEOR metric, not shown for
+Spanish; here we see that BLEU appears to converge. We also include
+NIST, which converges earlier. For the JRC-Acquis corpus, the METEOR metric, not shown for
 brevity, shows a similar late convergence as BLEU, whereas WER and PER confirm
 the trend followed by NIST.
 
@@ -898,34 +898,36 @@ the trend followed by NIST.
 \end{figure}
 
 
-In the EMEA learning curve in Table~\ref{fig:emealc}, we included an analysis
+In the EMEA learning curve in Table~\ref{fig:emealc} we include an analysis
 of different context sizes.  An enlargement of the context size seems to be
 beneficial for this data set each step along the way, but these results have
-already been shown not to generalise easily, nor is this trend likely to
-continue if ever more context were to be added.
+already been shown not to generalise.
+% nor is this trend likely to
+%continue if ever more context were to be added.
 
 The positive results on the EMEA and JRC data needs to be contrasted to the
 earlier negative results. Can we identify why these corpora, with these
 language pairs, perform well?
 
 We can observe that the nature of these two corpora consists of highly
-formulaic language, medical language in the case of EMEA, and judicial language
-in the case of JRC-Acquis.  This is implies the language is generally more
+formulaic language, medical language in the case of EMEA, and legal language
+in the case of JRC-Acquis.  This implies the language is generally more
 rigidly structured, predictable, and therefore easier to translate than corpora
 from more diverse domains. The fact that the scores for these corpora are
-higher than those for the corpora we've seen before illustrates this point.
+higher than those for the corpora we have seen before illustrates this point.
 
 As hypothesised earlier, it may be possible that a certain quality of
-translation is needed before the source-side context information is able to
-make an impact. The learning curve experiments suggest this, but it is at odds
-with the positive results on the Chinese-English IWSLT 2006 data
-(Table~\ref{tab:iwslt2006zhen}), which shows lower scores and is trained on a very
-small training set. We dive further into this hypothesis with a series of
-experiments on a Dutch-Frisian corpus. The high similarity between these two
-Germanic languages of The Netherlands makes translation easier, and has been
-shown to achieve high scores \citep{OERSETTER}. Table~\ref{tab:fa2} shows our
-findings. Although high scores were obtained as expected, we were completely
-unable to exceed the non-context-informed baseline. 
+translation is needed before the source-side context information is
+able to make an impact. The learning curve experiments suggest this,
+but it is at odds with the positive results on the Chinese-English
+IWSLT 2006 data (Table~\ref{tab:iwslt2006zhen}), which shows lower
+scores while trained on a very small training set. We dive further
+into this hypothesis with a series of experiments on a Dutch-Frisian
+corpus. The high similarity between these two Germanic languages
+spoken in The Netherlands makes translation easier, and has been shown
+to achieve high scores \citep{OERSETTER}. Table~\ref{tab:fa2} shows
+our findings. Although high scores were obtained as expected, we were
+unable to exceed the non-context-informed baseline.
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
