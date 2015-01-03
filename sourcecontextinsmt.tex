@@ -523,13 +523,13 @@ weighting methods for integrating this in the score vector for the phrase pair:
 
 \begin{itemize}
   \item \textbf{Replace} - Replace the $p(t|s)$ probability with $p(t|s,C)$
-  \item \textbf{Append} - Leave the existing $p(t|s)$ as it was, but append
+  \item \textbf{Append} - Leave the existing $p(t|s)$ as it was, and append
     $p(t|s,C)$ as a new score to the score vector.
 \end{itemize}
 
 The score weighting of choice is applied and the data is entered into the
 altered phrase-translation table. The source phrase takes the form of a
-sequence of $(i,j)$ indices, rather than the actual words..  The test data is
+sequence of $(i,j)$ indices, rather than the actual words. The test data is
 replaced with a series of consecutive positions as well. These two altered data
 sets are now the input to Moses, which can now run unmodified. 
 
@@ -547,7 +547,7 @@ For the translation model, we rely on a parallel corpus as our main source of
 input. Whenever the source is untokenised, we tokenise the data using
 \emph{ucto} \footnote{An open-source regular-expression based tokeniser with
 unicode support, \url{http://ilk.uvt.nl/ucto}}. For the language model, we
-simply reuse the target-side portion of the parallel corpus. We thus do not
+simply reuse the target-side portion of the parallel corpus; we do not
 introduce additional data for the language model in our experiments.
 
 We use various corpora\footnote{Europarl, EMEA and JRC-Acquis can be obtained through
@@ -592,9 +592,11 @@ talks, used for subtitling, as used in the IWSLT 2012 Evaluation Campaign}
 
 \todo{TODO: add torrent link}
 
+% goed plan, die academic torrents?
+
 \subsection{Evaluation}
 
-Translation quality will be assessed along five widely-used automated metrics,
+We assess translation quality along five widely-used automated metrics,
 as human evaluation is prohibitively expensive:
 
 \begin{enumerate} %paraphrased from PBMBMT thesis
