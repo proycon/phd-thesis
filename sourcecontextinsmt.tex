@@ -306,7 +306,7 @@ IGTree and switches to a IB1 variant when a value mismatch occurs in the tree.
 In this study, we therefore opt to use TRIBL2 over plain IGTree, but only when
 using IB1 would have a prohibitively large impact on performance.
 
-In our classifier-based translation model we will be modelling the probability
+In our classifier-based translation model we model the probability
 of a target phrase ($t$) given a source phrase ($s$) and context information
 ($C$). We can thus express this as $P(t|s,C)$.  \cite{Stroppa+07} state that
 direct estimation of this probability using relative frequencies would result
@@ -320,7 +320,7 @@ normalization, these can be considered a posterior distribution of
 target phrases. 
 
 We primarily focus on the modelling of local context, i.e. words in the
-immediate vicitinity of the source phrase. Take $w_0$ to be the first word of
+immediate vicinity of the source phrase. Take $w_0$ to be the first word of
 the source phrase $s$, then for a local context size of $n$ words to the left and
 $m$ to the right we construct the feature vector $C$ as follows:
 
@@ -346,12 +346,12 @@ $s$. Nevertheless, it is quite conceivable that a match for the context is not
 found and the classifier proceeds to match on another feature. To prevent
 situations in where the classifier falls back to a completely different source
 phrase, and thus comes up with unrelated translation options, we enforce that
-the source phrases need to match exactly, which is what \cite{Stroppa+07} do as
+the source phrases need to match, which is what \cite{Stroppa+07} do as
 well.
 
-For the classifier experts, on the other hand, the source phrase is the least
-powerful feature in the ranking, as it is shared amongst all instances. We
-therefore simply omit it from the feature vector.
+For the classifier experts, on the other hand, the source
+phrase carries no discriminative power, as it is shared amongst all instances. We
+therefore omit it from the feature vector.
 
 \subsection{Training}
 
