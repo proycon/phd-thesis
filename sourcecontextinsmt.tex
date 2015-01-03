@@ -424,15 +424,15 @@ classifier clearly has no added value and therefore such instances are omitted f
 \subsection{Integration in an SMT Decoder}
 \label{sec:smtintegration}
 
-The task of an SMT decoder is to find the best translation amongst a vast pool
+The task of an SMT decoder is to find the best translation among a vast pool
 of possible translation hypotheses. The best translation hypothesis is the
-translation hypothesis that maximises a log linear combination and is sought
+translation hypothesis that maximises a log-linear combination and is sought
 after in a beam-search algorithm. This log-linear combination draws from
 various models, such as a translation model (i.e. the phrase-translation
 table), a target-language model, and optionally additional models such as a
-distortion model or word-reordering model. 
+distortion model and a word-reordering model. 
 
-The SMT model is generally expressed as in equation~\ref{eq:smtmodel}, take $e$
+The SMT model is generally expressed as in equation~\ref{eq:smtmodel}, taking $e$
 to be the translation in the target language, and $f$ to be the sentence to be
 translated, in the source language.
 
