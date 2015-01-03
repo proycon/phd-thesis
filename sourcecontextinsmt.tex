@@ -969,7 +969,7 @@ the baseline, and thus not providing any added value. Unsurprisingly, scores
 are considerably lower than when tested on the same domain (c.f
 Table~\ref{tab:europarl250k}).
 
-The below-baseline results for Dutch-English on two corpora (Europarl and IWSLT
+The below-baseline results for Dutch--English on two corpora (Europarl and IWSLT
 2012 TED) may suggest that the efficacy of source-side context modelling
 depends strongly on the language pair. A possible hypothesis here is that
 source-side context modelling stands to gain most when translation from
@@ -982,9 +982,9 @@ results hitherto have been on language pairs in which the target language was
 morphologically richer.  In the first experiment we therefore take such a
 language pair, the English to Spanish language pair, and use it for a corpus
 that has performed poorly: the 250,000 sentence subset of Europarl.  If the
-results are better with English to Spanish than with Dutch to English then our
-hypothesis would be strengthens our hypothesis. When we look at the results of
-this experiment in Table~\ref{tab:europarl250k}, however, we immediately see
+results are better with English to Spanish than with Dutch to English
+then this would strengthen our hypothesis. When we look at the results of
+this experiment in Table~\ref{tab:europarl250k}, however, we see
 that this is not the case; all results are below baseline. A possible
 explanation may be that more training data is needed, as suggested by the
 earlier learning curves, but this too was an hypothesis we could not confirm on
@@ -1012,7 +1012,7 @@ l3r3 (experts/replace/opt/ib1) & 0.3298 & 0.562 & 7.9593 & 53.79 & 39.57 \\
 \end{table}
 
 The second attempt to test this hypothesis focusses on English to Russian, a
-very morphologically rich language with three genders and six cases. Under our
+morphologically very rich language with three genders and six cases. Under our
 hypothesis, we would expect positive results here.  Table~\ref{tab:yandex1M}
 shows the results of this experiment, but here we also find below-baseline
 results that do not support our hypothesis.
@@ -1045,9 +1045,9 @@ classifiers are employed in Word Sense Disambiguation.
 
 Classifier experts were built using the IB1 algorithm, whereas we choose for
 TRIBL2 for the monolithic classifier. This was done because the monolithic
-classifier is a lot bigger by definition, and therefore the high performance of
-the algorithm IGTree becomes imperative, a pure IB1 approach would be too slow
-and TRIBL2 seeks to combine the best of both worlds.
+classifier is a lot bigger by definition; a pure IB1 approach would be too slow
+and TRIBL2 seeks to combine the accuracy of IB1 with the speed of a
+decision-tree classifier, IGTree.
 
 Table~\ref{tab:expertcount} lists the number of classifier experts that were
 built for some of the data sets. The actual number of source phrases is always
@@ -1055,7 +1055,7 @@ much higher, as classifiers are only built when there is ambiguity regarding
 the translation. To see how these classifiers are typically distributed, based
 on the number of instances and classes, we zoom in on the IWSLT 2012 data for
 Dutch to English, and plot a histogram in Figure~\ref{fig:histogram}. As is
-ubiquitous in natural language processing, a zipf curve can be discerned from
+ubiquitous in natural language processing, a Zipfian curve can be discerned from
 this figure, with the vast majority of classifier experts being very small and
 having few translations options, i.e classes, and an immediate sharp drop in
 frequency as the number of instances or classes increases.
@@ -1103,10 +1103,11 @@ above baseline, we find the monolithic system strongest.
 Despite the results not being unanimous, the case for the classifier experts is
 strong and can be motivated by the fact that feature weights are computed on a per-
 source-phrase basis, rather than on the aggregation of all. It can be considered as a
-kind of optimisation step. The disadvantage is that such systems may therefore
-be more prone to overfitting on one hand, which might well be the case in the
-EMEA experiment, as well as sparsity problems for smaller classifier experts on
-the other hand.
+kind of optimisation step. The disadvantage is that such systems may 
+be more prone to overfitting, which might well be the case in the
+EMEA experiment.
+% as well as sparsity problems for smaller classifier experts on
+%the other hand.
 
 \todo{TODO: parameter optimisation experiment (still to run and process)}
 
@@ -1114,7 +1115,7 @@ the other hand.
 \subsection{Results: Weighting methods and score analysis}
 \label{sec:weighting}
 
-Two weighting methods have been implemented, the \emph{append} method, adding
+Two weighting methods have been implemented: the \emph{append} method, adding
 $p(t|s,C)$ as an extra score to the score vector, and the \emph{replace}
 method, which replaces the existing $p(t|s)$ score with $p(t|s,C)$. Most
 experiments have been conducted with the \emph{replace} method, as it is the
@@ -1142,29 +1143,28 @@ A comparison is complicated by the fact that the $p(t|s,C)$ score is often simpl
 equal to the $p(t|s)$ score, by definition so for any source phrases for which no
 classifier was needed, due to not being ambiguous in translation or context. 
 
-We can therefore not draw any satisfactory conclusions on the merit of the
-\emph{append} method versus the \emph{replace} method, given the experiments we
-conducted. We can, however, use the two different scoring methods to provide
-insight into the classifier results. How often does the classifier assign a
-$P(t|s,C)$ that significantly differs from $P(t|s)$? And how often are they
-completely identical?
-
+We can therefore not draw any satisfactory conclusions on the merit of
+the \emph{append} method versus the \emph{replace} method, given the
+experiments we conducted. We can, however, use the two different
+scoring methods to provide insight into the classifier results. How
+often does the classifier assign a $P(t|s,C)$ that significantly
+differs from $P(t|s)$? And how often are they completely identical?
 Such an analysis has been conducted on the test data of the JRC-Acquis
 corpus,from English to Spanish. This is shown in
-Figure~\ref{fig:scoredifference}. 
+Figure~\ref{fig:scoredifference}.
 
-For each occurrence of each source phrase in the test-data, we gathered all
-possible translations and computed $\frac{P(t|s,C)}{P(t|s)}$. This ratio
-expresses the difference between the context-informed translation probability
-and the non-context informed one.
-
-A value of one indicates there is no difference whatsoever, this includes all
-source phrases where either translation or context are unambiguous. A spike can
-be observed at this point, this spike covers $9\%$ of phrase-pairs. The right
-hand side of the graph ($>1$), is of most interest, it covers the phrase-pairs
-for which the classifier increased the probability, we compute that $75\%$ of
-the phrase-pairs is in this region, which is reflected by the increased
-noise in the graph. 
+For each occurrence of each source phrase in the test-data, we
+gathered all possible translations and computed
+$\frac{P(t|s,C)}{P(t|s)}$. This ratio expresses the difference between
+the context-informed translation probability and the non-context
+informed one. A value of one indicates there is no difference
+whatsoever, this includes all source phrases where either translation
+or context are unambiguous. A spike can be observed at this point,
+covering $9\%$ of phrase-pairs. The right hand side of the graph
+($>1$) is of most interest; it covers the phrase pairs for which the
+classifier increased the probability.$75\%$ of the
+phrase pairs are in this region, which is reflected by the increased
+noise in the graph.
 
 %A downward trend can be observed in the graph, downward adjustments are more
 %prevalent as it it is a logical consequence of increasing probability to one
@@ -1180,15 +1180,15 @@ noise in the graph.
 
 \subsection{Results: Qualitative Analysis}
 
-In this section we will take a look at the translations themselves and see if
+In this section we take a closer look at the translations themselves and see if
 we can discern patterns that can tell us what the effect of source-side context
 information is and when it pays off.
 
 We zoom in on the corpus that performed best, the EMEA corpus -- English to
 Spanish, one million sentence pairs. We compare the context-informed
 \texttt{l1r1} system with the non-context informed baseline to assess the
-impact of the context information. Out of $5000$ sentences in the test set,
-$3863$ ($77\%$) are translated identically. This high number again shows that
+impact of the context information. Out of $5,000$ sentences in the test set,
+$3,863$ ($77\%$) are translated identically. This high number again shows that
 it is difficult to make a difference. Nevertheless, $22\%$ differs and results
 in a net gain in translation performance, as seen in Table~\ref{tab:EMEA}.
 
@@ -1235,7 +1235,17 @@ of a word.
 \textbf{Reference:} Las reacciones adversas \underline{que se consideran relacionadas} con el uso de Agenerase son síntomas gastrointestinales , erupción y parestesia oral / perioral . \\ \\
 \end{exmp}
 
-In addition to the positive examples, there are also neutral and negative examples. In example~\ref{ex:QAneutral}, all translations can be considered correct and conveying the same message with different nuances, as a difference construction is chosen. Example~\ref{ex:QAnegative} shows the inverse situation of example~\ref{ex:QAsynonym}, a different synonym was chosen but it does not match with the reference translation. This too is a common pattern in the data. This raises the question whether the impact of context-information would not be lower if the test set would have contained multiple reference translations. Such data unfortunately is hard to come by and was not available in this study.
+In addition to the positive examples, there are also neutral and
+negative examples. In example~\ref{ex:QAneutral}, all translations can
+be considered correct and conveying the same message with different
+nuances, as a difference construction is
+chosen. Example~\ref{ex:QAnegative} shows the inverse situation of
+example~\ref{ex:QAsynonym}; a different synonym was chosen but it does
+not match with the reference translation. This too is a common pattern
+in the data. This raises the question whether the impact of
+context-information would not be lower if the test set would have
+contained multiple reference translations. Such data unfortunately is
+hard to come by and was not available in this study.
 
 \begin{exmp}
 \footnotesize
@@ -1258,34 +1268,37 @@ In addition to the positive examples, there are also neutral and negative exampl
 
 We have conducted numerous experiments to assess whether surface-form
 source-side context information, i.e. without the use of any explicit
-linguistic features that require supervised parsers or taggers, can improve
-translation quality. Memory-based classifiers were used, and integrated in an
-SMT framework, following techniques commonly employed in WSD. The results of
-the experiments were mixed and there was a high degree of variability between
-different corpora and language pairs. Positive results were attained on only
-EMEA and JRC-Acquis, highly formulaic corpora. 
+linguistic features that require supervised parsers or taggers, can
+improve translation quality. Memory-based classifiers were used, and
+integrated in an SMT framework, following techniques commonly employed
+in WSD. The results of the experiments were mixed and there was a high
+degree of variability between different corpora and language
+pairs. Positive results were attained on only EMEA and JRC-Acquis,
+highly formulaic corpora.
 
 We replicated part of the work of \cite{Stroppa+07} and \cite{Rejwanul+11}, and
-found that results are fairly marginal. Inclusion of surface-form
+found that differences in results are fairly marginal. Inclusion of surface-form
 source-side context information is clearly not the most obvious road for the
 improvement of MT quality. It is likely that improvement can be more easily
-achieved through simple improvement of the target-side language model.
+achieved through optimizing the target-side language model.
 
-We hypothesised that source-side context information may contribute more when
-translating to a morpholigically more complex language, but were unable to
-prove this hypothesis. 
+We hypothesised that source-side context information may contribute
+more when translating to a morphologically more complex language, but
+were unable to confirm this hypothesis.
 
-In this discussion, we would like to focus on why the results of our study over-all do not make a good impression above baseline.  There is a theoretical foundation for this
-if we look at the interplay between the SMT decoder and the classifiers. For a
-source phrase $s$ with context $C$ and mapping to translation $t$ to be a
-strong fragment in the classifier, it has to have been observed multiple times
-in the training data. If this is so, then there is often a source fragment $s'$
-in the phrase-translation table that is the conjunction of $s$ and $C$, and
-which maps to a $t'$ of which $t$ is at least a substring. It is thus likely that the
-context information we try to explicitly model, is often already implicitly
-available to the decoder. This is provided that the classifier and
-phrase-translation table are trained on the same parallel corpus, as we
-consistently did.
+In this discussion we would like to focus on why the results of our
+study overall do not exceed above the baseline.  There may be an
+explanation for this if we look at the interplay between the SMT
+decoder and the classifiers. For a source phrase $s$ with context $C$
+and mapping to translation $t$ to be a strong fragment in the
+classifier, it has to have been observed multiple times in the
+training data. If this is so, then there is often a source fragment
+$s'$ in the phrase-translation table that is the conjunction of $s$
+and $C$, and which maps to a $t'$ of which $t$ is at least a
+substring. It is thus likely that the context information we try to
+explicitly model, is often already implicitly available to the
+decoder. This is provided that the classifier and phrase-translation
+table are trained on the same parallel corpus, as we consistently did.
 
 
 
