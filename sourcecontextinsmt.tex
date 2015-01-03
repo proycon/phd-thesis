@@ -445,15 +445,15 @@ Bayes' rule inverts the problem into two factors, the former corresponding to
 the translation model, and the latter corresponding to the language model. 
 
 The translation model is a mapping of the set of source phrases ($S$) to the
-set of target phrases ($T$). Each phrase-pair $(s,t)$ where $s \in S$ and $t
-\in T$ is in described by a score vector indicating the likelihood of
+set of target phrases ($T$). Each phrase pair $(s,t)$ where $s \in S$ and $t
+\in T$ is described by a score vector indicating the likelihood of
 translation. This score vector most notably consists of the probabilities
-$p(s|t)$ and $p(t|s)$. In addition, lexical weighting probabilities $lex(s|t)$
-and $lex(t|s)$ express the probability of a phrase-pair word-by-word, and are
+$p(s|t)$ and $p(t|s)$. In addition, the lexical weighting probabilities $lex(s|t)$
+and $lex(t|s)$ express the probability of a phrase pair word-by-word, and are
 often included as components in the score vector. During decoding, the total
 score of the translation model and other models is expressed as a log-linear
 combination, in which different weights can be assigned to each of the
-components of the score vector. These weights are meta-parameters to the task and
+components of the score vector. These weights are hyperparameters to the task and
 are typically optimised automatically on development data using for instance
 Minimum Error Rate Reduction \citep{MERT}.
 
@@ -463,22 +463,22 @@ context information. The hypothesis under investigation in the present study is
 that $p(t|s,C)$ is a more accurate measure than $p(t|s)$.
 
 The state-of-the art SMT decoder used in the majority of MT studies is Moses
-\citep{MOSES}. However, it offers no facilities to take source-side context
+\citep{MOSES}. Moses offers no facilities to take source-side context
 information in account. We had to consider three options to achieve our goal of
 integrating source-side context : 1) creating a new decoder; 2) enhancing
 Moses; or 3) using a bypass method. Although we initially set out to create a
 new decoder, it proved to be too difficult to attain the same quality as Moses.
 We therefore decided, in line also with most of the literature, to follow the
-third option, it is easiest and allows us to use Moses as a black box.
+third option; it allows us to use Moses as a black box.
 
-The bypass method is our \emph{discriminative translation filtering}
-step \citep{Rejwanul+11}, it performs context-aware classification in a
+The bypass method is a \emph{discriminative translation filtering}
+step \citep{Rejwanul+11}. It performs context-aware classification in a
 pre-processing step, namely through alteration of the phrase-translation table,
-and bypasses the need to alter the decoder in any way. We effectively take each
-sentence individually and ensure that the entries in the phrase-translation
+and bypasses the need to alter the decoder in any way. Taking each
+sentence individually, we ensure that the entries in the phrase-translation
 table are explicitly tuned to the source-side context. The output of the
 classifier(s) acts as the filter and constrains the translations options, as
-well as adjusts the score vector. Each instance of a source phrase will get a
+well as adjusts the score vector. Each instance of a source phrase gets a
 separate entry in the phrase-translation table, as opposed to one source phrase
 applying to all instances in the test data. 
 
