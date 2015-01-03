@@ -138,11 +138,11 @@ These examples are meant to illustrate the intuition that is behind our
 research hypothesis. We hypothesise that the inclusion of source-side context
 information in the translation model improves translation results, as the
 context helps in providing a more accurate disambiguation. A counter-hypothesis
-to this would be that whilst source-side context information is not modelled
+to this would be that although source-side context information is not modelled
 explicitly, it is implicitly captured by the combination of translation model
-and language model, and explicit modelling has no added value.
+and target language model, and explicit modelling has no added value.
 
-There is clear and obvious overlap between what we do here and the field of
+There is clear and obvious overlap between what we aim to do here and the field of
 Word Sense Disambiguation (WSD). We effectively test an integration of proven
 techniques from WSD in Statistical Machine Translation, and apply these to
 phrases rather than just words.
@@ -167,27 +167,28 @@ introducing extra data from linguistic preprocessors.
 
 The idea to integrate WSD approaches in SMT is not new, nor is the idea to use
 source-side context information to disambiguate in translation. Various studies
-have been conducted with mixed results. In the early days of SMT,
+have been conducted, offering mixed results. In the early days of SMT,
 \cite{GarciaVarea+02} already explicitly modelled source-side context in a
 maximum entropy model for word-based SMT, and report slightly improved error
 rates on a translation task.
 
 \cite{CarpuatWu05} were the first to directly tackle the question whether
 full-scale WSD models were beneficial to translation quality when integrated in
-SMT systems, and thus their work forms important foundation for our own study.
+SMT systems, and thus their work forms an important foundation for our own study.
 Their approach uses an ensemble classification model that integrates
 position-sensitive, syntactic, and local collocational features, which has
 proven itself in competitive WSD tasks. This includes linguistic features such
 as part-of-speech tags and lemmas, as well as more complex syntactic relations.
-They test for a single Chinese-to-English test-set only, and only use BLEU,
+They test on a single Chinese-to-English test set only, and only
+evaluate with BLEU,
 which raises some questions on whether their conclusions would hold on
 different language pairs, test sets, and using different evaluation metrics.
 
-\cite{CarpuatWu05} place strong focus on the WSD model rather than the SMT
+\cite{CarpuatWu05} focus on the WSD model rather than on the SMT
 model, whereas we place more focus on the SMT model and the integration method,
-and keep the ``WSD-model'' relatively simple. Furthermore, the method they
-employ a simpler word-based form of Statistical Machine Translation and the
-level of integration seems limited.
+and keep our WSD model relatively simple. Furthermore, both the method they
+employ (a word-based form of Statistical Machine Translation) and the
+level of integration appear limited.
 
 Despite their efforts, they reach the surprising conclusion that inclusion of
 WSD techniques does \emph{not} yield better translation quality. Will these
@@ -203,7 +204,7 @@ training and the WSD predictions are integrated into the phrase-based SMT
 framework.'' \citep{CarpuatWu07}. They also broaden their use of evaluation
 metrics, yet still test on only Chinese to English.
 
-The work of \cite{Gimenez+07} is similar, they use support vector machines to
+The work of \cite{Gimenez+07} is similar. They use support vector machines to
 predict the phrase translation probabilities for the phrase-translation table
 component of SMT, rather than relying on the context-unaware Maximum Likehood
 Estimate the statistical process produces. The feature vector for their
@@ -213,7 +214,7 @@ linguistic features such as Part-of-Speech tags and lemmas. They conduct a
 manual evaluation judged on fluency and adequacy, and conclude that considering
 context improves adequacy, yet does not benefit fluency. They remark that the
 integration of the classifier probabilities in an SMT framework needs further
-study, which is something that will indeed be a focus in our present study.
+research, which is something that will indeed be a focus in our present study.
 
 The year 2007 saw a culmination of various studies integrating WSD techniques in
 SMT using classifiers. A third study in this trend was \cite{Stroppa+07}. They
