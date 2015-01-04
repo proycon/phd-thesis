@@ -832,7 +832,7 @@ l1r1 (experts/append/uni/ib1) & 0.6718 & 0.7567 & 11.7539 & 31.6 & 25.32 \\
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
-\multicolumn{6}{|c|}{JRC250k-en-es} \\
+\multicolumn{6}{|c|}{JRC250k-en-es sample 1} \\
 \hline 
 Reference baseline (moses only) & 0.4519 & 0.6248 & 9.6531 & 46.94 & 31.35 \\ 
 \hline 
@@ -844,7 +844,7 @@ Baseline (append/M/uni) & 0.4526 & 0.6242 & 9.8183 & 45.82 & 30.78 \\
 l1r1 (monolithic/append/uni/tribl2) & 0.4513 & 0.6237 & 9.8741 & 45.54 & 30.66 \\ 
 l1r1 (experts/append/uni/ib1) & \textbf{0.4527} & \textbf{0.6244} & \textbf{9.8839} & \textbf{45.48} & \textbf{30.61} \\ 
 \hline
-\multicolumn{6}{|c|}{JRC250k2-en-es} \\
+\multicolumn{6}{|c|}{JRC250k2-en-es sample 2} \\
 \hline
 Baseline (replace/M/uni) & 0.5268 & 0.6718 & 10.7683 & 40.37 & 26.73 \\ 
 l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.5309} & \textbf{0.6755} & \textbf{10.9422} & \textbf{39.55} & \textbf{26.07} \\ 
@@ -1055,11 +1055,17 @@ built for some of the data sets. The actual number of source phrases is always
 much higher, as classifiers are only built when there is ambiguity regarding
 the translation. To see how these classifiers are typically distributed, based
 on the number of instances and classes, we zoom in on the IWSLT 2012 data for
-Dutch to English, and plot a histogram in Figure~\ref{fig:histogram}. As is
-ubiquitous in natural language processing, a Zipfian curve can be discerned from
-this figure, with the vast majority of classifier experts being very small and
-having few translations options, i.e classes, and an immediate sharp drop in
-frequency as the number of instances or classes increases.
+Dutch to English, and plot a histogram in
+Figure~\ref{fig:histogram}. A typical Zipfian curve can be discerned from
+this figure, with the vast majority of classifier experts being based
+on a small amount of instances (left) and a long tail of experts, only
+partially shown, with over a 100 instances. Only a small subset of
+these experts has more than one translation option, seen by the small
+amount of green in the right half of Figure~\ref{fig:histogram}. In
+other words, most ambiguity is present in classifier experts trained on less than
+100 examples of a source phrase in different contexts. 
+%having few translations options, i.e classes, and an immediate sharp drop in
+%frequency as the number of instances or classes increases.
 
 \begin{table}
 \begin{tabular}{|lll|l|}
