@@ -1318,19 +1318,20 @@ impact. This hypothesis could not be confirmed on Dutch-Frisian data, and is at
 odds with the positive results on IWSLT 2006 English-Chinese, which had
 relatively little data and low scores.
 
-In this discussion we would like to focus on why the results of our
-study overall do not exceed above the baseline.  There may be an
-explanation for this if we look at the interplay between the SMT
-decoder and the classifiers. For a source phrase $s$ with context $C$
-and mapping to translation $t$ to be a strong fragment in the
-classifier, it has to have been observed multiple times in the
-training data. If this is so, then there is often a source fragment
-$s'$ in the phrase-translation table that is the conjunction of $s$
-and $C$, and which maps to a $t'$ of which $t$ is at least a
-substring. It is thus likely that the context information we try to
-explicitly model, is often already implicitly available to the
-decoder. This is provided that the classifier and phrase-translation
-table are trained on the same parallel corpus, as we consistently did.
+In this discussion we would like to focus on why the results of our study
+overall do not exceed above the baseline.  There may be an explanation for this
+if we look at the interplay between the SMT decoder and the classifiers. For a
+source phrase $s$ with context $C$ and mapping to translation $t$ to be a
+strong fragment in the classifier, it has to have been observed multiple times
+in the training data. If this is so, then this implies that there is often a
+source fragment $s'$ in the phrase-translation table that is the conjunction of
+$s$ and $C$, and which maps to a $t'$ of which $t$ is at least a substring. It
+is thus likely that the context information we try to explicitly model, is
+often already \emph{implicitly} available to the decoder. This is provided that
+the classifier and phrase-translation table are trained on the same parallel
+corpus, as we consistently did. Rather than considering a source phrase in
+context, the decoder may thus opt to choose to include the context as integral
+part of the phrase. 
 
 
 
