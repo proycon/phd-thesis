@@ -40,10 +40,10 @@
 
 
 \author{Maarten van Gompel \& Antal van den Bosch \\
- Centre for Language Studies \\
-  dboud University Nijmegen \\
+  Centre for Language Studies \\
+  Radboud University Nijmegen \\
   {\tt proycon@anaproy.nl}}
-\authorrunning{Van Gompel and Van den Bosch}
+\authorrunning{van Gompel and van den Bosch}
 
 %\date{}
 
@@ -1013,6 +1013,7 @@ another data set.
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
+\hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
 \multicolumn{6}{c}{Europarl 250k - English $\rightarrow$ Spanish} \\
@@ -1040,6 +1041,7 @@ results that do not support our hypothesis.
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
+\hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
 \multicolumn{6}{c}{yandex1M - English $\rightarrow$ Russian} \\
@@ -1066,20 +1068,23 @@ we ask moses to verbosely output\footnote{This can be done using the
 \texttt{-T} flag}, for each output sentence, which phrases from the
 intermediate phrase-translation table are used. We then analyse how many phrase
 pairs are unique to the context-informed system. These phrases thus do not
-occur in the baseline and are indicative of the SMT decoder making a different
-choice than it did for the baseline, due to the classifier information.
-Table~\ref{tab:decodediff} shows the results for a few of the data sets we
-used. 
+occur in the baseline and are indicative of the SMT decoder choosing a
+different translation option than it did for the baseline, due to the
+classifier information. Table~\ref{tab:decodediff} shows the results for a few
+of the data sets we used. We also show, in the last column, how many of the
+source-side fragments are not in the baseline, implying that the SMT decoder
+chose a different source-phrase to translation than the baseline.
 
 \begin{table}
 \begin{tabular}{|lll|cc|}
 \hline
-\textbf{Corpus} & \textbf{Language Pair} & \textbf{Configuration} & \textbf{Unique phrase-pairs} & \textbf{Unique source phrases} \\
+\textbf{Corpus} & \textbf{Language Pair} & \textbf{Configuration} &
+\textbf{Diff. pairs} & \textbf{Diff. source} \\
 \hline
-EMEA & English$\rightarrow$Spanish & l1r1 (monolithic/uni/replace) & $43.68\%$ & $40.15\%$ \\
-Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (monolithic/opt/replace) & $33.57\%$ & $32.50\%$ \\
-IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1 (monolithic/opt/replace) & $26.86\%$ & $20.07\%$ \\
-IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (monolithic/opt/replace) & $24.55\%$ & $12.49\%$ \\
+EMEA & English$\rightarrow$Chinese & l1r1 (M/uni/replace) & $43.68\%$ & $40.15\%$ \\
+Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (M/opt/replace) & $33.57\%$ & $32.50\%$ \\
+IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1 (M/opt/replace) & $26.86\%$ & $20.07\%$ \\
+IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (M/opt/replace) & $24.55\%$ & $12.49\%$ \\
 \hline
 \end{tabular}
 \caption{The number of phrases in the context-informed test output that are not
