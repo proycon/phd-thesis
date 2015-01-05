@@ -1058,6 +1058,37 @@ show that this feature gets assigned significantly more weight than the other
 scores of the translation model, it is surpassed only by the language model for
 some experiments.
 
+We have measured the impact of the classifier on translation quality. To get a
+deeper understanding of the impact of the classifier(s), we measure to what
+extend the phrases used in the test set output of a context-informed system
+differ from the phrases used in the non-context informed output. To this end,
+we ask moses to verbosely output\footnote{This can be done using the
+\texttt{-T} flag}, for each output sentence, which phrases from the
+intermediate phrase-translation table are used. We then analyse how many phrase
+pairs are unique to the context-informed system. These phrases thus do not
+occur in the baseline and are indicative of the SMT decoder making a different
+choice than it did for the baseline, due to the classifier information.
+Table~\ref{tab:decodediff} shows the results for a few of the data sets we
+used. 
+
+\begin{table}
+\begin{tabular}{|lll|cc|}
+\hline
+\textbf{Corpus} & \textbf{Language Pair} & \textbf{Configuration} & \textbf{Unique phrase-pairs} & \textbf{Unique source phrases} &
+\hline
+EMEA & English$\rightarrow$Spanish & l1r1 (monolithic/uni/replace) & $43.68\%$ & $40.15\%$ \\
+Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (monolithic/opt/replace) & $33.57\%$ & $32.50\%$ \\
+IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1 (monolithic/opt/replace) & $26.86\%$ & $20.07\%$ \\
+IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (monolithic/opt/replace) & $24.55\%$ & $12.49\%$ \\
+\hline
+\end{tabular}
+\caption{The number of phrases in the context-informed test output that are not
+in the non-context-informed baseline}
+\label{tab:decodediff}
+\end{table}
+
+\todo{TODO: complete and interpret table}
+
 \subsection{Results: classifier type}
 \label{sec:typeopt}
 
