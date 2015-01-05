@@ -687,6 +687,9 @@ complexity of different layers of optimisation (even under an independence
 assumption) we choose to limit ourselves to just optimisation of the SMT
 decoder parameters in this study. These parameters have the most immediate and
 largest impact as they are directly optimised on the evaluation metric used.
+Note that although we forego on explicit variable context selection, an
+implicit form is still there for the classifier experts; the feature weights
+are computed on a by-classifier basis.
 
 \subsection{Results: source-side context vs. no context}
 \label{sec:results1}
@@ -1254,17 +1257,16 @@ of a word.
 \textbf{Reference:} Las reacciones adversas \underline{que se consideran relacionadas} con el uso de Agenerase son síntomas gastrointestinales , erupción y parestesia oral / perioral . \\ \\
 \end{exmp}
 
-In addition to the positive examples, there are also neutral and
-negative examples. In example~\ref{ex:QAneutral}, all translations can
-be considered correct and conveying the same message with different
-nuances, as a difference construction is
-chosen. Example~\ref{ex:QAnegative} shows the inverse situation of
-example~\ref{ex:QAsynonym}; a different synonym was chosen but it does
-not match with the reference translation. This too is a common pattern
-in the data. This raises the question whether the impact of
-context-information would not be lower if the test set would have
-contained multiple reference translations. Such data unfortunately is
-hard to come by and was not available in this study.
+In addition to the positive examples, there are also neutral and negative
+examples. In example~\ref{ex:QAneutral}, all translations can technically be
+considered correct and convey the same message with different nuances; a
+difference construction is chosen. Example~\ref{ex:QAnegative} shows the
+inverse situation of example~\ref{ex:QAsynonym}; a different synonym was chosen
+but it does not match with the reference translation. This too is a common
+pattern in the data. This raises the question whether the impact of
+context-information would not be lower if the test set would have contained
+multiple reference translations. Such data unfortunately is hard to come by and
+was not available in this study.
 
 \begin{exmp}
 \footnotesize
