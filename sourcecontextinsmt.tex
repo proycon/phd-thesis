@@ -667,20 +667,20 @@ parameters, and the classifier parameters should be evaluated on the
 end result, i.e. the full sentential translations, according to one or more MT
 metrics. This, however, is prohibitively expensive as it vastly increases the
 parameter search space and thus the complexity of the problem. As a concession
-for the sake of computability, classifier parameter optimisation is considered
+for the sake of computability, classifier parameter optimisation can be considered
 independently and assessed through simpler cross-validation or leave-one-out
 methods (depending on the number of instances in the classifier expert).  This
-still introduces a significant computational bottleneck.  We conduct an
-experiment in this way described in Section~\ref{sec:typeopt}.
+still introduces a significant computational bottleneck.  
 
-This optimisation can be taken a step further by optimising the local context
+Optimisation can be taken a step further by also optimising the local context
 size, i.e. the make up of the feature vector, on a by-classifier basis, as
-opposed to using the same context size to all classifiers. This has been
-researched in \cite{UVTWSD2} in the context of cross-lingual Word Sense
-Disambiguation rather than full Machine Translation. In this study, classifier
-parameter optimisation showed an overall negative effect, most likely due to
-overfitting, especially when combined with variable context selection. Variable
-context selection by itself did make a small positive impact.
+opposed to using the same context size for all classifiers. This has been
+extensively researched in \cite{UVTWSD2} in the context of cross-lingual Word
+Sense Disambiguation, rather than full Machine Translation. In this study,
+classifier parameter optimisation showed an overall negative effect, most
+likely due to overfitting, especially when combined with variable context
+selection. Variable context selection by itself did make a small positive
+impact.
 
 Given the results of this prior study, and due to the inherent computational
 complexity of different layers of optimisation (even under an independence
