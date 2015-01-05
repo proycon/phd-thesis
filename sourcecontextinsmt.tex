@@ -634,6 +634,7 @@ integration of context information, and that differences in result can not be
 attributed to minor idiosyncrasies of the implementation.
 
 \subsection{Parameter optimisation}
+\label{sec:paropt}
 
 An SMT system relies heavily on parameter optimisation. Each component of the
 score vector is weighted by a separate parameter. These parameters are
@@ -647,11 +648,11 @@ require an extra weight that the baseline does not have}. Again, the motivation
 here is to keep all variables equal except for the integration of context
 information, so we can make a fair assessment.
 
-\todo{TODO: look at feature weights from MERT (later on)}
+\todo{MAYBE TODO: look at feature weights from MERT (later on)}
 
 %talk about parameter optimisation in classifier
 While we conduct parameter optimisation for the parameters of the SMT
-decoder, we do not yet do so for the classifiers. Yet, these too could
+decoder, we do not do so for the classifiers. Yet, these too could
 be optimised. This is only feasible for the classifier experts; recall
 that the monolithic classifier necessarily has extra constraints
 imposed on it to prevent translations that do not occur in the
@@ -670,6 +671,20 @@ methods (depending on the number of instances in the classifier expert).  This
 still introduces a significant computational bottleneck.  We conduct an
 experiment in this way described in Section~\ref{sec:typeopt}.
 
+This optimisation can be taken a step further by optimising the local context
+size, i.e. the make up of the feature vector, on a by-classifier basis, as
+opposed to using the same context size to all classifiers. This has been
+researched in \cite{UVTWSD2} in the context of cross-lingual Word Sense
+Disambiguation rather than full Machine Translation. In this study, classifier
+parameter optimisation showed an overall negative effect, most likely due to
+overfitting, especially when combined with variable context selection. Variable
+context selection by itself did make a small positive impact.
+
+Given the results of this prior study, and due to the inherent computational
+complexity of different layers of optimisation (even under an independence
+assumption) we choose to limit ourselves to just optimisation of the SMT
+decoder parameters in this study. These parameters have the most immediate and
+largest impact as they are directly optimised on the evaluation metric used.
 
 \subsection{Results: source-side context vs. no context}
 \label{sec:results1}
@@ -1110,16 +1125,12 @@ the EMEA data (Table~\ref{tab:emea}), where we had the most significant gains
 above baseline, we find the monolithic system strongest. 
 
 Despite the results not being unanimous, the case for the classifier experts is
-strong and can be motivated by the fact that feature weights are computed on a per-
-source-phrase basis, rather than on the aggregation of all. It can be considered as a
-kind of optimisation step. The disadvantage is that such systems may 
-be more prone to overfitting, which might well be the case in the
-EMEA experiment.
-% as well as sparsity problems for smaller classifier experts on
-%the other hand.
-
-\todo{TODO: parameter optimisation experiment (still to run and process)}
-
+strong and can be motivated by the fact that feature weights are computed on a
+per- source-phrase basis, rather than on the aggregation of all. It can be
+considered as a kind of optimisation step, in absence of classifier parameter
+optimisation and variable context selection (see Section~\ref{sec:paropt}). The
+disadvantage is that such systems may be more prone to overfitting, which might
+well be the case in the EMEA experiment.
 
 \subsection{Results: Weighting methods and score analysis}
 \label{sec:weighting}
