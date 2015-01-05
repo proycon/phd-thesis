@@ -485,7 +485,7 @@ applying to all instances in the test data.
 
 To achieve this, each source phrase in the phrase-translation table is replaced
 by a representation of its position in the test data, e.g.  $(1,0)$ for first
-sentence, first word.  This is done using the software \texttt{colibri-mt}. It
+sentence, first word.  This is done using the software \emph{colibri-mt}. It
 creates an indexed pattern model on the test data, constrained by the phrases
 in the phrase-translation table. This thus constitutes a mapping of all distinct
 source phrases in the phrase-translation table to the indices in the test
@@ -558,7 +558,7 @@ sentence pairs we used for training, development and testing.
 
 \begin{table}
 \begin{tabular}{lrr}
-& \textbf{Languages} & \textbf{Sentence Pairs}\footnote{train/development/test} \\
+& \textbf{Languages} & \textbf{Sentence Pairs} \\
 \hline
 \multicolumn{3}{l}{\pbox{12cm}{\textbf{Europarl} -- \emph{The proceedings of the
 European Parliament} \citep{EUROPARL,OPUS2012}} } \\
@@ -589,7 +589,9 @@ talks, used for subtitling, as used in the IWSLT 2012 Evaluation Campaign}
  \emph{Phrases crawled from the web by Russian search engine Yandex} } } \\
  & English to Russian & $990,000$ / $5000$ / $5000$ \\
 \end{tabular}
-\caption{Overview of parallel corpora used for experiments}
+\caption{Overview of parallel corpora used for experiments. The three values
+for sentence pairs correspond to the size of the training, development and test
+set, respectively.}
 \label{tab:datasets}
 \end{table}
 
