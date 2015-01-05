@@ -582,9 +582,11 @@ European Union} \citep{OPUS2012} } \\
 talks, used for subtitling, as used in the IWSLT 2012 Evaluation Campaign}
     \citep{WIT3,IWSLT12} } } \\
  & English to Dutch & $127,806$ / $885$ / $1569$ \\
-\multicolumn{3}{l}{\pbox{12cm}{\textbf{IWLST 2006 Evaluation Campaign} } } \\
+\multicolumn{3}{l}{\pbox{12cm}{\textbf{IWLST 2006 Evaluation Campaign} -
+\emph{Collection of phrases from a phrasebook / traveller's guide } } } \\
  & Chinese to English & $40,274$ / $489$ / $486$ \\
-\multicolumn{3}{l}{\pbox{12cm}{\textbf{Yandex 1M Web Corpus} } } \\
+ \multicolumn{3}{l}{\pbox{12cm}{\textbf{Yandex 1M Web Corpus}  -
+ \emph{Phrases crawled from the web by Russian search engine Yandex} } } \\
  & English to Russian & $990,000$ / $5000$ / $5000$ \\
 \end{tabular}
 \caption{Overview of parallel corpora used for experiments}
@@ -1274,23 +1276,30 @@ hard to come by and was not available in this study.
 
 We have conducted numerous experiments to assess whether surface-form
 source-side context information, i.e. without the use of any explicit
-linguistic features that require supervised parsers or taggers, can
-improve translation quality. Memory-based classifiers were used, and
-integrated in an SMT framework, following techniques commonly employed
-in WSD. The results of the experiments were mixed and there was a high
-degree of variability between different corpora and language
-pairs. Positive results were attained on only EMEA and JRC-Acquis,
+linguistic features that require supervised parsers or taggers, can improve
+translation quality. Memory-based classifiers were used, and integrated in an
+SMT framework, following techniques commonly employed in WSD. The results of
+the experiments were mixed and there was a high degree of variability between
+different corpora and language pairs. Positive results were attained on EMEA,
+for both English to Spanish and English to Dutch, JRC-Acquis (English to
+Spanish) and IWSLT 2006 (English to Chinese). Especially the former two are
 highly formulaic corpora.
 
-We replicated part of the work of \cite{Stroppa+07} and \cite{Rejwanul+11}, and
-found that differences in results are fairly marginal. Inclusion of surface-form
-source-side context information is clearly not the most obvious road for the
-improvement of MT quality. It is likely that improvement can be more easily
-achieved through optimizing the target-side language model.
+We effectively replicated the part of the work of \cite{Stroppa+07} and
+\cite{Rejwanul+11} that does not depend on further linguistic information, and
+found that results are fairly marginal Except for the aforementioned data sets
+most results were below baseline. Inclusion of surface-form source-side context
+information is clearly not the most obvious road for the improvement of MT
+quality. It is likely that improvement can be more easily achieved through
+for example optimisation of the target-side language model.
 
-We hypothesised that source-side context information may contribute
-more when translating to a morphologically more complex language, but
-were unable to confirm this hypothesis.
+We hypothesised that source-side context information may contribute more when
+translating to a morphologically more complex language, but were unable to
+confirm this hypothesis. Another hypothesis was that a certain quality of
+translation had to be reached before the source-side context can make an
+impact. This hypothesis could not be confirmed on Dutch-Frisian data, and is at
+odds with the positive results on IWSLT 2006 English-Chinese, which had
+relatively little data and low scores.
 
 In this discussion we would like to focus on why the results of our
 study overall do not exceed above the baseline.  There may be an
