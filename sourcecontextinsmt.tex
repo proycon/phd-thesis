@@ -1063,17 +1063,19 @@ some experiments.
 We have measured the impact of the classifier on translation quality. To get a
 deeper understanding of the impact of the classifier(s), we measure to what
 extend the phrases used in the test set output of a context-informed system
-differ from the phrases used in the non-context informed output. To this end,
-we ask moses to verbosely output\footnote{This can be done using the
-\texttt{-T} flag}, for each output sentence, which phrases from the
-intermediate phrase-translation table are used. We then analyse how many phrase
-pairs are unique to the context-informed system. These phrases thus do not
-occur in the baseline and are indicative of the SMT decoder choosing a
-different translation option than it did for the baseline, due to the
-classifier information. Table~\ref{tab:decodediff} shows the results for a few
-of the data sets we used. We also show, in the last column, how many of the
-source-side fragments are not in the baseline, implying that the SMT decoder
-chose a different source-phrase to translation than the baseline.
+differ from the phrases used in the non-context informed output, irrespective
+of whether that difference contributes positively or negatively to the
+translation quality. To this end, we ask moses to verbosely
+output\footnote{This can be done using the \texttt{-T} flag}, for each output
+sentence, which phrases from the intermediate phrase-translation table are
+used. We then analyse how many phrase pairs are unique to the context-informed
+system. These phrases thus do not occur in the baseline and are indicative of
+the SMT decoder choosing a different translation option than it did for the
+baseline, due to the classifier information. Table~\ref{tab:decodediff} shows
+the results for a few of the data sets we used. We also show, in the last
+column, how many of the source-side fragments are not in the baseline, implying
+that the SMT decoder chose a different source-phrase to translation than the
+baseline.
 
 \begin{table}
 \begin{tabular}{|lll|cc|}
@@ -1104,8 +1106,6 @@ phrases, can not be discerned. The lowest difference was made by the IWSLT 2006
 corpus for which we \emph{did} get significant positive results in translation
 quality.
 
-
-\todo{TODO: interpret table}
 
 \subsection{Results: classifier type}
 \label{sec:typeopt}
