@@ -1081,7 +1081,7 @@ chose a different source-phrase to translation than the baseline.
 \textbf{Corpus} & \textbf{Language Pair} & \textbf{Configuration} &
 \textbf{Diff. pairs} & \textbf{Diff. source} \\
 \hline
-EMEA & English$\rightarrow$Chinese & l1r1 (M/uni/replace) & $43.68\%$ & $40.15\%$ \\
+EMEA & English$\rightarrow$Spanish & l1r1 (M/uni/replace) & $43.68\%$ & $40.15\%$ \\
 JRC (250k) & English$\rightarrow$Spanish & l1r1 (M/uni/replace) & $41.14\%$ & $32.77\%$ \\
 Yandex (1M) & English$\rightarrow$Russian & l1r1 (M/opt/replace) & $37.72\%$ & $26.58\%$ \\
 Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (M/opt/replace) & $33.57\%$ & $32.50\%$ \\
@@ -1093,6 +1093,17 @@ IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (M/opt/replace) & $24.55\%$ & $1
 in the non-context-informed baseline}
 \label{tab:decodediff}
 \end{table}
+
+The corpus that scores best on translation quality above baseline, the EMEA
+corpus, also shows the largest difference in the output due to the inclusion of
+context information. Notable here is that the EMEA corpus has a much higher fraction
+of source fragments that differ from the baseline. The JRC corpus, for which we
+found positives results as well, comes in second. However, a correlation
+between translation quality and the difference ratio of phrase pairs or source
+phrases, can not be discerned. The lowest difference was made by the IWSLT 2006
+corpus for which we \emph{did} get significant positive results in translation
+quality.
+
 
 \todo{TODO: interpret table}
 
