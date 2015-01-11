@@ -184,14 +184,14 @@ proven itself in competitive WSD tasks. This includes linguistic features such
 as part-of-speech tags and lemmas, as well as more complex syntactic relations.
 They test on a single Chinese--English test set only, and only
 evaluate with BLEU,
-which raises some questions on whether their conclusions would hold on
+which leaves open the question whether their conclusions would hold on
 different language pairs, test sets, and using different evaluation metrics.
 
 \cite{CarpuatWu05} focus on the WSD model rather than on the SMT
-model, whereas we place more focus on the SMT model and the integration method,
-and keep our WSD model relatively simple. Furthermore, both the method they
-employ (a word-based form of Statistical Machine Translation) and the
-level of integration appear limited.
+model, whereas we place more focus on the SMT model and the
+integration method, and keep our WSD model relatively
+simple. Furthermore, both the SMT method they employ (word-based) and
+the level of integration appear limited.
 
 Despite their efforts, they reach the surprising conclusion that inclusion of
 WSD techniques does \emph{not} yield better translation quality. Will these
@@ -207,17 +207,20 @@ training and the WSD predictions are integrated into the phrase-based SMT
 framework.'' \citep{CarpuatWu07}. They also broaden their use of evaluation
 metrics, yet still test on only Chinese to English.
 
-The work of \cite{Gimenez+07} is similar. They use support vector machines to
-predict the phrase translation probabilities for the phrase-translation table
-component of SMT, rather than relying on the context-unaware Maximum Likehood
-Estimate the statistical process produces. The feature vector for their
-classifiers consists of both local context as well as global context features.
-In addition to the surface forms of the words, they do rely on shallow
-linguistic features such as Part-of-Speech tags and lemmas. They conduct a
-manual evaluation judged on fluency and adequacy, and conclude that considering
-context improves adequacy, yet does not benefit fluency. They remark that the
-integration of the classifier probabilities in an SMT framework needs further
-research, which is something that will indeed be a focus in our present study.
+The work of \cite{Gimenez+07}, from the same year, follows a similar
+strategy. They use support vector machines to predict the phrase
+translation probabilities for the phrase-translation table component
+of SMT, rather than relying on the context-unaware Maximum Likehood
+Estimate the statistical process produces. The feature vector for
+their classifiers consists of both local context as well as global
+context features.  In addition to the surface forms of the words, they
+rely on shallow linguistic features such as Part-of-Speech tags and
+lemmas. They conduct a manual evaluation judged on fluency and
+adequacy, and conclude that considering context improves semantic
+adequacy, yet does not benefit syntactic fluency. They remark that the
+integration of the classifier probabilities in an SMT framework needs
+further research, which is something that will indeed be a focus in
+our present study.
 
 The year 2007 saw a culmination of various studies integrating WSD techniques in
 SMT using classifiers. A third study in this trend was \cite{Stroppa+07}. They
