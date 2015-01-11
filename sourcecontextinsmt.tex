@@ -431,7 +431,7 @@ and therefore such instances are omitted from the training data.
 \subsection{Integration in an SMT Decoder}
 \label{sec:smtintegration}
 
-The task of an SMT decoder is to find the best translation among a vast pool
+The task of an SMT decoder is to find the best translation among a pool
 of possible translation hypotheses. The best translation hypothesis is the
 translation hypothesis that maximises a log-linear combination and is sought
 after in a beam-search algorithm. This log-linear combination draws from
@@ -439,7 +439,7 @@ various models, such as a translation model (i.e. the phrase-translation
 table), a target-language model, and optionally additional models such as a
 distortion model and a word-reordering model. 
 
-The SMT model is generally expressed as in equation~\ref{eq:smtmodel}, taking $e$
+The SMT model is generally expressed as in Equation~\ref{eq:smtmodel}, taking $e$
 to be the translation in the target language, and $f$ to be the sentence to be
 translated, in the source language.
 
@@ -479,23 +479,25 @@ We therefore decided, in line also with most of the literature, to follow the
 third option; it allows us to use Moses as a black box.
 
 The bypass method is a \emph{discriminative translation filtering}
-step \citep{Rejwanul+11}. It performs context-aware classification in a
-pre-processing step, namely through alteration of the phrase-translation table,
-and bypasses the need to alter the decoder in any way. Taking each
-sentence individually, we ensure that the entries in the phrase-translation
-table are explicitly tuned to the source-side context. The output of the
-classifier(s) acts as the filter and constrains the translations options, as
-well as adjusts the score vector. Each instance of a source phrase gets a
-separate entry in the phrase-translation table, as opposed to one source phrase
-applying to all instances in the test data. 
+step \citep{Rejwanul+11}. It performs context-aware classification in
+a pre-processing step, namely through alteration of the
+phrase-translation table, and bypasses the need to alter the
+decoder. Taking each sentence individually, we ensure that the entries
+in the phrase-translation table are explicitly tuned to the
+source-side context. The output of the classifier(s) acts as the
+filter and constrains the translations options, as well as adjusts the
+score vector. Each instance of a source phrase receives a separate entry
+in the phrase-translation table, as opposed to one source phrase
+applying to all instances in the test data.
 
-To achieve this, each source phrase in the phrase-translation table is replaced
-by a representation of its position in the test data, e.g.  $(1,0)$ for first
-sentence, first word.  This is done using the software \emph{colibri-mt}. It
-creates an indexed pattern model on the test data, constrained by the phrases
-in the phrase-translation table. This thus constitutes a mapping of all distinct
-source phrases in the phrase-translation table to the indices in the test
-corpus that are instances of these phrases.
+To achieve this, each source phrase in the phrase-translation table is
+replaced by a representation of its position in the test data, e.g.
+$(1,0)$ for first sentence, first word.  This is done using the
+software package \emph{colibri-mt}. It creates an indexed pattern
+model on the test data, constrained by the phrases in the
+phrase-translation table. This thus constitutes a mapping of all
+distinct source phrases in the phrase-translation table to the indices
+in the test corpus that are instances of these phrases.
 
 Subsequently we invoke the classifier(s) and construct the altered
 phrase-translation table as shown in Algorithm~\ref{alg:contextmoses}.
@@ -539,8 +541,6 @@ altered phrase-translation table. The source phrase takes the form of a
 sequence of $(i,j)$ indices, rather than the actual words. The test data is
 replaced with a series of consecutive positions as well. These two altered data
 sets are now the input to Moses, which can now run unmodified. 
-
-
 
 \section{Experiments}
 
@@ -704,8 +704,7 @@ experiments on various corpora and language pairs. The first results,
 on the IWSLT 2006 Evaluation Campaign, Chinese to English, are listed
 in Table~\ref{tab:iwslt2006zhen}. They show a consistent advantage of
 having the source-side classifiers. A dataset from the same source
-\footnote{This dataset is not publicly available. Moreover, as we no
-  longer having means of comparing the exact set used by
+\footnote{This dataset is not publicly available. As we do not have the exact set used by
   \cite{Stroppa+07}, we have to assume our training and test sets,
   whilst drawn from the same source, are distinct subsets from the
   ones used by \cite{Stroppa+07}} was used in \cite{Stroppa+07}, who
@@ -764,12 +763,13 @@ postponed until a later section.  For the current and most of our experiments,
 weights to the SMT decoder have been optimised (\emph{opt}) using MERT, on the
 baseline.
 
-For this experiment, we draw the conclusion that the integration of
+For this experiment we draw the conclusion that the integration of
 source-side context-informed classifiers may indeed be beneficial.
 The highest results are attained with a configuration of two words to
 the left and two words to the right, but the results from the various
-context configurations are fairly close. It is likely that using
-different data results in a different ranking.
+context configurations are fairly close. 
+%It is likely that using
+%different data results in a different ranking.
 
 This positive conclusion, however, can not be easily generalised.
 Table~\ref{tab:europarl250k}, for example, presents a more scattered image,
@@ -951,29 +951,31 @@ already been shown not to generalise.
 % nor is this trend likely to
 %continue if ever more context were to be added.
 
-The positive results on the EMEA and JRC data needs to be contrasted to the
-earlier negative results. Can we identify why these corpora, with these
-language pairs, perform well?
-
-We can observe that the nature of these two corpora consists of highly
-formulaic language, medical language in the case of EMEA, and legal language
-in the case of JRC-Acquis.  This implies the language is generally more
-rigidly structured, predictable, and therefore easier to translate than corpora
-from more diverse domains. The fact that the scores for these corpora are
-higher than those for the corpora we have seen before illustrates this point.
+The positive results on the EMEA and JRC data needs to be
+contrasted to the earlier negative results. Can we identify why these
+corpora, with these language pairs, perform well? We can safely assert
+that both corpora consists of highly formulaic language; medical language in the
+case of EMEA, and legal language in the case of JRC-Acquis.  This
+implies the language is generally more rigidly structured,
+predictable, and therefore easier to translate than corpora from more
+diverse domains. The fact that the scores for EMEA and JRC are higher
+than those for the corpora we have seen before illustrates this
+point.
 
 As hypothesised earlier, it may be possible that a certain quality of
 translation is needed before the source-side context information is
 able to make an impact. The learning curve experiments suggest this,
 but it is at odds with the positive results on the Chinese-English
 IWSLT 2006 data (Table~\ref{tab:iwslt2006zhen}), which shows lower
-scores while trained on a very small training set. We dive further
-into this hypothesis with a series of experiments on a Dutch-Frisian
-corpus. The high similarity between these two Germanic languages
-spoken in The Netherlands makes translation easier, and has been shown
-to achieve high scores \citep{OERSETTER}. Table~\ref{tab:fa2} shows
-our findings. Although high scores were obtained as expected, we were
-unable to exceed the non-context-informed baseline.
+scores while trained on a very small training set.\footnote{Note that the IWSLT
+2006 data is formulaic in its own way: it consists of utterances in a
+limited domain, tourism.} We dive further into this hypothesis with a
+series of experiments on a Dutch-Frisian corpus. The high similarity
+between these two Germanic languages spoken in The Netherlands makes
+translation easier, and has been shown to achieve high scores
+\citep{OERSETTER}. Table~\ref{tab:fa2} shows our findings. Although
+high scores were obtained as expected, we were unable to exceed the
+non-context-informed baseline.
 
 \begin{table}
 \begin{tabular}{|l|ccccc|}
@@ -1002,7 +1004,6 @@ l3r3 (experts/replace/opt/ib1) & 0.5134 & 0.6852 & 9.8908 & 33.21 & 27.79 \\
 \caption{Negative results on the Frisian-Dutch parallel corpus}
 \label{tab:fa2}
 \end{table}
-
 
 We further address the issue of domain in a cross-domain experiment, to assess
 whether introducing a differentiation between domains has a positive impact
@@ -1135,7 +1136,7 @@ quality.
 \subsection{Results: classifier type}
 \label{sec:typeopt}
 
-We have introduced two types of classifier, integrated in an Statistical
+We have introduced two types of classifiers, integrated in an Statistical
 Machine Translation framework by means of the ``bypass'' method described in
 Section~\ref{sec:smtintegration}. The monolithic classifier, modelling all phrase-pairs
 in a single classifier, is used also by \cite{Stroppa+07} and
@@ -1210,7 +1211,7 @@ above baseline, we find the monolithic system strongest.
 
 Despite the results not being unanimous, the case for the classifier experts is
 strong and can be motivated by the fact that feature weights are computed on a
-per- source-phrase basis, rather than on the aggregation of all. It can be
+per-source-phrase basis, rather than on the aggregation of all. It can be
 considered as a kind of optimisation step, in absence of classifier parameter
 optimisation and variable context selection (see Section~\ref{sec:paropt}). The
 disadvantage is that such systems may be more prone to overfitting, which might
@@ -1224,7 +1225,7 @@ Two weighting methods have been implemented: the \emph{append} method, adding
 $p(t|s,C)$ as an extra score to the score vector, and the \emph{replace}
 method, which replaces the existing $p(t|s)$ score with $p(t|s,C)$. Most
 experiments have been conducted with the \emph{replace} method, as it is the
-simplest one. For EMEA (Table~\ref{tab:emea}) and JRC-Acquis
+simplest one. For EMEA (Table~\ref{tab:emea}) and JRC
 (Table~\ref{tab:jrc250k}), the \emph{append} method was tested as well.
 
 Comparing the two weighting methods, however, is far from trivial. When a
