@@ -563,6 +563,7 @@ come to a general conclusion. Table~\ref{tab:datasets} lists them all, along wit
 sentence pairs we used for training, development and testing.
 
 \begin{table}
+\begin{center}
 \begin{tabular}{lrr}
 & \textbf{Languages} & \textbf{Sentence Pairs} \\
 \hline
@@ -599,6 +600,7 @@ talks, used for subtitling, as used in the IWSLT 2012 Evaluation Campaign}
 for sentence pairs correspond to the size of the training, development and test
 set, respectively.}
 \label{tab:datasets}
+\end{center}
 \end{table}
 
 \todo{TODO: add torrent link}
@@ -712,6 +714,7 @@ also reported positive results.
 
 \begin{savenotes}
 \begin{table}
+\begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
@@ -740,6 +743,7 @@ l3r3 (experts/replace/opt/ib1) & 0.2950 & 0.5328 & 5.5433 & 55.66 & 46.41 \\
 \end{tabular}
 \caption{Positive results for Chinese to English on IWSLT 2006 Evaluation Campaign data}
 \label{tab:iwslt2006zhen}
+\end{center}
 \end{table}
 \end{savenotes}
 \todo{TODO: compute and add significance, also to other tables}
@@ -778,6 +782,7 @@ training instances of the Europarl corpus, from Dutch to
 English.
 
 \begin{table}
+\begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
@@ -796,6 +801,7 @@ l3r3 (experts/replace/opt/ib1) & 0.268 & 0.5069 & 7.3879 & \textbf{63.18} & 45.1
 \end{tabular}
 \caption{Negative results on Europarl 250k, Dutch to English}
 \label{tab:europarl250k}
+\end{center}
 \end{table}
 
 In Table~\ref{tab:iwslt2012} we see results on the IWSLT 2012 corpus, for the
@@ -804,6 +810,7 @@ baseline.
 
 \begin{savenotes}
 \begin{table}
+\begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
@@ -824,6 +831,7 @@ l3r3 (experts/replace/opt/ib1) & 0.2995 & 0.5498 & 7.3243 & 51.96 & 39.57 \\
 \end{tabular}
 \caption{Negative results on IWSLT 2012, Dutch to English}
 \label{tab:iwslt2012}
+\end{center}
 \end{table}
 \end{savenotes}
 
@@ -840,6 +848,7 @@ uniform (uni) distribution of weights for the translation model, and similar
 defaults for the other components.
 
 \begin{table}
+\begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
@@ -868,11 +877,13 @@ l1r1 (experts/append/uni/ib1) & 0.6718 & 0.7567 & 11.7539 & 31.6 & 25.32 \\
 \end{tabular}
 \caption{Positive results on EMEA, English to Spanish and English to Dutch}
 \label{tab:emea}
+\end{center}
 \end{table}
 
 
 
 \begin{table}
+\begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
@@ -902,6 +913,7 @@ l1r1 (experts/append/uni/ib1) & 0.5304 & 0.6749 & 10.9971 & 39.18 & 25.99 \\
 \end{tabular}
 \caption{Results on two independent samples of JRC-Acquis (both containing 250000 sentences), English to Spanish}
 \label{tab:jrc250k}
+\end{center}
 \end{table}
 
 
@@ -978,6 +990,7 @@ high scores were obtained as expected, we were unable to exceed the
 non-context-informed baseline.
 
 \begin{table}
+\begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
@@ -1003,6 +1016,7 @@ l3r3 (experts/replace/opt/ib1) & 0.5134 & 0.6852 & 9.8908 & 33.21 & 27.79 \\
 \end{tabular}
 \caption{Negative results on the Frisian-Dutch parallel corpus}
 \label{tab:fa2}
+\end{center}
 \end{table}
 
 We further address the issue of domain in a cross-domain experiment, to assess
@@ -1031,13 +1045,14 @@ language pair, the English to Spanish language pair, and use it for a corpus
 that has performed poorly: the 250,000 sentence subset of Europarl.  If the
 results are better with English to Spanish than with Dutch to English
 then this would strengthen our hypothesis. When we look at the results of
-this experiment in Table~\ref{tab:europarl250k}, however, we see
+this experiment in Table~\ref{tab:europarl250k2}, however, we see
 that this is not the case; all results are below baseline. A possible
 explanation may be that more training data is needed, as suggested by the
 earlier learning curves, but this too was an hypothesis we could not confirm on
 another data set.
 
 \begin{table}
+\begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
@@ -1056,7 +1071,8 @@ l3r3 (experts/replace/opt/ib1) & 0.3298 & 0.562 & 7.9593 & 53.79 & 39.57 \\
 \hline
 \end{tabular}
 \caption{Negative results on Europarl 250k - English to Spanish}
-\label{tab:europarl250k}
+\label{tab:europarl250k2}
+\end{center}
 \end{table}
 
 The second attempt to test this hypothesis focusses on English to Russian, a
@@ -1066,6 +1082,7 @@ shows the results of this experiment, but here we also find below-baseline
 results that do not support our hypothesis.
 
 \begin{table}
+\begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
@@ -1078,6 +1095,7 @@ l1r1 (monolithic/replace/opt/tribl2) & 0.1166 & 0.5568 & 5.2558 & \textbf{74.45}
 \end{tabular}
 \caption{Negative results on Yandex1M - English to Russian}
 \label{tab:yandex1M}
+\end{center}
 \end{table}
 
 Are we placing our bets on the wrong horse by focussing solely on $p(t|s)$ and
@@ -1104,6 +1122,7 @@ that the SMT decoder chose a different source-phrase to translate than the
 baseline did.
 
 \begin{table}
+\begin{center}
 \begin{tabular}{|lll|cc|}
 \hline
 \textbf{Corpus} & \textbf{Language Pair} & \textbf{Configuration} &
@@ -1120,6 +1139,7 @@ IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (M/opt/replace) & $24.55\%$ & $1
 \caption{The number of phrases in the context-informed test output that are not
 in the non-context-informed baseline}
 \label{tab:decodediff}
+\end{center}
 \end{table}
 
 The corpus that scores best on translation quality above baseline, the EMEA
@@ -1168,6 +1188,7 @@ other words, most ambiguity is present in classifier experts trained on less tha
 %frequency as the number of instances or classes increases.
 
 \begin{table}
+\begin{center}
 \begin{tabular}{|lll|l|}
 \hline
 \textbf{Corpus} & \textbf{Sentence pairs} & \textbf{Languages} & \textbf{Classifier Experts} \\
@@ -1182,6 +1203,7 @@ Fryske Akademy & 137,937 & Frisian-Dutch & 213,573 \\
 \end{tabular}
 \caption{Number of classifier experts generated per data set}
 \label{tab:expertcount}
+\end{center}
 \end{table}
 
 
@@ -1263,7 +1285,7 @@ possible translations and computed $\frac{P(t|s,C)}{P(t|s)}$. This ratio
 expresses the difference between the context-informed translation probability
 and the non-context informed one. A value of one indicates there is no
 difference whatsoever, this includes all source phrases where either
-translation or context are unambiguous. A spike, an outlier in the figure, can
+translation or context are unambiguous. An outlier point can
 be observed at this point, covering $9\%$ of phrase-pairs. The right hand side
 of the graph ($>1$) is of most interest; it covers the phrase pairs to which
 the classifier assigns a higher probability. No less than $75\%$ of the phrase
