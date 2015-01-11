@@ -276,13 +276,14 @@ ordering aspect.
 \subsection{Modelling source-side context with classifiers}
 
 In line with several previous studies \citep{Rejwanul+11,PBMBMT,
-Stroppa+07,MARKERBASED}, we make use of memory-based classifiers to build a
-translation model informed by source-side context information. More
-specifically, we will be using IB1 \citep{IB1}, an implementation of k-Nearest
-Neighbours; IGTree \citep{IGTree}, an optimised and lossless tree-based approximation thereof;
-and TRIBL2, a mixture of IB1 and IGTree. 
+  Stroppa+07,MARKERBASED}, we make use of memory-based classifiers to
+build a translation model informed by source-side context
+information. More specifically, we will be using IB1 \citep{IB1}, an
+implementation of $k$-Nearest Neighbour classification; IGTree
+\citep{IGTree}, an optimised and lossless tree-based approximation
+thereof; and TRIBL2, a mixture of IB1 and IGTree.
 
-These algorithms are all implemented in the software package Timbl
+These algorithms are all implemented in the software package TiMBL
 \citep{TIMBL}\footnote{\url{http://ilk.uvt.nl/timbl}} and are
 well-suited for symbolic data and highly multivariate class spaces.
 Moreover, memory-based classification has been a successful method in
@@ -369,8 +370,8 @@ word alignments using GIZA++ \citep{GIZA}. Then we identify and extract phrase
 pairs using the {\em grow-diag-final}\/ algorithm \citep{OchNey2003}. The
 result is a phrase-translation table mapping source phrases to target
 phrases, along with associates scores which we will discuss in the next
-section. This phrase-translation table effectively constitutes the translation
-model.
+section. %This phrase-translation table effectively constitutes the translation
+%model.
 
 The translation model would be finished if we would want to leave it to be
 non-context-informed. We have some additional steps to perform to train our
@@ -385,7 +386,7 @@ it occurs.  Additionally, a reverse index is included in the model for
 the target-side of the corpus, which maps any given
 $(sentence, token)$ position to a set phrases that begins at that
 position.  This is computed using the software package
-\emph{colibri-core} \footnote{http://proycon.github.io/colibri-core},
+\emph{colibri-core} \footnote{\url{http://proycon.github.io/colibri-core}},
 which takes care of a losslessly compressed in-memory representation
 for all phrases, and allows us to cope with large corpora. Given these
 two pattern models $M_{source}$ and $M_{target}$ we can quickly and
@@ -414,18 +415,18 @@ vector.  The algorithm will return a list containing two-tuples $(C,t)$.  }
 \end{algorithm}
     
 This algorithm is implemented in \emph{colibri-mt}
-\footnote{https://github.com/proycon/colibri-mt}.
+\footnote{\url{https://github.com/proycon/colibri-mt}}.
 
-The return instances can be stored directly, either in a single model for the
+The returned instances can be stored directly, either in a single model for the
 monolithic approach or in separate models for each $s$ for the classifier
 expert approach. A final training phase then computes the feature ranking and
-transforms this data into the instance base format required for Timbl.
+transforms this data into the instance base format required for TiMBL.
 
 %When extra training data for the classifier(s), 
-It may well happen that either
-1) an $(s,t)$ pair only occurs once, or 2) a pattern $s$ occurs in multiple
-context but all map to the same $t$. In such cases, a context-informed
-classifier clearly has no added value and therefore such instances are omitted from the training data.  
+It may well happen that either 1) an $(s,t)$ pair only occurs once, or
+2) a pattern $s$ occurs in multiple context but all map to the same
+$t$. In such cases, a context-informed classifier has no added value
+and therefore such instances are omitted from the training data.
 
 \subsection{Integration in an SMT Decoder}
 \label{sec:smtintegration}
