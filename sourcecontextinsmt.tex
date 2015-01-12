@@ -681,7 +681,7 @@ still introduces a significant computational bottleneck.
 Optimisation can be taken a step further by also optimising the local context
 size, i.e. the make up of the feature vector, on a by-classifier basis, as
 opposed to using the same context size for all classifiers. This has been
-extensively researched in \cite{UVTWSD2} in the context of cross-lingual Word
+extensively researched in \cite{WSD2} in the context of cross-lingual Word
 Sense Disambiguation, rather than full Machine Translation. In this study,
 classifier parameter optimisation showed an overall negative effect, most
 likely due to overfitting, especially when combined with variable context
@@ -1325,10 +1325,9 @@ the most common type of difference. Example~\ref{ex:QAdrop} shows the dropping
 of a word.
 
 
-\begin{exmp}
+\begin{exe}
 \footnotesize
-\label{ex:QAsynonym}
-\textbf{Baseline:} El cambio continuo del lugar de inyección dentro de \underline{un área} determinada puede ayudar a \\
+\ex \textbf{Baseline:} El cambio continuo del lugar de inyección dentro de \underline{un área} determinada puede ayudar a \\
 \textbf{l1r1:} El cambio continuo del lugar de inyección dentro de \underline{una región} determinada puede ayudar a \\
 \textbf{Reference:} La contínua rotación de los puntos de inyección dentro de \underline{una región} determinada puede ayudar a reducir o prevenir estas reacciones \\
 \noindent\makebox[\linewidth]{\rule{\linewidth}{0.4pt}}
@@ -1340,23 +1339,24 @@ of a word.
 \textbf{Baseline:} Como consecuencia , el fenilbutirato de sodio , reduce \underline{los niveles plasmáticos} de amonio y glutamina en pacientes con trastornos del ciclo de la urea . \\
 \textbf{l1r1:} Como consecuencia , el fenilbutirato de sodio reduce \underline{las concentraciones plasmáticas elevadas} de amonio y glutamina en pacientes con trastornos del ciclo de la urea .  \\
 \textbf{Reference:} Como consecuencia , el fenilbutirato de sodio reduce \underline{las concentraciones plasmáticas elevadas} de amoníaco y glutamina en pacientes con trastornos del ciclo de la urea .
-\end{exmp}
+\label{ex:QAsynonym}
+\end{exe}
 
-\begin{exmp}
+\begin{exe}
 \footnotesize
-\label{ex:QAdrop}
-\textbf{Baseline:} \underline{Los estudios} en animales , no pueden excluir el desarrollo potencial de toxicidad ( ver sección 5.3 ) . \\
+\ex \textbf{Baseline:} \underline{Los estudios} en animales , no pueden excluir el desarrollo potencial de toxicidad ( ver sección 5.3 ) . \\
 \textbf{l1r1:} \underline{Estudios} en animales , no pueden excluir el desarrollo potencial de toxicidad ( ver sección 5.3 ) . \\
 \textbf{Reference:} \underline{Estudios} en animales , no pueden excluir el desarrollo potencial de toxicidad ( ver sección 5.3 ) .
-\end{exmp}
+\label{ex:QAdrop}
+\end{exe}
 
-\begin{exmp}
+\begin{exe}
 \footnotesize
-\label{ex:QAgrammar}
-\textbf{Baseline:} Las reacciones adversas \underline{consideradas relacionadas} con el uso de Agenerase son síntomas gastrointestinales , erupción y parestesia oral / peri-oral . \\
+\ex \textbf{Baseline:} Las reacciones adversas \underline{consideradas relacionadas} con el uso de Agenerase son síntomas gastrointestinales , erupción y parestesia oral / peri-oral . \\
 \textbf{l1r1:}  Las reacciones adversas \underline{que se consideran relacionadas} con el uso de Agenerase son síntomas gastrointestinales , erupción y parestesia oral / \\
 \textbf{Reference:} Las reacciones adversas \underline{que se consideran relacionadas} con el uso de Agenerase son síntomas gastrointestinales , erupción y parestesia oral / perioral . \\ \\
-\end{exmp}
+\label{ex:QAgrammar}
+\end{exe}
 
 In addition to the positive examples, there are also neutral and negative
 examples. In example~\ref{ex:QAneutral}, all translations can technically be
@@ -1369,21 +1369,21 @@ context-information would not be lower if the test set would have contained
 multiple reference translations. Such data unfortunately is hard to come by and
 was not available in this study.
 
-\begin{exmp}
+\begin{exe}
 \footnotesize
-\label{ex:QAneutral}
-\textbf{Baseline:} Asegúrese de que el polvo \underline{esté completamente disuelto} . \\
+\ex \textbf{Baseline:} Asegúrese de que el polvo \underline{esté completamente disuelto} . \\
 \textbf{l1r1:} Asegúrese de que el polvo \underline{se disuelva completamente} .  \\
 \textbf{Reference:} Asegúrese de que el polvo \underline{se ha disuelto completamente} .
-\end{exmp}
+\label{ex:QAneutral}
+\end{exe}
 
-\begin{exmp}
+\begin{exe}
 \footnotesize
-\label{ex:QAnegative}
-\textbf{Baseline:} Los pacientes \underline{se asignaron aleatoriamente} a recibir 500 $\mu$ g de Aranesp una vez cada tres semanas o 2,25 $\mu$ g / kg una vez a la semana . \\
+\ex \textbf{Baseline:} Los pacientes \underline{se asignaron aleatoriamente} a recibir 500 $\mu$ g de Aranesp una vez cada tres semanas o 2,25 $\mu$ g / kg una vez a la semana . \\
 \textbf{l1r1:} Los pacientes \underline{fueron aleatorizados} a recibir 500 $\mu$ g de Aranesp una vez cada tres semanas o 2,25 $\mu$ g / kg una vez a la semana . \\
 \textbf{Reference:} Los pacientes \underline{se asignaron aleatoriamente} a recibir 500 $\mu$ g de Aranesp una vez cada tres semanas o 2,25 $\mu$ g / kg una vez a la semana .
-\end{exmp}
+\label{ex:QAnegative}
+\end{exe}
 
 
 \section{Conclusions and Discussion} 
