@@ -71,7 +71,10 @@
   language-independent and knowledge-poor: we do not employ any
   explicit linguistic features computed by part-of-speech taggers,
   word sense disambiguation systems, supertaggers, or parsers, as used
-  by previous work.
+  by previous work. We find only limited improvement of translation quality for
+  certain formulaic corpora and conclude that explicit modelling of source-side
+  context information does not add much to the data already implicitly
+  available in the decode process.
 \end{abstract}
 
 \section{Introduction}
@@ -80,9 +83,9 @@ In Phrase-based Statistical Machine Translation (SMT) the problem of
 translating an input sentence from a source language to a target language is
 implemented as a game of probabilities and a search for the most probable
 translation option.  These probabilities are expressed in a number of models
-that specialize in a certain aspect relevant to the translation process. The
-``phrase-based'' characteristic is due to phrases being the building blocks of
-the translation model, generalizing earlier approaches in
+that specialise in a certain aspect relevant to the translation process. The
+``phrase-based'' characteristic is because phrases are the building blocks of
+the translation model, generalising earlier approaches in
 Statistical Machine Translation based on words.  Phrases in this
 sense are sequences one or more words, i.e. $n$-grams of variable
 length (including unigrams). They are not constrained to form a
@@ -93,13 +96,13 @@ translation model which maps the translation phrases in the source
 language ($s$) to phrases in target language ($t$). This mapping is
 expressed as a vector of probabilities, $P({phrase}_s|{phrase}_t)$ and
 $P({phrase}_t|{phrase}_s)$. They can be seen to model the notion of
-``semantic faithfulness''; if a phrase is translated from one language
+\emph{``semantic faithfulness''}; if a phrase is translated from one language
 to another, the meaning should be preserved as accurately as possible.
 
 The second core model is the language model. This model is monolingual
 in nature and models the target language. It models what words are
 likely to follow others and can be interpreted as modelling the
-``syntactic fluency'' notion of translation; a translation should be
+\emph{``syntactic fluency''} notion of translation; a translation should be
 in a natural word order and be a typical sequence of words for the
 target language.
 
@@ -153,7 +156,7 @@ phrases rather than just words.
 WSD systems often employ a variety of linguistic features. The focus of our
 study, however, is to be independent of the explicit computation of
 linguistically abstract features with language-dependent tools such as
-lemmatizers, part-of-speech taggers, supertaggers, or dependency parsers
+lemmatisers, part-of-speech taggers, supertaggers, or dependency parsers
 \cite{Rejwanul+11}. 
 %We are interested only in the surface
 %forms, the text as-is, and stay as close as possible to vanilla Phrase-Based
@@ -228,15 +231,15 @@ focus on the word form, as does this present study, and add only
 part-of-speech features. On IWSLT 2006 data for Chinese--English and
 Italian--English, they achieve a significant improvement for the former, whereas
 the BLEU score for the latter fails to pass the significance test. We 
-attempt to reproduce these experiments in this study.
+attempt to reproduce the Chinese--English experiment in this study.
 
 Source-context aware translation has also been attempted outside of the
-predominant statistical machine translation framework. \cite{MBMT} implement a
+predominant SMT framework. \cite{MBMT} implement a
 simple form of example-based machine translation that is word-based and relies
 chiefly on classifiers for the translation model component. Two studies derive
 from the same concept while transcending a word-based paradigm:
 \cite{MARKERBASED} use chunks delimited by common markers, and \cite{PBMBMT}
-attempts a full extension to phrases similar to SMT. Although positive results
+attempt a full extension to phrases similar to SMT. Although positive results
 are achieved in the latter study, it does not rival state-of-the-art SMT.
 
 The most important and complete study we build upon is
@@ -258,7 +261,7 @@ classifier probabilities in the SMT, as recommended also by
 \section{Methodology}
 \label{ref:methodology}
 
-Like most of previous work, we approach the machine translation
+Like most of the previous work, we approach the machine translation
 problem in a phrase-based fashion, which has superseded the simpler word-based
 based paradigm for quite some time. This means that phrases, defined as a
 sequence of one or more words (that need not form a linguistic entity in any
@@ -269,8 +272,8 @@ sub-parts and combining the results in the best order.
 In describing our methodology, we first focus on the problem of phrasal
 translation, adding in the source-side context component. This shall be done
 using classifiers. Then we address how this can be integrated into a
-phrase-based Stastiscal Machine Translation decoder, which also takes care of
-ordering aspect. 
+phrase-based Statistical Machine Translation decoder, which also takes care of
+the ordering aspect. 
 
 
 \subsection{Modelling source-side context with classifiers}
@@ -369,7 +372,7 @@ Given a tokenised and sentence-aligned parallel corpus, we iteratively learn
 word alignments using GIZA++ \citep{GIZA}. Then we identify and extract phrase
 pairs using the {\em grow-diag-final}\/ algorithm \citep{OchNey2003}. The
 result is a phrase-translation table mapping source phrases to target
-phrases, along with associates scores which we will discuss in the next
+phrases, along with associated scores which we will discuss in the next
 section. %This phrase-translation table effectively constitutes the translation
 %model.
 
@@ -424,7 +427,7 @@ transforms this data into the instance base format required for TiMBL.
 
 %When extra training data for the classifier(s), 
 It may well happen that either 1) an $(s,t)$ pair only occurs once, or
-2) a pattern $s$ occurs in multiple context but all map to the same
+2) a pattern $s$ occurs in multiple contexts but all map to the same
 $t$. In such cases, a context-informed classifier has no added value
 and therefore such instances are omitted from the training data.
 
@@ -444,7 +447,7 @@ to be the translation in the target language, and $f$ to be the sentence to be
 translated, in the source language.
 
 \begin{equation}
-\argmax_e p(e|f) = \argmax_e p(e|f)p(e)
+\argmax_e p(e|f) = \argmax_e p(f|e)p(e)
 \label{eq:smtmodel}
 \end{equation}
 
@@ -801,7 +804,7 @@ l3r3 (experts/replace/opt/ib1) & 0.268 & 0.5069 & 7.3879 & \textbf{63.18} & 45.1
 \end{table}
 
 In Table~\ref{tab:iwslt2012} we see results on the IWSLT 2012 corpus, for the
-same language pair, which paint a similar picture, albeit closer to the
+same language pair, which paints a similar picture, albeit closer to the
 baseline.
 
 \begin{savenotes}
@@ -933,10 +936,10 @@ would only give rise to the variability problem we just illustrated.  Instead,
 each of the larger samples contains the smaller samples as a subset.
 Figure~\ref{fig:emealc} shows the learning curve for EMEA, English to Spanish,
 measured along the BLEU metric. All other metrics follow the same trend for the
-EMEA corpus.  Figure~\ref{fig:jrclc} shows the same for JRC Acquis, English to
+EMEA corpus but are omitted for brevity. Figure~\ref{fig:jrclc} shows the same for JRC Acquis, English to
 Spanish; here we see that BLEU appears to converge. We also include
-NIST, which converges earlier. For the JRC-Acquis corpus, the METEOR metric, not shown for
-brevity, shows a similar late convergence as BLEU, whereas WER and PER confirm
+NIST, which converges earlier. For the JRC-Acquis corpus, the METEOR metric,
+also not shown for brevity, shows a similar late convergence as BLEU, whereas WER and PER confirm
 the trend followed by NIST.
 
 \begin{figure}
@@ -964,7 +967,7 @@ already been shown not to generalise.
 The positive results on the EMEA and JRC data needs to be
 contrasted to the earlier negative results. Can we identify why these
 corpora, with these language pairs, perform well? We can safely assert
-that both corpora consists of highly formulaic language; medical language in the
+that both corpora consist of highly formulaic language; medical language in the
 case of EMEA, and legal language in the case of JRC-Acquis.  This
 implies the language is generally more rigidly structured,
 predictable, and therefore easier to translate than corpora from more
@@ -1031,7 +1034,7 @@ Table~\ref{tab:europarl250k}).
 The below-baseline results for Dutch--English on two corpora (Europarl and IWSLT
 2012 TED) may suggest that the efficacy of source-side context modelling
 depends strongly on the language pair. A possible hypothesis here is that
-source-side context modelling stands to gain most when translation from
+source-side context modelling stands to gain most when translating from
 morphologically simpler languages to morphologically richer languages, as the
 source-side context information may help in determining the proper
 morphological form. 
@@ -1095,6 +1098,7 @@ l1r1 (monolithic/replace/opt/tribl2) & 0.1166 & 0.5568 & 5.2558 & \textbf{74.45}
 \label{tab:yandex1M}
 \end{center}
 \end{table}
+%TODO: Add l2r2 ??
 
 Are we placing our bets on the wrong horse by focussing solely on $p(t|s)$ and
 replacing it with $p(t|s,C)$? No, the optimised decoder parameters over-all
@@ -1104,7 +1108,7 @@ some experiments.
 
 We have measured the impact of the classifier on translation quality. To get a
 deeper understanding of the impact of the classifier(s), we measure to what
-extend the phrases used in the test set output of a context-informed system
+extent the phrases used in the test set output of a context-informed system
 differ from the phrases used in the non-context informed output, irrespective
 of whether that difference contributes positively or negatively to the
 translation quality. To this end, we ask moses to verbosely
@@ -1219,7 +1223,7 @@ for Chinese-English (Table~\ref{tab:iwslt2006zhen} (for all context sizes except
 \texttt{l3r3}), for  IWSTL 2012 TED Dutch-English (Table~\ref{tab:iwslt2012},
 mostly below baseline), Europarl250k Dutch-English
 (Table~\ref{tab:europarl250k}, mostly below baseline), and Frisian-Dutch
-(Table~\ref{tab:fa2}, all below baseline)).
+(Table~\ref{tab:fa2}, all below baseline).
 
 These results suggest that the classifier experts perform better than the
 monolithic classifier. When looking at the two 250,000 instance samples of
@@ -1233,7 +1237,7 @@ Despite the results not being unanimous, the case for the classifier experts is
 strong and can be motivated by the fact that feature weights are computed on a
 per-source-phrase basis, rather than on the aggregation of all. It can be
 considered as a kind of optimisation step, in absence of classifier parameter
-optimisation and variable context selection (see Section~\ref{sec:paropt}). The
+optimisation and explicit variable context selection (see Section~\ref{sec:paropt}). The
 disadvantage is that such systems may be more prone to overfitting, which might
 well be the case in the EMEA experiment.
 
@@ -1320,7 +1324,8 @@ Example~\ref{ex:QAsynonym} shows three examples of the selection of a better
 translation given the context, matching with the reference translation, even
 though the baseline translation could be considered correct as well. This is
 the most common type of difference. Example~\ref{ex:QAdrop} shows the dropping
-of a word.
+of a word. Example~\ref{ex:QAgrammar} shows selection of a grammatically better
+phrase in the context.
 
 
 \begin{exe}
@@ -1359,7 +1364,7 @@ of a word.
 In addition to the positive examples, there are also neutral and negative
 examples. In example~\ref{ex:QAneutral}, all translations can technically be
 considered correct and convey the same message with different nuances; a
-difference construction is chosen. Example~\ref{ex:QAnegative} shows the
+different construction is chosen. Example~\ref{ex:QAnegative} shows the
 inverse situation of example~\ref{ex:QAsynonym}; a different synonym was chosen
 but it does not match with the reference translation. This too is a common
 pattern in the data. This raises the question whether the impact of
@@ -1412,7 +1417,7 @@ certain constraints.
 
 Finding these precise constraints, however, proved elusive. We hypothesised that
 source-side context information may contribute more when translating to a
-morphologically more complex language, but this was emperically refuted.
+morphologically more complex language, but this was empirically refuted.
 An alternative hypothesis was that a certain quality of translation had to
 be reached before the source-side context can make an impact. This hypothesis
 could not be confirmed on Dutch-Frisian data, and is at odds with the positive
