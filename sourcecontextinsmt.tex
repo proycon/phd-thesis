@@ -748,7 +748,9 @@ l3r3 (monolithic/replace/opt/tribl2) & 0.2962 & 0.5275 & 5.5364 & 55.26 & 46.36 
 l3r3 (experts/replace/opt/ib1) & 0.2950 & 0.5328 & 5.5433 & 55.66 & 46.41 \\ 
 \hline
 \end{tabular}
-\caption{Results for Chinese to English on IWSLT 2006 Evaluation Campaign data.}
+\caption{Results for Chinese to English on IWSLT 2006 Evaluation Campaign data.
+The numbers in the context-aware configurations (l$x$r$y$), refer to the size
+of the left respectively right context.}
 \label{tab:iwslt2006zhen}
 \end{center}
 \end{table}
@@ -897,7 +899,7 @@ l1r1 (experts/append/uni/ib1) & 0.6718 & 0.7567 & 11.7539 & 31.60 & 25.32 \\
 Baseline (replace/M/uni) & 0.4510 & 0.6241 & 9.6386 & 47.02 & 31.41 \\ 
 l1r1 (monolithic/replace/uni/tribl2) & 0.4503 & 0.6240 & \textbf{9.7726} & \textbf{46.25} & \textbf{30.88} \\ 
 l1r1 (experts/replace/uni/ib1) & \textbf{0.4513}$\dagger$\footnote{Score is
-\emph{not} significant at $p<0.05$} & \textbf{0.6243} & 9.7619 & 46.31 & 30.91 \\ 
+\emph{not} significant at $p<0.05$.} & \textbf{0.6243} & 9.7619 & 46.31 & 30.91 \\ 
 \hline 
 Baseline (append/M/uni) & 0.4526 & 0.6242 & 9.8183 & 45.82 & 30.78 \\ 
 l1r1 (monolithic/append/uni/tribl2) & 0.4513 & 0.6237 & 9.8741 & 45.54 & 30.66 \\ 
@@ -961,10 +963,10 @@ the trend followed by NIST.
 \end{figure}
 
 
-In the EMEA learning curve in Table~\ref{fig:emealc} we include an analysis
-of different context sizes.  An enlargement of the context size seems to be
-beneficial for this data set each step along the way, but these results have
-already been shown not to generalise.
+In the EMEA learning curve in Figure~\ref{fig:emealc} we included different
+context sizes.  An enlargement of the context size seems to be beneficial for
+this data set each step along the way, but these results have already been
+shown not to generalise.
 % nor is this trend likely to
 %continue if ever more context were to be added.
 
