@@ -451,8 +451,10 @@ translated, in the source language.
 \label{eq:smtmodel}
 \end{equation}
 
-Bayes' rule inverts the problem into two factors, the former corresponding to
-the translation model, and the latter corresponding to the language model. 
+Bayes' rule inverts the problem into two factors\footnote{The denominator p(f)
+can be dropped as it would not alter the outcome of the \emph{argmax}
+function}, the former corresponding to the translation model, and the latter
+corresponding to the language model. 
 
 The translation model is a mapping of the set of source phrases ($S$) to the
 set of target phrases ($T$). Each phrase pair $(s,t)$ where $s \in S$ and $t
