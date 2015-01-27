@@ -1034,7 +1034,7 @@ tested on the IWSLT 2012 TED data. We find the context-informed
 system\footnote{l1r1 (monolithic/replace/uni/tribl2)} scoring the
 same\footnote{BLEU 0.2137, METEOR 0.4798, NIST 6.2172, WER 57.99, PER 46.01} as
 the baseline, and thus not providing any added value. Unsurprisingly, scores
-are considerably lower than when tested on the same domain (c.f
+are considerably lower than when tested on the same domain (cf.
 Table~\ref{tab:europarl250k}).
 
 The below-baseline results for Dutch--English on two corpora (Europarl and IWSLT
@@ -1117,8 +1117,8 @@ deeper understanding of the impact of the classifier(s), we measure to what
 extent the phrases used in the test set output of a context-informed system
 differ from the phrases used in the non-context informed output, irrespective
 of whether that difference contributes positively or negatively to the
-translation quality. To this end, we ask moses to verbosely
-output\footnote{This can be done using the \texttt{-T} flag}, for each output
+translation quality. To this end, we ask Moses to verbosely
+output,\footnote{This can be done using the \texttt{-T} flag} for each output
 sentence, which phrases from the intermediate phrase-translation table are
 used. We then analyse how many phrase pairs are unique to the context-informed
 system. These phrases thus do not occur in the baseline and are indicative of
@@ -1145,7 +1145,7 @@ IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (M/opt/replace) & $24.55\%$ & $1
 \hline
 \end{tabular}
 \caption{The number of phrases in the context-informed test output that are not
-in the non-context-informed baseline}
+in the non-context-informed baseline.}
 \label{tab:decodediff}
 \end{center}
 \end{table}
@@ -1209,7 +1209,7 @@ Fryske Akademy & 137,937 & Dutch-Frisian & 276,819 \\
 Fryske Akademy & 137,937 & Frisian-Dutch & 213,573 \\
 \hline
 \end{tabular}
-\caption{Number of classifier experts generated per data set}
+\caption{Number of classifier experts generated per data set.}
 \label{tab:expertcount}
 \end{center}
 \end{table}
@@ -1218,7 +1218,9 @@ Fryske Akademy & 137,937 & Frisian-Dutch & 213,573 \\
 \begin{figure}
 \begin{center}
 \includegraphics[width=90.00mm]{classifierhistogram.png}
-\caption{Histogram showing the distribution of the number of instances (blue) and number of classes (green) in the classifier experts for IWSLT 2012 TED, Dutch to English (logarithmic)}
+\caption{Histogram showing the distribution of the number of instances (blue)
+and number of classes (green) in the classifier experts for IWSLT 2012 TED,
+Dutch to English (logarithmic).}
 \label{fig:histogram}
 \end{center}
 \end{figure}
@@ -1444,7 +1446,7 @@ if we look at the interplay between the SMT decoder and the classifiers. The
 classifier instances are generated with the phrase-translation table as input,
 looking up the context in the corpus. There will therefore never be phrases in
 the classifier training data that do not occur in the classifier. If we have a
-classifier training instance $s,C \mapsto t$, i.e.  a source phrase $s$ with
+classifier training instance $(s,C) \mapsto t$, i.e.  a source phrase $s$ with
 context $C$ and mapping to translation $t$, and $C$ is a context that occurs
 multiple times in the corpus, then there is often a source fragment $s'$ in the
 phrase-translation table that is the conjunction of $s$ and $C$, and which maps
