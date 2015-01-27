@@ -263,7 +263,7 @@ classifier probabilities in the SMT, as recommended also by
 
 Like most of the previous work, we approach the machine translation
 problem in a phrase-based fashion, which has superseded the simpler word-based
-based paradigm for quite some time. This means that phrases, defined as a
+paradigm for quite some time. This means that phrases, defined as a
 sequence of one or more words (that need not form a linguistic entity in any
 way), form the basic building blocks of our translation model. The problem of
 translating a sentence is decomposed into the problem of translating its phrasal
@@ -354,7 +354,7 @@ hand, the first such a comparison in the literature as far as we know.
 For the monolithic classifier, the first feature in the ranking will always be
 $s$. Nevertheless, it is quite conceivable that a match for the context is not
 found and the classifier proceeds to match on another feature. To prevent
-situations in where the classifier falls back to a completely different source
+situations in which the classifier falls back to a completely different source
 phrase, and thus comes up with unrelated translation options, we enforce that
 the source phrases need to match, which is what \cite{Stroppa+07} do as
 well.
@@ -744,7 +744,7 @@ l3r3 (monolithic/replace/opt/tribl2) & 0.2962 & 0.5275 & 5.5364 & 55.26 & 46.36 
 l3r3 (experts/replace/opt/ib1) & 0.2950 & 0.5328 & 5.5433 & 55.66 & 46.41 \\ 
 \hline
 \end{tabular}
-\caption{Positive results for Chinese to English on IWSLT 2006 Evaluation Campaign data}
+\caption{Results for Chinese to English on IWSLT 2006 Evaluation Campaign data}
 \label{tab:iwslt2006zhen}
 \end{center}
 \end{table}
@@ -754,7 +754,7 @@ l3r3 (experts/replace/opt/ib1) & 0.2950 & 0.5328 & 5.5433 & 55.66 & 46.41 \\
 Several local context sizes have been attempted. The number after \texttt{l}
 refers to the numbers of words to the left of the source phrase. The number
 after \texttt{r} denotes the right context size. Further parameters to the
-system are enclosed within parentheses.  Recall that our the classifiers may be
+system are enclosed within parentheses.  Recall that the classifiers may be
 built in two distinct ways, a single \emph{monolithic} configuration (with
 \emph{tribl2}), as is used here, or a classifier \emph{expert} configuration
 (with \emph{ib1}).  Secondly, score weighting can be done either through the
@@ -788,17 +788,17 @@ English.
 \hline
 \multicolumn{6}{|c|}{europarl250k-nl-en} \\
 \hline 
-Baseline (replace/M/opt) & \textbf{0.2801} & \textbf{0.5181} & 7.4274 & 63.4 & 45.0 \\ 
-l1r1 (monolithic/replace/opt/tribl2) & \textbf{0.2801} & \textbf{0.5181} & 7.4274 & 63.4 & 45.0 \\ 
+Baseline (replace/M/opt) & \textbf{0.2801} & \textbf{0.5181} & 7.4274 & 63.40 & 45.0 \\ 
+l1r1 (monolithic/replace/opt/tribl2) & \textbf{0.2801} & \textbf{0.5181} & 7.4274 & 63.40 & 45.0 \\ 
 l2r1 (monolithic/replace/opt/tribl2) & 0.2713 & 0.509 & 7.4168 & 63.08 & 45.01 \\ 
 l2r1 (experts/replace/opt/ib1) & 0.2722 & 0.5105 & \textbf{7.4344} & 63.05 & \textbf{44.94} \\ 
 l2r2 (monolithic/replace/opt/tribl2) & 0.2696 & 0.5078 & 7.4025 & 63.18 & 45.07 \\ 
 l2r2 (experts/replace/opt/ib1) & 0.271 & 0.5095 & 7.423 & \textbf{63.04} & 44.98 \\ 
 l3r3 (monolithic/replace/opt/tribl2) & 0.2673 & 0.5061 & 7.3826 & 63.29 & 45.16 \\ 
-l3r3 (experts/replace/opt/ib1) & 0.268 & 0.5069 & 7.3879 & \textbf{63.18} & 45.1 \\ 
+l3r3 (experts/replace/opt/ib1) & 0.268 & 0.5069 & 7.3879 & 63.18 & 45.1 \\ 
 \hline
 \end{tabular}
-\caption{Negative results on Europarl 250k, Dutch to English}
+\caption{Results on Europarl 250k, Dutch to English}
 \label{tab:europarl250k}
 \end{center}
 \end{table}
@@ -828,7 +828,7 @@ l3r3 (monolithic/replace/opt/tribl2) & 0.2994 & 0.5497 & 7.3264 & \textbf{51.92}
 l3r3 (experts/replace/opt/ib1) & 0.2995 & 0.5498 & 7.3243 & 51.96 & 39.57 \\ 
 \hline
 \end{tabular}
-\caption{Negative results on IWSLT 2012, Dutch to English}
+\caption{Results on IWSLT 2012, Dutch to English}
 \label{tab:iwslt2012}
 \end{center}
 \end{table}
@@ -874,7 +874,7 @@ l1r1 (monolithic/append/uni/tribl2) & \textbf{0.6743} & \textbf{0.7587} & \textb
 l1r1 (experts/append/uni/ib1) & 0.6718 & 0.7567 & 11.7539 & 31.60 & 25.32 \\ 
 \hline
 \end{tabular}
-\caption{Positive results on EMEA, English to Spanish and English to Dutch}
+\caption{Results on EMEA, English to Spanish and English to Dutch}
 \label{tab:emea}
 \end{center}
 \end{table}
@@ -891,7 +891,7 @@ l1r1 (experts/append/uni/ib1) & 0.6718 & 0.7567 & 11.7539 & 31.60 & 25.32 \\
 \multicolumn{6}{|c|}{JRC250k-en-es sample 1} \\
 \hline 
 Baseline (replace/M/uni) & 0.4510 & 0.6241 & 9.6386 & 47.02 & 31.41 \\ 
-l1r1 (monolithic/replace/uni/tribl2) & 0.4503 & 0.624 & \textbf{9.7726} & \textbf{46.25} & \textbf{30.88} \\ 
+l1r1 (monolithic/replace/uni/tribl2) & 0.4503 & 0.6240 & \textbf{9.7726} & \textbf{46.25} & \textbf{30.88} \\ 
 l1r1 (experts/replace/uni/ib1) & \textbf{0.4513}$\dagger$\footnote{Score is
 \emph{not} significant at $p<0.05$} & \textbf{0.6243} & 9.7619 & 46.31 & 30.91 \\ 
 \hline 
@@ -1255,7 +1255,7 @@ simplest one. For EMEA (Table~\ref{tab:emea}) and JRC
 Comparing the two weighting methods, however, is far from trivial. When a
 discrepancy is found between a run with the replace method (4 scores) and the
 run with the append method (5 scores), we can not simply ascribe such a
-difference to the extra score, but must into account that the very act of
+difference to the extra score, but must take into account that the very act of
 adding a score shifts the weights for the score vector, even if uniformly
 distributed. Any shift may likely affect the outcome. This
 motivation is also the reason we included a separate baseline for the append
@@ -1405,12 +1405,12 @@ problem, and considering experiences in prior research.
 Various distinct corpora and language pairs have been employed for the
 experiments, this in order to ensure that conclusions are of a generic
 enough nature rather than incidental artifacts. The results of the
-experiments, however, were still often in contrast with one and other;
+experiments, however, were still often in contrast with one another;
 there was a high degree of variability between the corpora and
 language pairs. Positive results were attained on EMEA, for both
 English to Spanish and English to Dutch, JRC-Acquis (English to
 Spanish) and IWSLT 2006 (English to Chinese).  Especially the former
-two are highly formulaic corpora, and the touristic 'how to' domain of
+two are highly formulaic corpora, and the touristic ``how to'' domain of
 the IWSLT 2006 data has formulaic aspects as well, leading us to be
 cautiously optimistic source-side context does have merit under
 certain constraints.
@@ -1452,7 +1452,7 @@ information we try to \emph{explicitly} model, is often already
 \emph{implicitly} available to the decoder.  Rather than considering a source
 phrase in context, the decoder may thus opt to choose to include the context as
 integral part of the phrase.  The target-language model already plays an
-important role here, as it encourages the decoder the choose translation options
+important role here, as it encourages the decoder to choose translation options
 that fit well together. Source-side context modelling, without additional
 linguistic features, seems to only have something to offer for highly formulaic
 corpora. 
