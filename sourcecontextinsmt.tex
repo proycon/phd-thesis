@@ -903,12 +903,16 @@ l1r1 (experts/append/uni/ib1) & 0.6938$*$ & 0.7723 & 12.317 & 29.13 & 22.85 \\
 \multicolumn{6}{|c|}{EMEA-en-nl} \\
 \hline
 Baseline (replace/M/uni) & 0.6612 & 0.7502 & 11.5287 & 32.77 & 26.22 \\ 
-l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.6725} & \textbf{0.7572} & \textbf{11.7539} & \textbf{31.62} & \textbf{25.27} \\ 
-l1r1 (experts/replace/uni/ib1) & 0.6697 & 0.7552 & 11.7028 & 31.88 & 25.52 \\ 
+%System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
+l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.6725}$*$ & \textbf{0.7572} & \textbf{11.7539} & \textbf{31.62} & \textbf{25.27} \\ 
+%System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
+l1r1 (experts/replace/uni/ib1) & 0.6697$*$ & 0.7552 & 11.7028 & 31.88 & 25.52 \\ 
 \hline 
 Baseline (append/M/uni) & 0.6646 & 0.7525 & 11.6214 & 32.27 & 25.81 \\ 
-l1r1 (monolithic/append/uni/tribl2) & \textbf{0.6743} & \textbf{0.7587} & \textbf{11.8008} & \textbf{31.38} & \textbf{25.07} \\ 
-l1r1 (experts/append/uni/ib1) & 0.6718 & 0.7567 & 11.7539 & 31.60 & 25.32 \\ 
+%System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
+l1r1 (monolithic/append/uni/tribl2) & \textbf{0.6743}$*$ & \textbf{0.7587} & \textbf{11.8008} & \textbf{31.38} & \textbf{25.07} \\ 
+%System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
+l1r1 (experts/append/uni/ib1) & 0.6718$*$ & 0.7567 & 11.7539 & 31.60 & 25.32 \\ 
 \hline
 \end{tabular}
 \caption{Results on EMEA, English to Spanish and English to Dutch}
@@ -928,6 +932,7 @@ l1r1 (experts/append/uni/ib1) & 0.6718 & 0.7567 & 11.7539 & 31.60 & 25.32 \\
 \multicolumn{6}{|c|}{JRC250k-en-es sample 1} \\
 \hline 
 Baseline (replace/M/uni) & 0.4510 & 0.6241 & 9.6386 & 47.02 & 31.41 \\ 
+
 l1r1 (monolithic/replace/uni/tribl2) & 0.4503 & 0.6240 & \textbf{9.7726} & \textbf{46.25} & \textbf{30.88} \\ 
 l1r1 (experts/replace/uni/ib1) & \textbf{0.4513}$\dagger$\footnote{Score is
 \emph{not} significant at $p<0.05$.} & \textbf{0.6243} & 9.7619 & 46.31 & 30.91 \\ 
@@ -1356,7 +1361,7 @@ $\frac{p(t|s,C)}{p(t|s)}$ on the  JRC250k English to Spanish test set, illustrat
 \end{figure}
 
 
-\subsection{Results: Qualitative analysis}
+\subsection{Qualitative analysis}
 \label{sec:qualanal}
 
 In this section we take a closer look at the translations themselves and see if
