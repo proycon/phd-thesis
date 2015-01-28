@@ -642,14 +642,17 @@ ordering of the same words will have the same score. The lower the score, the
 more similar the translation is to the reference.
 \end{enumerate}
 
-\subsection{Baseline}
-
 For each experiment we construct a non-context-informed baseline. This
 baseline does make use of our full pipeline, i.e. the bypass method described
 in Section~\ref{sec:smtintegration}, but it does not invoke the
 classifiers.  We do this to ensure the only difference is the actual
 integration of context information, and that differences in result can not be
 attributed to minor idiosyncrasies of the implementation.
+
+We test statistical significance of our systems on the BLEU score, compared to
+the non-context informed baseline For this we use pairwise bootstrap sampling
+\citep{KoehnStatSig} with $5000$ iterations. Statistical significance at
+$p<0.05$ will be marked with an asterisk in the results.
 
 \subsection{Parameter optimisation}
 \label{sec:paropt}
@@ -759,15 +762,8 @@ also reported positive results.
 \hline
 Baseline (replace/M/opt) & 0.2877 & 0.532 & 5.3809 & 57.33 & 47.66 \\ 
 %l1r1 vs baseline: System 1 BLEU better: 4908 / 5000 = 0.9816 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (monolithic/replace/opt/tribl2) & 0.2959$*$ \footnote{The asterisk denotes
-that the value is statistically
-significant compared to the baseline at $p<0.05$, tested using pairwise bootstrap sampling
-\citep{KoehnStatSig} with $5000$ iterations. Statistical significance testing has only
-been conducted for a few experiments in order to substantiate our conclusion,
-and only using BLEU.  When significance has been shown, higher BLEU values
-are assumed to be significant too. Note that absence of this mark does not
-imply the results are not significant, but merely that it has not been
-explicitly verified.} & 0.5306 & 5.5294 & 55.69 & 46.41 \\
+l1r1 (monolithic/replace/opt/tribl2) & 0.2959$*$ \footnote{Statistically
+significant compared to the baseline at $p<0.05$} & 0.5306 & 5.5294 & 55.69 & 46.41 \\
 %System 1 BLEU better: 4957 / 5000 = 0.9914 -- BLEU SIGNIFICANT at p = 0.05
 l1r1 (experts/replace/opt/ib1) & 0.2978$*$ & \textbf{0.5339} & 5.5313 & 55.66 & 46.33 \\ 
 %System 1 BLEU better: 4781 / 5000 = 0.9562 -- BLEU SIGNIFICANT at p = 0.05
