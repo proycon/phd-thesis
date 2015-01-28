@@ -704,6 +704,10 @@ Note that although we forego on explicit variable context selection, an
 implicit form is still there for the classifier experts; the feature weights
 are computed on a by-classifier basis.
 
+\section{Results}
+
+
+
 \subsection{Results: source-side context vs. no context}
 \label{sec:results1}
 
@@ -739,13 +743,17 @@ and only using BLEU.  When significance has been shown, higher BLEU values
 are assumed to be significant too. Note that absence of this mark does not
 imply the results are not significant, but merely that it has not been
 explicitly verified.} & 0.5306 & 5.5294 & 55.69 & 46.41 \\
-l1r1 (experts/replace/opt/ib1) & 0.2978 & \textbf{0.5339} & 5.5313 & 55.66 & 46.33 \\ 
-l2r1 (monolithic/replace/opt/tribl2) & 0.2941 & 0.5305 & 5.5192 & 55.29 & 46.23 \\ 
-l2r1 (experts/replace/opt/ib1) & 0.2955 & 0.5338 & 5.5391 & 55.53 & 46.23 \\ 
-l2r2 (monolithic/replace/opt/tribl2) & 0.2968 & 0.5281 & \textbf{5.5493} & \textbf{55.1} & \textbf{46.09} \\ 
-l2r2 (experts/replace/opt/ib1) & \textbf{0.2986} & 0.5304 & 5.5467 & 55.47 & 46.36 \\ 
-l3r3 (monolithic/replace/opt/tribl2) & 0.2962 & 0.5275 & 5.5364 & 55.26 & 46.36 \\ 
-l3r3 (experts/replace/opt/ib1) & 0.2950 & 0.5328 & 5.5433 & 55.66 & 46.41 \\ 
+%System 1 BLEU better: 4957 / 5000 = 0.9914 -- BLEU SIGNIFICANT at p = 0.05
+l1r1 (experts/replace/opt/ib1) & 0.2978$*$ & \textbf{0.5339} & 5.5313 & 55.66 & 46.33 \\ 
+%System 1 BLEU better: 4781 / 5000 = 0.9562 -- BLEU SIGNIFICANT at p = 0.05
+l2r1 (monolithic/replace/opt/tribl2) & 0.2941$*$ & 0.5305 & 5.5192 & 55.29 & 46.23 \\ 
+%System 1 BLEU better: 4847 / 5000 = 0.9694 -- BLEU SIGNIFICANT at p = 0.0
+l2r1 (experts/replace/opt/ib1) & 0.2955$*$ & 0.5338 & 5.5391 & 55.53 & 46.23 \\ 
+%System 1 BLEU better: 4941 / 5000 = 0.9882 -- BLEU SIGNIFICANT at p = 0.05
+l2r2 (monolithic/replace/opt/tribl2) & 0.2968$*$ & 0.5281 & \textbf{5.5493} & \textbf{55.10} & \textbf{46.09} \\ 
+l2r2 (experts/replace/opt/ib1) & \textbf{0.2986}$*$ & 0.5304 & 5.5467 & 55.47 & 46.36 \\ 
+l3r3 (monolithic/replace/opt/tribl2) & 0.2962$*$ & 0.5275 & 5.5364 & 55.26 & 46.36 \\ 
+l3r3 (experts/replace/opt/ib1) & 0.2950$*$ & 0.5328 & 5.5433 & 55.66 & 46.41 \\ 
 \hline
 \end{tabular}
 \caption{Results for Chinese to English on IWSLT 2006 Evaluation Campaign data.
