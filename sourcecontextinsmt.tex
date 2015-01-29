@@ -1000,21 +1000,26 @@ also not shown for brevity, shows a similar late convergence as BLEU, whereas WE
 the trend followed by NIST.
 
 \begin{figure}
+\begin{center}
 \newlength\figureheight
 \newlength\figurewidth
 \setlength\figureheight{6cm}
 \setlength\figurewidth{8cm}
 \input{EMEAlc0.tikz}
-%\includegraphics[width=120.00mm]{emealcbleu.png}
+\end{center}
 \caption{Learning curve on EMEA, English to Spanish, measuring BLEU score, logarithmic scale}
 \label{fig:emealc}
 \end{figure}
 
 
 \begin{figure}
-\includegraphics[width=120.00mm]{jrclcbleu.png}
-\includegraphics[width=120.00mm]{jrclcnist.png}
-\caption{Learning curve on JRC Acquis, English to Spanish, measuring BLEU score (top) and NIST (bottom), logarithmic scale}
+\begin{center}
+\setlength\figureheight{5cm}
+\setlength\figurewidth{6cm}
+\input{JRClc0.tikz}
+\input{JRClc2.tikz}
+\end{center}
+\caption{Learning curve on JRC Acquis, English to Spanish, measuring BLEU score (left) and NIST (right), logarithmic scale}
 \label{fig:jrclc}
 \end{figure}
 

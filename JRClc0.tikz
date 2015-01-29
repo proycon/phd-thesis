@@ -1,0 +1,57 @@
+% This file was created by matplotlib v0.1.0.
+% Copyright (c) 2010--2014, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% 
+% The lastest updates can be retrieved from
+% 
+% https://github.com/nschloe/matplotlib2tikz
+% 
+% where you can also submit bug reports and leavecomments.
+% 
+\begin{tikzpicture}
+
+\definecolor{color1}{rgb}{0.917647058823529,0.917647058823529,0.949019607843137}
+\definecolor{color0}{rgb}{0.298039215686275,0.447058823529412,0.690196078431373}
+
+\begin{axis}[
+xlabel={Sample size},
+ylabel={BLEU},
+xmin=10000, xmax=250000,
+ymin=0.28, ymax=0.46,
+xmode=log,
+width=\figurewidth,
+height=\figureheight,
+xmajorgrids,
+ymajorgrids,
+legend pos=north west,
+legend entries={{Baseline},{l1r1}}
+]
+\addplot [line width=0.7000000000000001pt, red]
+coordinates {
+(10000,0.2908)
+(25000,0.346)
+(50000,0.3753)
+(100000,0.3987)
+(250000,0.451)
+
+};
+\addplot [line width=0.7000000000000001pt, color0]
+coordinates {
+(10000,0.2828)
+(25000,0.3425)
+(50000,0.3695)
+(100000,0.3943)
+(250000,0.4503)
+
+};
+\path [draw=white, fill opacity=0] (axis cs:13,0)--(axis cs:13,0);
+
+\path [draw=white, fill opacity=0] (axis cs:1,13)--(axis cs:1,13);
+
+\path [draw=white, fill opacity=0] (axis cs:0,13)--(axis cs:0,13);
+
+\path [draw=white, fill opacity=0] (axis cs:13,1)--(axis cs:13,1);
+
+\end{axis}
+
+\end{tikzpicture}
