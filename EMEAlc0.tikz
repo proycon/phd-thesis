@@ -1,0 +1,103 @@
+% This file was created by matplotlib v0.1.0.
+% Copyright (c) 2010--2014, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% 
+% The lastest updates can be retrieved from
+% 
+% https://github.com/nschloe/matplotlib2tikz
+% 
+% where you can also submit bug reports and leavecomments.
+% 
+\begin{tikzpicture}
+
+\definecolor{color1}{rgb}{0.333333333333333,0.658823529411765,0.407843137254902}
+\definecolor{color3}{rgb}{0.505882352941176,0.447058823529412,0.698039215686274}
+\definecolor{color4}{rgb}{0.917647058823529,0.917647058823529,0.949019607843137}
+\definecolor{color2}{rgb}{0.768627450980392,0.305882352941176,0.32156862745098}
+\definecolor{color0}{rgb}{0.298039215686275,0.447058823529412,0.690196078431373}
+
+\begin{axis}[
+title={Learning Curve for EMEAlc},
+xlabel={Sample size},
+ylabel={BLEU},
+xmin=10000, xmax=1000000,
+ymin=0.25, ymax=0.7,
+xmode=log,
+width=\figurewidth,
+height=\figureheight,
+xmajorgrids,
+ymajorgrids,
+legend pos=north west,
+legend entries={{Baseline},{l1r1},{l1r2},{l2r2},{l3r3}}
+]
+\addplot [line width=0.7000000000000001pt, red]
+coordinates {
+(10000,0.2919)
+(25000,0.3503)
+(50000,0.4214)
+(100000,0.4704)
+(250000,0.543)
+(500000,0.5996)
+(750000,0.6462)
+(1000000,0.6722)
+
+};
+\addplot [line width=0.7000000000000001pt, color0]
+coordinates {
+(10000,0.2894)
+(25000,0.3479)
+(50000,0.4191)
+(100000,0.4716)
+(250000,0.5458)
+(500000,0.6066)
+(750000,0.658)
+(1000000,0.6857)
+
+};
+\addplot [line width=0.7000000000000001pt, color1]
+coordinates {
+(10000,0.2891)
+(25000,0.3479)
+(50000,0.4185)
+(100000,0.4708)
+(250000,0.5461)
+(500000,0.6074)
+(750000,0.66)
+(1000000,0.6884)
+
+};
+\addplot [line width=0.7000000000000001pt, color2]
+coordinates {
+(10000,0.2889)
+(25000,0.3478)
+(50000,0.4189)
+(100000,0.4708)
+(250000,0.5465)
+(500000,0.6086)
+(750000,0.6616)
+(1000000,0.6909)
+
+};
+\addplot [line width=0.7000000000000001pt, color3]
+coordinates {
+(10000,0.2891)
+(25000,0.3473)
+(50000,0.4186)
+(100000,0.4703)
+(250000,0.5464)
+(500000,0.609)
+(750000,0.6632)
+(1000000,0.692)
+
+};
+\path [draw=white, fill opacity=0] (axis cs:13,0)--(axis cs:13,0);
+
+\path [draw=white, fill opacity=0] (axis cs:1,13)--(axis cs:1,13);
+
+\path [draw=white, fill opacity=0] (axis cs:0,13)--(axis cs:0,13);
+
+\path [draw=white, fill opacity=0] (axis cs:13,1)--(axis cs:13,1);
+
+\end{axis}
+
+\end{tikzpicture}

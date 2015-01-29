@@ -5,6 +5,8 @@
 \usepackage{times}
 \usepackage[utf8]{inputenc}
 \usepackage{url}
+\usepackage{tikz}
+\usepackage{pgfplots}
 \usepackage{latexsym}
 \special{papersize=210mm,297mm} % to avoid having to use "-t a4" with dvips 
 %\setlength\titlebox{6.5cm}  % You can expand the title box if you really have to
@@ -21,6 +23,7 @@
 \usepackage{gb4e}
 \usepackage{natbib}
 
+\pgfplotsset{compat=newest}
 
 \let\proof\relax
 \let\endproof\relax
@@ -997,7 +1000,12 @@ also not shown for brevity, shows a similar late convergence as BLEU, whereas WE
 the trend followed by NIST.
 
 \begin{figure}
-\includegraphics[width=120.00mm]{emealcbleu.png}
+\newlength\figureheight
+\newlength\figurewidth
+\setlength\figureheight{6cm}
+\setlength\figurewidth{8cm}
+\input{EMEAlc0.tikz}
+%\includegraphics[width=120.00mm]{emealcbleu.png}
 \caption{Learning curve on EMEA, English to Spanish, measuring BLEU score, logarithmic scale}
 \label{fig:emealc}
 \end{figure}
