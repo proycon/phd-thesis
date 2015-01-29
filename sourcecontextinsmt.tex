@@ -726,7 +726,7 @@ might work. Section~\ref{sec:qqthreshold} investigates whether a certain
 criticial mass of translation quality or quantity of training material is needed
 before source-side context can make an impact. Section~\ref{sec:morphdir}
 analyzes whether translation from morphologically simpler to more complex
-language is what makes the difference. Section~\ref{sec:quantanalysis} conducts
+language is what makes the difference. Section~\ref{sec:quantanal} conducts
 a quantitative analysis to assess whether the classifiers make an impact even
 if this does not reflect in the translation quality.
 
@@ -853,7 +853,9 @@ baseline.
 \hline 
 Baseline (replace/M/opt) & 0.3014 & \textbf{0.5577} & 7.2676 & 52.91 & 39.98 \\ 
 l1r1 (monolithic/replace/opt/tribl2) & 0.3008 & 0.5526 & 7.3201 & 52.17 & 39.57 \\ 
-l1r1 (experts/replace/opt/ib1) & \textbf{0.3018} & 0.5536 & 7.3195 & 52.23 & 39.52 \\ %TODO: computing significance
+%System 1 BLEU better: 2894 / 5000 = 0.5788
+l1r1 (experts/replace/opt/ib1) & \textbf{0.3018}$\dagger$\footnote{Score is
+\emph{not} significant at $p<0.05$.} & 0.5536 & 7.3195 & 52.23 & 39.52 \\ 
 l2r1 (monolithic/replace/opt/tribl2) & 0.2997 & 0.5521 & 7.3253 & 52.1 & 39.48 \\ 
 l2r1 (experts/replace/opt/ib1) & 0.3007 & 0.5532 & 7.3286 & 52.14 & 39.5 \\ 
 l2r2 (monolithic/replace/opt/tribl2) & 0.3000 & 0.5516 & 7.3303 & 51.99 & 39.49 \\ 
@@ -929,7 +931,7 @@ l1r1 (experts/append/uni/ib1) & 0.6718$*$ & 0.7567 & 11.7539 & 31.60 & 25.32 \\
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
 \hline
-\multicolumn{6}{|c|}{JRC250k-en-es sample 1} \\
+\multicolumn{6}{|c|}{JRC250k-en-es (sample 1)} \\
 \hline 
 Baseline (replace/M/uni) & 0.4510 & 0.6241 & 9.6386 & 47.02 & 31.41 \\ 
 
@@ -939,18 +941,22 @@ l1r1 (experts/replace/uni/ib1) & \textbf{0.4513}$\dagger$\footnote{Score is
 \hline 
 Baseline (append/M/uni) & 0.4526 & 0.6242 & 9.8183 & 45.82 & 30.78 \\ 
 l1r1 (monolithic/append/uni/tribl2) & 0.4513 & 0.6237 & 9.8741 & 45.54 & 30.66 \\ 
-l1r1 (experts/append/uni/ib1) & \textbf{0.4527} & \textbf{0.6244} & \textbf{9.8839} & \textbf{45.48} & \textbf{30.61} \\ 
+%System 1 BLEU better: 3089 / 5000 = 0.6178
+l1r1 (experts/append/uni/ib1) & \textbf{0.4527}$\dagger$ & \textbf{0.6244} & \textbf{9.8839} & \textbf{45.48} & \textbf{30.61} \\ 
 \hline
-\multicolumn{6}{|c|}{JRC250k2-en-es sample 2} \\
+\multicolumn{6}{|c|}{JRC250k2-en-es (sample 2)} \\
 \hline
 Baseline (replace/M/uni) & 0.5268 & 0.6718 & 10.7683 & 40.37 & 26.73 \\ 
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
 l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.5309}$*$ & \textbf{0.6755} & \textbf{10.9422} & \textbf{39.55} & \textbf{26.07} \\ 
-l1r1 (experts/replace/uni/ib1) & 0.5293 & 0.6744 & 10.9004 & 39.73 & 26.19 \\ 
+%System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
+l1r1 (experts/replace/uni/ib1) & 0.5293$*$ & 0.6744 & 10.9004 & 39.73 & 26.19 \\ 
 \hline 
 Baseline (append/M/uni) & 0.5289 & 0.6733 & 10.905 & 39.60 & 26.28 \\ 
-l1r1 (monolithic/append/uni/tribl2) & \textbf{0.5307} & \textbf{0.6755} & \textbf{11.0163} & \textbf{39.12} & \textbf{25.91} \\ 
-l1r1 (experts/append/uni/ib1) & 0.5304 & 0.6749 & 10.9971 & 39.18 & 25.99 \\ 
+%System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
+l1r1 (monolithic/append/uni/tribl2) & \textbf{0.5307}$*$ & \textbf{0.6755} & \textbf{11.0163} & \textbf{39.12} & \textbf{25.91} \\ 
+%System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
+l1r1 (experts/append/uni/ib1) & 0.5304$*$ & 0.6749 & 10.9971 & 39.18 & 25.99 \\ 
 \hline
 \end{tabular}
 \caption{Results on two independent samples of JRC-Acquis (both containing 250000 sentences), English to Spanish}
@@ -960,10 +966,11 @@ l1r1 (experts/append/uni/ib1) & 0.5304 & 0.6749 & 10.9971 & 39.18 & 25.99 \\
 \end{savenotes}
 
 Table~\ref{tab:jrc250k} again clearly illustrates our observation that there is
-significant variation between data sets. We have drawn two independent samples
-from the same dataset and observe that this results in rather different scores.
-Nevertheless, the conclusion that source-side context is beneficial is upheld
-for both, with the second sample doing so by a larger margin. 
+significant variation between data sets. We have drawn two independent random
+samples of both $250,000$ instances from the same dataset and observe that this results in rather different
+scores. Source-side context produces the winning scores in both samples, and
+by a fair margin in the second sample. In the first sample, however, they fail to
+pass statistical significance tests.
 
 \subsection{Hypothesis: Quantity or quality threshold}
 \label{sec:qqthreshold}
@@ -1155,6 +1162,7 @@ l1r1 (monolithic/replace/opt/tribl2) & 0.1166 & 0.5568 & 5.2558 & \textbf{74.45}
 %TODO: Add l2r2 ??
 
 \subsection{Quantitative Analysis}
+\label{sec:quantanal}
 
 Are we placing our bets on the wrong horse by focussing solely on $p(t|s)$ and
 replacing it with $p(t|s,C)$? No, the optimised decoder parameters over-all
