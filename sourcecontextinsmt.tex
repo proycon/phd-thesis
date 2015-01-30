@@ -24,6 +24,8 @@
 \usepackage{natbib}
 
 \pgfplotsset{compat=newest}
+%\usetikzlibrary{external}
+%\tikzexternalize
 
 \let\proof\relax
 \let\endproof\relax
@@ -139,7 +141,7 @@ which are expressed by different words in Spanish. Source-side context
 information may provide valuable clues to what sense is being employed, and
 therefore what translation is correct.  The words ``boat'' and the phrase ``of
 the river'' in example \ref{ex:bank2} provide clues that we are using
-bank in its maritime sense. Example \ref{ex:bank1} is less obvious, but the
+bank in its aquatic sense. Example \ref{ex:bank1} is less obvious, but the
 word ``trust'' could be seen to be a clue for ``bank'' denoting a
 financial institution.
 
@@ -1356,29 +1358,47 @@ classifier was needed, due to not being ambiguous in translation or context.
 
 We can therefore not draw any satisfactory conclusions on the merit of the
 \emph{append} method versus the \emph{replace} method, given the experiments we
-conducted. We can, however, use the two different scoring methods to provide
-insight into the classifier results. How often does the classifier assign a
-$p(t|s,C)$ that significantly differs from $p(t|s)$? And how often are they
-completely identical?  Such an analysis has been conducted on the test data of
-the JRC-Acquis corpus, from English to Spanish. This is shown in
+conducted.
+
+We can, however, use the two different scoring methods to provide insight into
+the classifier results. How often does the classifier assign a $p(t|s,C)$ that
+significantly differs from $p(t|s)$? We compute this the
+test data of the JRC-Acquis corpus, from English to Spanish, as shown in
 Figure~\ref{fig:scoredifference}.
 
 For each occurrence of each source phrase in the test-data, we gathered all
-possible translations and computed $\frac{p(t|s,C)}{p(t|s)}$. This ratio
-expresses the difference between the context-informed translation probability
-and the non-context informed one. A value of one indicates there is no
-difference whatsoever, this includes all source phrases where either
-translation or context are unambiguous. An outlier point can
-be observed at this point, covering $9\%$ of phrase-pairs. The right hand side
-of the graph ($>1$) is of most interest; it covers the phrase pairs to which
-the classifier assigns a higher probability. No less than $75\%$ of the phrase
-pairs are in this region.
+possible translations and compute the difference $\Delta$ between the
+context-informed translation probability and the non-context informed one as
+per Equation~\ref{eqn:scorediff}.
+
+\begin{equation}
+  \Delta = 
+\begin{cases}
+ \frac{p(t|s,C)}{p(t|s)} - 1, & \text{if } p(t|s,C) \geq p(t|s)  \\
+ -1(\frac{p(t|s)}{p(t|s,C)}) - 1 & \text{otherwise}
+\end{cases}
+\label{eqn:scorediff}
+\end{equation}
+
+A value of zero indicates there is no difference whatsoever, this includes all
+source phrases where either translation or context are unambiguous. A spike and
+outlier can be observed at this point\footnote{$\pm 0.05$}, covering $9\%$ of
+all phrase-pairs. We observe that the right-hand side of the graph drops much
+less sharply than the left hand side, it covers the phrase pairs to which the
+classifier assigns a higher probability. No less than $75\%$ of the phrase
+pairs are in this region. This is a direct result of the discriminative
+filtering done by the classifiers, which prunes the weakest translation
+options, and therefore on the hole raises the probability of the remaining
+options.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=90.00mm]{scoredifference.png}
-\caption{Scatter plot (logarithmic scale) showing the ratio
-$\frac{p(t|s,C)}{p(t|s)}$ on the  JRC250k English to Spanish test set, illustrating the difference between the classifier score and the original SMT score.}
+\setlength\figureheight{6cm}
+\setlength\figurewidth{6cm}
+\input{scoredifference.tikz}
+\input{scoredifference2.tikz}
+%\includegraphics[width=90.00mm]{scoredifference.png}
+\caption{Scatter plot (logarithmic scale) illustrating the difference $\Delta$ between the classifier score and the original SMT score on the JRC250k English to Spanish test set. The right figure provides a zoomed view and illustrates that small changes are most prevalent.}
 \label{fig:scoredifference}
 \end{center}
 \end{figure}

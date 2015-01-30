@@ -1,0 +1,29 @@
+% This file was created by matplotlib v0.1.0.
+% Copyright (c) 2010--2014, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% 
+% The lastest updates can be retrieved from
+% 
+% https://github.com/nschloe/matplotlib2tikz
+% 
+% where you can also submit bug reports and leavecomments.
+% 
+\begin{tikzpicture}
+
+
+\pgfplotstableread{scorediff.dat}\scorediffdata
+
+\begin{axis}[
+ybar=-1pt,
+bar width=1,
+xlabel={$\Delta (\pm 0.05)$},
+ylabel={Frequency},
+xmin=-800, xmax=800,
+ymin=1, ymax=2000000,
+ymode=log,
+width=\figurewidth,
+height=\figureheight]
+  \addplot[scatter,only marks,mark=*,mark options={mark size=1}] table[x=x,y=y,col sep=space] {\scorediffdata};
+\end{axis}
+
+\end{tikzpicture}
