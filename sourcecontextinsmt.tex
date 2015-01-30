@@ -2,8 +2,15 @@
 \smartqed  % flush right qed marks, e.g. at end of proof
 \usepackage{easy-todo}
 \usepackage{mathptmx}      % use Times fonts if available on your TeX system
-\usepackage{times}
+\usepackage{iftex}
+\ifPDFTeX
 \usepackage[utf8]{inputenc}
+\else
+\ifLuaTeX
+\usepackage[utf8]{luainputenc}
+\fi
+\fi
+\usepackage{times}
 \usepackage{url}
 \usepackage{tikz}
 \usepackage{pgfplots}
