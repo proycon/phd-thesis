@@ -1,0 +1,32 @@
+% This file was created by matplotlib v0.1.0.
+% Copyright (c) 2010--2014, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% 
+% The lastest updates can be retrieved from
+% 
+% https://github.com/nschloe/matplotlib2tikz
+% 
+% where you can also submit bug reports and leavecomments.
+% 
+\begin{tikzpicture}
+
+
+\pgfplotstableread{histinstances.dat}\histinstances
+\pgfplotstableread{histclasses.dat}\histclasses
+
+\begin{axis}[
+ybar=-1pt,
+bar width=1,
+xlabel={Number of instances (blue) and classes (red)},
+ylabel={Frequency},
+xmin=0, xmax=200,
+ymin=1, ymax=1000000,
+ymode=log,
+width=\figurewidth,
+height=\figureheight
+]
+  \addplot+table[x=x,y=y,col sep=tab] {\histinstances};
+  \addplot+table[x=x,y=y,col sep=tab] {\histclasses};
+\end{axis}
+
+\end{tikzpicture}
