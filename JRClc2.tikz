@@ -14,7 +14,6 @@
 \definecolor{color0}{rgb}{0.298039215686275,0.447058823529412,0.690196078431373}
 
 \begin{axis}[
-title={Learning Curve for JRClc},
 xlabel={Sample size},
 ylabel={NIST},
 xmin=10000, xmax=250000,
