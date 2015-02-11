@@ -272,7 +272,7 @@ the classifier probabilities in the SMT, as recommended also by
 
 
 \section{Methodology}
-\label{ref:methodology}
+\label{sec:methodology}
 
 Like most of the previous work, we approach the machine translation
 problem in a phrase-based fashion, which has superseded the simpler word-based
@@ -401,7 +401,7 @@ phrase to the locations in the corpus where it occurs.  Additionally, a reverse
 index is included in the model for the target-side of the corpus, which maps
 any given $(sentence, token)$ position to a set of phrases that begins at that
 position.  This is computed using the software package
-\emph{colibri-core},\footnote{\url{http://proycon.github.io/colibri-core}}
+\emph{colibri-core},\footnote{\url{http://proycon.github.io/colibri-core}, \texttt{ae04607b2f2354c702c15350fc4fdd1a673b7bcb} is the git commit that represents a fair state of the software version during this study.}
 which takes care of a losslessly compressed in-memory representation for all
 phrases, and allows us to cope with large corpora. Given these two pattern
 models $M_{source}$ and $M_{target}$ we can extract the context for each phrase
@@ -431,7 +431,7 @@ vector.  The algorithm will return a list containing two-tuples $(C,t)$.  }
     
 \noindent
 This algorithm is implemented in \emph{colibri-mt}.
-\footnote{\url{https://github.com/proycon/colibri-mt}}
+\footnote{\url{https://github.com/proycon/colibri-mt}, \texttt{7abeac5a139779ab9c9c4e1b275cf801ed38c232} is the git commit represents a fair state of this software during this research.}
 
 The returned instances can be stored directly, either in a single model for the
 monolithic approach or in separate models for each $s$ for the classifier
@@ -677,9 +677,9 @@ however, known to have high variance across multiple runs, due to many local
 optima in the search space. We therefore do not run MERT independently on each
 experimental run, but only on the baseline run, and use those weights for
 subsequent runs using the replace method.\footnote{The append method would
-require an extra weight that MERT would not have optimised. Again, the motivation
-here is to keep all variables equal except for the integration of context
-information, so we can make a fair assessment.
+require an extra weight that MERT would not have optimised.} Again, the
+motivation here is to keep all variables equal except for the integration of
+context information, so we can make a fair assessment.
 
 %talk about parameter optimisation in classifier
 While we conduct parameter optimisation for the parameters of the SMT
@@ -1378,16 +1378,19 @@ per Equation~\ref{eqn:scorediff}.
 \label{eqn:scorediff}
 \end{equation}
 
-A value of zero indicates there is no difference whatsoever, this includes all
+For Figure~\ref{fig:scoredifference}, we set up bins of size 0.1, so each point
+on the x axis aggregates results with of the specified $\Delta \pm 0.05$. A
+value of zero indicates there is no difference whatsoever, this includes all
 source phrases where either translation or context are unambiguous. A spike and
 outlier can be observed at this point\footnote{$\pm 0.05$}, covering $9\%$ of
-all phrase-pairs. We observe that the right-hand side of the graph drops much
-less sharply than the left hand side. The right-hand side covers the phrase
-pairs to which the classifier assigns a higher probability. No less than $75\%$
-of the phrase pairs are in this region. This is a direct result of the
-discriminative filtering done by the classifiers, which prunes the weakest
-translation options, and therefore on the hole raises the probability of the
-remaining options.
+all phrase-pairs. We observe that the positive side of the graph drops much
+less sharply than the negative side. The positive numbers cover the phrase
+pairs to which the classifier assigns a higher probability; the value expresses
+the factor by which the probability is increased. No less than $75\%$ of the
+phrase pairs are in this region. This is a direct result of the discriminative
+filtering done by the classifiers, which prunes the weakest translation
+options, and therefore on the hole raises the probability of the remaining
+options.
 
 \begin{figure}
 \begin{center}
