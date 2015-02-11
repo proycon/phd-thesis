@@ -300,10 +300,10 @@ implementation of $k$-Nearest Neighbour classification; IGTree
 thereof; and TRIBL2, a mixture of IB1 and IGTree.
 
 These algorithms are all implemented in the software package TiMBL
-\citep{TIMBL}\footnote{\url{http://ilk.uvt.nl/timbl}} and are
-well-suited for symbolic data and highly multivariate class spaces.
-Moreover, memory-based classification has been a successful method in
-the field of Word Sense Disambiguation \citep{SENSEVAL2,WSD2}.
+\citep{TIMBL}\footnote{\url{http://ilk.uvt.nl/timbl}, version 6.4.5 is the
+version we used.} and are well-suited for symbolic data and highly multivariate
+class spaces.  Moreover, memory-based classification has been a successful
+method in the field of Word Sense Disambiguation \citep{SENSEVAL2,WSD2}.
 
 When speaking of the $k$ nearest neighbours in the implementation of IB1,
 IGTree and TRIBL2, we are actually referring to the neighbours at nearest
@@ -401,7 +401,7 @@ phrase to the locations in the corpus where it occurs.  Additionally, a reverse
 index is included in the model for the target-side of the corpus, which maps
 any given $(sentence, token)$ position to a set of phrases that begins at that
 position.  This is computed using the software package
-\emph{colibri-core},\footnote{\url{http://proycon.github.io/colibri-core}, \texttt{ae04607b2f2354c702c15350fc4fdd1a673b7bcb} is the git commit that represents a fair state of the software version during this study.}
+\emph{colibri-core},\footnote{\url{http://proycon.github.io/colibri-core} \\ \texttt{ae04607b2f2354c702c15350fc4fdd1a673b7bcb} is the git commit that represents a fair state of the software version during this study.}
 which takes care of a losslessly compressed in-memory representation for all
 phrases, and allows us to cope with large corpora. Given these two pattern
 models $M_{source}$ and $M_{target}$ we can extract the context for each phrase
@@ -431,7 +431,7 @@ vector.  The algorithm will return a list containing two-tuples $(C,t)$.  }
     
 \noindent
 This algorithm is implemented in \emph{colibri-mt}.
-\footnote{\url{https://github.com/proycon/colibri-mt}, \texttt{7abeac5a139779ab9c9c4e1b275cf801ed38c232} is the git commit represents a fair state of this software during this research.}
+\footnote{\url{https://github.com/proycon/colibri-mt} \\ \texttt{7abeac5a139779ab9c9c4e1b275cf801ed38c232} is the git commit that represents a fair state of the software version during this study.}
 
 The returned instances can be stored directly, either in a single model for the
 monolithic approach or in separate models for each $s$ for the classifier
@@ -488,13 +488,16 @@ context information. The hypothesis under investigation in the present study is
 that $p(t|s,C)$ is a more accurate measure than $p(t|s)$.
 
 The state-of-the-art SMT decoder used in the majority of MT studies is Moses
-\citep{MOSES}. Moses offers no facilities to take source-side context
-information in account. We considered three options to achieve our goal of
-integrating source-side context: 1) creating a new decoder; 2) enhancing
-Moses; or 3) using a bypass method. Although we initially set out to create a
-new decoder, it proved to be too difficult to attain the same quality as Moses.
-We therefore decided, in line also with most of the literature, to follow the
-third option and use a bypass method; this allows us to use Moses as a black box.
+\footnote{\url{http://statmt.org/moses/}, git commit
+\texttt{1615d56b69df5d959de9c5416cf628d76ac99169} expresses a fair state of the
+version used in this study.} \citep{MOSES}. Moses offers no facilities to take
+source-side context information in account. We considered three options to
+achieve our goal of integrating source-side context: 1) creating a new decoder;
+2) enhancing Moses; or 3) using a bypass method. Although we initially set out
+to create a new decoder, it proved to be too difficult to attain the same
+quality as Moses.  We therefore decided, in line also with most of the
+literature, to follow the third option and use a bypass method; this allows us
+to use Moses as a black box.
 
 The bypass method is a \emph{discriminative translation filtering}
 step \citep{Rejwanul+11}. It performs context-aware classification in
@@ -573,7 +576,7 @@ an improvement in translation quality.
 For the translation model, we rely on a parallel corpus as our main source of
 input. Whenever the source is untokenised, we tokenise the data using
 \emph{ucto}.\footnote{An open-source regular-expression based tokeniser with
-unicode support, \url{http://ilk.uvt.nl/ucto}} For the language model, we
+unicode support, \url{http://ilk.uvt.nl/ucto}, we used version 0.7.0} For the language model, we
 simply reuse the target-side portion of the parallel corpus; we do not
 introduce additional data for the language model in our experiments.
 
