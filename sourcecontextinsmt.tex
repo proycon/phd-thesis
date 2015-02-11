@@ -65,28 +65,22 @@
 \maketitle
 
 \begin{abstract} 
-  We present a series of experiments focusing on the modelling of
-  source-side context to improve Phrase-based Statistical Machine
-  Translation. Statistical Machine Translation systems typically
-  consist of a translation model and a language model. The former maps
-  phrases in the source language to the target language, without
-  regard for the context in which the source phrases occur. The latter
-  models just the target language, and acts as a target-side model of
-  context information after translation. We attempt to independently
-  reproduce a line of existing research and test whether considering
-  context information directly in the translation model has a positive
-  effect on translation quality.  We furthermore investigate various
-  ways discriminative classifier-based models can be integrated into
-  Statical Machine Translation.  We will use proven techniques from
-  Word Sense Disambiguation, effectively integrating these techniques in
-  Statistical Machine Translation. Our approach is
-  language-independent and knowledge-poor: we do not employ any
-  explicit linguistic features computed by part-of-speech taggers,
-  word sense disambiguation systems, supertaggers, or parsers, as used
-  by previous work. We find only limited improvement of translation quality for
-  certain formulaic corpora and conclude that explicit modelling of source-side
-  context information does not add much to the data already implicitly
-  available in the decode process.
+  We present a series of experiments focusing on the modelling of source-side
+context to improve Phrase-based Statistical Machine Translation. We attempt to
+independently reproduce a line of existing research and test whether
+considering source-side context information directly in the translation model has a
+positive effect on translation quality.  We furthermore investigate various
+ways in which discriminative classifier-based models can be integrated into Statical
+Machine Translation.  We use proven techniques from Word Sense
+Disambiguation, effectively integrating these techniques in Statistical Machine
+Translation. Our approach is language-independent and knowledge-poor: we do not
+employ any explicit linguistic features computed by part-of-speech taggers,
+word sense disambiguation systems, supertaggers, or parsers, as used by
+previous work. We observe improvements in translation quality by our method,
+but only clearly so for domain-specific corpora with a high degree of formulaic
+language. Lowering the expectations raised by previous work, we conclude that
+the explicit modeling of source-side context information does not generally add
+much information to that already implicitly available in the decoding process.  
 \end{abstract}
 
 \section{Introduction}
@@ -96,7 +90,7 @@ translating an input sentence from a source language to a target language is
 implemented as a game of probabilities and a search for the most probable
 translation option.  These probabilities are expressed in a number of models
 that specialise in a certain aspect relevant to the translation process. The
-``phrase-based'' characteristic is because phrases are the building blocks of
+method is called ``phrase-based'' because phrases are the building blocks of
 the translation model, generalising earlier approaches in
 Statistical Machine Translation based on words.  Phrases in this
 sense are sequences of one or more words, i.e. $n$-grams of variable
@@ -118,12 +112,12 @@ likely to follow others and can be interpreted as modelling the
 in a natural word order and be a typical sequence of words for the
 target language.
 
-A Machine Translation \emph{decoder} optimises a log-linear model of
-these two, and additional other, models. Given an input sentence in
-the source language, it searches through a vast space of all
-``possible'' translation options, most nonsensical, for a path
-maximising the probabilities according to each of the models, taking
-into account different weights they may be assigned.
+A Machine Translation \emph{decoder} optimises a log-linear model of that
+combined these two, and optionally other models as well. Given an input
+sentence in the source language, it searches through a vast space of all
+``possible'' translation options, most nonsensical, for a path maximising the
+probabilities according to each of the models, taking into account different
+weights they may be assigned.
 
 The study we currently present focusses on the role of additional
 surface-form source-language context
@@ -143,22 +137,21 @@ Spanish translation in examples~\ref{ex:bank1} and \ref{ex:bank2}.
 \label{ex:bank2}
 \end{exe}
 
-The same English word, ``bank'', may express multiple semantic senses, some of
+The same English word, ``bank'', may express multiple lexical semantic senses, some of
 which are expressed by different words in Spanish. Source-side context
-information may provide valuable clues to what sense is being employed, and
+information may provide valuable clues to what sense is being intended, and
 therefore what translation is correct.  The words ``boat'' and the phrase ``of
 the river'' in example \ref{ex:bank2} provide clues that we are using
 bank in its aquatic sense. Example \ref{ex:bank1} is less obvious, but the
 word ``trust'' could be seen to be a clue for ``bank'' denoting a
 financial institution.
 
-These examples are meant to illustrate the intuition that is behind our
-research hypothesis. We hypothesise that the inclusion of source-side context
-information in the translation model improves translation results, as the
-context helps in providing a more accurate disambiguation. A counter-hypothesis
-to this would be that although source-side context information is not modelled
-explicitly, it is implicitly captured by the combination of translation model
-and target language model, and explicit modelling has no added value.
+We hypothesise that the inclusion of source-side context information in the
+translation model improves translation results, as the context helps in
+providing a more accurate disambiguation. A counter-hypothesis to this would be
+that although source-side context information is not modelled explicitly, it is
+implicitly captured by the combination of translation model and target language
+model, and explicit modelling has no added value.
 
 There is an obvious overlap between what we aim to do here and the field of
 Word Sense Disambiguation (WSD). We effectively test an integration of proven
@@ -181,27 +174,29 @@ Not introducing extra data for the translation system means our goals have to
 be set more modest as well. We may not expect the same gains as are achieved by
 introducing extra data from linguistic preprocessors.
 
+In the next section, we will sketch an overview of previous research. Section~\ref{sec:methodology} describes how our system is set up. In Section~\ref{sec:experiments} we inttroduce the data-sets used and the experiments we conducted, the many results of which are presented, analyzed and discussed in Section~\ref{sec:results}. In Section~\ref{sec:conclusion} we come to the final conclusion.
+
 \section{Previous research}
 
 The idea to integrate WSD approaches in SMT is not new, nor is the idea to use
 source-side context information to disambiguate in translation. Various studies
 have been conducted, offering mixed results. In the early days of SMT,
-\cite{GarciaVarea+02} already explicitly modelled source-side context in a
+\cite{GarciaVarea+02} explicitly modelled source-side context in a
 maximum entropy model for word-based SMT, and report slightly improved error
 rates on a translation task.
 
-\cite{CarpuatWu05} were the first to directly tackle the question whether
-full-scale WSD models were beneficial to translation quality when integrated in
-SMT systems, and thus their work forms an important foundation for our own study.
-Their approach uses an ensemble classification model that integrates
-position-sensitive, syntactic, and local collocational features, which has
-proven itself in competitive WSD tasks. This includes linguistic features such
-as part-of-speech tags and lemmas, as well as more complex syntactic relations.
-They test on a single Chinese--English test set only, and only
-evaluate with BLEU,
-which leaves open the question whether their conclusions would hold on
-different language pairs, test sets, and using different evaluation metrics.
-Their approach is word-based, however, and the level of integration is also limited.
+\cite{CarpuatWu05} were the first to tackle the question whether full-scale WSD
+models were beneficial to translation quality when integrated in SMT systems,
+and thus their work forms an important foundation for our own study.  Their
+approach uses an ensemble classification model that integrates
+position-sensitive, syntactic, and local collocational features, a combination
+with proven merit in competitive WSD tasks. This includes linguistic features
+such as part-of-speech tags and lemmas, as well as more complex syntactic
+relations.  They test on a single Chinese-to-English test set only, and only
+evaluate with BLEU, which leaves open the question whether their conclusions
+would hold on different language pairs, test sets, and using different
+evaluation metrics.  Their approach is word-based, however, and the level of
+integration is also limited.
 
 Carpuat and Wu focus on the WSD model rather than on the SMT
 model, whereas we place more focus on the SMT model and the
@@ -210,7 +205,7 @@ simple.
 
 Despite their efforts, they reach the surprising conclusion that inclusion of
 WSD techniques does \emph{not} yield better translation quality. Will these
-results hold in a more modern Phrase-based Statistical Machine Translation
+results hold in a more modern phrase-based Statistical Machine Translation
 approach?
 
 Two years later they expanded their study to full phrasal units
@@ -230,7 +225,7 @@ Estimate the statistical process produces. The feature vector for
 their classifiers consists of both local context as well as global
 context features.  In addition to the surface forms of the words, they
 rely on shallow linguistic features such as part-of-speech tags and
-lemmas. They conduct a manual evaluation judged on fluency and
+lemmas. They conduct a manual evaluation judging fluency and
 adequacy, and conclude that considering context improves semantic
 adequacy, yet does not benefit syntactic fluency. They remark that the
 integration of the classifier probabilities in an SMT framework needs
@@ -248,26 +243,26 @@ Chinese--English experiment in this study.
 
 Source-context aware translation has also been attempted outside of the
 predominant SMT framework. \cite{MBMT} implement a
-simple form of example-based machine translation that is word-based and relies
+form of example-based machine translation that is word-based and relies
 chiefly on classifiers for the translation model component. Two studies derive
 from the same concept while transcending a word-based paradigm:
 \cite{MARKERBASED} use chunks delimited by common markers, and \cite{PBMBMT}
 attempt a full extension to phrases similar to SMT. Although positive results
 are achieved in the latter study, it does not rival state-of-the-art SMT.
 
-The most important and complete study we build upon is
-\cite{Rejwanul+11}, which in turn draws from the majority of the
-aforementioned studies, and provides an extensive comparison between
-them. Their study finds that including linguistically-informed
-contextual features produces improvements, but not always; also,
-different contextual features have different, unpredictable results,
-some of which positive. The main contrast between our study and
-theirs is that they focus on a variety of linguistically-informed
-contextual features, whereas we depart from a language-independent
-angle and intend to settle some of the conflicting reports whether
-this may lead to an improvement in translation quality. A notable
-focus in our study will be possible methods of integrating the
-classifier probabilities in the SMT, as recommended also by
+The most complete study we build upon is \cite{Rejwanul+11}, which in turn
+draws from the majority of the aforementioned studies, and provides an
+extensive comparison between them. Their study finds that including
+linguistically-informed contextual features produces improvements, but not
+always; also, different contextual features have different, unpredictable
+results, some of which positive. The main contrast between our study and theirs
+is that Haque et al focus on a variety of linguistically-informed contextual
+features, whereas we depart from a language-independent angle, i.e. we do not
+presuppose the presence of natural language processing tools for computing
+linguistically abstract features. Furthermore, we intend to settle the
+conflicting reports on whether this may lead to an improvement in translation
+quality. A notable focus in our study will be possible methods of integrating
+the classifier probabilities in the SMT, as recommended also by
 \cite{Gimenez+07}.
 
 
@@ -284,8 +279,8 @@ sub-parts and combining the results in the best order.
 
 In describing our methodology, we first focus on the problem of phrasal
 translation, adding in the source-side context component. This shall be done
-using classifiers. Then we address how this can be integrated into a
-phrase-based Statistical Machine Translation decoder, which also takes care of
+using discriminative classifiers. Then we address how this can be integrated into a
+phrase-based Statistical Machine Translation decoder, which takes care of
 the ordering aspect. 
 
 
@@ -311,18 +306,17 @@ distance $k$. So even with $k=1$ we may be talking about multiple data points
 that are all at equal distance.
 
 %(these two paragraphs are paraphrased from my PBMBMT thesis, not sure to cite
-%or prevent for risk of over-self-citation here)
-% [Antal] that's no problem.
+%or prevent for risk of over-self-citation here) % [Antal] that's no problem.
 IGTree compresses the instance base into an ordered decision tree structure at
 training time, and issues look-ups in this tree structure at test time. Unlike
 other top-down induced decision tree methods such as C4.5, features in IGTree
-are tested in a fixed order. This is computed only once 
-for all features. This order is determined using metrics such as
-\emph{information gain} or \emph{gain ratio}. They determine the relative
-informativeness or disambiguating power of each feature and provide a ranking of
-all features. 
+are tested in a fixed order, computed only once for all features. This order is
+determined using metrics such as \emph{information gain} or \emph{gain
+ratio}\footnote{This is the default that is also used in our experiments}. They
+determine the relative informativeness or disambiguating power of each feature
+and provide a ranking of all features. 
 
-IGTree's performance relies on the differences in information gain between
+IGTree's performance relies on the differences in gain ratio between
 features. If these are small then IGTree may perform significantly below IB1
 \citep{TIMBL}. A hybrid approach called TRIBL2 \citep{TIMBL} starts out with
 IGTree and switches to a IB1 variant when a value mismatch occurs in the tree.
@@ -335,14 +329,14 @@ of a target phrase ($t$) given a source phrase ($s$) and context information
 direct estimation of this probability using relative frequencies would result
 in overestimation of large phrases, and that therefore a smoothing factor is
 required. They proceed to say that through memory-based classification they
-implicitly introduce precisely such a smoothing factor implicitly.
+introduce precisely such a smoothing factor implicitly.
 
 Given a source phrase and context information, the classifier yields classes
 corresponding to target phrases, with an associated weight. After
 normalization, these can be considered a posterior distribution of
 target phrases. 
 
-We primarily focus on the modelling of local context, i.e. words in the
+We focus on the modelling of local context, i.e. words in the
 immediate vicinity of the source phrase. Take $w_0$ to be the first word of
 the source phrase $s$, then for a local context size of $n$ words to the left and
 $m$ to the right we construct the feature vector $C$ as
@@ -378,8 +372,9 @@ therefore omit it from the feature vector.
 
 \subsection{Training}
 
-The translation model is trained on parallel corpus data. We follow a common
-MT pipeline, and additionally derive classifier training data from the data.
+The translation model is trained on parallel corpus data. We follow a common MT
+pipeline, and additionally derive classifier training data from the
+resulting phrase-translation table and the parallel corpus.
 
 Given a tokenised and sentence-aligned parallel corpus, we iteratively learn
 word alignments using GIZA++ \citep{GIZA}. Then we identify and extract phrase
@@ -394,20 +389,19 @@ non-context-informed. We have some additional steps to perform to train our
 context-informed classifiers. We take the phrase-translation table, along with
 the parallel corpus, as a basis for extracting training instances.
 
-We build indexed pattern models of all source phrases and target
-phrases that occur on their respective side the parallel corpus, and
-which also occur in the phrase-translation table. An indexed pattern
-model maps each distinct phrase to the locations in the corpus where
-it occurs.  Additionally, a reverse index is included in the model for
-the target-side of the corpus, which maps any given
-$(sentence, token)$ position to a set phrases that begins at that
+We build indexed pattern models of all source phrases and target phrases that
+occur on their respective side of the parallel corpus, and which also occur in
+the phrase-translation table. An indexed pattern model maps each distinct
+phrase to the locations in the corpus where it occurs.  Additionally, a reverse
+index is included in the model for the target-side of the corpus, which maps
+any given $(sentence, token)$ position to a set of phrases that begins at that
 position.  This is computed using the software package
 \emph{colibri-core},\footnote{\url{http://proycon.github.io/colibri-core}}
-which takes care of a losslessly compressed in-memory representation
-for all phrases, and allows us to cope with large corpora. Given these
-two pattern models $M_{source}$ and $M_{target}$ we can quickly and
-efficiently extract the context for each phrase pair, as shown in
-simplified form in Algorithm~\ref{alg:featureextract}.
+which takes care of a losslessly compressed in-memory representation for all
+phrases, and allows us to cope with large corpora. Given these two pattern
+models $M_{source}$ and $M_{target}$ we can extract the context for each phrase
+pair quickly and efficiently, as shown in simplified form in
+Algorithm~\ref{alg:featureextract}.
 
 \begin{algorithm}
 \caption{Algorithm for feature extraction for training classifiers.  Take $n$
@@ -465,10 +459,10 @@ translated, in the source language.
 \label{eq:smtmodel}
 \end{equation}
 
-Bayes' rule inverts the problem into two factors\footnote{The denominator p(f)
-can be dropped as it would not alter the outcome of the \emph{argmax}
-function}, the former corresponding to the translation model, and the latter
-corresponding to the language model. 
+Bayes' rule inverts the problem into two factors\footnote{The normalisator
+denominator p(f) can be dropped as it would not alter the outcome of the
+\emph{argmax} function}, the former corresponding to the translation model, and
+the latter corresponding to the language model. 
 
 The translation model is a mapping of the set of source phrases ($S$) to the
 set of target phrases ($T$). Each phrase pair $(s,t)$ where $s \in S$ and $t
@@ -481,7 +475,7 @@ score of the translation model and other models is expressed as a log-linear
 combination, in which different weights can be assigned to each of the
 components of the score vector. These weights are hyperparameters to the task and
 are typically optimised automatically on development data using for instance
-Minimum Error Rate Reduction \citep{MERT}.
+Minimum Error Rate Reduction (MERT) \citep{MERT}.
 
 The probability $p(t|s)$ is the one we are interested in. Recall that the
 classifiers seek to model $p(t|s,C)$, where $C$ constitutes the vector of
@@ -490,7 +484,7 @@ that $p(t|s,C)$ is a more accurate measure than $p(t|s)$.
 
 The state-of-the-art SMT decoder used in the majority of MT studies is Moses
 \citep{MOSES}. Moses offers no facilities to take source-side context
-information in account. We had to consider three options to achieve our goal of
+information in account. We considered three options to achieve our goal of
 integrating source-side context: 1) creating a new decoder; 2) enhancing
 Moses; or 3) using a bypass method. Although we initially set out to create a
 new decoder, it proved to be too difficult to attain the same quality as Moses.
@@ -562,8 +556,9 @@ replaced with a series of consecutive positions as well. These two altered data
 sets are now the input to Moses, which can now run unmodified. 
 
 \section{Experiments}
+\label{sec:experiments}
 
-We conduct a large number of experiments to assess whether integration of
+We conduct a series of experiments to assess whether integration of
 context-informed classifiers in Statistical Machine Translation leads to
 an improvement in translation quality. 
 
@@ -658,7 +653,7 @@ For each experiment we construct a non-context-informed baseline. This
 baseline does make use of our full pipeline, i.e. the bypass method described
 in Section~\ref{sec:smtintegration}, but it does not invoke the
 classifiers.  We do this to ensure the only difference is the actual
-integration of context information, and that differences in result can not be
+integration of context information, and that differences in results can not be
 attributed to minor idiosyncrasies of the implementation.
 
 We test statistical significance of our systems on the BLEU score, compared to
@@ -677,7 +672,7 @@ however, known to have high variance across multiple runs, due to many local
 optima in the search space. We therefore do not run MERT independently on each
 experimental run, but only on the baseline run, and use those weights for
 subsequent runs using the replace method.\footnote{The append method would
-require an extra weight that the baseline does not have} Again, the motivation
+require an extra weight that MERT would not have optimised. Again, the motivation
 here is to keep all variables equal except for the integration of context
 information, so we can make a fair assessment.
 
@@ -721,12 +716,13 @@ implicit form is still there for the classifier experts; the feature weights
 are computed on a by-classifier basis.
 
 \section{Results}
+\label{sec:results}
 
-In this section we will present the results of our experiments.
-Our largest issue with the present MT literature on this subject is that we too often
-see that hypotheses are tested only on or two corpora, with just one or two
-language-pairs. We feel that from such results, generic conclusions are too
-quickly drawn. To prevent this pitfall, our experiments are distributed amongst
+In this section we will present the results of our experiments.  Our largest
+issue with the present MT literature on this subject is that we too often see
+that hypotheses are tested only on or two corpora, with just one or two
+language-pairs. We feel that from such results, generic conclusions are drawn
+too quickly. To prevent this pitfall, our experiments are distributed amongst
 various corpora and language pairs.
 
 Section~\ref{sec:results1} will focus on our main hypothesis; does inclusion
@@ -735,7 +731,7 @@ will soon observe that this question is not straightforward to answer, as
 the different corpora and language pairs often paint a conflicting image. We
 posit a number of hypotheses to determine in which cases source-side-context
 might work. Section~\ref{sec:qqthreshold} investigates whether a certain
-criticial mass of translation quality or quantity of training material is needed
+critical mass of translation quality or quantity of training material is needed
 before source-side context can make an impact. Section~\ref{sec:morphdir}
 analyzes whether translation from morphologically simpler to more complex
 language is what makes the difference. Section~\ref{sec:quantanal} conducts
@@ -743,24 +739,23 @@ a quantitative analysis to assess whether the classifiers make an impact even
 if this does not reflect in the translation quality.
 
 Our secondary hypotheses concern the ways in which classifiers can be
-integrated in SMT, here we investigate the impact of the classifier type and
-weighting methods.  These are assessed in sections~\ref{sec:typeopt} and
+integrated in SMT. We investigate the impact of the classifier type and
+weighting methods.  These are assessed in Sections~\ref{sec:typeopt} and
 \ref{sec:weighting}, respectively. We conclude the result section with a
 qualitative analysis in Section~\ref{sec:qualanal}.
 
 \subsection{Source-side context vs. no context}
 \label{sec:results1}
 
-The primary objective of our study is to assess the role of
-source-side context information. To this end we conducted a series of
-experiments on various corpora and language pairs. The first results,
-on the IWSLT 2006 Evaluation Campaign, Chinese to English, are listed
-in Table~\ref{tab:iwslt2006zhen}. They show a consistent advantage of
-having the source-side classifiers. A dataset from the same source
-\footnote{This dataset is not publicly available. As we do not have the exact set used by
-  \cite{Stroppa+07}, we have to assume our training and test sets,
-  whilst drawn from the same source, are distinct subsets from the
-  ones used by \cite{Stroppa+07}.} was used in \cite{Stroppa+07}, who
+The primary objective of our study is to assess the role of source-side context
+information. To this end we conducted a series of experiments on various
+corpora and language pairs. The first results, on the IWSLT 2006 Evaluation
+Campaign, Chinese to English, are listed in Table~\ref{tab:iwslt2006zhen}. They
+show a consistent advantage of having the source-side classifiers. A dataset
+from the same source\footnote{This dataset is not publicly available. As we do
+not have the exact set used by \cite{Stroppa+07}, we have to assume our
+training and test sets, whilst drawn from the same source, are distinct subsets
+from the ones used by \cite{Stroppa+07}.} was used in \cite{Stroppa+07}, who
 also reported positive results.
 
 \begin{savenotes}
@@ -774,8 +769,7 @@ also reported positive results.
 \hline
 Baseline (replace/M/opt) & 0.2877 & 0.532 & 5.3809 & 57.33 & 47.66 \\ 
 %l1r1 vs baseline: System 1 BLEU better: 4908 / 5000 = 0.9816 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (monolithic/replace/opt/tribl2) & 0.2959$*$ \footnote{Statistically
-significant compared to the baseline at $p<0.05$} & 0.5306 & 5.5294 & 55.69 & 46.41 \\
+l1r1 (monolithic/replace/opt/tribl2) & 0.2959$*$ & 0.5306 & 5.5294 & 55.69 & 46.41 \\
 %System 1 BLEU better: 4957 / 5000 = 0.9914 -- BLEU SIGNIFICANT at p = 0.05
 l1r1 (experts/replace/opt/ib1) & 0.2978$*$ & \textbf{0.5339} & 5.5313 & 55.66 & 46.33 \\ 
 %System 1 BLEU better: 4781 / 5000 = 0.9562 -- BLEU SIGNIFICANT at p = 0.05
@@ -791,15 +785,15 @@ l3r3 (experts/replace/opt/ib1) & 0.2950$*$ & 0.5328 & 5.5433 & 55.66 & 46.41 \\
 \end{tabular}
 \caption{Results for Chinese to English on IWSLT 2006 Evaluation Campaign data.
 The numbers in the context-aware configurations (l$x$r$y$), refer to the size
-of the left respectively right context.}
+of the left respectively right context. The asterisk denotes statistical significance compared to the baseline at $p<0.05$}
 \label{tab:iwslt2006zhen}
 \end{center}
 \end{table}
 \end{savenotes}
 
-Several local context sizes have been attempted. The number after \texttt{l}
+Several local context sizes have been attempted. The number after l
 refers to the numbers of words to the left of the source phrase. The number
-after \texttt{r} denotes the right context size. Further parameters to the
+after r denotes the right context size. Further parameters to the
 system are enclosed within parentheses.  Recall that the classifiers may be
 built in two distinct ways, a single \emph{monolithic} configuration (with
 \emph{tribl2}), as is used here, or a classifier \emph{expert} configuration
@@ -812,19 +806,20 @@ postponed until a later section.  For the current and most of our experiments,
 weights to the SMT decoder have been optimised (\emph{opt}) using MERT, on the
 baseline.
 
-For this experiment we draw the conclusion that the integration of
-source-side context-informed classifiers may indeed be beneficial.
-The highest results are attained with a configuration of two words to
-the left and two words to the right, but the results from the various
-context configurations are fairly close. 
-%It is likely that using
-%different data results in a different ranking.
+For this experiment we draw the conclusion that the integration of source-side
+context-informed classifiers may indeed be beneficial, all variants perform
+significantly better than the baseline in terms of BLEU.  The highest results
+are attained with a configuration of two words to the left and two words to the
+right, but the results from the various context configurations are fairly
+close.  
 
 This positive conclusion, however, can not be easily generalised.
 Table~\ref{tab:europarl250k}, for example, presents a more scattered image,
 with results primarily below baseline. This experiment was conducted on 250,000
 training instances of the Europarl corpus, from Dutch to
-English.
+English. In Table~\ref{tab:iwslt2012} we see results on the IWSLT 2012 corpus, for the
+same language pair, which paints a similar picture, albeit closer to the
+baseline.
 
 \begin{table}
 \begin{center}
@@ -849,9 +844,6 @@ l3r3 (experts/replace/opt/ib1) & 0.268 & 0.5069 & 7.3879 & 63.18 & 45.1 \\
 \end{center}
 \end{table}
 
-In Table~\ref{tab:iwslt2012} we see results on the IWSLT 2012 corpus, for the
-same language pair, which paints a similar picture, albeit closer to the
-baseline.
 
 \begin{savenotes}
 \begin{table}
@@ -866,8 +858,7 @@ baseline.
 Baseline (replace/M/opt) & 0.3014 & \textbf{0.5577} & 7.2676 & 52.91 & 39.98 \\ 
 l1r1 (monolithic/replace/opt/tribl2) & 0.3008 & 0.5526 & 7.3201 & 52.17 & 39.57 \\ 
 %System 1 BLEU better: 2894 / 5000 = 0.5788
-l1r1 (experts/replace/opt/ib1) & \textbf{0.3018}$\dagger$\footnote{Score is
-\emph{not} significant at $p<0.05$.} & 0.5536 & 7.3195 & 52.23 & 39.52 \\ 
+l1r1 (experts/replace/opt/ib1) & \textbf{0.3018} & 0.5536 & 7.3195 & 52.23 & 39.52 \\ 
 l2r1 (monolithic/replace/opt/tribl2) & 0.2997 & 0.5521 & 7.3253 & 52.1 & 39.48 \\ 
 l2r1 (experts/replace/opt/ib1) & 0.3007 & 0.5532 & 7.3286 & 52.14 & 39.5 \\ 
 l2r2 (monolithic/replace/opt/tribl2) & 0.3000 & 0.5516 & 7.3303 & 51.99 & 39.49 \\ 
@@ -948,13 +939,12 @@ l1r1 (experts/append/uni/ib1) & 0.6718$*$ & 0.7567 & 11.7539 & 31.60 & 25.32 \\
 Baseline (replace/M/uni) & 0.4510 & 0.6241 & 9.6386 & 47.02 & 31.41 \\ 
 
 l1r1 (monolithic/replace/uni/tribl2) & 0.4503 & 0.6240 & \textbf{9.7726} & \textbf{46.25} & \textbf{30.88} \\ 
-l1r1 (experts/replace/uni/ib1) & \textbf{0.4513}$\dagger$\footnote{Score is
-\emph{not} significant at $p<0.05$.} & \textbf{0.6243} & 9.7619 & 46.31 & 30.91 \\ 
+l1r1 (experts/replace/uni/ib1) & \textbf{0.4513} & \textbf{0.6243} & 9.7619 & 46.31 & 30.91 \\ 
 \hline 
 Baseline (append/M/uni) & 0.4526 & 0.6242 & 9.8183 & 45.82 & 30.78 \\ 
 l1r1 (monolithic/append/uni/tribl2) & 0.4513 & 0.6237 & 9.8741 & 45.54 & 30.66 \\ 
 %System 1 BLEU better: 3089 / 5000 = 0.6178
-l1r1 (experts/append/uni/ib1) & \textbf{0.4527}$\dagger$ & \textbf{0.6244} & \textbf{9.8839} & \textbf{45.48} & \textbf{30.61} \\ 
+l1r1 (experts/append/uni/ib1) & \textbf{0.4527} & \textbf{0.6244} & \textbf{9.8839} & \textbf{45.48} & \textbf{30.61} \\ 
 \hline
 \multicolumn{6}{|c|}{JRC250k2-en-es (sample 2)} \\
 \hline
@@ -987,9 +977,8 @@ pass statistical significance tests.
 \subsection{Hypothesis: Quantity or quality threshold}
 \label{sec:qqthreshold}
 
-The high variability makes it hard to draw generic conclusions. Can we discern
-why source-side context fails to make an impact for certain corpora and
-language pairs and not for others?
+The high variability in our results makes it hard to draw generic conclusions.
+Can we discern why source-side context leads to improved translation quality on certain corpora and language pairs and not on others?
 
 We may speculate that below-baseline results, such as the earlier results on Dutch-to-English
 Europarl and IWSLT2012 data, may be caused by a lack of training data. To
@@ -1002,11 +991,12 @@ would only give rise to the variability problem we just illustrated.  Instead,
 each of the larger samples contains the smaller samples as a subset.
 Figure~\ref{fig:emealc} shows the learning curve for EMEA, English to Spanish,
 measured along the BLEU metric. All other metrics follow the same trend for the
-EMEA corpus but are omitted for brevity. Figure~\ref{fig:jrclc} shows the same for JRC Acquis, English to
-Spanish; here we see that BLEU appears to converge. We also include
-NIST, which converges earlier. For the JRC-Acquis corpus, the METEOR metric,
-also not shown for brevity, shows a similar late convergence as BLEU, whereas WER and PER confirm
-the trend followed by NIST.
+EMEA corpus but are omitted for brevity. Figure~\ref{fig:jrclc} shows the same
+for JRC Acquis, English to Spanish; here we see that BLEU starts lower, but
+meets the baseline at the maximum sample size. We also include NIST, which
+converges earlier. For the JRC-Acquis corpus, the METEOR metric, also not shown
+for brevity, shows a similar late convergence as BLEU, whereas WER and PER
+confirm the trend followed by NIST.
 
 \begin{figure}
 \begin{center}
@@ -1040,16 +1030,15 @@ shown not to generalise.
 % nor is this trend likely to
 %continue if ever more context were to be added.
 
-The positive results on the EMEA and JRC data needs to be
-contrasted to the earlier negative results. Can we identify why these
-corpora, with these language pairs, perform well? We can safely assert
-that both corpora consist of highly formulaic language; medical language in the
-case of EMEA, and legal language in the case of JRC-Acquis.  This
-implies the language is generally more rigidly structured,
-predictable, and therefore easier to translate than corpora from more
-diverse domains. The fact that the scores for EMEA and JRC are higher
-than those for the corpora we have seen before illustrates this
-point.
+The positive results on the EMEA and JRC data needs to be contrasted to the
+earlier negative results. Can we identify why these corpora, with these
+language pairs, perform well? We can safely assert that both corpora consist of
+highly formulaic language, more so than the other corpora; medical language in
+the case of EMEA, and legal language in the case of JRC-Acquis.  This implies
+the language is generally more rigidly structured, predictable, and therefore
+easier to translate than corpora from more diverse domains. The fact that the
+scores for EMEA and JRC are higher than those for the corpora we have seen
+before illustrates this point.
 
 Another hypothesis is that it may be possible that a certain \emph{quality} of
 translation is needed before the source-side context information is able to
@@ -1187,9 +1176,9 @@ l1r1 (monolithic/replace/opt/tribl2) & 0.1166 & 0.5568 & 5.2558 & \textbf{74.45}
 \label{sec:quantanal}
 
 Are we placing our bets on the wrong horse by focussing solely on $p(t|s)$ and
-replacing it with $p(t|s,C)$? No, the optimised decoder parameters over-all
-show that this feature gets assigned significantly more weight than the other
-scores of the translation model, it is surpassed only by the language model for
+replacing it with $p(t|s,C)$? No, the optimised decoder parameters overall
+show that this feature receives significantly more weight than the other
+scores of the translation model. It is surpassed only by the language model for
 some experiments.
 
 We have measured the impact of the classifier on translation quality. To get a
@@ -1197,17 +1186,15 @@ deeper understanding of the impact of the classifier(s), we measure to what
 extent the phrases used in the test set output of a context-informed system
 differ from the phrases used in the non-context informed output, irrespective
 of whether that difference contributes positively or negatively to the
-translation quality. To this end, we ask Moses to verbosely
-output,\footnote{This can be done using the \texttt{-T} flag} for each output
-sentence, which phrases from the intermediate phrase-translation table are
-used. We then analyse how many phrase pairs are unique to the context-informed
-system. These phrases thus do not occur in the baseline and are indicative of
-the SMT decoder choosing a different translation option than it did for the
-baseline, due to the classifier information. Table~\ref{tab:decodediff} shows
-the results for a few of the data sets we used. We also show, in the last
-column, how many of the source-side fragments are not in the baseline, implying
-that the SMT decoder chose a different source-phrase to translate than the
-baseline did.
+translation quality. To this end, we ask Moses to verbosely output, for each
+output sentence, which phrases from the intermediate phrase-translation table
+are used. We then analyse how many phrase pairs are unique to the
+context-informed system. These phrases are indicative of the SMT decoder
+choosing a different translation option than it did for the baseline, due to
+the classifier information. Table~\ref{tab:decodediff} shows the results for a
+few of the data sets we used. We also show, in the last column, how many of the
+source-side fragments are not in the baseline, implying that the SMT decoder
+chose a different source-phrase to translate than the baseline did.
 
 \begin{table}
 \begin{center}
@@ -1232,7 +1219,7 @@ in the non-context-informed baseline.}
 
 The corpus that scores best on translation quality above baseline, the EMEA
 corpus, also shows the largest difference in the output due to the inclusion of
-context information. Notable here is that the EMEA corpus has a much higher fraction
+context information. Notable here is that the EMEA corpus has a higher fraction
 of source fragments that differ from the baseline. The JRC corpus, for which we
 found positives results as well, comes in second. However, a correlation
 between translation quality and the difference ratio of phrase pairs or source
@@ -1267,7 +1254,7 @@ Dutch to English, and plot a histogram in
 Figure~\ref{fig:histogram}. A typical Zipfian curve can be discerned from
 this figure, with the vast majority of classifier experts being based
 on a small amount of instances (left) and a long tail of experts, only
-partially shown, with over a 100 instances. Only a small subset of
+partially shown, with fewer than 100 instances. Only a small subset of
 these experts has more than one translation option, seen by the small
 amount of red in the right half of Figure~\ref{fig:histogram}. In
 other words, most ambiguity is present in classifier experts trained on less than
@@ -1316,7 +1303,7 @@ mostly below baseline), Europarl250k Dutch-English
 (Table~\ref{tab:fa2}, all below baseline).
 
 These results suggest that the classifier experts perform better than the
-monolithic classifier. When looking at the two 250,000 instance samples of
+monolithic classifier. When inspecting the two 250,000 instance samples of
 JRC-Acquis (Table~\ref{tab:jrc250k}), we see a conflicting image. One sample
 confirms our hypothesis that the classifier experts are better, whereas in the
 other the monolithic classifier has the upper-hand. Moreover, when we look at
@@ -1369,9 +1356,8 @@ conducted.
 
 We can, however, use the two different scoring methods to provide insight into
 the classifier results. How often does the classifier assign a $p(t|s,C)$ that
-significantly differs from $p(t|s)$? We compute this the
-test data of the JRC-Acquis corpus, from English to Spanish, as shown in
-Figure~\ref{fig:scoredifference}.
+differs from $p(t|s)$? We compute this the test data of the JRC-Acquis corpus,
+from English to Spanish, as shown in Figure~\ref{fig:scoredifference}.
 
 For each occurrence of each source phrase in the test-data, we gathered all
 possible translations and compute the difference $\Delta$ between the
@@ -1391,12 +1377,12 @@ A value of zero indicates there is no difference whatsoever, this includes all
 source phrases where either translation or context are unambiguous. A spike and
 outlier can be observed at this point\footnote{$\pm 0.05$}, covering $9\%$ of
 all phrase-pairs. We observe that the right-hand side of the graph drops much
-less sharply than the left hand side, it covers the phrase pairs to which the
-classifier assigns a higher probability. No less than $75\%$ of the phrase
-pairs are in this region. This is a direct result of the discriminative
-filtering done by the classifiers, which prunes the weakest translation
-options, and therefore on the hole raises the probability of the remaining
-options.
+less sharply than the left hand side. The right-hand side covers the phrase
+pairs to which the classifier assigns a higher probability. No less than $75\%$
+of the phrase pairs are in this region. This is a direct result of the
+discriminative filtering done by the classifiers, which prunes the weakest
+translation options, and therefore on the hole raises the probability of the
+remaining options.
 
 \begin{figure}
 \begin{center}
@@ -1499,30 +1485,30 @@ was not available in this study.
 
 
 \section{Conclusions and Discussion} 
+\label{sec:conclusion}
 
 We have conducted numerous experiments to assess whether surface-form
 source-side context information, i.e. without the use of any explicit
 linguistic features that require supervised parsers or taggers, can improve
 translation quality. Memory-based classifiers were used, and integrated in an
 SMT framework, following techniques commonly employed in WSD. Different
-classifier types, context sizes, and score weighting methods, have been
+classifier types, context sizes, and score weighting methods have been
 researched. Parameter optimisation was conducted on the decoder parameters for
 various experiments. Optimisation of classifier parameters and feature
 selection was omitted in order to contain the computational complexity of the
 problem, and considering experiences in prior research.
 
 Various distinct corpora and language pairs have been employed for the
-experiments, this in order to ensure that conclusions are of a generic
-enough nature rather than incidental artifacts. The results of the
-experiments, however, were still often in contrast with one another;
-there was a high degree of variability between the corpora and
-language pairs. Positive results were attained on EMEA, for both
-English to Spanish and English to Dutch, JRC-Acquis (English to
-Spanish) and IWSLT 2006 (English to Chinese).  Especially the former
-two are highly formulaic corpora, and the touristic ``how to'' domain of
-the IWSLT 2006 data has formulaic aspects as well, leading us to be
-cautiously optimistic source-side context does have merit under
-certain constraints.
+experiments, this in order to ensure that conclusions are of a generic enough
+nature rather than incidental artifacts of the type that have arguably steered
+conclusions in previous work. The results of the experiments, however, were
+often in contrast with one another; there was a high degree of variability
+between the corpora and language pairs. Positive results were attained on EMEA,
+for both English to Spanish and English to Dutch, JRC-Acquis (English to
+Spanish) and IWSLT 2006 (English to Chinese).  Especially the former two are
+highly formulaic corpora, and the touristic ``how to'' domain of the IWSLT 2006
+data has formulaic aspects as well, leading us to be cautiously optimistic
+source-side context does have merit under certain constraints.
 
 Finding these precise constraints, however, proved elusive. We hypothesised that
 source-side context information may contribute more when translating to a
@@ -1541,7 +1527,7 @@ information is clearly not the most obvious road for the improvement of MT
 quality. It is likely that improvement can be more easily achieved through for
 example optimisation of the target-side language model.
 
-In this final discussion we would like to focus on why the results of our study
+Finally, we would like to focus on why the results of our study
 overall do not exceed above the baseline.  There may be an explanation for this
 if we look at the interplay between the SMT decoder and the classifiers. The
 classifier instances are generated with the phrase-translation table as input,
