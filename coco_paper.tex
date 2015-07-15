@@ -54,8 +54,42 @@ We distinguish three categories of patterns, and define them as follows:
 Our definitions are defined narrowly and, with exception of $n-gram$ do not
 necessarily correspond to the way the concepts are used in other studies. Some
 may use the term skipgram to include what we call flexgram.  The term
-``elastigram'' is sometimes also employed to refer to flexgrams. 
+``elastigram'' is sometimes also employed by others to refer to flexgrams. 
 %TODO: cite something
+
+As we deal with word tokens, this implies that the corpus data has to be in a
+tokenised form. Text data is typically stored in a string of characters, the
+characters themselves drawing their meaning from a character encoding. The
+storage of a huge amount of strings is inefficient from a memory perspective.
+Colibri Core therefore works on the basis of a lossless compression, in which
+each unique word token is assigned a numeric class. This effectively defines
+the ``vocabulary'' of your data, and is called a \emph{class encoding}. A
+pattern is then not represented as an array of characters, but as an array of
+these classes instead. Further lossless compression is achieved by holding this
+array of classes in a dynamic-length byte representation, in which low class
+values can be stored in less bytes than high class values. Classes $0$ to $15$
+can be stored in a single byte, higher classes require at least two bytes. To
+achieve maximum compression, classes are assigned to word tokens based on
+frequency: words with the highest frequency receive the lowest classes.
+
+The implementation's grammar confirms to the regular expression in
+Equation~\ref{eq:patterngrammar}, where $p$ is a pattern, $l$ is a single-byte
+length marker where $l<128$, $c$ is an $l$-byte sequence holding a class number
+(big endian), and $m>=128$ is a special marker used to indicate placeholder
+tokens for skipgrams $(128)$, or dynamic-width gaps for flexgrams
+$(129)$\footnote{$m$ and $lc$ are mutually exclusive}.
+
+\begin{equation}
+\label{eq:patterngrammar}
+p \leftarrow (lc|m)+
+\end{equation}
+
+
+
+
+
+
+
 
 
 
