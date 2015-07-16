@@ -1,0 +1,146 @@
+%to be submitted to SoftwareX
+
+\begin{document}
+
+
+\section{Introduction}
+
+The n-gram, a sequence of $n$ consecutive word tokens, is a core concept for
+many Natural Language Processing (NLP) applications. One of the most NLP basic
+tasks is to read corpus text and compute an $n$-gram frequency list, elementary
+for any kind of statistical analysis. The unigram frequency list, i.e. word
+frequency list, is the simplest instance of this task that is especially
+ubiquitous. Computing $n$-gram frequency on a corpus text is fairly trivial,
+and any beginning computer science student will have no trouble to accomplish
+this in just a few lines of code in a modern high-level programming language.
+Nevertheless, this computation is at the heart of Colibri Core, the NLP sofware
+we aim to introduce in this paper, as there is more to it than meets the eye at
+first.
+
+N-grams are typically distributed in a Zipfian fashion, implying there are only
+a few high-frequency patterns, with words such as common function words in the
+lead, and there is a long tail of patterns that occur only very sparsely. This
+basic fact makes counting a notoriously memory-hungry enterprise, as patterns
+occurring below your minimum frequency treshold can not be discarded from
+memory until the entire corpus has been processed. 
+
+When working with large data sets and higher-order $n$-ngrams, this memory
+problem becomes apparent quickly when trivial solutions are employed. Colibri
+Core, on the other hand, offers tools and programming libraries that are
+heavily optimised to 1) reduce memory usage, and 2) have high performance.
+
+Colibri Core is developed in the scope of the ``Constructions as Linguistic
+Bridges'' PhD study, which roughly focusses on the role of constructions, i.e.
+patterns such as $n$-grams, in their context, in Machine Translation. Machine
+Translation, as well as Language Modelling are two common fields where large
+data sets are often encountered, as more data generally improves the quality of
+the resulting translation model or language model. 
+
+The task of finding $n$-grams is generalised in Colibri Core to the task of
+finding \emph{patterns} or \emph{constructions} (we use the terms
+interchangeably). Furthermore, once patterns are identified, resulting in a
+\emph{pattern model}, Colibri Core can extract relations between the patterns.
+
+\section{Patterns}
+
+We distinguish three categories of patterns, and define them as follows:
+
+\begin{enumerate}
+    \item N-grams - A sequence of $n$ word tokens that are all consecutive.
+    \item Skipgrams - A fixed-length sequence of $p$ word tokens and $q$ token placeholders/wildcards ($n=p+q$), the placeholders constitute gaps or skips and a skipgram can contain multiple of these. In turn, a gap can span one or more tokens. 
+    \item Flexgrams - A sequence s, with one or more gaps of variable length, which implies the pattern by itself is of undefined length.
+\end{enumerate}
+
+Our definitions are defined narrowly and, with exception of $n-gram$ do not
+necessarily correspond to the way the concepts are used in other studies. Some
+may use the term skipgram to include what we call flexgram.  The term
+``elastigram'' is sometimes also employed by others to refer to flexgrams. 
+%TODO: cite something
+
+As we deal with word tokens, this implies that the corpus data has to be in a
+tokenised form. Text data is typically stored in a string of characters, the
+characters themselves drawing their meaning from a character encoding. The
+storage of a huge amount of strings is inefficient from a memory perspective,
+considering the fact that words follow a Zipfian distribution. Colibri Core
+therefore works on the basis of a lossless compression, in which each unique
+word token is assigned a numeric class. This effectively defines the
+``vocabulary'' of your data, and is called a \emph{class encoding}. A pattern
+is then not represented as an array of characters, but as an array of these
+classes instead. Further lossless compression is achieved by holding this array
+of classes in a dynamic-length byte representation, in which low class values
+can be stored in less bytes than high class values. Classes $1$ to $16$ can be
+stored in a single byte, higher classes require at least two bytes. To achieve
+maximum compression, classes are assigned to word tokens based on frequency:
+words with the highest frequency receive the lowest classes.
+
+The implementation's grammar confirms to the regular expression in
+Equation~\ref{eq:patterngrammar}, where $p$ is a pattern, $l$ is a single-byte
+length marker where $l<128$, $c$ is an $l$-byte sequence holding a class number
+(big endian), and $m>=128$ is a special marker used to indicate placeholder
+tokens for skipgrams $(128)$, or dynamic-width gaps for flexgrams
+$(129)$\footnote{$m$ and $lc$ are mutually exclusive}.
+
+\begin{equation}
+\label{eq:patterngrammar}
+p \leftarrow (lc|m)+
+\end{equation}
+
+To encode a text corpus, a class encoding needs to be computed first. To decode
+the encoded corpus back to plain text, the class encoding is needed again.
+Colibri Core provides tools and exposes library functions to do this.
+
+\section{Informed Iterative Counting}
+
+N-gram frequency lists are often parametrised by a certain threshold, $n$-grams
+with less occurrences than this threshold are pruned. Because of the Zipfian
+nature of our $n$-gram distribution, we can circumvent the problem of having to
+hold a huge amount of patterns in memory which won't exceed our threshold, by
+employing informed counting. Informed counting is an iterative procedure, shown
+in pseudo code in Algorithm~\ref{alg:itercounting}. Here we take $m$ to be the maximum
+$n$-gram order we intend to extract, the whole corpus is then processed for
+each $n$ where $1<n\leq\m$, extracting the respective $n$-grams at each
+iteration. This means that at each iteration, we can consult the results of the
+previous iteration. We can then readily discard any $n$-gram with $n>1$ for
+which either of the two $n-1$-grams that it by definition contains does not
+meet the threshold, as it follows that then the $n$-gram can never meet the
+threshold either. By outright discarding an $n$-gram we do not need to store it
+and its count in memory. 
+
+
+
+
+\begin{algorithm} \caption{Informed Iterative Counting for n-grams.  Take $m$
+to be the maximum $n$-gram order we intend to extract, $t$ to be the minimum occurrence threshold, and $M$ to be the
+pattern model in memory, with unigrams already counted in the more trivial fashion.}
+\label{alg:featureextract}
+\begin{algorithmic}
+\For {$n \in 2..m$}
+    \For {$line \in corpus$}
+        \For {$ngram \in extractngrams(line,n)$}
+            \State  $nm1gram_1, nm1gram_2 \leftarrow extractngrams(ngram,n-1)$
+            \If {$getcount(M,nm1gram_1) \geq t$ \And $getcount(M,nm1gram_2) \geq t$}
+                \State M \leftarrow countplusone($ngram$)
+            \EndIf
+        \EndFor 
+      \EndFor
+  \EndFor
+  \Return M
+\EndFor \\
+\Return{instances}
+\end{algorithmic}
+\end{algorithm}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
