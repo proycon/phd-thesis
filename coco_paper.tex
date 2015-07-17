@@ -125,6 +125,7 @@ to be the maximum $n$-gram order we intend to extract, $t$ to be the minimum occ
 pattern model in memory, with unigrams already counted in the more trivial fashion.}
 \label{alg:featureextract}
 \begin{algorithmic}
+%TODO
 \For {$n \in 2..m$}
     \For {$line \in corpus$}
         \For {$ngram \in extractngrams(line,n)$}
@@ -165,11 +166,12 @@ templating as well. We distinguish two types of pattern models:
 \end{enumerate}
 
 Obviously, indexed pattern models make a considerably higher demand on memory.
-They do however, allow for a broad range of computations.
+They do however, allow for a broader range of computations.
 
 \section{Relations between Patterns}
 
-Various relations can be extracted between patterns in a pattern model, for the latter two relation types an indexed pattern model is required.
+Various relations can be extracted between patterns in a pattern model, for all
+but the first of the relation types an indexed pattern model is required.
 
 \begin{itemize}
  \item \textbf{Subsumption} - $n$-gram $x y z$ subsumes $n-1$-grams $x y$ and $y z$. 
@@ -187,7 +189,7 @@ Various relations can be extracted between patterns in a pattern model, for the 
 For each of these categories, the relationship goes in both directions, i.e.
 you can query for the subsuming patterns as well as the subsumed patterns, the
 left neighbours as well as the right neighbours, the instantiations as well as
-the abstractions. The latter two relation types rely on both the \emph{forward
+the abstractions. The latter three relation types rely on both the \emph{forward
 index} inherent in an indexed pattern model, as well as the \emph{reverse
 index}, a function from positions in the corpus to an array of patterns that
 are found at said position, that can be automatically computed from the forward
@@ -225,11 +227,53 @@ corpus analysis.
 
 %TODO
 
+\section{Software specifications}
+
+Colibri Core consist of a C++ library, a Python binding\footnote{Both for
+Python 2 as well as Python 3, written in Cython.} to said library and a set of
+command-line tools. This allows for an interface to the sofware at various
+levels, accommodating the need in different use cases and catering for
+different levels of expertise. The available tools are:
+
+\begin{itemize}
+    \item colibri-patternmodeller - This is the core tool, it allows for the
+        construction and inspection of pattern models.
+    \item colibri-classencode - For the construction of a class encoding and
+        the encoding of corpus data
+    \item colibri-classdecode - For decoding encoded corpus data, given a class
+        encoding
+\end{itemize}
+
+There are also higher-level shell scripts that invoke the above tools, so basic
+tasks can be accomplished more easily without exposing the low-level functionality:
+
+\begin{itemize}
+    \item colibri-ngrams - Extracts n-grams of a particular size from the corpus text, in the order they occur, i.e. by moving a sliding window over the text.
+    \item colibri-freqlist - Extracts all n-grams from one or more corpus text files and outputs a frequency list. Also allows for the extraction of skipgrams. By default all n-grams are extract, but an occurrence threshold can be set with the -t flag.
+    \item colibri-ngramstats - Prints a summary report on the ngrams in one or more corpus text files. To get the full details on interpreting the output report, read the section Statistical Reports and Histograms.
+    \item colibri-histogram - Prints a histogram of pattern occurrence count
+    \item colibri-queryngrams - Interactive CLI tool allowing you to query ngrams from standard input, various statistics and relations can be outputted.
+    \item colibri-reverseindex - Computes and prints a reverse index for the specified corpus text file. For each token position in the corpus, it will output what patterns are found there (i.e start at that very same position)
+    \item colibri-loglikelihood - Computes the log-likelihood between patterns in two or more corpus text files, which allows users to determine what words or patterns are significantly more frequent in one corpus than the other.
+    \item colibri-coverage - Computes overlap between a training corpus and a test corpus, produces coverage metrics.
+\end{itemize}
+
+The tools and scripts in Colibri Core are explicitly geared for command-line
+usage. However, a RESTful webservice as well as generic web interface to
+Colibri Core is also provided using CLAM\cite{CLAM}.
+
+The software should compile and run on a wide variety of Unix-based systems,
+including Linux, FreeBSD and Mac OS X. Everything is released under the GNU
+Public License (v3)\footnote{TODO}.
+
+Documentation, including API reference, is provided at
+\url{http://proycon.github.io/colibri-core/doc/}. An extra tutorial for Python
+is available at
+\url{http://proycon.github.io/colibri-core/doc/colibricore-python-tutorial.html}.
+
 \section{Benchmarks}
 
 %TODO
-
-
 
 
 
