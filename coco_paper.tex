@@ -36,10 +36,17 @@ Translation, as well as Language Modelling are two common fields where large
 data sets are often encountered, as more data generally improves the quality of
 the resulting translation model or language model. 
 
+
 The task of finding $n$-grams is generalised in Colibri Core to the task of
 finding \emph{patterns} or \emph{constructions} (we use the terms
 interchangeably). Furthermore, once patterns are identified, resulting in a
 \emph{pattern model}, Colibri Core can extract relations between the patterns.
+
+Colibri-core is a memory-based technique where models are held entirely in
+memory to guarantee maximum performance on lookup and computation. It does
+place considerable memory requirements on the system on which is it run. This
+approach can be contrasted to e.g. database approaches which have much higher
+latency and where the data consumes far more memory/diskspace.
 
 \section{Patterns}
 
@@ -94,7 +101,7 @@ Colibri Core provides tools and exposes library functions to do this.
 N-gram frequency lists are often parametrised by a certain threshold, $n$-grams
 with less occurrences than this threshold are pruned. Because of the Zipfian
 nature of our $n$-gram distribution, we can circumvent the problem of having to
-hold a huge amount of patterns in memory which won't exceed our threshold, by
+hold a huge amount of patterns in memory which won't exceed our threshold. We do this by
 employing informed counting. Informed counting is an iterative procedure, shown
 in pseudo code in Algorithm~\ref{alg:itercounting}. Here we take $m$ to be the maximum
 $n$-gram order we intend to extract, the whole corpus is then processed for
@@ -102,11 +109,9 @@ each $n$ where $1<n\leq\m$, extracting the respective $n$-grams at each
 iteration. This means that at each iteration, we can consult the results of the
 previous iteration. We can then readily discard any $n$-gram with $n>1$ for
 which either of the two $n-1$-grams that it by definition contains does not
-meet the threshold, as it follows that then the $n$-gram can never meet the
+meet the threshold, as it follows that the $n$-gram can never meet the
 threshold either. By outright discarding an $n$-gram we do not need to store it
 and its count in memory. 
-
-
 
 
 \begin{algorithm} \caption{Informed Iterative Counting for n-grams.  Take $m$
@@ -119,7 +124,7 @@ pattern model in memory, with unigrams already counted in the more trivial fashi
         \For {$ngram \in extractngrams(line,n)$}
             \State  $nm1gram_1, nm1gram_2 \leftarrow extractngrams(ngram,n-1)$
             \If {$getcount(M,nm1gram_1) \geq t$ \And $getcount(M,nm1gram_2) \geq t$}
-                \State M \leftarrow countplusone($ngram$)
+                \State $M(ngram) \leftarrow M(ngram) + 1$
             \EndIf
         \EndFor 
       \EndFor
@@ -129,6 +134,64 @@ pattern model in memory, with unigrams already counted in the more trivial fashi
 \Return{instances}
 \end{algorithmic}
 \end{algorithm}
+
+\subsection{Skipgrams}
+
+%TODO: skipgram counting
+
+\section{Pattern Models}
+
+The pattern model is a $key\mapto\value$ store, where the keys correspond to
+patterns. The underlying C++ library allows for choosing the actual underlying
+container implementation through templating. The default container datatype is
+a hash map\footnote{using the \texttt{unordered_map} STL container in C++11},
+which guarantees fast access and update times when the hashing is good. The
+hash\footnote{Spooky Hash v2 is used for hashing:
+http://burtleburtle.net/bob/hash/spooky.html} is computed directly from the
+binary representation of a pattern.
+
+In the underlying C++ implementation, the values of the pattern model are subject to
+templating as well. We distinguish two types of pattern models:
+
+\begin{enumerate}
+ \item \textbf{Unindexed Pattern Models} - Values are simple integers
+ \item \textbf{Indexed Pattern Models} - Values are arrays of indices where the pattern can be found in the corpus
+\end{enumerate}
+
+Obviously, indexed pattern models make a considerably higher demand on memory.
+They do however, allow for a broad range of computations.
+
+\section{Relations between Patterns}
+
+Various relations can be extracted between patterns in a pattern model, for the latter two relation types an indexed pattern model is required.
+
+\begin{itemize}
+ \item \textbf{Subsumption} - $n$-gram $x y z$ subsumes $n-1$-grams $x y$ and $y z$. 
+ \item \textbf{Successor} - Patterns that are in a sequence in the corpus data. 
+ \item \textbf{Instantiation Relations} - Skipgrams or flexgrams may be \emph{instantiated} by other patterns. For example, ``to be _ not _'' be is instantiated by ``or _ to'', resulting in the 6-gram ``to be or not to be''. This type of relation thus allows you to precisely determine what patterns occur in certain gaps.
+\end{itemize}
+
+For each of these categories, the relationship goes in both directions, i.e.
+you can query for the subsuming patterns as well as the subsumed patterns, the
+left neighbours as well as the right neighbours, the instantiations as well as
+the abstractions. The latter two relation types rely on both the \emph{forward
+index} inherent in an indexed pattern model, as well as the \emph{reverse
+index}, a function from positions in the corpus to an array of patterns that
+are found at said position, that can be automatically computed from the forward
+index. In the implementation, the reverse index is not modelled in memory as a
+mapping from positions to patterns, but as much less memory-consuming mapping
+from positions to unigrams; the patterns can be derived on-the-fly from that.
+
+The relationships between patterns make for an excellent tool to extract and
+model context information, which was needed in the scope of the PhD study for
+which Colibri Core was constructed. It can form the basis of language
+models, and allows for various statistical NLP applications, such as word
+prediction and spelling correction. 
+
+
+
+
+
 
 
 
