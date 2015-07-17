@@ -8,7 +8,7 @@
 The n-gram, a sequence of $n$ consecutive word tokens, is a core concept for
 many Natural Language Processing (NLP) applications. One of the most NLP basic
 tasks is to read corpus text and compute an $n$-gram frequency list, elementary
-for any kind of statistical analysis. The unigram frequency list, i.e. word
+for any kind of statistical analysis. The unigram frequency list, i.e.\ word
 frequency list, is the simplest instance of this task that is especially
 ubiquitous. Computing $n$-gram frequency on a corpus text is fairly trivial,
 and any beginning computer science student will have no trouble to accomplish
@@ -30,7 +30,7 @@ Core, on the other hand, offers tools and programming libraries that are
 heavily optimised to 1) reduce memory usage, and 2) have high performance.
 
 Colibri Core is developed in the scope of the ``Constructions as Linguistic
-Bridges'' PhD study, which roughly focusses on the role of constructions, i.e.
+Bridges'' PhD study, which roughly focusses on the role of constructions, i.e.\ 
 patterns such as $n$-grams, in their context, in Machine Translation. Machine
 Translation, as well as Language Modelling are two common fields where large
 data sets are often encountered, as more data generally improves the quality of
@@ -45,7 +45,7 @@ interchangeably). Furthermore, once patterns are identified, resulting in a
 Colibri-core is a memory-based technique where models are held entirely in
 memory to guarantee maximum performance on lookup and computation. It does
 place considerable memory requirements on the system on which is it run. This
-approach can be contrasted to e.g. database approaches which have much higher
+approach can be contrasted to e.g.\ database approaches which have much higher
 latency and where the data consumes far more memory/diskspace.
 
 \section{Patterns}
@@ -125,7 +125,6 @@ to be the maximum $n$-gram order we intend to extract, $t$ to be the minimum occ
 pattern model in memory, with unigrams already counted in the more trivial fashion.}
 \label{alg:featureextract}
 \begin{algorithmic}
-%TODO
 \For {$n \in 2..m$}
     \For {$line \in corpus$}
         \For {$ngram \in extractngrams(line,n)$}
@@ -142,9 +141,14 @@ pattern model in memory, with unigrams already counted in the more trivial fashi
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Skipgrams}
+Though not expressed in the simplified algorithm above, the actual
+implementation accounts for more parameters, such as setting a lower bound to
+$n$, which results in pruning steps at each iteration of $n$. The amount of
+back-off, going all the way up to $m-1$ here, can also be fine-tuned.
 
-%TODO: skipgram counting
+The counting of skipgrams and flexgrams will be discussed later in
+Section~\ref{ref:countskipgrams}.
+
 
 \section{Pattern Models}
 
@@ -180,22 +184,23 @@ but the first of the relation types an indexed pattern model is required.
      \emph{instantiated} by other patterns. For example, ``to be \_ not \_'' be
      is instantiated by ``or \_ to'', resulting in the 6-gram ``to be or not to be''. This type of relation thus allows you to precisely determine what patterns occur in certain gaps.
  \item \textbf{Co-occurrence Relations} - Different patterns can naturally co-occur multiple times
-     within the the structural ``units'' you decided upon for the corpus (e.g.
+     within the the structural ``units'' you decided upon for the corpus (e.g.\ 
      sentences, paragraphs, tweets, etc). The measure of such co-occurrence 
      can be expressed by established metrics such as Jaccard and (normalised) mutual
      pointwise information.
 \end{itemize}
 
-For each of these categories, the relationship goes in both directions, i.e.
-you can query for the subsuming patterns as well as the subsumed patterns, the
-left neighbours as well as the right neighbours, the instantiations as well as
-the abstractions. The latter three relation types rely on both the \emph{forward
-index} inherent in an indexed pattern model, as well as the \emph{reverse
-index}, a function from positions in the corpus to an array of patterns that
-are found at said position, that can be automatically computed from the forward
-index. In the implementation, the reverse index is not modelled in memory as a
-mapping from positions to patterns, but as much less memory-consuming mapping
-from positions to unigrams; the patterns can be derived on-the-fly from that.
+For each of these categories, the relationship is bidirectional, i.e.\ you can
+query for the subsuming patterns as well as the subsumed patterns, the left
+neighbours as well as the right neighbours, the instantiations as well as the
+abstractions. The co-occurrence relationship is fully symmetrical. These latter
+three relation types rely on both the \emph{forward index} inherent in an
+indexed pattern model, as well as the \emph{reverse index}, a function from
+positions in the corpus to an array of patterns that are found at said
+position, that can be automatically computed from the forward index. In the
+implementation, the reverse index is not modelled in memory as a mapping from
+positions to patterns, but as much less memory-consuming mapping from positions
+to unigrams; the patterns can be derived on-the-fly from that.
 
 All these extractable relationships between patterns make for an excellent tool
 to extract and model context information, which was needed in the scope of the
@@ -203,14 +208,43 @@ PhD study for which Colibri Core was constructed. It can form the basis of
 language models, and allows for various statistical NLP applications, such as
 word prediction\footnote{An end-user example of this is provided by the Colibri
 Predictor web application, part of Colibri-apps
-\url{https://github.com/proycon/colibri-apps}} and spelling correction
-\footnote{Colibri-core based spelling correction is currently being implemented
+\url{https://github.com/proycon/colibri-apps}} and spelling correction\footnote{Colibri-core based spelling correction is currently being implemented
 in Gecco: \url{http://github.com/proycon/gecco}}. 
 
 An additional web-based tool called Colibri Graphview\footnote{Also part of
 https://github.com/proycon/colibri-apps} allows all of these relations do be
 visualised in an interactive graph.
 
+\subsection{Skipgram Counting}
+\label{sec:skipgramcount}
+
+The computation of skipgrams is parametrised by an upper limit $l$ in the number of
+tokens, as the possible configuration of gaps increases exponentially with the
+total length spanned. It first requires a count of all $n$-grams where $0<n\geq\l$. 
+
+\begin{algorithm} \caption{Informed Counting for skipgrams.  Take $l$
+to be the maximum skipgram order we intend to extract, $t$ to be the minimum occurrence threshold, and $M$ to be the
+pattern model in memory, with ngrams already counted.}
+\label{alg:skipgramcount}
+\begin{algorithmic}
+\For {$n \in 3..l$}
+    \For {$ngram \in getngrams(M,n,t)$}
+        \For {$skipgram \in possibleconfigurations(ngram)$}
+            \State  $nm1gram_1, nm1gram_2 \leftarrow extractngrams(ngram,n-1)$
+            \If {$getcount(M,nm1gram_1) \geq t$ \And $getcount(M,nm1gram_2) \geq t$}
+                \State $M(skipgram) \leftarrow M(skipgram) + 1$
+            \EndIf
+        \EndFor 
+    \EndFor
+  \EndFor
+  \Return M
+\EndFor \\
+\Return{instances}
+\end{algorithmic}
+\end{algorithm}
+
+
+%TODO: skipgram counting
 \subsection{Flexgram computation}
 
 We had deliberately skipped flexgram computation until after the discussion of
@@ -248,7 +282,8 @@ There are also higher-level shell scripts that invoke the above tools, so basic
 tasks can be accomplished more easily without exposing the low-level functionality:
 
 \begin{itemize}
-    \item colibri-ngrams - Extracts n-grams of a particular size from the corpus text, in the order they occur, i.e. by moving a sliding window over the text.
+    \item colibri-ngrams - Extracts n-grams of a particular size from the
+        corpus text, in the order they occur, i.e.\ by moving a sliding window over the text.
     \item colibri-freqlist - Extracts all n-grams from one or more corpus text files and outputs a frequency list. Also allows for the extraction of skipgrams. By default all n-grams are extract, but an occurrence threshold can be set with the -t flag.
     \item colibri-ngramstats - Prints a summary report on the ngrams in one or more corpus text files. To get the full details on interpreting the output report, read the section Statistical Reports and Histograms.
     \item colibri-histogram - Prints a histogram of pattern occurrence count
