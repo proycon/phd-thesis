@@ -109,7 +109,7 @@ with less occurrences than this threshold are pruned. Because of the Zipfian
 nature of our $n$-gram distribution, we can circumvent the problem of having to
 hold a huge amount of patterns in memory which won't exceed our threshold. We do this by
 employing informed counting. Informed counting is an iterative procedure, shown
-in pseudo code in Algorithm~\ref{alg:itercounting}. Here we take $m$ to be the maximum
+in pseudo code in Algorithm~\ref{alg:ngramcounting}. Here we take $m$ to be the maximum
 $n$-gram order we intend to extract, the whole corpus is then processed for
 each $n$ where $1<n\leq\m$, extracting the respective $n$-grams at each
 iteration. This means that at each iteration, we can consult the results of the
@@ -117,38 +117,87 @@ previous iteration. We can then readily discard any $n$-gram with $n>1$ for
 which either of the two $n-1$-grams that it by definition contains does not
 meet the threshold, as it follows that the $n$-gram can never meet the
 threshold either. By outright discarding an $n$-gram we do not need to store it
-and its count in memory. 
+and its count in memory. After each iteration of $n$, we prune all the
+$n$-grams that did not reach the threshold.
 
 
 \begin{algorithm} \caption{Informed Iterative Counting for n-grams.  Take $m$
 to be the maximum $n$-gram order we intend to extract, $t$ to be the minimum occurrence threshold, and $M$ to be the
 pattern model in memory, with unigrams already counted in the more trivial fashion.}
-\label{alg:featureextract}
+\label{alg:ngramcounting}
 \begin{algorithmic}
 \For {$n \in 2..m$}
     \For {$line \in corpus$}
         \For {$ngram \in extractngrams(line,n)$}
             \State  $nm1gram_1, nm1gram_2 \leftarrow extractngrams(ngram,n-1)$
-            \If {$getcount(M,nm1gram_1) \geq t$ \And $getcount(M,nm1gram_2) \geq t$}
+            \If {$M(nm1gram_1) \geq t$ \And $M(nm1gram_2) \geq t$}
                 \State $M(ngram) \leftarrow M(ngram) + 1$
             \EndIf
         \EndFor 
       \EndFor
   \EndFor
-  \Return M
+  \State $M \leftarrow prunengrams(M,n,t)$
 \EndFor \\
-\Return{instances}
+\Return{M}
 \end{algorithmic}
 \end{algorithm}
 
 Though not expressed in the simplified algorithm above, the actual
 implementation accounts for more parameters, such as setting a lower bound to
-$n$, which results in pruning steps at each iteration of $n$. The amount of
-back-off, going all the way up to $m-1$ here, can also be fine-tuned.
+$n$. The amount of back-off, going all the way up to $m-1$ here, can also be
+fine-tuned.
 
-The counting of skipgrams and flexgrams will be discussed later in
-Section~\ref{ref:countskipgrams}.
+\subsection{Informed Skipgram Counting}
+\label{sec:skipgramcount}
 
+The computation of skipgrams is parametrised by an upper limit $l\leq\m$ in the number of
+tokens, as the possible configuration of gaps increases exponentially with the
+total length spanned. It first requires a count of all $n$-grams where $0<n\geq\l$. 
+
+The algorithm, shown in Algorithm\~ref{alg:skipgramcount} considers all
+possible ways skips can be inserted in all of the n-grams in the model. It can
+discard a skipgram candidate by looking at the non-skip parts that make up the
+skipgram, and checking whether those exceed the set threshold. 
+
+\begin{algorithm} \caption{Informed Counting for skipgrams.  Take $l$
+to be the maximum skipgram order we intend to extract, $t$ to be the minimum occurrence threshold, and $M$ to be the
+pattern model in memory, with ngrams already counted.}
+\label{alg:skipgramcount}
+\begin{algorithmic}
+\For {$n \in 3..l$}
+    \For {$ngram \in getngrams(M,n,t)$}
+        \For {$skipgram \in possibleconfigurations(ngram)$}
+            \State $docount \leftarrow \True$
+            \For {$part \in parts(skipgram)$}
+            \If {$M(part) < t$}
+                    \State $docount \leftarrow \False$
+                    \Break
+                \EndIf
+            \EndFor 
+            \If {$docount$}
+                \State $M(skipgram) \leftarrow M(skipgram) + 1$
+            \EndIf
+        \EndFor 
+    \EndFor
+  \EndFor
+  \State $M \leftarrow pruneskipgrams(M,n,t)$
+\EndFor \\
+\Return{M}
+\end{algorithmic}
+\end{algorithm}
+
+In this algorithm, the \texttt{possibleconfigurations(ngram)} function returns
+all possible skipgram configurations for the given $n$-gram. Note that
+configuration of gaps depends only on the length of the $n$-gram, and can
+therefore easily be pre-computed. The \texttt{parts(skipgram)} function returns
+all consecutive parts that are subsumed in the skipgram, i.e.\ the parts you
+obtain when breaking at each skip.
+
+Like Algorithm~\ref{alg:ngramcount}, Algorithm~\ref{alg:skipgramcount}
+presupposes a threshold $t>1$. For threshold one, more trivial algorithms are
+invoked, as the user does not want to prune anything. These make only a single
+pass over the data. For skipgrams this leads to an explosion of
+resulting patterns, exponential with number of tokens, and is best avoided.
 
 \section{Pattern Models}
 
@@ -201,56 +250,6 @@ position, that can be automatically computed from the forward index. In the
 implementation, the reverse index is not modelled in memory as a mapping from
 positions to patterns, but as much less memory-consuming mapping from positions
 to unigrams; the patterns can be derived on-the-fly from that.
-
-All these extractable relationships between patterns make for an excellent tool
-to extract and model context information, which was needed in the scope of the
-PhD study for which Colibri Core was constructed. It can form the basis of
-language models, and allows for various statistical NLP applications, such as
-word prediction\footnote{An end-user example of this is provided by the Colibri
-Predictor web application, part of Colibri-apps
-\url{https://github.com/proycon/colibri-apps}} and spelling correction\footnote{Colibri-core based spelling correction is currently being implemented
-in Gecco: \url{http://github.com/proycon/gecco}}. 
-
-An additional web-based tool called Colibri Graphview\footnote{Also part of
-https://github.com/proycon/colibri-apps} allows all of these relations do be
-visualised in an interactive graph.
-
-\subsection{Skipgram Counting}
-\label{sec:skipgramcount}
-
-The computation of skipgrams is parametrised by an upper limit $l$ in the number of
-tokens, as the possible configuration of gaps increases exponentially with the
-total length spanned. It first requires a count of all $n$-grams where $0<n\geq\l$. 
-
-\begin{algorithm} \caption{Informed Counting for skipgrams.  Take $l$
-to be the maximum skipgram order we intend to extract, $t$ to be the minimum occurrence threshold, and $M$ to be the
-pattern model in memory, with ngrams already counted.}
-\label{alg:skipgramcount}
-\begin{algorithmic}
-\For {$n \in 3..l$}
-    \For {$ngram \in getngrams(M,n,t)$}
-        \For {$skipgram \in possibleconfigurations(ngram)$}
-            \State  $nm1gram_1, nm1gram_2 \leftarrow extractngrams(ngram,n-1)$
-            \If {$getcount(M,nm1gram_1) \geq t$ \And $getcount(M,nm1gram_2) \geq t$}
-                \State $M(skipgram) \leftarrow M(skipgram) + 1$
-            \EndIf
-        \EndFor 
-    \EndFor
-  \EndFor
-  \Return M
-\EndFor \\
-\Return{instances}
-\end{algorithmic}
-\end{algorithm}
-
-
-%TODO: skipgram counting
-\subsection{Flexgram computation}
-
-We had deliberately skipped flexgram computation until after the discussion of
-of the relationships, as the co-occurrence relationship is necessary
-prerequisite for the computation of flexgrams.
-
 %TODO
 
 \section{Corpus Comparison}
@@ -268,6 +267,13 @@ Python 2 as well as Python 3, written in Cython.} to said library and a set of
 command-line tools. This allows for an interface to the sofware at various
 levels, accommodating the need in different use cases and catering for
 different levels of expertise. The available tools are:
+
+\begin{itemize}
+    \item colibri-patternmodeller - This is the core tool, it allows for the
+        construction and inspection of pattern models.
+    \item colibri-classencode - For the construction of a class encoding and
+        the encoding of corpus data
+ailable tools are:
 
 \begin{itemize}
     \item colibri-patternmodeller - This is the core tool, it allows for the
