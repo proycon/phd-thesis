@@ -227,12 +227,12 @@ Various relations can be extracted between patterns in a pattern model, for all
 but the first of the relation types an indexed pattern model is required.
 
 \begin{itemize}
- \item \textbf{Subsumption} - $n$-gram $x y z$ subsumes $n-1$-grams $x y$ and $y z$. 
- \item \textbf{Successor} - Patterns that are in a sequence in the corpus data. 
- \item \textbf{Instantiation Relations} - Skipgrams or flexgrams may be
+ \item \textbf{Subsumption Relation} - $n$-gram $x y z$ subsumes $n-1$-grams $x y$ and $y z$. 
+ \item \textbf{Succession Relation} - Patterns that are in a sequence in the corpus data. 
+ \item \textbf{Instantiation Relation} - Skipgrams or flexgrams may be
      \emph{instantiated} by other patterns. For example, ``to be \_ not \_'' be
      is instantiated by ``or \_ to'', resulting in the 6-gram ``to be or not to be''. This type of relation thus allows you to precisely determine what patterns occur in certain gaps.
- \item \textbf{Co-occurrence Relations} - Different patterns can naturally co-occur multiple times
+ \item \textbf{Co-occurrence Relation} - Different patterns can naturally co-occur multiple times
      within the the structural ``units'' you decided upon for the corpus (e.g.\ 
      sentences, paragraphs, tweets, etc). The measure of such co-occurrence 
      can be expressed by established metrics such as Jaccard and (normalised) mutual
@@ -248,17 +248,22 @@ indexed pattern model, as well as the \emph{reverse index}, a function from
 positions in the corpus to an array of patterns that are found at said
 position, that can be automatically computed from the forward index. In the
 implementation, the reverse index is not modelled in memory as a mapping from
-positions to patterns, but as much less memory-consuming mapping from positions
+positions to patterns, but as a much less memory-consuming mapping from positions
 to unigrams; the patterns can be derived on-the-fly from that.
-%TODO
 
 \section{Corpus Comparison}
 
 The computation of pattern models on two or more distinct corpora, provided the
 class encoding is the same for all of them, provides a basis for comparative
-corpus analysis.
+corpus analysis. One measure for corpus comparison is the notion of
+``coverage'', this metric is expressed as the number of tokens in the test
+corpus that is covered by the patterns from the training corpus. The metric can
+be represented either absolute, or in normalised form as a fraction of the
+total amount of tokens in the test corpus. For such comparisons, we compute a
+pattern model on the training corpus, and subsequently compute a second pattern
+model on the test corpus, but \emph{constrained} by the former pattern model. 
 
-%TODO
+
 
 \section{Software specifications}
 
