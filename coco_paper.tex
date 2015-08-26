@@ -214,8 +214,8 @@ In the underlying C++ implementation, the values of the pattern model are subjec
 templating as well. We distinguish two types of pattern models:
 
 \begin{enumerate}
- \item \textbf{Unindexed Pattern Models} - Values are simple integers
- \item \textbf{Indexed Pattern Models} - Values are arrays of indices where the pattern can be found in the corpus
+ \item \textbf{Unindexed Pattern Models} -- Values are simple integers
+ \item \textbf{Indexed Pattern Models} -- Values are arrays of indices where the pattern can be found in the corpus
 \end{enumerate}
 
 Obviously, indexed pattern models make a considerably higher demand on memory.
@@ -243,7 +243,7 @@ For each of these categories, the relationship is bidirectional, i.e.\ you can
 query for the subsuming patterns as well as the subsumed patterns, the left
 neighbours as well as the right neighbours, the instantiations as well as the
 abstractions. The co-occurrence relationship is fully symmetrical. These latter
-three relation types rely on both the \emph{forward index} inherent in an
+three relationships rely on both the \emph{forward index} inherent in an
 indexed pattern model, as well as the \emph{reverse index}, a function from
 positions in the corpus to an array of patterns that are found at said
 position, that can be automatically computed from the forward index. In the
