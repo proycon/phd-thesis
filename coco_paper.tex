@@ -223,6 +223,38 @@ Obviously, indexed pattern models make a considerably higher demand on memory.
 They do however, allow for a broader range of computations, as shall become
 apparent in subsequent sections.
 
+\subsection{Two-step training}
+
+Training indexed patterns models is far more memory intensive than training
+unindexed models, especially in huge corpora with a high type-token ratio. To
+lower the demand on memory for such corpora, we implement a type of
+\emph{two-step training}. This involves first constructing an unindexed pattern
+model and subsequently constructing an indexed model on the basis of that, by
+making another pass over the corpus and gathering all indices. The gain here is
+in avoiding temporary storage of the indices that will not pass the occurrence
+threshold but can not be ruled out a priori by the informed counting algorithm.
+
+\section{Corpus Comparison}
+
+The computation of pattern models on two or more distinct corpora, provided the
+class encoding is the same for all of them, provides a basis for comparative
+corpus analysis. One measure for corpus comparison introduced in the software
+is the notion of ``coverage'', this metric is expressed as the number of tokens
+in the test corpus that is covered by the patterns from the training corpus.
+The metric can be represented either absolute, or in normalised form as a
+fraction of the total amount of tokens in the test corpus. 
+
+To perform such comparisons, we first compute a pattern model on the training
+corpus, and subsequently compute a second pattern model on the test corpus, but
+\emph{constrained} by the former pattern model. The ability to train
+constrained models is present throughout the software and can for instance also
+be used to train a pattern model based on a custom preset list of patterns.
+
+Summarised statistics are computed at multiple levels. Measures such as
+occurrence count and coverage can be consulted for aggregates of n-grams,
+skipgrams, or flexgrams. The former two can be inspected specifically for each
+of the different pattern sizes present in the model, i.e. for each value of $n$.
+
 \section{Relations between Patterns}
 
 Various relations can be extracted between patterns in a pattern model, for all
@@ -253,28 +285,6 @@ position. This can be automatically computed from the forward index. In the
 actual implementation, the reverse index is not modelled in memory as a mapping from
 positions to patterns, but as a much less memory-consuming mapping from
 positions to unigrams; the patterns can be derived on-the-fly from that.
-
-\section{Corpus Comparison}
-
-The computation of pattern models on two or more distinct corpora, provided the
-class encoding is the same for all of them, provides a basis for comparative
-corpus analysis. One measure for corpus comparison introduced in the software
-is the notion of ``coverage'', this metric is expressed as the number of tokens
-in the test corpus that is covered by the patterns from the training corpus.
-The metric can be represented either absolute, or in normalised form as a
-fraction of the total amount of tokens in the test corpus. 
-
-To perform such comparisons, we first compute a pattern model on the training
-corpus, and subsequently compute a second pattern model on the test corpus, but
-\emph{constrained} by the former pattern model. The ability to train
-constrained models is present throughout the software and can for instance also
-be used to train a pattern model based on a custom preset list of patterns.
-
-Summarised statistics are computed at multiple levels. Measures such as
-occurrence count and coverage can be consulted for aggregates of n-grams,
-skipgrams, or flexgrams. The former two can be inspected specifically for each
-of the different pattern sizes present in the model, i.e. for each value of $n$.
-
 
 \section{Software specification}
 
