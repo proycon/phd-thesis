@@ -8,8 +8,8 @@
 The n-gram, a sequence of $n$ consecutive word tokens, is a core concept for
 many Natural Language Processing (NLP) applications. One of the most NLP basic
 tasks is to read corpus text and compute an $n$-gram frequency list, elementary
-for any kind of statistical analysis. The unigram frequency list, i.e.\ word
-frequency list, is the simplest instance of this task that is especially
+for any kind of statistical analysis. The unigram frequency list, i.e.\ the word
+frequency list, is the simplest instance of this task which is especially
 ubiquitous. Computing $n$-gram frequency on a corpus text is fairly trivial,
 and any beginning computer science student will have no trouble to accomplish
 this in just a few lines of code in a modern high-level programming language.
@@ -61,27 +61,27 @@ We distinguish three categories of patterns, and define them as follows:
 Our definitions are defined narrowly and, with exception of $n-gram$ do not
 necessarily correspond to the way the concepts are used in other studies. Some
 may use the term skipgram to include what we call flexgram.  The term
-``elastigram'' is sometimes also employed by others to refer to flexgrams. 
+``elastigram'' is sometimes also seen in the literature to refer to flexgrams. 
 %TODO: cite something
 
-As we deal with word tokens, this implies that the corpus data has to be in a
+Dealing with word tokens implies that the corpus data has to be in a
 tokenised form. We start from the basis of plain-text corpus data, containing one
 ``unit'' per line; a unit can correspond to a sentence, paragraph, tweet
 or whatever unit is deemed appropriate for the task at hand. Corpus data can
-alternatively be provided in FoLiA XML \cite{TODO} as well, although linguistic
+alternatively be provided in FoLiA XML format \cite{TODO} as well, although linguistic
 annotation will typically be ignored.
 
-Text data is typically stored in a string of characters, the
-characters themselves drawing their meaning from a character encoding. The
+Text data is typically stored as a string of characters, the
+characters themselves draw their meaning from a character encoding. The
 storage of a huge amount of strings is inefficient from a memory perspective,
 considering the fact that words follow a Zipfian distribution. Colibri Core
 therefore works on the basis of a lossless compression, in which each unique
 word token is assigned a numeric class. This effectively defines the
-``vocabulary'' of your data, and is called a \emph{class encoding}. A pattern
+``vocabulary'' of your data, which we call a \emph{class encoding}. A pattern
 is then not represented as an array of characters, but as an array of these
 classes instead. Further lossless compression is achieved by holding this array
 of classes in a dynamic-length byte representation, in which low class values
-can be stored in less bytes than high class values. Classes $1$ to $16$ can be
+can be stored in fewer bytes than high class values. Classes $1$ to $16$ can be
 stored in a single byte, higher classes require at least two bytes. To achieve
 maximum compression, classes are assigned to word tokens based on frequency:
 words with the highest frequency receive the lowest classes.
