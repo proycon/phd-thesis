@@ -154,7 +154,7 @@ The computation of skipgrams is parametrised by an upper limit $l\leq\m$ in the 
 tokens, as the possible configuration of gaps increases exponentially with the
 total length spanned. It first requires a count of all $n$-grams where $0<n\geq\l$. 
 
-The algorithm, shown in Algorithm\~ref{alg:skipgramcount} considers all
+The algorithm, shown in Algorithm~\ref{alg:skipgramcount} considers all
 possible ways skips can be inserted in all of the n-grams in the model. It can
 discard a skipgram candidate by looking at the non-skip parts that make up the
 skipgram, and checking whether those exceed the set threshold. 
@@ -188,10 +188,11 @@ pattern model in memory, with ngrams already counted.}
 
 In this algorithm, the \texttt{possibleconfigurations(ngram)} function returns
 all possible skipgram configurations for the given $n$-gram. Note that
-configuration of gaps depends only on the length of the $n$-gram, and can
-therefore easily be pre-computed. The \texttt{parts(skipgram)} function returns
-all consecutive parts that are subsumed in the skipgram, i.e.\ the parts you
-obtain when breaking at each skip.
+configuration of gaps depends only on the length of the $n$-gram, irregardless
+of its content, and can therefore easily be pre-computed. The
+\texttt{parts(skipgram)} function returns all consecutive parts that are
+subsumed in the skipgram, i.e.\ the parts you obtain when breaking at each
+skip.
 
 Like Algorithm~\ref{alg:ngramcount}, Algorithm~\ref{alg:skipgramcount}
 presupposes a threshold $t>1$. For threshold one, more trivial algorithms are
@@ -205,7 +206,7 @@ The pattern model is a $key\mapto\value$ store, where the keys correspond to
 patterns. The underlying C++ library allows for choosing the actual underlying
 container implementation through templating. The default container datatype is
 a hash map\footnote{using the \texttt{unordered\_map} STL container in C++11},
-which guarantee $O(1)$ access and update times under ideal hashing conditions. The
+which guarantees $O(1)$ access and update times under ideal hashing conditions. The
 hash\footnote{Spooky Hash v2 is used for hashing:
 http://burtleburtle.net/bob/hash/spooky.html} is computed directly from the
 binary representation of a pattern.
@@ -219,7 +220,8 @@ templating as well. We distinguish two types of pattern models:
 \end{enumerate}
 
 Obviously, indexed pattern models make a considerably higher demand on memory.
-They do however, allow for a broader range of computations.
+They do however, allow for a broader range of computations, as shall become
+apparent in subsequent sections.
 
 \section{Relations between Patterns}
 
@@ -242,43 +244,60 @@ but the first of the relation types an indexed pattern model is required.
 For each of these categories, the relationship is bidirectional, i.e.\ you can
 query for the subsuming patterns as well as the subsumed patterns, the left
 neighbours as well as the right neighbours, the instantiations as well as the
-abstractions. The co-occurrence relationship is fully symmetrical. These latter
-three relationships rely on both the \emph{forward index} inherent in an
-indexed pattern model, as well as the \emph{reverse index}, a function from
-positions in the corpus to an array of patterns that are found at said
-position, that can be automatically computed from the forward index. In the
-implementation, the reverse index is not modelled in memory as a mapping from
-positions to patterns, but as a much less memory-consuming mapping from positions
-to unigrams; the patterns can be derived on-the-fly from that.
+abstractions. The co-occurrence relationship is fully symmetrical. 
+
+These latter three relationships rely on both the \emph{forward index} inherent
+in an indexed pattern model, as well as the \emph{reverse index}, a function
+from positions in the corpus to an array of patterns that are found at said
+position. This can be automatically computed from the forward index. In the
+actual implementation, the reverse index is not modelled in memory as a mapping from
+positions to patterns, but as a much less memory-consuming mapping from
+positions to unigrams; the patterns can be derived on-the-fly from that.
 
 \section{Corpus Comparison}
 
 The computation of pattern models on two or more distinct corpora, provided the
 class encoding is the same for all of them, provides a basis for comparative
-corpus analysis. One measure for corpus comparison is the notion of
-``coverage'', this metric is expressed as the number of tokens in the test
-corpus that is covered by the patterns from the training corpus. The metric can
-be represented either absolute, or in normalised form as a fraction of the
-total amount of tokens in the test corpus. For such comparisons, we compute a
-pattern model on the training corpus, and subsequently compute a second pattern
-model on the test corpus, but \emph{constrained} by the former pattern model. 
+corpus analysis. One measure for corpus comparison introduced in the software
+is the notion of ``coverage'', this metric is expressed as the number of tokens
+in the test corpus that is covered by the patterns from the training corpus.
+The metric can be represented either absolute, or in normalised form as a
+fraction of the total amount of tokens in the test corpus. 
+
+To perform such comparisons, we first compute a pattern model on the training
+corpus, and subsequently compute a second pattern model on the test corpus, but
+\emph{constrained} by the former pattern model. The ability to train
+constrained models is present throughout the software and can for instance also
+be used to train a pattern model based on a custom preset list of patterns.
+
+Summarised statistics are computed at multiple levels. Measures such as
+occurrence count and coverage can be consulted for aggregates of n-grams,
+skipgrams, or flexgrams. The former two can be inspected specifically for each
+of the different pattern sizes present in the model, i.e. for each value of $n$.
 
 
-
-\section{Software specifications}
+\section{Software specification}
 
 Colibri Core consist of a C++ library, a Python binding\footnote{Both for
 Python 2 as well as Python 3, written in Cython.} to said library and a set of
 command-line tools. This allows for an interface to the sofware at various
 levels, accommodating the need in different use cases and catering for
-different levels of expertise. The available tools are:
+different levels of expertise. 
+
+The Python binding ensures that the functionality of Colibri Core is available
+from Python without sacrificing the great performance benefit native code
+provides. Python was chosen as it is a high-level programming language in
+widespread use in the scientific community, and the NLP community in
+particular.
+
+From the command line, the following tools are available:
 
 \begin{itemize}
-    \item colibri-patternmodeller - This is the core tool, it allows for the
+    \item colibri-patternmodeller -- This is the core tool, it allows for the
         construction and inspection of pattern models.
-    \item colibri-classencode - For the construction of a class encoding and
+    \item colibri-classencode -- For the construction of a class encoding and
         the encoding of corpus data
-    \item colibri-classdecode - For decoding encoded corpus data, given a class
+    \item colibri-classdecode -- For decoding encoded corpus data, given a class
         encoding
 \end{itemize}
 
@@ -286,15 +305,15 @@ There are also higher-level shell scripts that invoke the above tools, so basic
 tasks can be accomplished more easily without exposing the low-level functionality:
 
 \begin{itemize}
-    \item colibri-ngrams - Extracts n-grams of a particular size from the
+    \item colibri-ngrams -- Extracts n-grams of a particular size from the
         corpus text, in the order they occur, i.e.\ by moving a sliding window over the text.
-    \item colibri-freqlist - Extracts all n-grams from one or more corpus text files and outputs a frequency list. Also allows for the extraction of skipgrams. By default all n-grams are extract, but an occurrence threshold can be set with the -t flag.
-    \item colibri-ngramstats - Prints a summary report on the ngrams in one or more corpus text files. To get the full details on interpreting the output report, read the section Statistical Reports and Histograms.
-    \item colibri-histogram - Prints a histogram of pattern occurrence count
-    \item colibri-queryngrams - Interactive CLI tool allowing you to query ngrams from standard input, various statistics and relations can be outputted.
-    \item colibri-reverseindex - Computes and prints a reverse index for the specified corpus text file. For each token position in the corpus, it will output what patterns are found there (i.e start at that very same position)
-    \item colibri-loglikelihood - Computes the log-likelihood between patterns in two or more corpus text files, which allows users to determine what words or patterns are significantly more frequent in one corpus than the other.
-    \item colibri-coverage - Computes overlap between a training corpus and a test corpus, produces coverage metrics.
+    \item colibri-freqlist -- Extracts all n-grams from one or more corpus text files and outputs a frequency list. Also allows for the extraction of skipgrams. By default all n-grams are extract, but an occurrence threshold can be set with the -t flag.
+    \item colibri-ngramstats -- Prints a summary report on the ngrams in one or more corpus text files. To get the full details on interpreting the output report, read the section Statistical Reports and Histograms.
+    \item colibri-histogram -- Prints a histogram of pattern occurrence count
+    \item colibri-queryngrams -- Interactive CLI tool allowing you to query ngrams from standard input, various statistics and relations can be outputted.
+    \item colibri-reverseindex -- Computes and prints a reverse index for the specified corpus text file. For each token position in the corpus, it will output what patterns are found there (i.e start at that very same position)
+    \item colibri-loglikelihood -- Computes the log-likelihood between patterns in two or more corpus text files, which allows users to determine what words or patterns are significantly more frequent in one corpus than the other.
+    \item colibri-coverage -- Computes overlap between a training corpus and a test corpus, produces coverage metrics.
 \end{itemize}
 
 The tools and scripts in Colibri Core are explicitly geared for command-line
