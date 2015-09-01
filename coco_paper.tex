@@ -248,12 +248,20 @@ To perform such comparisons, we first compute a pattern model on the training
 corpus, and subsequently compute a second pattern model on the test corpus, but
 \emph{constrained} by the former pattern model. The ability to train
 constrained models is present throughout the software and can for instance also
-be used to train a pattern model based on a custom preset list of patterns.
+be used to train a pattern model based on a custom preset list of patterns. The
+previously described two-step training algorithm is also an example of
+constrained training.
 
 Summarised statistics are computed at multiple levels. Measures such as
 occurrence count and coverage can be consulted for aggregates of n-grams,
 skipgrams, or flexgrams. The former two can be inspected specifically for each
-of the different pattern sizes present in the model, i.e. for each value of $n$.
+of the different pattern sizes present in the model, i.e.\ for each value of $n$.
+
+The coverage metric is a fairly crude metric of corpus overlap, despite the
+ability to assess it for different aggregates. A more widely established metric
+for corpus comparison is log-likelihood. Log likelihood allows you to identify
+how indicative a pattern is for a particular corpus. Our implementation follows
+the methodology of~\cite{Rayson00comparingcorpora}.
 
 \section{Relations between Patterns}
 
@@ -261,12 +269,12 @@ Various relations can be extracted between patterns in a pattern model, for all
 but the first of the relation types an indexed pattern model is required.
 
 \begin{itemize}
- \item \textbf{Subsumption Relation} - $n$-gram $x y z$ subsumes $n-1$-grams $x y$ and $y z$. 
- \item \textbf{Succession Relation} - Patterns that are in a sequence in the corpus data. 
- \item \textbf{Instantiation Relation} - Skipgrams or flexgrams may be
+ \item \textbf{Subsumption Relation} -- $n$-gram $x y z$ subsumes $n-1$-grams $x y$ and $y z$. 
+ \item \textbf{Succession Relation} -- Patterns that are in a sequence in the corpus data. 
+ \item \textbf{Instantiation Relation} -- Skipgrams or flexgrams may be
      \emph{instantiated} by other patterns. For example, ``to be \_ not \_'' be
      is instantiated by ``or \_ to'', resulting in the 6-gram ``to be or not to be''. This type of relation thus allows you to precisely determine what patterns occur in certain gaps.
- \item \textbf{Co-occurrence Relation} - Different patterns can naturally co-occur multiple times
+ \item \textbf{Co-occurrence Relation} -- Different patterns can naturally co-occur multiple times
      within the the structural ``units'' you decided upon for the corpus (e.g.\ 
      sentences, paragraphs, tweets, etc). The measure of such co-occurrence 
      can be expressed by established metrics such as Jaccard and (normalised) mutual
@@ -298,7 +306,8 @@ The Python binding ensures that the functionality of Colibri Core is available
 from Python without sacrificing the great performance benefit native code
 provides. Python was chosen as it is a high-level programming language in
 widespread use in the scientific community, and the NLP community in
-particular.
+particular. It demands less expertise from the developer than C++ and is more
+suitable for rapid prototyping.
 
 From the command line, the following tools are available:
 
@@ -309,6 +318,8 @@ From the command line, the following tools are available:
         the encoding of corpus data
     \item colibri-classdecode -- For decoding encoded corpus data, given a class
         encoding
+    \item colibri-comparemodels -- Compares the frequency of patterns between
+        two or more pattern models by computing log likelihood,.
 \end{itemize}
 
 There are also higher-level shell scripts that invoke the above tools, so basic
@@ -330,9 +341,9 @@ The tools and scripts in Colibri Core are explicitly geared for command-line
 usage. However, a RESTful webservice as well as generic web interface to
 Colibri Core is also provided using CLAM\cite{CLAM}.
 
-The software should compile and run on a wide variety of Unix-based systems,
-including Linux, FreeBSD and Mac OS X. Everything is released under the GNU
-Public License (v3)\footnote{TODO}.
+The software should compile and run on a wide variety of POSIX-compliant
+systems, including Linux, FreeBSD and Mac OS X. Everything is released as open
+source under the GNU Public License (v3)\footnote{TODO}.
 
 Documentation, including API reference, is provided at
 \url{http://proycon.github.io/colibri-core/doc/}. An extra tutorial for Python
