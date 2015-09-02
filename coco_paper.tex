@@ -161,6 +161,22 @@ implementation accounts for more parameters, such as setting a lower bound to
 $n$. The amount of back-off, going all the way up to $m-1$ here, can also be
 fine-tuned.
 
+A performance evaluation of this algorithm has been performed by comparing a
+naive implementation in Python, a simple implementation of informed iterative
+counting in Python, and the optimised C++ implementation in Colibri Core. To
+this end, we use a corpus of Dutch translations of TED talks of $127,806$
+sentences and $2,330,075$ words\footnote{The data is from the IWSLT 2012
+Evaluation Campaign,
+\url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html#MTtrack}.
+Tokenisation was performed using ucto, \url{http://ilk.uvt.nl/ucto}.}. We set
+the occurrence threshold to $2$ and extract everything from unigrams to
+$8$-grams. The naive implementation, before pruning, consumes $2737$ MB and
+runs in $23$ seconds.  A Python implementation of informed iterative counting
+lowers memory usage to $167$ MB at the cost of increased CPU time, $65$
+seconds. The Colibri Core implementation runs in $9.5$ seconds and takes just
+$76$ MB, these gains can be attributed to the class encoding and the fact that
+Colibri Core is implemented in C++.
+
 \subsection{Informed Skipgram Counting}
 \label{sec:skipgramcount}
 
@@ -379,10 +395,9 @@ source under the GNU Public License (v3)\footnote{TODO}.
 
 Documentation, including API reference, is provided at
 \url{http://proycon.github.io/colibri-core/doc/}. An extra tutorial for Python
-is available at
-\url{http://proycon.github.io/colibri-core/doc/colibricore-python-tutorial.html}.
+is available at \url{http://proycon.github.io/colibri-core/doc/colibricore-python-tutorial.html}.
 
-\section{Benchmarks}
+
 
 %TODO
 
