@@ -211,8 +211,26 @@ hash\footnote{Spooky Hash v2 is used for hashing:
 http://burtleburtle.net/bob/hash/spooky.html} is computed directly from the
 binary representation of a pattern.
 
-In the underlying C++ implementation, the values of the pattern model are subject to
-templating as well. We distinguish two types of pattern models:
+The use of hash maps can be contrasted to the use of suffix (or prefix) tries,
+a common datastructure for storing n-grams. Although suffix tries benefit from
+decreased memory use due to less overlap in pattern data. The strongly linked
+nature of tries causes significant overhead in memory use\footnote{Each pointer
+consuming 8 bytes on 64-bit architectures, and one would be needed between
+every two tokens.} that well exceeds the memory footprint of hash maps. For
+this reason, hashmaps are the default and tries are currently not implemented
+in Colibi Core. The templating, however, easily allows for such an
+implementation to be added in the future.
+
+At this point, we need to address suffix arrays \citep{Manber90} as well, which
+are derived from suffix tries but with significantly decreased space
+requirements. Suffix arrays with longest common prefix (LCP) arrays will
+consume less memory than our hash maps, but are typically much slower to construct
+and query. A predecessor of Colibri Core was compared against a suffix array
+implementation \citep{Stehouwer10} and was found to be significantly faster in
+model construction.
+
+We distinguish two types of pattern model, depending on the type of the values,
+which in the underlying c++ implementation is subject to templating as well:
 
 \begin{enumerate}
  \item \textbf{Unindexed Pattern Models} -- Values are simple integers
@@ -259,9 +277,10 @@ of the different pattern sizes present in the model, i.e.\ for each value of $n$
 
 The coverage metric is a fairly crude metric of corpus overlap, despite the
 ability to assess it for different aggregates. A more widely established metric
-for corpus comparison is log-likelihood. Log likelihood allows you to identify
-how indicative a pattern is for a particular corpus. Our implementation follows
-the methodology of~\cite{Rayson00comparingcorpora}.
+for corpus comparison is log-likelihood. Log likelihood expresses how much more
+likely any given pattern is for either of the two models. It therefore allows
+you to identify how indicative a pattern is for a particular corpus. Our
+implementation follows the methodology of~\cite{Rayson00comparingcorpora}.
 
 \section{Relations between Patterns}
 
