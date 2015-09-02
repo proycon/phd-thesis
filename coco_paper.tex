@@ -1,7 +1,22 @@
-%to be submitted to SoftwareX
+\documentclass[review]{elsarticle}
+
+\usepackage{lineno,hyperref}
+\usepackage{algorithm} 
+\usepackage{algpseudocode} 
+\modulolinenumbers[5]
+
+\journal{SoftwareX}
 
 \begin{document}
 
+\begin{frontmatter}
+
+\title{Colibri Core}
+\author{Maarten van Gompel}
+
+\end{frontmatter}
+
+\linenumbers
 
 \section{Introduction}
 
@@ -53,9 +68,9 @@ latency and where the data consumes far more memory/diskspace.
 We distinguish three categories of patterns, and define them as follows:
 
 \begin{enumerate}
-    \item N-grams - A sequence of $n$ word tokens that are all consecutive.
-    \item Skipgrams - A fixed-length sequence of $p$ word tokens and $q$ token placeholders/wildcards ($n=p+q$), the placeholders constitute gaps or skips and a skipgram can contain multiple of these. In turn, a gap can span one or more tokens. 
-    \item Flexgrams - A sequence s, with one or more gaps of variable length, which implies the pattern by itself is of undefined length.
+    \item N-grams -- A sequence of $n$ word tokens that are all consecutive.
+    \item Skipgrams -- A fixed-length sequence of $p$ word tokens and $q$ token placeholders/wildcards ($n=p+q$), the placeholders constitute gaps or skips and a skipgram can contain multiple of these. In turn, a gap can span one or more tokens. 
+    \item Flexgrams -- A sequence s, with one or more gaps of variable length, which implies the pattern by itself is of undefined length.
 \end{enumerate}
 
 Our definitions are defined narrowly and, with exception of $n-gram$ do not
@@ -111,7 +126,7 @@ hold a huge amount of patterns in memory which won't exceed our threshold. We do
 employing informed counting. Informed counting is an iterative procedure, shown
 in pseudo code in Algorithm~\ref{alg:ngramcounting}. Here we take $m$ to be the maximum
 $n$-gram order we intend to extract, the whole corpus is then processed for
-each $n$ where $1<n\leq\m$, extracting the respective $n$-grams at each
+each $n$ where $1<n\leq m$, extracting the respective $n$-grams at each
 iteration. This means that at each iteration, we can consult the results of the
 previous iteration. We can then readily discard any $n$-gram with $n>1$ for
 which either of the two $n-1$-grams that it by definition contains does not
@@ -130,13 +145,12 @@ pattern model in memory, with unigrams already counted in the more trivial fashi
     \For {$line \in corpus$}
         \For {$ngram \in extractngrams(line,n)$}
             \State  $nm1gram_1, nm1gram_2 \leftarrow extractngrams(ngram,n-1)$
-            \If {$M(nm1gram_1) \geq t$ \And $M(nm1gram_2) \geq t$}
+            \If {$M(nm1gram_1) \geq t$ \& $M(nm1gram_2) \geq t$}
                 \State $M(ngram) \leftarrow M(ngram) + 1$
             \EndIf
         \EndFor 
-      \EndFor
-  \EndFor
-  \State $M \leftarrow prunengrams(M,n,t)$
+    \EndFor
+    \State $M \leftarrow prunengrams(M,n,t)$
 \EndFor \\
 \Return{M}
 \end{algorithmic}
@@ -150,9 +164,9 @@ fine-tuned.
 \subsection{Informed Skipgram Counting}
 \label{sec:skipgramcount}
 
-The computation of skipgrams is parametrised by an upper limit $l\leq\m$ in the number of
+The computation of skipgrams is parametrised by an upper limit $l\leq m$ in the number of
 tokens, as the possible configuration of gaps increases exponentially with the
-total length spanned. It first requires a count of all $n$-grams where $0<n\geq\l$. 
+total length spanned. It first requires a count of all $n$-grams where $0<n\geq l$. 
 
 The algorithm, shown in Algorithm~\ref{alg:skipgramcount} considers all
 possible ways skips can be inserted in all of the n-grams in the model. It can
@@ -167,11 +181,11 @@ pattern model in memory, with ngrams already counted.}
 \For {$n \in 3..l$}
     \For {$ngram \in getngrams(M,n,t)$}
         \For {$skipgram \in possibleconfigurations(ngram)$}
-            \State $docount \leftarrow \True$
+            \State $docount \leftarrow True$
             \For {$part \in parts(skipgram)$}
             \If {$M(part) < t$}
-                    \State $docount \leftarrow \False$
-                    \Break
+                    \State $docount \leftarrow False$
+                    Break
                 \EndIf
             \EndFor 
             \If {$docount$}
@@ -179,8 +193,7 @@ pattern model in memory, with ngrams already counted.}
             \EndIf
         \EndFor 
     \EndFor
-  \EndFor
-  \State $M \leftarrow pruneskipgrams(M,n,t)$
+    \State $M \leftarrow pruneskipgrams(M,n,t)$
 \EndFor \\
 \Return{M}
 \end{algorithmic}
@@ -202,7 +215,7 @@ resulting patterns, exponential with number of tokens, and is best avoided.
 
 \section{Pattern Models}
 
-The pattern model is a $key\mapto\value$ store, where the keys correspond to
+The pattern model is a $key \mapsto value$ store, where the keys correspond to
 patterns. The underlying C++ library allows for choosing the actual underlying
 container implementation through templating. The default container datatype is
 a hash map\footnote{using the \texttt{unordered\_map} STL container in C++11},
@@ -331,13 +344,13 @@ suitable for rapid prototyping.
 From the command line, the following tools are available:
 
 \begin{itemize}
-    \item colibri-patternmodeller -- This is the core tool, it allows for the
+    \item \texttt{colibri-patternmodeller} -- This is the core tool, it allows for the
         construction and inspection of pattern models.
-    \item colibri-classencode -- For the construction of a class encoding and
+    \item \texttt{colibri-classencode} -- For the construction of a class encoding and
         the encoding of corpus data
-    \item colibri-classdecode -- For decoding encoded corpus data, given a class
+    \item \texttt{colibri-classdecode} -- For decoding encoded corpus data, given a class
         encoding
-    \item colibri-comparemodels -- Compares the frequency of patterns between
+    \item \texttt{colibri-comparemodels} -- Compares the frequency of patterns between
         two or more pattern models by computing log likelihood,.
 \end{itemize}
 
@@ -345,15 +358,15 @@ There are also higher-level shell scripts that invoke the above tools, so basic
 tasks can be accomplished more easily without exposing the low-level functionality:
 
 \begin{itemize}
-    \item colibri-ngrams -- Extracts n-grams of a particular size from the
+    \item \texttt{colibri-ngrams} -- Extracts n-grams of a particular size from the
         corpus text, in the order they occur, i.e.\ by moving a sliding window over the text.
-    \item colibri-freqlist -- Extracts all n-grams from one or more corpus text files and outputs a frequency list. Also allows for the extraction of skipgrams. By default all n-grams are extract, but an occurrence threshold can be set with the -t flag.
-    \item colibri-ngramstats -- Prints a summary report on the ngrams in one or more corpus text files. To get the full details on interpreting the output report, read the section Statistical Reports and Histograms.
-    \item colibri-histogram -- Prints a histogram of pattern occurrence count
-    \item colibri-queryngrams -- Interactive CLI tool allowing you to query ngrams from standard input, various statistics and relations can be outputted.
-    \item colibri-reverseindex -- Computes and prints a reverse index for the specified corpus text file. For each token position in the corpus, it will output what patterns are found there (i.e start at that very same position)
-    \item colibri-loglikelihood -- Computes the log-likelihood between patterns in two or more corpus text files, which allows users to determine what words or patterns are significantly more frequent in one corpus than the other.
-    \item colibri-coverage -- Computes overlap between a training corpus and a test corpus, produces coverage metrics.
+    \item \texttt{colibri-freqlist} -- Extracts all n-grams from one or more corpus text files and outputs a frequency list. Also allows for the extraction of skipgrams. By default all n-grams are extract, but an occurrence threshold can be set with the -t flag.
+    \item \texttt{colibri-ngramstats} -- Prints a summary report on the ngrams in one or more corpus text files. To get the full details on interpreting the output report, read the section Statistical Reports and Histograms.
+    \item \texttt{colibri-histogram} -- Prints a histogram of pattern occurrence count
+    \item \texttt{colibri-queryngrams} -- Interactive CLI tool allowing you to query ngrams from standard input, various statistics and relations can be outputted.
+    \item \texttt{colibri-reverseindex} -- Computes and prints a reverse index for the specified corpus text file. For each token position in the corpus, it will output what patterns are found there (i.e start at that very same position)
+    \item \texttt{colibri-loglikelihood} -- Computes the log-likelihood between patterns in two or more corpus text files, which allows users to determine what words or patterns are significantly more frequent in one corpus than the other.
+    \item \texttt{colibri-coverage} -- Computes overlap between a training corpus and a test corpus, produces coverage metrics.
 \end{itemize}
 
 The tools and scripts in Colibri Core are explicitly geared for command-line
@@ -374,13 +387,10 @@ is available at
 %TODO
 
 
+\section*{References}
 
-
-
-
-
-
-
+\bibliographystyle{elsarticle-num}
+\bibliography{coco_paper}
 
 
 \end{document}
