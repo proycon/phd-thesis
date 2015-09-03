@@ -75,13 +75,18 @@ We distinguish three categories of patterns, and define them as follows:
 \begin{enumerate}
     \item N-grams -- A sequence of $n$ word tokens that are all consecutive.
     \item Skipgrams -- A fixed-length sequence of $p$ word tokens and $q$ token placeholders/wildcards ($n=p+q$), the placeholders constitute gaps or skips and a skipgram can contain multiple of these. In turn, a gap can span one or more tokens. 
-    \item Flexgrams -- A sequence s, with one or more gaps of variable length, which implies the pattern by itself is of undefined length.
+    \item Flexgrams -- A sequence $s$s, with one or more gaps of variable length, which implies the pattern by itself is of undefined length.
 \end{enumerate}
 
-Our definitions are defined narrowly and, with exception of $n-gram$ do not
-necessarily correspond to the way the concepts are used in other studies. Some
+Our definitions are defined narrowly and, with exception of $n$-grams do not
+necessarily match up precisely to the way the concepts are used in other studies. Some
 may use the term skipgram to include what we call flexgram.  The term
 ``elastigram'' is sometimes also seen in the literature to refer to flexgrams. 
+
+Skipgrams are used in the field to obtain a higher level of generalisation, which
+can not be provided by n-grams. They can, for instance, be found as features in
+classification tasks \citep{DHONDT}, or as a means in language modelling to
+decrease perplexity \citep{Guthrie06}.
 
 Dealing with word tokens implies that the corpus data has to be in a
 tokenised form. We start from the basis of plain-text corpus data, containing one
@@ -228,7 +233,7 @@ of its content, and can therefore easily be pre-computed. The
 subsumed in the skipgram, i.e.\ the parts you obtain when breaking at each
 skip.
 
-Like Algorithm~\ref{alg:ngramcount}, Algorithm~\ref{alg:skipgramcount}
+Like Algorithm~\ref{alg:ngramcounting}, Algorithm~\ref{alg:skipgramcount}
 presupposes a threshold $t>1$. For threshold one, more trivial algorithms are
 invoked, as the user does not want to prune anything. These make only a single
 pass over the data. For skipgrams this leads to an explosion of
