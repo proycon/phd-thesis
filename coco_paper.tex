@@ -352,6 +352,17 @@ actual implementation, the reverse index is not modelled in memory as a mapping 
 positions to patterns, but as a much less memory-consuming mapping from
 positions to unigrams; the patterns can be derived on-the-fly from that.
 
+\subsection{Flexgram Counting}
+
+Thus-far, we have explained the algorithms for n-gram counting and skipgram
+counting, but have not yet done so for flexgrams. The implementation allows
+flexgrams to be computed in two different ways. The first is by simply
+extracting skipgrams first, and then abstracting flexgrams from these
+skipgrams. In this case the flexgram computation is constrained by the same
+maximum-size limit the skipgrams are. The second method for flexgram extraction
+proceeds through the co-occurence relation. A flexgram is formed whenever two
+patterns (within the same structural unit) occur above a set threshold.
+
 \section{Software specification}
 
 Colibri Core consist of a C++ library, a Python binding\footnote{Both for
