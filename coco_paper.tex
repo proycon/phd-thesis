@@ -51,13 +51,18 @@ Translation, as well as Language Modelling are two common fields where large
 data sets are often encountered, as more data generally improves the quality of
 the resulting translation model or language model. 
 
-
 The task of finding $n$-grams is generalised in Colibri Core to the task of
 finding \emph{patterns} or \emph{constructions} (we use the terms
 interchangeably). Furthermore, once patterns are identified, resulting in a
 \emph{pattern model}, Colibri Core can extract relations between the patterns.
 
-Colibri-core is a memory-based technique where models are held entirely in
+As the name Colibri Core suggests, the software is geared to provide
+\emph{core} functionality for modelling patterns and exposes this functionality
+as a programming library as well as through command line tools. It aims to
+provide a solid foundation upon which more specialised software can be build,
+such as software for language modelling.
+
+Colibri Core provides memory-based techniques where models are held entirely in
 memory to guarantee maximum performance on lookup and computation. It does
 place considerable memory requirements on the system on which is it run. This
 approach can be contrasted to e.g.\ database approaches which have much higher
@@ -77,29 +82,29 @@ Our definitions are defined narrowly and, with exception of $n-gram$ do not
 necessarily correspond to the way the concepts are used in other studies. Some
 may use the term skipgram to include what we call flexgram.  The term
 ``elastigram'' is sometimes also seen in the literature to refer to flexgrams. 
-%TODO: cite something
 
 Dealing with word tokens implies that the corpus data has to be in a
 tokenised form. We start from the basis of plain-text corpus data, containing one
 ``unit'' per line; a unit can correspond to a sentence, paragraph, tweet
 or whatever unit is deemed appropriate for the task at hand. Corpus data can
-alternatively be provided in FoLiA XML format \cite{TODO} as well, although linguistic
+alternatively be provided in FoLiA XML format \cite{FOLIAPAPER} as well, although linguistic
 annotation will typically be ignored.
 
-Text data is typically stored as a string of characters, the
-characters themselves draw their meaning from a character encoding. The
-storage of a huge amount of strings is inefficient from a memory perspective,
-considering the fact that words follow a Zipfian distribution. Colibri Core
-therefore works on the basis of a lossless compression, in which each unique
-word token is assigned a numeric class. This effectively defines the
-``vocabulary'' of your data, which we call a \emph{class encoding}. A pattern
-is then not represented as an array of characters, but as an array of these
-classes instead. Further lossless compression is achieved by holding this array
-of classes in a dynamic-length byte representation, in which low class values
-can be stored in fewer bytes than high class values. Classes $1$ to $16$ can be
-stored in a single byte, higher classes require at least two bytes. To achieve
-maximum compression, classes are assigned to word tokens based on frequency:
-words with the highest frequency receive the lowest classes.
+Text data is typically stored as a string of characters, the characters
+themselves draw their meaning from a character encoding. The storage of a huge
+amount of strings is inefficient from a memory perspective, considering the
+fact that words follow a Zipfian distribution. Colibri Core therefore works on
+the basis of a lossless compression, in which each unique word token is
+assigned a numeric class. This effectively defines the ``vocabulary'' of your
+data, which we call a \emph{class encoding}. A pattern is then not represented
+as an array of characters, but as an array of these classes instead. Further
+lossless compression is achieved by holding this array of classes in a
+dynamic-length byte representation, in which low class values can be stored in
+fewer bytes than high class values. Classes $1$ to $16$ can be stored in a
+single byte, higher classes require at least two bytes. To achieve maximum
+compression, classes are assigned to word tokens based on frequency (i.e.\
+entropy encoding): words with the highest frequency receive the lowest classes.
+This is essentially a variant of Huffman coding \citep{HUFFMAN}.
 
 The implementation's grammar confirms to the regular expression in
 Equation~\ref{eq:patterngrammar}, where $p$ is a pattern, $l$ is a single-byte
@@ -387,11 +392,11 @@ tasks can be accomplished more easily without exposing the low-level functionali
 
 The tools and scripts in Colibri Core are explicitly geared for command-line
 usage. However, a RESTful webservice as well as generic web interface to
-Colibri Core is also provided using CLAM\cite{CLAM}.
+Colibri Core is also provided using CLAM\cite{CLAMPAPER}.
 
 The software should compile and run on a wide variety of POSIX-compliant
 systems, including Linux, FreeBSD and Mac OS X. Everything is released as open
-source under the GNU Public License (v3)\footnote{TODO}.
+source under the GNU Public License (v3)\footnote{https://gnu.org/licenses/gpl.html}.
 
 Documentation, including API reference, is provided at
 \url{http://proycon.github.io/colibri-core/doc/}. An extra tutorial for Python
