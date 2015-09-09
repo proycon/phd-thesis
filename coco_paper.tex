@@ -53,9 +53,9 @@ latency and where the data consumes far more memory/diskspace.
 We distinguish three categories of patterns, and define them as follows:
 
 \begin{enumerate}
-    \item N-grams - A sequence of $n$ word tokens that are all consecutive.
-    \item Skipgrams - A fixed-length sequence of $p$ word tokens and $q$ token placeholders/wildcards ($n=p+q$), the placeholders constitute gaps or skips and a skipgram can contain multiple of these. In turn, a gap can span one or more tokens. 
-    \item Flexgrams - A sequence s, with one or more gaps of variable length, which implies the pattern by itself is of undefined length.
+    \item N-grams -- A sequence of $n$ word tokens that are all consecutive.
+    \item Skipgrams -- A fixed-length sequence of $p$ word tokens and $q$ token placeholders/wildcards ($n=p+q$), the placeholders constitute gaps or skips and a skipgram can contain multiple of these. In turn, a gap can span one or more tokens. 
+    \item Flexgrams -- A sequence s, with one or more gaps of variable length, which implies the pattern by itself is of undefined length.
 \end{enumerate}
 
 Our definitions are defined narrowly and, with exception of $n-gram$ do not
@@ -227,12 +227,12 @@ Various relations can be extracted between patterns in a pattern model, for all
 but the first of the relation types an indexed pattern model is required.
 
 \begin{itemize}
- \item \textbf{Subsumption Relation} - $n$-gram $x y z$ subsumes $n-1$-grams $x y$ and $y z$. 
- \item \textbf{Succession Relation} - Patterns that are in a sequence in the corpus data. 
- \item \textbf{Instantiation Relation} - Skipgrams or flexgrams may be
+ \item \textbf{Subsumption Relation} -- $n$-gram $x y z$ subsumes $n-1$-grams $x y$ and $y z$. 
+ \item \textbf{Succession Relation} -- Patterns that are in a sequence in the corpus data. 
+ \item \textbf{Instantiation Relation} -- Skipgrams or flexgrams may be
      \emph{instantiated} by other patterns. For example, ``to be \_ not \_'' be
      is instantiated by ``or \_ to'', resulting in the 6-gram ``to be or not to be''. This type of relation thus allows you to precisely determine what patterns occur in certain gaps.
- \item \textbf{Co-occurrence Relation} - Different patterns can naturally co-occur multiple times
+ \item \textbf{Co-occurrence Relation} -- Different patterns can naturally co-occur multiple times
      within the the structural ``units'' you decided upon for the corpus (e.g.\ 
      sentences, paragraphs, tweets, etc). The measure of such co-occurrence 
      can be expressed by established metrics such as Jaccard and (normalised) mutual
@@ -274,11 +274,11 @@ levels, accommodating the need in different use cases and catering for
 different levels of expertise. The available tools are:
 
 \begin{itemize}
-    \item colibri-patternmodeller - This is the core tool, it allows for the
+    \item colibri-patternmodeller -- This is the core tool, it allows for the
         construction and inspection of pattern models.
-    \item colibri-classencode - For the construction of a class encoding and
+    \item colibri-classencode -- For the construction of a class encoding and
         the encoding of corpus data
-    \item colibri-classdecode - For decoding encoded corpus data, given a class
+    \item colibri-classdecode -- For decoding encoded corpus data, given a class
         encoding
 \end{itemize}
 
@@ -286,15 +286,15 @@ There are also higher-level shell scripts that invoke the above tools, so basic
 tasks can be accomplished more easily without exposing the low-level functionality:
 
 \begin{itemize}
-    \item colibri-ngrams - Extracts n-grams of a particular size from the
+    \item colibri-ngrams -- Extracts n-grams of a particular size from the
         corpus text, in the order they occur, i.e.\ by moving a sliding window over the text.
-    \item colibri-freqlist - Extracts all n-grams from one or more corpus text files and outputs a frequency list. Also allows for the extraction of skipgrams. By default all n-grams are extract, but an occurrence threshold can be set with the -t flag.
-    \item colibri-ngramstats - Prints a summary report on the ngrams in one or more corpus text files. To get the full details on interpreting the output report, read the section Statistical Reports and Histograms.
-    \item colibri-histogram - Prints a histogram of pattern occurrence count
-    \item colibri-queryngrams - Interactive CLI tool allowing you to query ngrams from standard input, various statistics and relations can be outputted.
-    \item colibri-reverseindex - Computes and prints a reverse index for the specified corpus text file. For each token position in the corpus, it will output what patterns are found there (i.e start at that very same position)
-    \item colibri-loglikelihood - Computes the log-likelihood between patterns in two or more corpus text files, which allows users to determine what words or patterns are significantly more frequent in one corpus than the other.
-    \item colibri-coverage - Computes overlap between a training corpus and a test corpus, produces coverage metrics.
+    \item colibri-freqlist -- Extracts all n-grams from one or more corpus text files and outputs a frequency list. Also allows for the extraction of skipgrams. By default all n-grams are extract, but an occurrence threshold can be set with the -t flag.
+    \item colibri-ngramstats -- Prints a summary report on the ngrams in one or more corpus text files. To get the full details on interpreting the output report, read the section Statistical Reports and Histograms.
+    \item colibri-histogram -- Prints a histogram of pattern occurrence count
+    \item colibri-queryngrams -- Interactive CLI tool allowing you to query ngrams from standard input, various statistics and relations can be outputted.
+    \item colibri-reverseindex -- Computes and prints a reverse index for the specified corpus text file. For each token position in the corpus, it will output what patterns are found there (i.e start at that very same position)
+    \item colibri-loglikelihood -- Computes the log-likelihood between patterns in two or more corpus text files, which allows users to determine what words or patterns are significantly more frequent in one corpus than the other.
+    \item colibri-coverage -- Computes overlap between a training corpus and a test corpus, produces coverage metrics.
 \end{itemize}
 
 The tools and scripts in Colibri Core are explicitly geared for command-line
