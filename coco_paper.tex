@@ -75,7 +75,7 @@ We distinguish three categories of patterns, and define them as follows:
 \begin{enumerate}
     \item N-grams -- A sequence of $n$ word tokens that are all consecutive.
     \item Skipgrams -- A fixed-length sequence of $p$ word tokens and $q$ token placeholders/wildcards ($n=p+q$), the placeholders constitute gaps or skips and a skipgram can contain multiple of these. In turn, a gap can span one or more tokens. 
-    \item Flexgrams -- A sequence $s$s, with one or more gaps of variable length, which implies the pattern by itself is of undefined length.
+    \item Flexgrams -- A sequence $s$, with one or more gaps of variable length, which implies the pattern by itself is of undefined length.
 \end{enumerate}
 
 Our definitions are defined narrowly and, with exception of $n$-grams do not
@@ -386,7 +386,6 @@ From the command line, the following tools are available:
     \item \texttt{colibri-classencode} -- For the construction of a class encoding and
         the encoding of corpus data
     \item \texttt{colibri-classdecode} -- For decoding encoded corpus data, given a class
-        encoding
     \item \texttt{colibri-comparemodels} -- Compares the frequency of patterns between
         two or more pattern models by computing log likelihood,.
 \end{itemize}
