@@ -11,12 +11,25 @@
 
 \begin{frontmatter}
 
-\title{Colibri Core}
+\title{Efficient n-gram, skipgram and flexgram modelling with Colibri Core}
 \author{Maarten van Gompel \\ Centre for Language Studies \\ Radboud University Nijmegen}
 
 \end{frontmatter}
 
 \linenumbers
+
+\begin{abstract}
+Counting n-grams lies at the core of any frequentist corpus analysis and is
+often considered a trivial matter. Going beyond consecutive n-grams to patterns
+such as skipgrams and flexgrams already increases the demand for better
+solutions. The need to operate on big corpus data does so even more.  Lossless
+compression and less trivial algorithms are needed to lower the memory demands,
+yet retain good speed, and keep the task manageable. Colibri Core is software
+for the efficient computation of n-grams, skipgrams and flexgrams from corpus
+data. The resulting pattern models can be analyzed and compared in various
+ways. The software offers a programming library for C++ and
+Python, as well as command-line tools.
+\end{abstract}
 
 \section{Introduction}
 
@@ -60,13 +73,14 @@ As the name Colibri Core suggests, the software is geared to provide
 \emph{core} functionality for modelling patterns and exposes this functionality
 as a programming library as well as through command line tools. It aims to
 provide a solid foundation upon which more specialised software can be build,
-such as software for language modelling.
+such as software for language modelling. The software is aimed at
+data scientists with a solid technical background and developers. 
 
 Colibri Core provides memory-based techniques where models are held entirely in
 memory to guarantee maximum performance on lookup and computation. It does
 place considerable memory requirements on the system on which is it run. This
 approach can be contrasted to e.g.\ database approaches which have much higher
-latency and where the data consumes far more memory/diskspace.
+latency.
 
 \section{Patterns}
 
@@ -181,7 +195,8 @@ Evaluation Campaign,
 Tokenisation was performed using ucto, \url{http://ilk.uvt.nl/ucto}.}. We set
 the occurrence threshold to $2$ and extract everything from unigrams to
 $8$-grams. The naive implementation, before pruning, consumes $2737$ MB and
-runs in $23$ seconds.  A Python implementation of informed iterative counting
+runs in $23$ seconds\footnote{All these experiments were conducted on a system with
+an Intel Core i7-4770K CPU \@ 3.50GHz, 16GB RAM, running Linux kernel 4.1}. A Python implementation of informed iterative counting
 significantly lowers memory usage to $167$ MB, at the cost of increased CPU
 time; $65$ seconds. The Colibri Core implementation runs in $9.5$ seconds and
 takes memory down to just $76$ MB, these gains can be attributed to the class
@@ -239,6 +254,36 @@ invoked, as the user does not want to prune anything. These make only a single
 pass over the data. For skipgrams this leads to an explosion of
 resulting patterns, exponential with number of tokens, and is best avoided.
 
+\subsection{What counts?}
+\label{sec:whatcounts}
+
+The counting algorithms are parametrised by a large number of parameters which
+are not shown in Algorithm~\ref{alg:ngramcounting} and
+Algorithm~\ref{alg:skipgramcount} to reduce complexity. The wide variety of
+parameters allow the user to influence precisely what is counted and this is one
+of the main assets of Colibri Core. Parameters exist to affect the following:
+
+\begin{itemize}
+    \item The minimum and maximum length (in words/tokens) of the n-grams
+        and/or skipgrams to be extracted. Setting minimum and maximum length to
+        the same value will produce a model of homogenous pattern length.
+    \item A secondary word occurrence threshold can be configured. This is a value set higher than
+        the primary occurrence threshold. Only patterns
+        occuring above the primary threshold, and for which each of the
+        individual words in the pattern passes the secondary threshold as well, will
+        be included in the model.
+    \item N-grams that are not subsumed by higher order n-grams, i.e.\ which do
+        not  occur as part of a higher order n-gram in the data/model, can be pruned
+        from the model. 
+    \item Skipgrams can be constrained using the \emph{skip type threshold}. This
+        requires that at least this number of distinct patterns must fit in any 
+        skip in the skipgram. Higher values will produce less skipgrams, but
+        typically more generic ones. 
+    \item Skipgrams and n-grams are typically computed using the same
+        occurrence threshold, but it is also possible to use a different threshold
+        for skipgrams.
+\end{itemize}
+
 \section{Pattern Models}
 
 The pattern model is a $key \mapsto value$ store, where the keys correspond to
@@ -260,13 +305,14 @@ this reason, hashmaps are the default and tries are currently not implemented
 in Colibi Core. The templating, however, easily allows for such an
 implementation to be added in the future.
 
-At this point, we need to address suffix arrays \citep{Manber90} as well, which
+At this point, we need to briefly address suffix arrays \citep{Manber90} as well, which
 are derived from suffix tries but with significantly decreased space
 requirements. Suffix arrays with longest common prefix (LCP) arrays will
-consume less memory than our hash maps, but are typically much slower to construct
-and query. A predecessor of Colibri Core was compared against a suffix array
-implementation \citep{Stehouwer10} and was found to be significantly faster in
-model construction.
+consume less memory than our hash maps, but are typically much slower to
+construct and query. Though no exhaustive experiment was conducted to this
+end, we did compare a predecessor of Colibri Core with a suffix array implementation
+\citep{Stehouwer10} and found our implementation to be significantly faster in model
+construction.
 
 We distinguish two types of pattern model, depending on the type of the values,
 which in the underlying c++ implementation is subject to templating as well:
@@ -290,6 +336,8 @@ model and subsequently constructing an indexed model on the basis of that, by
 making another pass over the corpus and gathering all indices. The gain here is
 in avoiding temporary storage of the indices that will not pass the occurrence
 threshold but can not be ruled out a priori by the informed counting algorithm.
+This conservation of memory comes at the cost of a extended execution time, so
+it is up to the user whether to use this depending on his/her needs.
 
 \section{Corpus Comparison}
 
@@ -361,7 +409,9 @@ extracting skipgrams first, and then abstracting flexgrams from these
 skipgrams. In this case the flexgram computation is constrained by the same
 maximum-size limit the skipgrams are. The second method for flexgram extraction
 proceeds through the co-occurence relation. A flexgram is formed whenever two
-patterns (within the same structural unit) occur above a set threshold.
+patterns (within the same structural unit) occur above a set threshold. The
+implementation of this latter method is currently limited to flexgrams with a
+single variable-width gap. 
 
 \section{Software specification}
 
@@ -406,8 +456,12 @@ tasks can be accomplished more easily without exposing the low-level functionali
 \end{itemize}
 
 The tools and scripts in Colibri Core are explicitly geared for command-line
-usage. However, a RESTful webservice as well as generic web interface to
-Colibri Core is also provided using CLAM\cite{CLAMPAPER}.
+usage. However, a RESTful webservice as well as generic web
+interface\footnote{The webservice is hosted on
+\url{https://webservices-lst.science.ru.nl}} to Colibri Core is also provided using
+CLAM\cite{CLAMPAPER}, to accommodate less technical end-users as well as
+automated networked clients. Future work building upon Colibri Core, may focus
+on offering appealing higher-level interfaces to reach a wider audience.
 
 The software should compile and run on a wide variety of POSIX-compliant
 systems, including Linux, FreeBSD and Mac OS X. Everything is released as open
