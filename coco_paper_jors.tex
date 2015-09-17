@@ -1,23 +1,39 @@
-\documentclass[review]{elsarticle}
+\documentclass[a4paper]{article}
 
-\usepackage{lineno,hyperref}
+\usepackage{hyperref}
 \usepackage{algorithm} 
 \usepackage{algpseudocode} 
-\modulolinenumbers[5]
+\usepackage{parskip}
+\usepackage{natbib}
+\renewcommand{\familydefault}{\sfdefault}
 
+%Number only sections, not subsections
+\setcounter{secnumdepth}{1}
+
+
+\title{Efficient n-gram, skipgram and flexgram modelling with Colibri Core}
 
 \begin{document}
 
-\begin{frontmatter}
+\section{Overview}
 
-\title{Efficient n-gram, skipgram and flexgram modelling with Colibri Core}
-\author{Maarten van Gompel \\ Centre for Language Studies \\ Radboud University Nijmegen}
+\subsection{Title}
+\textbf{Efficient n-gram, skipgram and flexgram modelling with Colibri Core}
 
-\end{frontmatter}
+\subsection{Paper Authors}
+\begin{enumerate}
+    \item van Gompel, Maarten;
+    \item van den Bosch, Antal;
+\end{enumerate}
 
-\linenumbers
+\subsection{Paper Author Roles and Affiliations}
+\begin{enumerate}
+    \item PhD Candidate - Centre for Language Studies, Radboud University Nijmegen
+    \item Professor - Centre for Language Studies, Radboud University Nijmegen
+\end{enumerate}
 
-\begin{abstract}
+\subsection{Abstract}
+
 Counting n-grams lies at the core of any frequentist corpus analysis and is
 often considered a trivial matter. Going beyond consecutive n-grams to patterns
 such as skipgrams and flexgrams already increases the demand for better
@@ -28,9 +44,11 @@ for the efficient computation of n-grams, skipgrams and flexgrams from corpus
 data. The resulting pattern models can be analyzed and compared in various
 ways. The software offers a programming library for C++ and
 Python, as well as command-line tools.
-\end{abstract}
 
-\section{Introduction}
+\subsection{Keywords}
+Natural Language Processing; n-grams; skipgrams; corpus frequency; corpus analysis
+
+\subsection{Introduction}
 
 The n-gram, a sequence of $n$ consecutive word tokens, is a core concept for
 many Natural Language Processing (NLP) applications. One of the most basic NLP
@@ -75,13 +93,10 @@ provide a solid foundation upon which more specialised software can be build,
 such as software for language modelling. The software is aimed at
 data scientists with a solid technical background and developers. 
 
-Colibri Core provides memory-based techniques where models are held entirely in
-memory to guarantee maximum performance on lookup and computation. It does
-place considerable memory requirements on the system on which is it run. This
-approach can be contrasted to e.g.\ database approaches which have much higher
-latency.
 
-\section{Patterns}
+\subsection{Implementation and Architecture}
+
+\subsubsection{Patterns}
 
 We distinguish three categories of patterns, and define them as follows:
 
@@ -140,7 +155,7 @@ To encode a text corpus, a class encoding needs to be computed first. To decode
 the encoded corpus back to plain text, the class encoding is needed again.
 Colibri Core provides tools and exposes library functions to do this.
 
-\section{Informed Iterative Counting}
+\subsubsection{Informed Iterative Counting}
 
 N-gram frequency lists are often parametrised by a certain threshold, $n$-grams
 with less occurrences than this threshold are pruned. Because of the Zipfian
@@ -184,24 +199,10 @@ implementation accounts for more parameters, such as setting a lower bound to
 $n$. The amount of back-off, going all the way up to $m-1$ here, can also be
 fine-tuned.
 
-A performance evaluation of this algorithm has been performed by comparing a
-naive implementation in Python, a simple implementation of informed iterative
-counting in Python, and the optimised C++ implementation in Colibri Core. To
-this end, we use a corpus of Dutch translations of TED talks of $127,806$
-sentences and $2,330,075$ words\footnote{The data is from the IWSLT 2012
-Evaluation Campaign,
-\url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html\#MTtrack}.
-Tokenisation was performed using ucto, \url{http://ilk.uvt.nl/ucto}.}. We set
-the occurrence threshold to $2$ and extract everything from unigrams to
-$8$-grams. The naive implementation, before pruning, consumes $2737$ MB and
-runs in $23$ seconds\footnote{All these experiments were conducted on a system with
-an Intel Core i7-4770K CPU \@ 3.50GHz, 16GB RAM, running Linux kernel 4.1}. A Python implementation of informed iterative counting
-significantly lowers memory usage to $167$ MB, at the cost of increased CPU
-time; $65$ seconds. The Colibri Core implementation runs in $9.5$ seconds and
-takes memory down to just $76$ MB, these gains can be attributed to the class
-encoding and the fact that Colibri Core is implemented in C++.
+A performance evaluation of this algorithm will be addressed later in the
+section on \emph{Quality Control}.
 
-\subsection{Informed Skipgram Counting}
+\subsubsection{Informed Skipgram Counting}
 \label{sec:skipgramcount}
 
 The computation of skipgrams is parametrised by an upper limit $l\leq m$ in the number of
@@ -231,8 +232,8 @@ pattern model in memory, with ngrams already counted.}
             \If {$docount$}
                 \State $M(skipgram) \leftarrow M(skipgram) + 1$
             \EndIf
-        \EndFor 
-    \EndFor
+            \EndFor 
+            \EndFor
     \State $M \leftarrow pruneskipgrams(M,n,t)$
 \EndFor \\
 \Return{M}
@@ -253,7 +254,7 @@ invoked, as the user does not want to prune anything. These make only a single
 pass over the data. For skipgrams this leads to an explosion of
 resulting patterns, exponential with number of tokens, and is best avoided.
 
-\subsection{What counts?}
+\subsubsection{What counts?}
 \label{sec:whatcounts}
 
 The counting algorithms are parametrised by a large number of parameters which
@@ -283,7 +284,7 @@ of the main assets of Colibri Core. Parameters exist to affect the following:
         for skipgrams.
 \end{itemize}
 
-\section{Pattern Models}
+\subsubsection{Pattern Models}
 
 The pattern model is a $key \mapsto value$ store, where the keys correspond to
 patterns. The underlying C++ library allows for choosing the actual underlying
@@ -325,7 +326,7 @@ Obviously, indexed pattern models make a considerably higher demand on memory.
 They do however, allow for a broader range of computations, as shall become
 apparent in subsequent sections.
 
-\subsection{Two-step training}
+\subsubsection{Two-step training}
 
 Training indexed patterns models is far more memory intensive than training
 unindexed models, especially in huge corpora with a high type-token ratio. To
@@ -338,7 +339,7 @@ threshold but can not be ruled out a priori by the informed counting algorithm.
 This conservation of memory comes at the cost of a extended execution time, so
 it is up to the user whether to use this depending on his/her needs.
 
-\section{Corpus Comparison}
+\subsubsection{Corpus Comparison}
 
 The computation of pattern models on two or more distinct corpora, provided the
 class encoding is the same for all of them, provides a basis for comparative
@@ -368,7 +369,7 @@ likely any given pattern is for either of the two models. It therefore allows
 you to identify how indicative a pattern is for a particular corpus. Our
 implementation follows the methodology of~\cite{Rayson00comparingcorpora}.
 
-\section{Relations between Patterns}
+\subsubsection{Relations between Patterns}
 
 Various relations can be extracted between patterns in a pattern model, for all
 but the first of the relation types an indexed pattern model is required.
@@ -399,7 +400,7 @@ actual implementation, the reverse index is not modelled in memory as a mapping 
 positions to patterns, but as a much less memory-consuming mapping from
 positions to unigrams; the patterns can be derived on-the-fly from that.
 
-\subsection{Flexgram Counting}
+\subsubsection{Flexgram Counting}
 
 Thus-far, we have explained the algorithms for n-gram counting and skipgram
 counting, but have not yet done so for flexgrams. The implementation allows
@@ -412,13 +413,50 @@ patterns (within the same structural unit) occur above a set threshold. The
 implementation of this latter method is currently limited to flexgrams with a
 single variable-width gap. 
 
-\section{Software specification}
+\subsection{Quality Control}
+\label{sec:qc}
 
-Colibri Core consist of a C++ library, a Python binding\footnote{Both for
-Python 2 as well as Python 3, written in Cython.} to said library and a set of
-command-line tools. This allows for an interface to the sofware at various
-levels, accommodating the need in different use cases and catering for
-different levels of expertise. 
+To ensure the software is working as intended, a series of tests is available.
+The tool \texttt{colibri-test} tests the various functions of the C++ library,
+and the \texttt{test.py} script tests the Python binding. Testing in the form
+of continuous integration is made possible through \emph{Travis CI}, where all
+our test results can always be accessed
+publicly.\footnote{\url{https://travis-ci.org/proycon/colibri-core}}
+
+A performance evaluation of our iterative counting algorithm has been performed
+by comparing our optimised C++ implemation with a naive implementation in
+Python, as well as a simple implementation of informed iterative counting in
+Python. To this end, we use a corpus of Dutch translations of TED talks of
+$127,806$ sentences and $2,330,075$ words\footnote{The data is from the IWSLT
+2012 Evaluation Campaign, \url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html\#MTtrack}.
+Tokenisation was performed using ucto, \url{http://ilk.uvt.nl/ucto}.}. We set
+the occurrence threshold to $2$ and extract everything from unigrams to
+$8$-grams. The naive implementation, before pruning, consumes $2737$ MB and
+runs in $23$ seconds\footnote{All these experiments were conducted using the
+    included \texttt{benchmarks.py} script on a system
+    with an Intel Core i7-4770K CPU \@ 3.50GHz, 16GB RAM, running Linux kernel
+4.1}. A Python implementation of informed iterative counting significantly
+lowers memory usage to $167$ MB, at the cost of increased CPU time; $65$
+seconds. The Colibri Core implementation runs in $9.5$ seconds and takes memory
+down to just $76$ MB, these gains can be attributed to the class encoding and
+the fact that Colibri Core is implemented in C++.
+
+Documentation, including API references for both Python and C++, is provided at
+\url{http://proycon.github.io/colibri-core}. 
+
+\section{Availability}
+
+\subsection{Operation System}
+
+Colibri Core should run on modern POSIX-compliant operating systems, including
+Linux, FreeBSD and Mac OS X. It is tested to compile with current versions of
+both \texttt{gcc} as well as \texttt{clang}.
+
+\subsection{Programming Language}
+
+Colibri Core is written in C++, adhering to the C++11 standard. The Python
+binding is written in Cython (0.21 or above) and supports both Python 2.7 as
+well as Python 3.
 
 The Python binding ensures that the functionality of Colibri Core is available
 from Python without sacrificing the great performance benefit native code
@@ -427,48 +465,72 @@ widespread use in the scientific community, and the NLP community in
 particular. It demands less expertise from the developer than C++ and is more
 suitable for rapid prototyping.
 
-From the command line, the following tools are available:
+\subsection{Additional system requirements}
 
-\begin{itemize}
-    \item \texttt{colibri-patternmodeller} -- This is the core tool, it allows for the
-        construction and inspection of pattern models.
-    \item \texttt{colibri-classencode} -- For the construction of a class encoding and
-        the encoding of corpus data
-    \item \texttt{colibri-classdecode} -- For decoding encoded corpus data, given a class
-    \item \texttt{colibri-comparemodels} -- Compares the frequency of patterns between
-        two or more pattern models by computing log likelihood,.
-\end{itemize}
+Colibri Core provides memory-based techniques where models are held entirely in
+memory to guarantee maximum performance on lookup and computation.  This
+approach can be contrasted to e.g.\ database approaches which have much higher
+latency.  It does place considerable memory requirements on the system on which
+is it run, though this depends entirely on the size of the data and the
+thresholds the user uses.  We recommend at least 16GB RAM, though using Colibri
+Core on high-end computing servers with 256GB RAM is not uncommon for extensive
+computation on big data sets.
 
-There are also higher-level shell scripts that invoke the above tools, so basic
-tasks can be accomplished more easily without exposing the low-level functionality:
+Colibri-core is single-threaded to the non-distributable nature of most of the
+algorithms.
 
-\begin{itemize}
-    \item \texttt{colibri-ngrams} -- Extracts n-grams of a particular size from the
-        corpus text, in the order they occur, i.e.\ by moving a sliding window over the text.
-    \item \texttt{colibri-freqlist} -- Extracts all n-grams from one or more corpus text files and outputs a frequency list. Also allows for the extraction of skipgrams. By default all n-grams are extract, but an occurrence threshold can be set with the -t flag.
-    \item \texttt{colibri-ngramstats} -- Prints a summary report on the ngrams in one or more corpus text files. To get the full details on interpreting the output report, read the section Statistical Reports and Histograms.
-    \item \texttt{colibri-histogram} -- Prints a histogram of pattern occurrence count
-    \item \texttt{colibri-queryngrams} -- Interactive CLI tool allowing you to query ngrams from standard input, various statistics and relations can be outputted.
-    \item \texttt{colibri-reverseindex} -- Computes and prints a reverse index for the specified corpus text file. For each token position in the corpus, it will output what patterns are found there (i.e start at that very same position)
-    \item \texttt{colibri-loglikelihood} -- Computes the log-likelihood between patterns in two or more corpus text files, which allows users to determine what words or patterns are significantly more frequent in one corpus than the other.
-    \item \texttt{colibri-coverage} -- Computes overlap between a training corpus and a test corpus, produces coverage metrics.
-\end{itemize}
+\subsection{Dependencies}
 
-The tools and scripts in Colibri Core are explicitly geared for command-line
-usage. However, a RESTful webservice as well as generic web
-interface\footnote{The webservice is hosted on
-\url{https://webservices-lst.science.ru.nl}} to Colibri Core is also provided using
-CLAM\cite{CLAMPAPER}, to accommodate less technical end-users as well as
-automated networked clients. Future work building upon Colibri Core, may focus
-on offering appealing higher-level interfaces to reach a wider audience.
+A standard C/C++ library and build environment; Python 2.7 or 3; Cython 0.21 or
+above. Support for reading the \emph{FoLiA} format is optional and requires the
+\texttt{libfolia} library.\footnote{https://proycon.github.io/folia}
 
-The software should compile and run on a wide variety of POSIX-compliant
-systems, including Linux, FreeBSD and Mac OS X. Everything is released as open
-source under the GNU Public License (v3)\footnote{https://gnu.org/licenses/gpl.html}.
+\subsection{List of contributors}
 
-Documentation, including API reference, is provided at
-\url{http://proycon.github.io/colibri-core/doc/}. An extra tutorial for Python
-is available at \url{http://proycon.github.io/colibri-core/doc/colibricore-python-tutorial.html}.
+Developed by Maarten van Gompel, with contributions and feedback from Louis
+Onrust and prof. Antal van den Bosch. \emph{Centre for Language Studies, Radboud
+University Nijmegen}.
+
+\subsection{Software Location}
+
+\textbf{Code repository}
+
+\indent \textbf{Name}: GitHub
+\indent \textbf{Identifier}: \url{https://github.com/proycon/colibri-core}
+\indent \textbf{Website}: \url{https://proycon.github.io/colibri-core}
+\indent \textbf{Licence}: GNU General Public Licence v3
+\indent \textbf{Date published}: since September 21st, 2013
+
+\subsection{Language}
+
+English
+
+
+\section{Reuse potential}
+
+Colibri Core explicitly aims to provide a foundation for others in the NLP
+community to build their tools and research on. The software is already being
+employed in ongoing research on Machine
+Translation\footnote{\url{https://github.com/proycon/colibri-mt}}, Bayesian Language
+Modelling\footnote{\url{https://github.com/naiaden/cococpyp}}, spelling
+correction\footnote{\url{https://github.com/proycon/gecco}}, and event
+prediction\footnote{\url{https://github.com/fkunneman/ADNEXT\_predict}}.
+
+As a programming library for both C++ and Python, Colibri Core can be
+potentially adopted by a wide variety of 3rd party developers. As a set of
+tools and scripts, Colibri Core also has merit by itself. It is, howver,
+focussed on command-line usage and therefore still requires a certain technical
+expertise from the end-user.
+
+To increase the accessibility of Colibri Core, a RESTful webservice as well as
+generic web interface is provided through CLAM\cite{CLAMPAPER}. With this we
+hope to meet the needs of less technical end-users, as well as automated
+networked clients. This webservice is hosted at
+\url{https://webservices-lst.science.ru.nl}.
+
+Future work building upon Colibri Core, may focus on offering more appealing
+high-level interfaces to reach a wider audience.
+
 
 \section*{References}
 
