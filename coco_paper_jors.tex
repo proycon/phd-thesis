@@ -1,11 +1,30 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper,12pt]{article}
+
+
+\usepackage{geometry}
+\geometry{a4paper, total={210mm,297mm}, left=3.17cm, right=3.17cm, top=1.25cm, bottom=4cm }
+
+
 
 \usepackage{hyperref}
 \usepackage{algorithm} 
 \usepackage{algpseudocode} 
 \usepackage{parskip}
 \usepackage{natbib}
+\usepackage{sectsty}
+\sectionfont{\fontsize{13}{13}\selectfont}
+\subsectionfont{\fontsize{13}{13}\selectfont}
+\subsubsectionfont{\fontsize{11}{11}\selectfont}
 \renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\thesection}{(\arabic{section})}
+\usepackage{titlesec}
+\usepackage{scrextend}
+
+\titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{12pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+
+\bibpunct{[}{]}{,}{a}{}{;}
 
 %Number only sections, not subsections
 \setcounter{secnumdepth}{1}
@@ -476,7 +495,7 @@ thresholds the user uses.  We recommend at least 16GB RAM, though using Colibri
 Core on high-end computing servers with 256GB RAM is not uncommon for extensive
 computation on big data sets.
 
-Colibri-core is single-threaded to the non-distributable nature of most of the
+Colibri-core is single-threaded due to the non-distributable nature of most of the
 algorithms.
 
 \subsection{Dependencies}
@@ -493,13 +512,15 @@ University Nijmegen}.
 
 \subsection{Software Location}
 
-\textbf{Code repository}
+\subsubsection{Code repository}
 
-\indent \textbf{Name}: GitHub
-\indent \textbf{Identifier}: \url{https://github.com/proycon/colibri-core}
-\indent \textbf{Website}: \url{https://proycon.github.io/colibri-core}
-\indent \textbf{Licence}: GNU General Public Licence v3
-\indent \textbf{Date published}: since September 21st, 2013
+\begin{addmargin}[2em]{2em}
+\textbf{Name}: GitHub \\
+\textbf{Identifier}: \url{https://github.com/proycon/colibri-core} \\
+\textbf{Website}: \url{https://proycon.github.io/colibri-core} \\
+\textbf{Licence}: GNU General Public Licence v3 \\
+\textbf{Date published}: since September 21st, 2013 \\
+\end{addmargin}
 
 \subsection{Language}
 
@@ -532,7 +553,6 @@ Future work building upon Colibri Core, may focus on offering more appealing
 high-level interfaces to reach a wider audience.
 
 
-\section*{References}
 
 \bibliographystyle{elsarticle-num}
 \bibliography{coco_paper}
