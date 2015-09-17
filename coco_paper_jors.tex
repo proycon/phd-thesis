@@ -10,7 +10,6 @@
 \usepackage{algorithm} 
 \usepackage{algpseudocode} 
 \usepackage{parskip}
-\usepackage{natbib}
 \usepackage{sectsty}
 \sectionfont{\fontsize{13}{13}\selectfont}
 \subsectionfont{\fontsize{13}{13}\selectfont}
@@ -19,12 +18,13 @@
 \renewcommand{\thesection}{(\arabic{section})}
 \usepackage{titlesec}
 \usepackage{scrextend}
+\usepackage{natbib}
+\bibpunct{[}{]}{;}{n}{,}{,}
 
 \titlespacing\section{0pt}{12pt plus 4pt minus 2pt}{12pt plus 2pt minus 2pt}
 \titlespacing\subsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 \titlespacing\subsubsection{0pt}{12pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
 
-\bibpunct{[}{]}{,}{a}{}{;}
 
 %Number only sections, not subsections
 \setcounter{secnumdepth}{1}
@@ -132,8 +132,8 @@ may use the term skipgram to include what we call flexgram.  The term
 
 Skipgrams are used in the field to obtain a higher level of generalisation, which
 can not be provided by n-grams. They can, for instance, be found as features in
-classification tasks \citep{DHONDT}, or as a means in language modelling to
-decrease perplexity \citep{Guthrie06}.
+classification tasks \cite{DHONDT}, or as a means in language modelling to
+decrease perplexity \cite{Guthrie06}.
 
 Dealing with word tokens implies that the corpus data has to be in a
 tokenised form. We start from the basis of plain-text corpus data, containing one
@@ -156,7 +156,7 @@ fewer bytes than high class values. Classes $1$ to $16$ can be stored in a
 single byte, higher classes require at least two bytes. To achieve maximum
 compression, classes are assigned to word tokens based on frequency (i.e.\
 entropy encoding): words with the highest frequency receive the lowest classes.
-This is essentially a variant of Huffman coding \citep{HUFFMAN}.
+This is essentially a variant of Huffman coding \cite{HUFFMAN}.
 
 The implementation's grammar confirms to the regular expression in
 Equation~\ref{eq:patterngrammar}, where $p$ is a pattern, $l$ is a single-byte
@@ -324,13 +324,13 @@ this reason, hashmaps are the default and tries are currently not implemented
 in Colibi Core. The templating, however, easily allows for such an
 implementation to be added in the future.
 
-At this point, we need to briefly address suffix arrays \citep{Manber90} as well, which
+At this point, we need to briefly address suffix arrays \cite{Manber90} as well, which
 are derived from suffix tries but with significantly decreased space
 requirements. Suffix arrays with longest common prefix (LCP) arrays will
 consume less memory than our hash maps, but are typically much slower to
 construct and query. Though no exhaustive experiment was conducted to this
 end, we did compare a predecessor of Colibri Core with a suffix array implementation
-\citep{Stehouwer10} and found our implementation to be significantly faster in model
+\cite{Stehouwer10} and found our implementation to be significantly faster in model
 construction.
 
 We distinguish two types of pattern model, depending on the type of the values,
@@ -554,7 +554,7 @@ high-level interfaces to reach a wider audience.
 
 
 
-\bibliographystyle{elsarticle-num}
+\bibliographystyle{agsm}
 \bibliography{coco_paper}
 
 
