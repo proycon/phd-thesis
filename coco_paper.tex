@@ -20,10 +20,10 @@
 \begin{abstract}
 Counting n-grams lies at the core of any frequentist corpus analysis and is
 often considered a trivial matter. Going beyond consecutive n-grams to patterns
-such as skipgrams and flexgrams already increases the demand for better
+such as skipgrams and flexgrams increases the demand for efficient
 solutions. The need to operate on big corpus data does so even more.  Lossless
-compression and less trivial algorithms are needed to lower the memory demands,
-yet retain good speed, and keep the task manageable. Colibri Core is software
+compression and non-trivial algorithms are required to lower the memory demands,
+yet retain good speed. Colibri Core is software
 for the efficient computation of n-grams, skipgrams and flexgrams from corpus
 data. The resulting pattern models can be analyzed and compared in various
 ways. The software offers a programming library for C++ and
@@ -40,28 +40,21 @@ frequency list, is the simplest instance of this task which is especially
 ubiquitous. Computing $n$-gram frequency on a corpus text is fairly trivial,
 and any beginning computer science student will have no trouble to accomplish
 this in just a few lines of code in a modern high-level programming language.
-Nevertheless, this computation is at the heart of Colibri Core, the NLP sofware
-we aim to introduce in this paper, as there is more to it than meets the eye at
-first.
+However, Optimising this to reduce memory constraints, improve speed, and scale to large
+data, is a more complex matter. Colibri Core, the NLP software we introduce here, offers 
+efficient algorithms to do this.
 
 N-grams are typically distributed in a Zipfian fashion, implying there are only
 a few high-frequency patterns, with words such as common function words in the
 lead, and there is a long tail of patterns that occur only very sparsely. This
 basic fact makes counting a notoriously memory-hungry enterprise, as patterns
-occurring below your minimum frequency treshold can not be discarded from
-memory until the entire corpus has been processed. 
+occurring below a minimum frequency treshold can not be discarded from
+memory until the entire corpus has been processed sequentially. 
 
 When working with large data sets and higher-order $n$-ngrams, this memory
 problem becomes apparent quickly when trivial solutions are employed. Colibri
 Core, on the other hand, offers tools and programming libraries that are
 heavily optimised to 1) reduce memory usage, and 2) have high performance.
-
-Colibri Core is developed in the scope of the ``Constructions as Linguistic
-Bridges'' PhD study, which roughly focusses on the role of constructions, i.e.\ 
-patterns such as $n$-grams, in their context, in Machine Translation. Machine
-Translation, as well as Language Modelling are two common fields where large
-data sets are often encountered, as more data generally improves the quality of
-the resulting translation model or language model. 
 
 The task of finding $n$-grams is generalised in Colibri Core to the task of
 finding \emph{patterns} or \emph{constructions} (we use the terms
@@ -71,9 +64,9 @@ interchangeably). Furthermore, once patterns are identified, resulting in a
 As the name Colibri Core suggests, the software is geared to provide
 \emph{core} functionality for modelling patterns and exposes this functionality
 as a programming library as well as through command line tools. It aims to
-provide a solid foundation upon which more specialised software can be build,
+provide a solid foundation upon which more specialised software can be built,
 such as software for language modelling. The software is aimed at
-data scientists with a solid technical background and developers. 
+NLP software developers and researchers with a solid technical background. 
 
 Colibri Core provides memory-based techniques where models are held entirely in
 memory to guarantee maximum performance on lookup and computation. It does
@@ -87,8 +80,9 @@ We distinguish three categories of patterns, and define them as follows:
 
 \begin{enumerate}
     \item N-grams -- A sequence of $n$ word tokens that are all consecutive.
-    \item Skipgrams -- A fixed-length sequence of $p$ word tokens and $q$ token placeholders/wildcards ($n=p+q$), the placeholders constitute gaps or skips and a skipgram can contain multiple of these. In turn, a gap can span one or more tokens. 
-    \item Flexgrams -- A sequence $s$, with one or more gaps of variable length, which implies the pattern by itself is of undefined length.
+    \item Skipgrams -- A fixed-length sequence of $p$ word tokens and $q$ token
+        placeholders/wildcards with total length $n$ ($n=p+q$), the placeholders constitute gaps or skips and a skipgram can contain multiple of these. In turn, a gap can span one or more tokens. 
+    \item Flexgrams -- A sequence with one or more gaps of variable length, which implies the pattern by itself is of undefined length.
 \end{enumerate}
 
 Our definitions are defined narrowly and, with exception of $n$-grams do not
@@ -96,45 +90,42 @@ necessarily match up precisely to the way the concepts are used in other studies
 may use the term skipgram to include what we call flexgram.  The term
 ``elastigram'' is sometimes also seen in the literature to refer to flexgrams. 
 
-Skipgrams are used in the field to obtain a higher level of generalisation, which
-can not be provided by n-grams. They can, for instance, be found as features in
+Skipgrams are used in the field to obtain a higher level of generalisation than
+can be offered by n-grams. They can, for instance, be found as features in
 classification tasks \citep{DHONDT}, or as a means in language modelling to
 decrease perplexity \citep{Guthrie06}.
 
 Dealing with word tokens implies that the corpus data has to be in a
 tokenised form. We start from the basis of plain-text corpus data, containing one
-``unit'' per line; a unit can correspond to a sentence, paragraph, tweet
+``unit'' per line; a unit can correspond to a sentence, paragraph, tweet,
 or whatever unit is deemed appropriate for the task at hand. Corpus data can
 alternatively be provided in FoLiA XML format \cite{FOLIAPAPER} as well, although linguistic
-annotation will typically be ignored.
+annotation will be ignored.
 
-Text data is typically stored as a string of characters, the characters
-themselves draw their meaning from a character encoding. The storage of a huge
-amount of strings is inefficient from a memory perspective, considering the
-fact that words follow a Zipfian distribution. Colibri Core therefore works on
-the basis of a lossless compression, in which each unique word token is
-assigned a numeric class. This effectively defines the ``vocabulary'' of your
-data, which we call a \emph{class encoding}. A pattern is then not represented
-as an array of characters, but as an array of these classes instead. Further
-lossless compression is achieved by holding this array of classes in a
-dynamic-length byte representation, in which low class values can be stored in
-fewer bytes than high class values. Classes $1$ to $16$ can be stored in a
-single byte, higher classes require at least two bytes. To achieve maximum
-compression, classes are assigned to word tokens based on frequency (i.e.\
-entropy encoding): words with the highest frequency receive the lowest classes.
-This is essentially a variant of Huffman coding \citep{HUFFMAN}.
+Text data is typically stored as a string of characters. The characters
+themselves draw their denotation from a character encoding. The storage of a
+huge amount of strings is inefficient from a memory perspective, considering
+the fact that words follow a Zipfian distribution. Colibri Core therefore works
+on the basis of a lossless compression, in which each unique word token is
+assigned a numeric type identifier, which we call a \emph{class}. This
+effectively defines the ``vocabulary'' of the data, which we call a
+\emph{class encoding}. A pattern is not represented as an array of
+characters, but as an array of these classes instead. Further lossless
+compression is achieved by holding this array of classes in a dynamic-length
+byte representation, in which low class values can be stored in fewer bytes
+than high class values. Classes $0$ to $127$ can be stored in a single byte,
+higher classes require at least two bytes. To achieve maximum compression,
+classes are assigned to word tokens based on frequency (i.e.\ entropy
+encoding): words with the highest frequency receive the lowest classes.  This
+is essentially a variant of Huffman coding \citep{HUFFMAN}. Some of the lowest
+classes are reserved for special purposes, e.g. to delimit sentences (class 0) or as
+markers for out-of-vocabulary words (class 2) or skipped content (classes 3 and 4).
 
-The implementation's grammar confirms to the regular expression in
-Equation~\ref{eq:patterngrammar}, where $p$ is a pattern, $l$ is a single-byte
-length marker where $l<128$, $c$ is an $l$-byte sequence holding a class number
-(big endian), and $m>=128$ is a special marker used to indicate placeholder
-tokens for skipgrams $(128)$, or dynamic-width gaps for flexgrams
-$(129)$\footnote{$m$ and $lc$ are mutually exclusive}.
-
-\begin{equation}
-\label{eq:patterngrammar}
-p \leftarrow (lc|m)+
-\end{equation}
+Of each byte in the class representation, the first bit is reserved as a continuation
+marker. As long as the continuation marker is high, the next byte is part of
+the class. When it is low, we know we are at the final byte of a class
+representation. The class itself is stored in the remaining 7-bits of each
+byte. In practise this results in good compression and reduces memory usage.
 
 To encode a text corpus, a class encoding needs to be computed first. To decode
 the encoded corpus back to plain text, the class encoding is needed again.
@@ -142,21 +133,21 @@ Colibri Core provides tools and exposes library functions to do this.
 
 \section{Informed Iterative Counting}
 
-N-gram frequency lists are often parametrised by a certain threshold, $n$-grams
-with less occurrences than this threshold are pruned. Because of the Zipfian
-nature of our $n$-gram distribution, we can circumvent the problem of having to
-hold a huge amount of patterns in memory which won't exceed our threshold. We do this by
+N-gram frequency lists are often parametrised by a certain threshold. $N$-grams
+with a frequency below threshold are pruned. Because of the Zipfian nature of
+our $n$-gram distribution, we can circumvent the problem of holding a huge
+amount of patterns in memory that do not meet the threshold. We do this by
 employing informed counting. Informed counting is an iterative procedure, shown
-in pseudo code in Algorithm~\ref{alg:ngramcounting}. Here we take $m$ to be the maximum
-$n$-gram order we intend to extract, the whole corpus is then processed for
-each $n$ where $1<n\leq m$, extracting the respective $n$-grams at each
-iteration. This means that at each iteration, we can consult the results of the
+in pseudo code in Algorithm~\ref{alg:ngramcounting}. Here we take $m$ to be the
+maximum $n$-gram order we intend to extract, the whole corpus is then processed
+for each $n$ where $1<n\leq m$, extracting the respective $n$-grams at each
+iteration. This means that at each iteration we can consult the results of the
 previous iteration. We can then readily discard any $n$-gram with $n>1$ for
-which either of the two $n-1$-grams that it by definition contains does not
-meet the threshold, as it follows that the $n$-gram can never meet the
-threshold either. By outright discarding an $n$-gram we do not need to store it
-and its count in memory. After each iteration of $n$, we prune all the
-$n$-grams that did not reach the threshold.
+which either of the two $n-1$-grams that it contains does not meet the
+threshold, as it follows that the $n$-gram can never meet the threshold either.
+By outright discarding an $n$-gram we do not need to store it and its count in
+memory. After each iteration of $n$, we prune all the $n$-grams that did not
+reach the threshold.
 
 
 \begin{algorithm} \caption{Informed Iterative Counting for n-grams.  Take $m$
@@ -198,7 +189,7 @@ runs in $23$ seconds\footnote{All these experiments were conducted on a system w
 an Intel Core i7-4770K CPU \@ 3.50GHz, 16GB RAM, running Linux kernel 4.1}. A Python implementation of informed iterative counting
 significantly lowers memory usage to $167$ MB, at the cost of increased CPU
 time; $65$ seconds. The Colibri Core implementation runs in $9.5$ seconds and
-takes memory down to just $76$ MB, these gains can be attributed to the class
+takes memory down to just $76$ MB. These gains can be attributed to the class
 encoding and the fact that Colibri Core is implemented in C++.
 
 \subsection{Informed Skipgram Counting}
@@ -210,7 +201,7 @@ total length spanned. It first requires a count of all $n$-grams where $0<n\geq 
 
 The algorithm, shown in Algorithm~\ref{alg:skipgramcount} considers all
 possible ways skips can be inserted in all of the n-grams in the model. It can
-discard a skipgram candidate by looking at the non-skip parts that make up the
+discard a skipgram candidate by looking at the non-skipped parts that make up the
 skipgram, and checking whether those exceed the set threshold. 
 
 \begin{algorithm} \caption{Informed Counting for skipgrams.  Take $l$
@@ -241,31 +232,32 @@ pattern model in memory, with ngrams already counted.}
 
 In this algorithm, the \texttt{possibleconfigurations(ngram)} function returns
 all possible skipgram configurations for the given $n$-gram. Note that
-configuration of gaps depends only on the length of the $n$-gram, irregardless
+the configuration of gaps depends only on the length of the $n$-gram, regardless
 of its content, and can therefore easily be pre-computed. The
 \texttt{parts(skipgram)} function returns all consecutive parts that are
-subsumed in the skipgram, i.e.\ the parts you obtain when breaking at each
-skip.
+subsumed in the skipgram.
 
 Like Algorithm~\ref{alg:ngramcounting}, Algorithm~\ref{alg:skipgramcount}
-presupposes a threshold $t>1$. For threshold one, more trivial algorithms are
+assumes a threshold $t>1$. When $t=1$, more trivial algorithms are
 invoked, as the user does not want to prune anything. These make only a single
 pass over the data. For skipgrams this leads to an explosion of
-resulting patterns, exponential with number of tokens, and is best avoided.
+resulting patterns, exponential with number of tokens, and is best avoided. The
+default will be $t=2$ in most cases.
 
 \subsection{What counts?}
 \label{sec:whatcounts}
 
 The counting algorithms are parametrised by a large number of parameters which
 are not shown in Algorithm~\ref{alg:ngramcounting} and
-Algorithm~\ref{alg:skipgramcount} to reduce complexity. The wide variety of
-parameters allow the user to influence precisely what is counted and this is one
+Algorithm~\ref{alg:skipgramcount} to reduce complexity. The set of
+parameters allows the user to influence precisely what is counted. This is one
 of the main assets of Colibri Core. Parameters exist to affect the following:
 
 \begin{itemize}
     \item The minimum and maximum length (in words/tokens) of the n-grams
         and/or skipgrams to be extracted. Setting minimum and maximum length to
-        the same value will produce a model of homogenous pattern length.
+        the same value will produce a model of homogenous pattern length (e.g.
+        only trigrams or words).
     \item A secondary word occurrence threshold can be configured. This is a value set higher than
         the primary occurrence threshold. Only patterns
         occuring above the primary threshold, and for which each of the
@@ -276,7 +268,7 @@ of the main assets of Colibri Core. Parameters exist to affect the following:
         from the model. 
     \item Skipgrams can be constrained using the \emph{skip type threshold}. This
         requires that at least this number of distinct patterns must fit in any 
-        skip in the skipgram. Higher values will produce less skipgrams, but
+        skip in the skipgram. Higher values will produce fewer skipgrams, but
         typically more generic ones. 
     \item Skipgrams and n-grams are typically computed using the same
         occurrence threshold, but it is also possible to use a different threshold
@@ -297,14 +289,14 @@ binary representation of a pattern.
 The use of hash maps can be contrasted to the use of suffix (or prefix) tries,
 a common datastructure for storing n-grams. Although suffix tries benefit from
 decreased memory use due to less overlap in pattern data. The strongly linked
-nature of tries causes significant overhead in memory use\footnote{Each pointer
+nature of tries causes a significant overhead in memory use\footnote{Each pointer
 consuming 8 bytes on 64-bit architectures, and one would be needed between
 every two tokens.} that well exceeds the memory footprint of hash maps. For
 this reason, hashmaps are the default and tries are currently not implemented
 in Colibi Core. The templating, however, easily allows for such an
 implementation to be added in the future.
 
-At this point, we need to briefly address suffix arrays \citep{Manber90} as well, which
+At this point, we need to address suffix arrays \citep{Manber90} as well, which
 are derived from suffix tries but with significantly decreased space
 requirements. Suffix arrays with longest common prefix (LCP) arrays will
 consume less memory than our hash maps, but are typically much slower to
@@ -313,40 +305,43 @@ end, we did compare a predecessor of Colibri Core with a suffix array implementa
 \citep{Stehouwer10} and found our implementation to be significantly faster in model
 construction.
 
-We distinguish two types of pattern model, depending on the type of the values,
-which in the underlying c++ implementation is subject to templating as well:
+We distinguish two types of pattern models, depending on the type of the values,
+which in the underlying C++ implementation is subject to templating as well:
 
 \begin{enumerate}
- \item \textbf{Unindexed Pattern Models} -- Values are simple integers
- \item \textbf{Indexed Pattern Models} -- Values are arrays of indices where the pattern can be found in the corpus
+ \item \textbf{Unindexed Pattern Models} -- Values are simple integers.
+ \item \textbf{Indexed Pattern Models} -- Values are arrays of indices where
+     the pattern's occurrences in the corpus are stored.
 \end{enumerate}
 
 Obviously, indexed pattern models make a considerably higher demand on memory.
-They do however, allow for a broader range of computations, as shall become
+They do, however, allow for a broader range of computations, as shall become
 apparent in subsequent sections.
 
 \subsection{Two-step training}
 
-Training indexed patterns models is far more memory intensive than training
-unindexed models, especially in huge corpora with a high type-token ratio. To
-lower the demand on memory for such corpora, we implement a type of
-\emph{two-step training}. This involves first constructing an unindexed pattern
-model and subsequently constructing an indexed model on the basis of that, by
-making another pass over the corpus and gathering all indices. The gain here is
-in avoiding temporary storage of the indices that will not pass the occurrence
-threshold but can not be ruled out a priori by the informed counting algorithm.
-This conservation of memory comes at the cost of a extended execution time, so
-it is up to the user whether to use this depending on his/her needs.
+Training indexed patterns models is more memory intensive than training
+unindexed models, especially in very large corpora (e.g. over 100 million
+words). To lower the demand on memory for such corpora, we implement a
+\emph{two-step training} procedure. This involves first constructing an
+unindexed pattern model and subsequently constructing an indexed model on the
+basis of that, by making another pass over the corpus and gathering all
+indices. The gain here is in avoiding temporary storage of the indices that
+will not pass the occurrence threshold but that cannot be ruled out a priori by the
+informed counting algorithm.  This conservation of memory comes at the cost of
+a extended execution time.
 
 \section{Corpus Comparison}
 
 The computation of pattern models on two or more distinct corpora, provided the
 class encoding is the same for all of them, provides a basis for comparative
 corpus analysis. One measure for corpus comparison introduced in the software
-is the notion of ``coverage'', this metric is expressed as the number of tokens
-in the test corpus that is covered by the patterns from the training corpus.
-The metric can be represented either absolute, or in normalised form as a
-fraction of the total amount of tokens in the test corpus. 
+is the notion of ``coverage''. This metric is expressed as the number of tokens
+in the test corpus that is covered by the patterns from the training corpus. It
+is therefore not a commutative metric and explicitly depends on choosing a
+training and a test corpus. The metric can be represented either in absolute
+counts, or in normalised form as a fraction of the total amount of tokens in
+the test corpus. 
 
 To perform such comparisons, we first compute a pattern model on the training
 corpus, and subsequently compute a second pattern model on the test corpus, but
@@ -370,18 +365,20 @@ implementation follows the methodology of~\cite{Rayson00comparingcorpora}.
 
 \section{Relations between Patterns}
 
-Various relations can be extracted between patterns in a pattern model, for all
-but the first of the relation types an indexed pattern model is required.
+Various relations can be extracted between patterns in a pattern model, either
+through the API or a dedicated query tool. For all but the first of the
+relation types an indexed pattern model is required. 
 
 \begin{itemize}
  \item \textbf{Subsumption Relation} -- $n$-gram $x y z$ subsumes $n-1$-grams $x y$ and $y z$. 
- \item \textbf{Succession Relation} -- Patterns that are in a sequence in the corpus data. 
+ \item \textbf{Succession Relation} -- Patterns that occur in a sequence in the corpus data. 
  \item \textbf{Instantiation Relation} -- Skipgrams or flexgrams may be
      \emph{instantiated} by other patterns. For example, ``to be \_ not \_'' be
      is instantiated by ``or \_ to'', resulting in the 6-gram ``to be or not to be''. This type of relation thus allows you to precisely determine what patterns occur in certain gaps.
  \item \textbf{Co-occurrence Relation} -- Different patterns can naturally co-occur multiple times
      within the the structural ``units'' you decided upon for the corpus (e.g.\ 
-     sentences, paragraphs, tweets, etc). The measure of such co-occurrence 
+     sentences, paragraphs, tweets, etc). These units are newline delimited in
+     your original input. The measure of such co-occurrence 
      can be expressed by established metrics such as Jaccard and (normalised) mutual
      pointwise information.
 \end{itemize}
@@ -401,16 +398,19 @@ positions to unigrams; the patterns can be derived on-the-fly from that.
 
 \subsection{Flexgram Counting}
 
-Thus-far, we have explained the algorithms for n-gram counting and skipgram
-counting, but have not yet done so for flexgrams. The implementation allows
-flexgrams to be computed in two different ways. The first is by simply
+Thus far we have explained the algorithms for n-gram counting and skipgram
+counting, but have not yet done so for flexgrams, i.e. patterns with one or more
+\emph{variable-width} gaps. The implementation allows
+flexgrams to be computed in two different ways. The first is by 
 extracting skipgrams first, and then abstracting flexgrams from these
 skipgrams. In this case the flexgram computation is constrained by the same
-maximum-size limit the skipgrams are. The second method for flexgram extraction
+maximum-size limit. The second method for flexgram extraction
 proceeds through the co-occurence relation. A flexgram is formed whenever two
 patterns (within the same structural unit) occur above a set threshold. The
 implementation of this latter method is currently limited to flexgrams with a
-single variable-width gap. 
+single variable-width gap. This method is recommended when the user is
+interested in long-distance flexgrams, whereas the abstraction method is
+recommended when the user is more interested in having multiple gaps.
 
 \section{Software specification}
 
