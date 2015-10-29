@@ -318,16 +318,20 @@ a hash map\footnote{using the \texttt{unordered\_map} STL container in C++11},
 which guarantees $O(1)$ access and update times under ideal hashing conditions. The
 hash\footnote{Spooky Hash v2 is used for hashing:
 http://burtleburtle.net/bob/hash/spooky.html} is computed directly from the
-binary representation of a pattern.
+binary representation of a pattern. Storing each pattern individually results
+in a lot of redundant information to be stored, as patterns overlap to a large
+degree. To conserve memory, the models can store pattern pointers
+instead\footenote{Each pattern pointer takes up 16 bytes}. These
+point to the original corpus data.
 
 The use of hash maps can be contrasted to the use of suffix (or prefix) tries,
-a common datastructure for storing n-grams. Although suffix tries benefit from
-decreased memory use due to less overlap in pattern data. The strongly linked
+a common datastructure for storing n-grams. Although suffix tries also benefit from
+decreased memory use due to no overlap in pattern data, the strongly linked
 nature of tries causes a significant overhead in memory use\footnote{Each pointer
 consuming 8 bytes on 64-bit architectures, and one would be needed between
 every two tokens.} that well exceeds the memory footprint of hash maps. For
 this reason, hashmaps are the default and tries are currently not implemented
-in Colibi Core. The templating, however, easily allows for such an
+in Colibi Core. The templating, however, does allow for such an
 implementation to be added in the future.
 
 At this point, we need to address suffix arrays \cite{Manber90} as well, which
@@ -340,7 +344,7 @@ end, we did compare a predecessor of Colibri Core with a suffix array implementa
 construction.
 
 We distinguish two types of pattern model, depending on the type of the values,
-which in the underlying c++ implementation is subject to templating as well:
+which in the underlying C++ implementation is subject to templating as well:
 
 \begin{enumerate}
  \item \textbf{Unindexed Pattern Models} -- Values are simple integers
@@ -449,11 +453,11 @@ the relationshis between flexgrams and skipgrams..
 \subsection{Quality Control}
 \label{sec:qc}
 
-To ensure the software is working as intended, a series of unit tests is available.
-The tool \texttt{colibri-test} tests the various functions of the C++ library,
-and the \texttt{test.py} script tests the Python binding. Testing in the form
-of continuous integration is made possible through \emph{Travis CI}, where all
-our test results can always be accessed
+To ensure the software is working as intended, an extensive series of unit
+tests is available.  The tool \texttt{colibri-test} tests the various functions
+of the C++ library, and the \texttt{test.py} script tests the Python binding.
+Testing in the form of continuous integration is made possible through
+\emph{Travis CI}, where all our test results can always be accessed
 publicly.\footnote{\url{https://travis-ci.org/proycon/colibri-core}}
 
 A performance evaluation of our iterative counting algorithm has been performed
@@ -479,7 +483,7 @@ Documentation, including API references for both Python and C++, is provided at
 
 \section{Availability}
 
-\subsection{Operation System}
+\subsection{Operating System}
 
 Colibri Core should be able to run on modern POSIX-compliant operating systems, including
 Linux, FreeBSD and Mac OS X. It is tested to compile with current versions of
