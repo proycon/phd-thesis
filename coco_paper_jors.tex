@@ -311,28 +311,34 @@ of the main assets of Colibri Core. Parameters exist to affect the following:
 
 \subsubsection{Pattern Models}
 
-The pattern model is a $key \mapsto value$ store, where the keys correspond to
-patterns. The underlying C++ library allows for choosing the actual underlying
-container implementation through templating. The default container datatype is
-a hash map\footnote{using the \texttt{unordered\_map} STL container in C++11},
-which guarantees $O(1)$ access and update times under ideal hashing conditions. The
-hash\footnote{Spooky Hash v2 is used for hashing:
+A pattern model is a $key \mapsto value$ store, where the keys correspond to
+patterns and the values typically correspond to occurrence counts, although any
+kind of other value is supported too. Our aim with pattern models is to have a
+data structure that allows for \emph{quick} lookup and iteration, as well as
+quick insertion during training. Moreover, memory consumption should be as
+conservative as possible, to allow handling of big data.
+
+The underlying C++ library allows for choosing the actual underlying container
+implementation and value type through templating. The default container
+datatype is a hash map\footnote{using the \texttt{unordered\_map} STL container
+in C++11}, which guarantees $O(1)$ access and update times under ideal hashing
+conditions. The hash\footnote{Spooky Hash v2 is used for hashing:
 http://burtleburtle.net/bob/hash/spooky.html} is computed directly from the
 binary representation of a pattern. Storing each pattern individually results
 in a lot of redundant information to be stored, as patterns overlap to a large
 degree. To conserve memory, the models can store pattern pointers
-instead\footenote{Each pattern pointer takes up 16 bytes}. These
-point to the original corpus data.
+instead\footenote{Each pattern pointer takes up 16 bytes}. These point to the
+original corpus data.
 
 The use of hash maps can be contrasted to the use of suffix (or prefix) tries,
-a common datastructure for storing n-grams. Although suffix tries also benefit from
-decreased memory use due to no overlap in pattern data, the strongly linked
-nature of tries causes a significant overhead in memory use\footnote{Each pointer
-consuming 8 bytes on 64-bit architectures, and one would be needed between
-every two tokens.} that well exceeds the memory footprint of hash maps. For
-this reason, hashmaps are the default and tries are currently not implemented
-in Colibi Core. The templating, however, does allow for such an
-implementation to be added in the future.
+a common datastructure for storing n-grams. Although suffix tries also benefit
+from decreased memory use due to no overlap in pattern data, the strongly
+linked nature of tries causes a significant overhead in memory
+use\footnote{Each pointer consuming 8 bytes on 64-bit architectures, and one
+would be needed between every two tokens.} that well exceeds the memory
+footprint of hash maps.  For this reason, hash maps are the default and tries
+are currently not implemented in Colibi Core. The templating, however, does
+allow for such an implementation to be added in the future.
 
 At this point, we need to address suffix arrays \cite{Manber90} as well, which
 are derived from suffix tries but with significantly decreased space
