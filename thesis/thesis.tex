@@ -1,9 +1,10 @@
-\documentclass[12pt,twoside,english]{MastersDoctoralThesis}
+\documentclass[12pt,makeidx,english]{style/phdthesis}
 
 
 \usepackage[T1]{fontenc}
-\usepackage[backend=bibtex,style=authoryear,natbib=true}{biblatex}
-\addbibresource{thesis.bib}
+\usepackage{url}
+\usepackage{natbib}
+
 
 \thesistitle{Context as Linguistic Bridges}
 \supervisor{Antal van den Bosch}
@@ -45,11 +46,11 @@ Abstract
 \mainmatter
 \pagestyle{thesis}
 
-\input{introduction}
+\include{introduction}
 
 \appendix
 
-\printbibliography[heading=bibintoc]
+\bibliography{thesis}
 
 \end{document}
 
