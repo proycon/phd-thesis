@@ -129,8 +129,8 @@ We distinguish three categories of patterns, and define them as follows:
 
 Our definitions are defined narrowly and, with exception of $n$-grams do not
 necessarily match up precisely to the way the concepts are used in other studies. Some
-may use the term skipgram to include what we call flexgram.  The term
-``elastigram'' is sometimes also seen in the literature to refer to flexgrams. 
+may use the term skipgram to include what we call flexgram, or use another term
+such as ``elastigram'' to refer to flexgrams. 
 
 Skipgrams are used in the field to obtain a higher level of generalisation than
 can be offered by n-grams. They can, for instance, be found as features in
@@ -477,7 +477,8 @@ Python, as well as a simple implementation of informed iterative counting in
 Python. These baselines are unindexed and simply store occurrence count in a
 Python dictionary. Comparisons can also be made between Colibri Core's
 unindexed vs indexed models, and between the optimised pointer models vs
-standard pattern models.  For the experiments, we used a corpus of Dutch
+standard pattern models.  For the experiments, shown in
+Table~\ref{tab:benchmarks} we used a corpus of Dutch
 translations of TED talks of $127,806$ sentences and $2,330,075$
 words\footnote{The data is from the IWSLT 2012 Evaluation Campaign,
     \url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html\#MTtrack}.
@@ -505,31 +506,33 @@ Unindexed Pattern Model (ordered map) & $30.5$ s & $84$ MB ($96$ MB) \\
 \caption{Colibri Core performance benchmarks using the \texttt{colibri-benchmarks} tool and the 
 \texttt{benchmarks.py} script for the Python baselines. Memory usage is measured as the difference in resident memory after training
 and before training. Peak memory usage is measured absolutely as reported by
-the OS and included in parentheses. All experiments were run on a Linux system
-with an Intel Xeon CPU E5-2630L v3 \@ 1.80GHz and 256GB RAM.
+the OS and included in parentheses. All experiments were performed on a Linux system
+with an Intel Xeon CPU (E5-2630L v3) at 1.80GHz and 256GB RAM.
 }
 }
+\label{tab:benchmarks}
 \end{table}
 
-The Python implementaton of iterative counting already shows a drastic
-reduction in memory usage compared to the naive python
-implementation\footnote{The naive implementation also seems to not recover well
-from peak memory consumption after pruning of the patterns occurring only
-once}. The first two experiments with Colibri Core's unindexed pattern models
-shows that memory is succesfully reduced further due to the class encoding. It
-also demonstrates the clear advantage in execution time offered by Colibri
-Core.
+From the data in Table~\ref{tab:benchmarks} we observe that the Python
+implementation of iterative counting already shows a drastic reduction in
+memory usage compared to the naive python implementation\footnote{The naive
+    implementation also seems to not recover well from peak memory consumption
+after pruning of the patterns occurring only once}. The first two experiments
+with Colibri Core's unindexed pattern models shows that memory is succesfully
+reduced further due to the class encoding. It also demonstrates the clear
+advantage in execution time offered by Colibri Core.
 
-The Pattern Pointer Models prove capable of further reduction in memory
-consumption, as well as offer a speed advantage. The pointer models use a
+The pattern pointer models prove capable of further reduction in memory
+consumption, and offer a clear speed advantage. The pointer models use a
 representation of patterns that refer to the original corpus data, which is
 fully loaded into memory, rather than storing a separate copy for each pattern. 
 
 The C++ library allows for easy swapping of the underlying datastructure for
-pattern models. The default hashmap (\texttt{std::unordered\_map}) solution can be
-contrasted to a pattern model using using an ordered map (\texttt{std::map},
-the hash key is still computed as it determines the ordering). As expected, the ordered map
-proves to be significantly slower and does not yield a memory advantage either.
+pattern models. The default hashmap (\texttt{std::unordered\_map}) solution can
+be contrasted to a pattern model using using an ordered map
+(\texttt{std::map}\footnote{the hash key is still computed as it determines
+the ordering}). As expected, the ordered map proves to be significantly slower
+and does not yield a memory advantage either.
 
 \subsubsection{Documentation} 
 
