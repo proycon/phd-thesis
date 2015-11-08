@@ -129,8 +129,8 @@ We distinguish three categories of patterns, and define them as follows:
 
 Our definitions are defined narrowly and, with exception of $n$-grams do not
 necessarily match up precisely to the way the concepts are used in other studies. Some
-may use the term skipgram to include what we call flexgram.  The term
-``elastigram'' is sometimes also seen in the literature to refer to flexgrams. 
+may use the term skipgram to include what we call flexgram, or use another term
+such as ``elastigram'' to refer to flexgrams. 
 
 Skipgrams are used in the field to obtain a higher level of generalisation than
 can be offered by n-grams. They can, for instance, be found as features in
@@ -327,7 +327,7 @@ http://burtleburtle.net/bob/hash/spooky.html} is computed directly from the
 binary representation of a pattern. Storing each pattern individually results
 in a lot of redundant information to be stored, as patterns overlap to a large
 degree. To conserve memory, the models can store pattern pointers
-instead\footenote{Each pattern pointer takes up 16 bytes}. These point to the
+instead\footnote{Each pattern pointer takes up 16 bytes}. These point to the
 original corpus data.
 
 The use of hash maps can be contrasted to the use of suffix (or prefix) tries,
@@ -335,7 +335,7 @@ a common datastructure for storing n-grams. Although suffix tries also benefit
 from decreased memory use due to no overlap in pattern data, the strongly
 linked nature of tries causes a significant overhead in memory
 use\footnote{Each pointer consuming 8 bytes on 64-bit architectures, and one
-would be needed between every two tokens.} that well exceeds the memory
+would be needed between every two tokens.} that quickly exceeds the memory
 footprint of hash maps.  For this reason, hash maps are the default and tries
 are currently not implemented in Colibi Core. The templating, however, does
 allow for such an implementation to be added in the future.
@@ -459,6 +459,9 @@ the relationshis between flexgrams and skipgrams..
 \subsection{Quality Control}
 \label{sec:qc}
 
+
+\subsubsection{Unit tests}
+
 To ensure the software is working as intended, an extensive series of unit
 tests is available.  The tool \texttt{colibri-test} tests the various functions
 of the C++ library. The \texttt{test.py} script tests the Python binding.
@@ -466,26 +469,76 @@ Testing in the form of continuous integration is made possible through
 \emph{Travis CI}, where all test results are publicly available for inspection.
 \footnote{\url{https://travis-ci.org/proycon/colibri-core}}
 
+\subsubsection{Performance Evaluation}
+
 A performance evaluation of our iterative counting algorithm has been performed
-by comparing our optimised C++ implemation with a naive implementation in
+by comparing our optimised C++ implementation with a naive implementation in
 Python, as well as a simple implementation of informed iterative counting in
-Python. To this end, we use a corpus of Dutch translations of TED talks of
-$127,806$ sentences and $2,330,075$ words\footnote{The data is from the IWSLT
-2012 Evaluation Campaign, \url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html\#MTtrack}.
+Python. These baselines are unindexed and simply store occurrence count in a
+Python dictionary. Comparisons can also be made between Colibri Core's
+unindexed vs indexed models, and between the optimised pointer models vs
+standard pattern models.  For the experiments, shown in
+Table~\ref{tab:benchmarks} we used a corpus of Dutch
+translations of TED talks of $127,806$ sentences and $2,330,075$
+words\footnote{The data is from the IWSLT 2012 Evaluation Campaign,
+    \url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html\#MTtrack}.
 Tokenisation was performed using ucto, \url{http://ilk.uvt.nl/ucto}.}. We set
-the occurrence threshold to $2$ and extract everything from unigrams to
-$8$-grams. The naive implementation consumes $2737$ MB at its peak (before
-pruning) and runs in $23$ seconds\footnote{All these experiments were conducted using the
-    included \texttt{benchmarks.py} script on a system
-    with an Intel Core i7-4770K CPU \@ 3.50GHz, 16GB RAM, running Linux kernel
-4.1}. A Python implementation of informed iterative counting significantly
-lowers memory usage to $167$ MB, at the cost of increased CPU time; $65$
-seconds. The Colibri Core implementation runs in $9.5$ seconds and takes memory
-down to just $76$ MB, these gains can be attributed to the class encoding and
-the fact that Colibri Core is implemented in C++.
+the occurrence threshold ($t$) to $2$ and extract everything from unigrams to
+$8$-grams. 
+
+\begin{table}[h]
+\footnotesize{
+\begin{tabular}{lll}
+Experiment & CPU time & Memory  \\
+\hline
+Naive Python implementation & $37.2$ s & $2848$ MB \\
+Python with iterative counting  & $65.7$ s & $170$ MB \\
+\hline
+Unindexed Pattern Model (from file) & $14.6$ s & $64$ MB ($76$ MB) \\
+Unindexed Pattern Model (preloaded corpus) & $11.3$ s & $64$ MB ($76$ MB) \\
+Unindexed Pattern Model (preloaded corpus), with skipgrams & $60.4$ s & $118$ MB ($131$ MB) \\
+Unindexed Pattern Pointer Model (preloaded corpus)  & $9.4$ s & $50$ MB ($62$ MB) \\
+Indexed Pattern Model (preloaded corpus) & $13.6$ s & $148$ MB ($160$ MB) \\
+Indexed Pattern Model (preloaded corpus), with skipgrams & $24.2$ s & $165$ MB ($178$ MB) \\
+Indexed Pattern Pointer Model (preloaded corpus) & $11.0$ s & $134$ MB ($146$ MB) \\
+Unindexed Pattern Model (ordered map) & $30.5$ s & $84$ MB ($96$ MB) \\
+\end{tabular}
+\caption{Colibri Core performance benchmarks using the \texttt{colibri-benchmarks} tool and the 
+\texttt{benchmarks.py} script for the Python baselines. Memory usage is measured as the difference in resident memory after training
+and before training. Peak memory usage is measured absolutely as reported by
+the OS and included in parentheses. All experiments were performed on a Linux system
+with an Intel Xeon CPU (E5-2630L v3) at 1.80GHz and 256GB RAM.
+}
+}
+\label{tab:benchmarks}
+\end{table}
+
+From the data in Table~\ref{tab:benchmarks} we observe that the Python
+implementation of iterative counting already shows a drastic reduction in
+memory usage compared to the naive python implementation\footnote{The naive
+    implementation also seems to not recover well from peak memory consumption
+after pruning of the patterns occurring only once}. The first two experiments
+with Colibri Core's unindexed pattern models shows that memory is succesfully
+reduced further due to the class encoding. It also demonstrates the clear
+advantage in execution time offered by Colibri Core.
+
+The pattern pointer models prove capable of further reduction in memory
+consumption, and offer a clear speed advantage. The pointer models use a
+representation of patterns that refer to the original corpus data, which is
+fully loaded into memory, rather than storing a separate copy for each pattern. 
+
+The C++ library allows for easy swapping of the underlying datastructure for
+pattern models. The default hashmap (\texttt{std::unordered\_map}) solution can
+be contrasted to a pattern model using using an ordered map
+(\texttt{std::map}\footnote{the hash key is still computed as it determines
+the ordering}). As expected, the ordered map proves to be significantly slower
+and does not yield a memory advantage either.
+
+\subsubsection{Documentation} 
 
 Documentation, including API references for both Python and C++, is provided at
-\url{http://proycon.github.io/colibri-core}. 
+\url{https://proycon.github.io/colibri-core}. An interactive tutorial for Python is also
+available.
 
 \section{Availability}
 
@@ -499,7 +552,7 @@ both \texttt{gcc} as well as \texttt{clang}.
 
 Colibri Core is written in C++, adhering to the C++11 standard. The Python
 binding is written in Cython (0.23 or above) and supports both Python 2.7 as
-well as Python 3.
+well as Python 3. The latter is recommended.
 
 The Python binding ensures that the functionality of Colibri Core is easily
 accessible from Python without sacrificing the great performance benefit native
@@ -520,13 +573,13 @@ Core on high-end computing servers with 256GB RAM is not uncommon for extensive
 computation on big data sets.
 
 Colibri Core is single-threaded due to the non-distributable nature of most of the
-algorithms. A 64-bit architecture (or better) is required.
+algorithms. A 64-bit architecture is required, 32-bit is not supported.
 
 \subsection{Dependencies}
 
 Colibri Core relies on the standard C/C++ library and a full build environment including autoconf and
 automake; Python 2.7 or 3; Cython 0.23 or above. Support for reading the
-\emph{FoLiA} XML format for text is optional and requires the \texttt{libfolia}
+\emph{FoLiA} XML format for text is entirely optional and requires the \texttt{libfolia}
 library.\footnote{https://proycon.github.io/folia}
 
 \subsection{List of contributors}
@@ -561,7 +614,6 @@ University Nijmegen}).
 
 English
 
-
 \section{Reuse potential}
 
 Colibri Core explicitly aims to provide a foundation for researchers in the NLP
@@ -580,14 +632,13 @@ focussed on command-line usage and therefore still requires a certain technical
 expertise from the end-user.
 
 To increase the accessibility of Colibri Core, a RESTful webservice as well as
-generic web interface is provided through CLAM\cite{CLAMPAPER}. With this we
+generic web interface is already provided through CLAM\cite{CLAMPAPER}. With this we
 hope to meet the needs of less technical end-users, as well as automated
 networked clients. This webservice is hosted at
 \url{https://webservices-lst.science.ru.nl}.
 
 Future work building upon Colibri Core may focus on offering 
 high-level user-interfaces to reach a wider audience.
-
 
 \bibliographystyle{agsm}
 \bibliography{coco_paper}
