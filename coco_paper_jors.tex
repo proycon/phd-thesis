@@ -85,7 +85,7 @@ word frequency list, is the simplest instance of this task which is especially
 ubiquitous. Computing $n$-gram frequency on a corpus text is fairly trivial,
 and any beginning computer science student will have no trouble to accomplish
 this in just a few lines of code in a modern high-level programming language.
-However, Optimising this to reduce memory constraints, improve speed, and scale
+However, optimising this to reduce memory constraints, improve speed, and scale
 to large data, is a more complex matter. Colibri Core, the NLP software we
 introduce here, offers efficient algorithms to do this.
 
@@ -99,7 +99,7 @@ memory until the entire corpus has been processed sequentially.
 When working with large data sets and higher-order $n$-ngrams, this memory
 problem becomes apparent quickly when trivial solutions are employed. Colibri
 Core, on the other hand, offers tools and programming libraries that are
-heavily optimised to 1) reduce memory usage, and 2) have high performance.
+heavily optimised to 1) reduce memory usage, and 2) offer high-speed performance.
 
 The task of finding $n$-grams is generalised in Colibri Core to the task of
 finding \emph{patterns} or \emph{constructions} (we use the terms
@@ -122,9 +122,15 @@ We distinguish three categories of patterns, and define them as follows:
 
 \begin{enumerate}
     \item N-grams -- A sequence of $n$ word tokens that are all consecutive.
+        For example: ``\texttt{to be or not to be}''
     \item Skipgrams -- A fixed-length sequence of $p$ word tokens and $q$ token
-        placeholders/wildcards with total length $n$ ($n=p+q$), the placeholders constitute gaps or skips and a skipgram can contain multiple of these. In turn, a gap can span one or more tokens. 
-    \item Flexgrams -- A sequence with one or more gaps of variable length, which implies the pattern by itself is of undefined length.
+        placeholders/wildcards with total length $n$ ($n=p+q$), the
+        placeholders constitute gaps or skips and a skipgram can contain
+        multiple of these. In turn, a gap can span one or more tokens. For
+    example: ``\texttt{``to \_ or \_ \_ be}''
+    \item Flexgrams -- A sequence with one or more gaps of variable length,
+        which implies the pattern by itself is of undefined length. For example:
+        ``\texttt{to * or * be}''
 \end{enumerate}
 
 Our definitions are defined narrowly and, with exception of $n$-grams do not
@@ -139,7 +145,7 @@ decrease perplexity \cite{Guthrie06}.
 
 Dealing with word tokens implies that the corpus data has to be in a
 tokenised form. We start from the basis of plain-text corpus data, containing one
-``unit'' per line; a unit can correspond to a sentence, paragraph, tweets
+\emph{unit} per line; a unit can correspond to a sentence, paragraph, tweet
 or whatever unit is deemed appropriate for the task at hand. Corpus data can
 alternatively be provided in FoLiA XML format \cite{FOLIAPAPER} as well, although linguistic
 annotation will be ignored.
@@ -150,7 +156,7 @@ huge amount of strings is inefficient from a memory perspective, considering
 the fact that words follow a Zipfian distribution. Colibri Core therefore works
 on the basis of a lossless compression, in which each unique word token is
 assigned a numeric type identifier, which we call a \emph{class}. This
-effectively defines the ``vocabulary'' of your data, which we call a
+effectively defines the \emph{vocabulary} of your data, which we call a
 \emph{class encoding}. A pattern is not represented as an array of
 characters, but as an array of these classes instead. Further lossless
 compression is achieved by holding this array of classes in a dynamic-length
@@ -163,11 +169,13 @@ is essentially a variant of Huffman coding \citep{HUFFMAN}. Some of the lowest
 classes are reserved for special purposes, e.g. to delimit sentences (class 0) or as
 markers for out-of-vocabulary words (class 2) or skipped content (classes 3 and 4).
 
-Of each byte in the class representation, the first bit is reserved as a continuation
-marker. As long as the continuation marker is high, the next byte is still part of
+Of each byte in the class representation, the highest bit is reserved as a continuation
+marker. As long as the continuation marker is set, the next byte is still part of
 the class. When it is low, we know we are at the final byte of a class
 representation. The class itself is stored in the remaining 7-bits of each
-byte. In practise this results in good compression and reduces memory usage.
+byte. In practise this results in good compression and reduces memory usage; an
+example corpus taking up $221$ MB on disk in plaintext form is reduced to just $60$ MB
+when compressed.
 
 To encode a text corpus, a class encoding needs to be computed first. To decode
 the encoded corpus back to plain text, the class encoding is needed again.
@@ -285,10 +293,10 @@ of the main assets of Colibri Core. Parameters exist to affect the following:
         and/or skipgrams to be extracted. Setting minimum and maximum length to
         the same value will produce a model of homogenous pattern length
         (e.g.\ only trigrams or words).
-    \item A secondary word occurrence threshold can be configured. This is a value set higher than
+    \item A secondary \emph{word} occurrence threshold can be configured. This is a value set higher than
         the primary occurrence threshold. Only patterns
         occuring above the primary threshold, and for which each of the
-        individual words in the pattern passes the secondary threshold as well, will
+        individual words/unigrams in the pattern passes the secondary threshold as well, will
         be included in the model.
     \item N-grams that are not subsumed by higher order n-grams, i.e.\ which do
         not  occur as part of a higher order n-gram in the data/model, can be pruned
@@ -296,9 +304,9 @@ of the main assets of Colibri Core. Parameters exist to affect the following:
         and all bigrams and unigrams that make up the trigrams, but not the
         bigrams and unigrams that are not subsumed in trigrams. 
     \item Skipgrams can be constrained using the \emph{skip type threshold}. This
-        requires that at least this number of distinct patterns must fit in any 
-        skip in the skipgram. Higher values will produce less skipgrams, but
-        typically more generic ones. A skipgram such as \emph{The * house} will
+        requires that at least this number of distinct patterns must fit in the
+        gaps of the skipgram. Higher values will produce less skipgrams, but
+        typically more generic ones. A skipgram such as \emph{The \_ house} will
         then only be included in the model if the corpus has instances in which the gap is
         filled by at least the specified number of distinct patterns. 
         An example is if the threshold is set to 2, and the corpus contains \emph{The
@@ -319,16 +327,16 @@ quick insertion during training. Moreover, memory consumption should be as
 conservative as possible, to allow handling of big data.
 
 The underlying C++ library allows for choosing the actual underlying container
-implementation and value type through templating. The default container
+implementation and value type through \emph{templating}. The default container
 datatype is a hash map\footnote{using the \texttt{unordered\_map} STL container
 in C++11}, which guarantees $O(1)$ access and update times under ideal hashing
 conditions. The hash\footnote{Spooky Hash v2 is used for hashing:
 http://burtleburtle.net/bob/hash/spooky.html} is computed directly from the
 binary representation of a pattern. Storing each pattern individually results
 in a lot of redundant information to be stored, as patterns overlap to a large
-degree. To conserve memory, the models can store pattern pointers
-instead\footnote{Each pattern pointer takes up 16 bytes}. These point to the
-original corpus data.
+degree. To conserve memory, the models can store pattern pointers\footnote{Each
+pattern pointer takes up 16 bytes} instead. These point to the original corpus
+data.
 
 The use of hash maps can be contrasted to the use of suffix (or prefix) tries,
 a common datastructure for storing n-grams. Although suffix tries also benefit
@@ -380,28 +388,29 @@ a extended execution time.
 The computation of pattern models on two or more distinct corpora, provided the
 class encoding is the same for all of them, provides a basis for comparative
 corpus analysis. One measure for corpus comparison introduced in the software
-is the notion of ``coverage''. This metric is expressed as the number of tokens
-in the test corpus that is covered by the patterns from the training corpus, it
-is therefore asymmetric and the choice of training and test corpus matters.
-The metric can be represented either in absolute counts, or in normalised form
-as a fraction of the total amount of tokens in the test corpus. 
+is the notion of \emph{coverage}. This metric is expressed as the number of
+tokens in the test corpus that is covered by the patterns from the training
+corpus, it is therefore asymmetric and the choice of training and test corpus
+matters.  The metric can be represented either in absolute counts, or in
+normalised form as a fraction of the total amount of tokens in the test corpus.
 
 To perform such comparisons, we first compute a pattern model on the training
 corpus, and subsequently compute a second pattern model on the test corpus, but
 \emph{constrained} by the former pattern model. The ability to train
 constrained models is present throughout the software and can for instance also
-be used to train a pattern model based on a custom preset list of patterns. The
-previously described two-step training algorithm is also an example of
-constrained training.
+be used to train a pattern model based on a custom preset list of patterns,
+effectively limiting the model to this preselection. The previously described
+two-step training algorithm is also an example of constrained training.
 
 Summarised statistics are computed at multiple levels. Measures such as
 occurrence count and coverage can be consulted for aggregates of n-grams,
-skipgrams, or flexgrams. The former two can be inspected specifically for each
-of the different pattern sizes present in the model, i.e.\ for each value of $n$.
+skipgrams, or flexgrams, as well as specific patterns. The former two can be
+inspected specifically for each of the different pattern sizes present in the
+model, i.e.\ for each value of $n$.
 
 The coverage metric is a fairly crude metric of corpus overlap, despite the
 ability to assess it for different aggregates. A more widely established metric
-for corpus comparison is log-likelihood. Log likelihood expresses how much more
+for corpus comparison is \emph{log-likelihood}. Log likelihood expresses how much more
 likely any given pattern is for either of the two models. It therefore allows
 you to identify how indicative a pattern is for a particular corpus. Our
 implementation follows the methodology of~\cite{Rayson00comparingcorpora}.
@@ -414,7 +423,8 @@ relation types an indexed pattern model is required.
 
 \begin{itemize}
  \item \textbf{Subsumption Relation} -- $n$-gram $x y z$ subsumes $n-1$-grams $x y$ and $y z$. 
- \item \textbf{Succession Relation} -- Patterns that occur in a sequence in the corpus data. 
+ \item \textbf{Succession Relation} -- Patterns that occur in a sequence in the
+     corpus data. For example: pattern $x$ precedes $yz$ and pattern $z$ succeeds $xy$.
  \item \textbf{Instantiation Relation} -- Skipgrams or flexgrams may be
      \emph{instantiated} by other patterns. For example, ``to be \_ not \_'' be
      is instantiated by ``or \_ to'', resulting in the 6-gram ``to be or not to be''. This type of relation thus allows you to precisely determine what patterns occur in certain gaps.
@@ -434,10 +444,9 @@ abstractions. The co-occurrence relationship is fully symmetrical.
 These latter three relationships rely on both the \emph{forward index} inherent
 in an indexed pattern model, as well as the \emph{reverse index}, a function
 from positions in the corpus to an array of patterns that are found at said
-position. This can be automatically computed from the forward index. In the
-actual implementation, the reverse index is not modelled in memory as a mapping from
-positions to patterns, but as a much less memory-consuming mapping from
-positions to unigrams; the patterns can be derived on-the-fly from that.
+position. The reverse index is not modelled in memory as an explicit mapping from
+positions to patterns, but computed on-the-fly based on the loaded corpus data
+and a simple reverse index keeping track of where each unit/sentence starts.
 
 \subsubsection{Flexgram Counting}
 
@@ -454,7 +463,7 @@ implementation of this latter method is currently limited to flexgrams with a
 single variable-width gap. This method is recommended when the user is
 interested in long-distance flexgrams, whereas the abstraction method is
 recommended when the user is more interested in having multiple gaps or
-the relationshis between flexgrams and skipgrams..
+the relationship between flexgrams and skipgrams.
 
 \subsection{Quality Control}
 \label{sec:qc}
@@ -517,7 +526,7 @@ From the data in Table~\ref{tab:benchmarks} we observe that the Python
 implementation of iterative counting already shows a drastic reduction in
 memory usage compared to the naive python implementation\footnote{The naive
     implementation also seems to not recover well from peak memory consumption
-after pruning of the patterns occurring only once}. The first two experiments
+after pruning of all patterns occurring only once.}. The first two experiments
 with Colibri Core's unindexed pattern models shows that memory is succesfully
 reduced further due to the class encoding. It also demonstrates the clear
 advantage in execution time offered by Colibri Core.
@@ -531,12 +540,12 @@ The C++ library allows for easy swapping of the underlying datastructure for
 pattern models. The default hashmap (\texttt{std::unordered\_map}) solution can
 be contrasted to a pattern model using using an ordered map
 (\texttt{std::map}\footnote{the hash key is still computed as it determines
-the ordering}). As expected, the ordered map proves to be significantly slower
+the ordering}, the last experiment in the table). As expected, the ordered map proves to be significantly slower
 and does not yield a memory advantage either.
 
 \subsubsection{Documentation} 
 
-Documentation, including API references for both Python and C++, is provided at
+Extensive documentation, including API references for both Python and C++, is provided at
 \url{https://proycon.github.io/colibri-core}. An interactive tutorial for Python is also
 available.
 
@@ -597,7 +606,7 @@ University Nijmegen}).
 \textbf{Persistent Identifier}: \url{https://dx.doi.org/10.5281/zenodo.33464} \\
 \textbf{Publisher}: Maarten van Gompel \\
 \textbf{Licence}: GNU General Public Licence v3 \\
-\textbf{Date published}: September 18th, 2015 \\
+\textbf{Date published}: November 8th, 2015 \\
 \end{addmargin}
 
 \subsubsection{Code repository}
