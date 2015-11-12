@@ -220,37 +220,51 @@ TiMBL classifier used may take a wealth of possible parameters. As already
 mentioned, for the latter an automatic algorithm of parameter optimisation was
 used \cite{PARAMSEARCH}, but optimisation of the feature extraction parameters
 has not been automated. Rather, a selection of configurations has been manually
-chosen and tested during the development stage.
+chosen and tested during the development stage
 
-%In Table \ref{tab:task3trialnl} some of the results on the \emph{trial data} are listed, for the Dutch Word Sense Disambiguation task only. These are precision and recall scores in the first column, and mode precision and recall in the second. All scores are \emph{averaged} over the five target words in the trial data. Included is also a baseline that has been computed by selecting simply the most common translation/sense for each target word, regardless of the context it appears in. 
+%TODO: explain metrics
 
-%\begin{table}
-%\label{tab:task3trialnl}
-%\footnotesize{
-%\begin{tabular}{|p{3cm}|l|l|}
-%\hline
-%\textbf{Feature configuration} & \textbf{PR} & \textbf{Mode PR} \\
-%\hline
-%Voter 1) word2+lemma2 2) global & 14.45 & 19.21 \\
-%word2 lemma2 & 14.09 & 19.21 \\
-%word2 & 13.3 & 20.07 \\
-%word2 global & 13.09 & 22.96 \\
-%global & 12.78 & 17.19 \\
-%word3 & 12.68 & 18.52 \\
-%word1 & 12.61 & 14.08 \\
-%word2 pos2 lemma2 & 11.03 & 12.21 \\
-%baseline & 10.82 & 22.36 \\
-%\hline
-%\end{tabular}
-%\caption{Average scores for the English-\emph{Dutch} Word Sense Disambiguation task, averaged over five target words.}
-%}
-%\end{table}
+% NOT IN ORIGINAL PAPER (likely due to space constraints)
 
-%Note that at the time this experiment was conducted, a bug existed in the output format specification, resulting in slightly lower scores.
+In Table~\ref{tab:task3trialnl} some of the results on the \emph{trial data}
+are listed, for the Dutch Word Sense Disambiguation task only.  All scores are
+\emph{averaged} over the five target words in the trial data. Included is also
+a baseline that has been computed by selecting simply the most common
+translation/sense for each target word, regardless of the context it appears
+in. 
 
-The following two configurations of features were found to perform amongst the
-best on the trial data. Therefore they have been selected and submitted for the
-contest:
+\begin{table}
+\label{tab:task3trialnl}
+\footnotesize{
+\begin{tabular}{|p{3cm}|l|l|}
+\hline
+\textbf{Feature configuration} & \textbf{Accuracy} \\%& \textbf{Mode PR} \\
+\hline
+Voter: word2$+$lemma2 \& global & \textbf{14.45} \\%& 19.21 \\
+word2$+$lemma2 & 14.09 \\%& 19.21 \\
+word2 & 13.30 \\%& 20.07 \\
+word2$+$global & 13.09 \\%& 22.96 \\
+global & 12.78 \\%& 17.19 \\
+word3 & 12.68 \\%& 18.52 \\
+word1 & 12.61 \\%& 14.08 \\
+word2$+$pos2$+$lemma2 & 11.03 \\%& 12.21 \\
+baseline & 10.82 \\% & 22.36 \\
+\hline
+\end{tabular}
+\caption{Average scores for various configurations on the trial data of the English-\emph{Dutch} Word Sense Disambiguation
+    task, averaged over five target words. At the time this experiment was conducted, a bug existed in the output format specification, resulting in slightly lower scores.}
+}
+\end{table}
+
+In Table~\ref{tab:task3trailnl},``word'' refers to the surface forms of the
+words, ``lemma'' denotes lemma features, ``pos'' denotes Part-of-Speech
+information. The subsequent number refers to the local context size. The
+``global'' configuration refers to global context features.
+
+%/NOT IN ORIGINAL PAPER
+
+The following two configurations of features were assembled for submission to
+the final shared task:
 
 \begin{enumerate}
 \item \textbf{UvT-WSD1-v} (aka \emph{UvT-v}) -- An arbiter-voting system over
@@ -262,6 +276,12 @@ features, two lemma features \emph{and} two part-of-speech tag features.
 \item \textbf{UvT-WSD1-g} (aka \emph{UvT-g}) -- Word experts with global features
 only.
 \end{enumerate}
+
+The UvT-v configuration was selected for its best performance of the trial
+chance\footnote{An extra configuration with PoS information was included in the
+voter on the odd chance it can make a difference, despite the poor performance
+observed in Table~\ref{tab:task3trialnl}}. The UvT-g configuration was included
+to judge the efficacy of global context features when used standalone.
 
 Table~\ref{tab:uvtwsd1clls} shows a condensed view of the results for the Cross-Lingual Lexical
 Substitution task. Table~\ref{Tab:uvtwsd1clwsd} shows the final results for the Word-Sense
@@ -371,6 +391,13 @@ context of just one word to the left and one to the right of the word to be
 disambiguated. Larger context sizes have a negative impact on average accuracy.
 These tests include hyperparameter optimisation, but the same trend shows
 without.
+
+%added for thesis:
+It is interesting to put this in contrast with the results from UvT-WSD1 in
+Table~\ref{tab:task3trialnl}, where a context size of two leads to better
+results than context size one.  A change that can only be explained by the
+difference in trial data. %TODO: what is the difference in trial data?
+%/
 
 \begin{figure}[t]
 \includegraphics[width=8cm]{context.png}
@@ -545,14 +572,14 @@ and two features to the right of the focus word, cf.  \cite{Hendrickx+02}.
 The global keyword features perform well for UvT-WSD1, but best results are
 achieved if they are not mixed with the local context features in one
 classifier. For WSD2 in the 2013 task, however, the global context features
-make much less of an impact.
+make much less of an impact in the feature exploration stage.
 
-An arbiter voting approach over multiple classifiers helps to smooth out errors
+For UvT-WSD1, an arbiter voting approach over multiple classifiers helps to smooth out errors
 and yields the highest scores (see Tables \ref{tab:uvtwsd1clls} and
 \ref{tab:uvtwsd1clwsd}). When compared to the other
-participants, the UvT-WSD1 system, in the voting configuration, ranks first in
+participants, the UvT-WSD1 system in the voting configuration ranks first in
 the Word Sense Disambiguation task, for the two language pairs in which we
-participated. 
+participated.  
 
 %WSD2
 
