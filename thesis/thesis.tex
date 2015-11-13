@@ -1,4 +1,4 @@
-\documentclass[12pt,makeidx,english]{style/phdthesis}
+\documentclass[11pt,makeidx,english]{style/phdthesis}
 
 
 \usepackage[T1]{fontenc}
@@ -29,12 +29,12 @@
 \theoremstyle{break}
 \newtheorem{exmp}{Example}[section]
 
-\thesistitle{Context as Linguistic Bridges}
-\supervisor{Antal van den Bosch}
-\degree{Doctor of Philosophy}
+%\thesistitle{Context as Linguistic Bridges}
+%\supervisor{Antal van den Bosch}
+%\degree{Doctor of Philosophy}
 \author{Maarten van Gompel}
 
-\university{Radboud University Nijmegen}
+%\university{Radboud University Nijmegen}
 
 \begin{document}
 
@@ -51,23 +51,17 @@
 \end{titlepage}
 
 
-\begin{abstract}
-Abstract
-\end{abstract}
-
-\begin{acknowledgements}
-\end{acknowledgements}
-
-
 \tableofcontents
 
 \listoffigures
 
 \listoftables 
 
+%\include{frontmatter}
 
 \mainmatter
-\pagestyle{thesis}
+\pagestyle{headings}
+
 
 \include{introduction}
 \include{colibricore}
@@ -78,8 +72,7 @@ Abstract
 \include{sourcecontextinsmt}
 \include{conclusion}
 
-\appendix
-
+\bibliographystyle{abbrv}
 \bibliography{thesis}
 
 \end{document}
