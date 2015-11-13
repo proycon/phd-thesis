@@ -115,8 +115,10 @@ offer:
 \end{itemize}
 
 
-The task can be related to two tasks that were offered in previous
-years of SemEval: Lexical Substitution \cite{CLLS} and most notably Cross-lingual Word Sense Disambiguation \cite{Lefever2013}. 
+The task can be related to the two tasks that were offered in previous years of
+SemEval and already introduced in Chapter~\ref{clwsd}: Lexical Substitution
+\citep{CLLS} and most notably Cross-lingual Word Sense Disambiguation
+\citep{Lefever2013}. 
 
 When comparing our task to the Cross-Lingual Word-Sense Disambiguation task,
 one notable difference is the fact that our task concerns not just words, but
@@ -159,8 +161,8 @@ evaluation was conducted on this data.
 The trial data was constructed in an automated fashion in the way described in
 Chapter~\ref{chap:colibritapilot}. In summary, first a phrase-translation table is
 constructed from a parallel corpus. We used the Europarl parallel corpus
-\cite{EUROPARL} and the Moses tools \cite{MOSES}, which in turn makes use of
-GIZA$++$ \cite{GIZA}. Only strong phrase pairs (exceeding a set threshold) were
+\citep{EUROPARL} and the Moses tools \citep{MOSES}, which in turn makes use of
+GIZA$++$ \citep{GIZA}. Only strong phrase pairs (exceeding a set threshold) were
 retained and weaker ones were pruned. This phrase-translation table was then
 used to create input sentences in which the L2 fragments are swapped for their
 L1 counterparts, effectively mimicking a fall-back to L1 in an L2 context. The
@@ -183,7 +185,7 @@ bilingual on-line stories aimed at language learners, gap-exercises and cloze
 tests, and contemporary written resources such as newspapers, novels, and
 Wikipedia. We aimed for actual learner corpora, but finding suitable learner
 corpora with sufficient data proved hard. For German we could use the the
-Merlin corpus \cite{Merlin}. In example (a) we see a real example of a fragment
+Merlin corpus \citep{Merlin}. In example (a) we see a real example of a fragment
 in a fallback language in an L2 context from the Merlin corpus.
 
 \begin{examples}
@@ -306,26 +308,26 @@ obvious avenue of tackling the problem is through standard Statistical Machine
 Translation (SMT). The CNRC team takes a pure SMT approach with few
 modifications. They employ their own Portage decoder and directly send an L1
 fragment in an L2 context, corresponding to a partial translation hypothesis
-with only one fragment left to decode, to their decoder \cite{CNRC}. The UEdin
+with only one fragment left to decode, to their decoder \citep{CNRC}. The UEdin
 team applies a similar method using the Moses decoder, marking the L2 context
 so that the decoder leaves this context as is. In addition they add a context
 similarity feature for every phrase pair in the phrase translation table, which
 expresses topical similarity with the test context. In order to properly
-decode, the phrase table is filtered per test sentence \cite{UEDIN}. The IUCL
+decode, the phrase table is filtered per test sentence \citep{UEDIN}. The IUCL
 and UNAL teams do make use of the information from word alignments or phrase
 translation tables, but do not use a standard SMT decoder. The IUCL system
 combines various information sources in a log-linear model: phrase table, L2
 Language Model, Multilingual Dictionary, and a dependency-based collocation
 model, although this latter source was not finished in time for the system
-submission \cite{IUCL}. The UNAL system extracts syntactic features as a means
+submission \citep{IUCL}. The UNAL system extracts syntactic features as a means
 to relate L1 fragments with L2 context to their L2 fragment translations, and
-uses memory-based classifiers to achieve this \cite{UNAL}. The two systems on
+uses memory-based classifiers to achieve this \citep{UNAL}. The two systems on
 the lower end of the result spectrum use different techniques altogether. The
 Sensible team approaches the problem by attempting to emulate the manual
 post-editing process human translators employ to correct MT output
-\cite{SENSIBLE},
+\citep{SENSIBLE},
 %maar hoe doen ze het dan?
-whereas TeamZ relies on Wiktionary as the sole source \cite{TEAMZ}.
+whereas TeamZ relies on Wiktionary as the sole source \citep{TEAMZ}.
 
 
 \section{Results}
@@ -520,7 +522,7 @@ part-of-speech categories and phrasal length. The difficulty of the task
 differs between language pairs, though not intentionally so. We observe that
 the Dutch-English set is the hardest and the Spanish-English is the easiest in
 the task. One of the participants implicitly observes this through measurement
-of the number of Out-of-Vocabulary words \cite{CNRC}. This implies that when
+of the number of Out-of-Vocabulary words \citep{CNRC}. This implies that when
 comparing system performance between different language pairs, one can not
 simply ascribe a lower result to a system having more difficulty with said
 language pair. This could rather be an intrinsic property of the test set or

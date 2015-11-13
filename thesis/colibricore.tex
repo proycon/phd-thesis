@@ -102,14 +102,14 @@ such as ``elastigram'' to refer to flexgrams.
 
 Skipgrams are used in the field to obtain a higher level of generalisation than
 can be offered by n-grams. They can, for instance, be found as features in
-classification tasks \cite{DHONDT}, or as a means in language modelling to
-decrease perplexity \cite{Guthrie06}.
+classification tasks \citep{DHONDT}, or as a means in language modelling to
+decrease perplexity \citep{Guthrie06}.
 
 Dealing with word tokens implies that the corpus data has to be in a
 tokenised form. We start from the basis of plain-text corpus data, containing one
 \emph{unit} per line; a unit can correspond to a sentence, paragraph, tweet
 or whatever unit is deemed appropriate for the task at hand. Corpus data can
-alternatively be provided in FoLiA XML format \cite{FOLIAPAPER} as well, although linguistic
+alternatively be provided in FoLiA XML format \citep{FOLIAPAPER} as well, although linguistic
 annotation will be ignored.
 
 Text data is typically stored as a string of characters. The characters
@@ -310,13 +310,13 @@ footprint of hash maps.  For this reason, hash maps are the default and tries
 are currently not implemented in Colibi Core. The templating, however, does
 allow for such an implementation to be added in the future.
 
-At this point, we need to address suffix arrays \cite{Manber90} as well, which
+At this point, we need to address suffix arrays \citep{Manber90} as well, which
 are derived from suffix tries but with significantly decreased space
 requirements. Suffix arrays with longest common prefix (LCP) arrays will
 consume less memory than our hash maps, but are typically much slower to
 construct and query. Though no exhaustive experiment was conducted to this
 end, we did compare a predecessor of Colibri Core with a suffix array implementation
-\cite{Stehouwer10} and found our implementation to be significantly faster in model
+\citep{Stehouwer10} and found our implementation to be significantly faster in model
 construction.
 
 We distinguish two types of pattern model, depending on the type of the values,
@@ -375,7 +375,7 @@ ability to assess it for different aggregates. A more widely established metric
 for corpus comparison is \emph{log-likelihood}. Log likelihood expresses how much more
 likely any given pattern is for either of the two models. It therefore allows
 you to identify how indicative a pattern is for a particular corpus. Our
-implementation follows the methodology of~\cite{Rayson00comparingcorpora}.
+implementation follows the methodology of~\citep{Rayson00comparingcorpora}.
 
 \subsection{Relations between Patterns}
 
@@ -594,7 +594,7 @@ focussed on command-line usage and therefore still requires a certain technical
 expertise from the end-user.
 
 To increase the accessibility of Colibri Core, a RESTful webservice as well as
-generic web interface is already provided through CLAM\cite{CLAMPAPER}. With this we
+generic web interface is already provided through CLAM\citep{CLAMPAPER}. With this we
 hope to meet the needs of less technical end-users, as well as automated
 networked clients. This webservice is hosted at
 \url{https://webservices-lst.science.ru.nl}.

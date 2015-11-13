@@ -1,5 +1,6 @@
 \documentclass[11pt,makeidx,english]{style/phdthesis}
-
+\usepackage[english]{babel}
+\usepackage{classicthesis}
 
 \usepackage[T1]{fontenc}
 \usepackage{url}
@@ -15,12 +16,13 @@
 \usepackage{listings}
 \usepackage[utf8]{inputenc}
 \usepackage{covington}
+\usepackage{titlesec}
 \usepackage[font={it}]{caption}
 \usepackage{algorithm} 
 \usepackage{algpseudocode} 
 \let\proof\relax
 \let\endproof\relax
-\usepackage{amsthm}
+%\usepackage{amsthm}
 \newtheoremstyle{break}
   {\topsep}{\topsep}%
   {\itshape}{}%
@@ -28,6 +30,24 @@
   {\newline}{}%
 \theoremstyle{break}
 \newtheorem{exmp}{Example}[section]
+
+% customize section
+\titleformat{\section}%
+{\Large\bfseries}% format
+{\llap{% label
+    \thesection\hskip 9pt}}%
+{0pt}% horizontal sep
+{}% before
+
+% customize subsection
+\titleformat{\subsection}%
+{\bfseries}% format
+{\llap{% label
+    \thesubsection\hskip 9pt}}%
+{0pt}% horizontal sep
+{}% before
+
+
 
 %\thesistitle{Context as Linguistic Bridges}
 %\supervisor{Antal van den Bosch}
@@ -72,7 +92,7 @@
 \include{sourcecontextinsmt}
 \include{conclusion}
 
-\bibliographystyle{abbrv}
+\bibliographystyle{apalike}
 \bibliography{thesis}
 
 \end{document}
