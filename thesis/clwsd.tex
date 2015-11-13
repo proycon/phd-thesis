@@ -1,20 +1,6 @@
-
-%% Based on the style files for ACL-IJCNLP-2009, which were, in turn,
-%% based on the style files for EACL-2009 and IJCNLP-2008...
-
-%% Based on the style files for EACL 2006 by 
-%%e.agirre@ehu.es or Sergi.Balari@uab.es
-%% and that of ACL 08 by Joakim Nivre and Noah Smith
-
-%\setlength\titlebox{6.5cm}    % You can expand the title box if you
-% really have to
-
 \chapter{Cross-Lingual Word Sense Disambiguation}
 
 
-\begin{document}
-
-\begin{abstract}
 
 In this chapter we apply k-nearest neighbour classifiers to two similar and
 localised translation tasks organized for SemEval 2010: Cross-Lingual Word
@@ -32,7 +18,6 @@ hyperparameter optimisation did not lead to the best results, indicating
 overfitting by our optimisation method in this aspect. Feature selection does
 have a modest positive impact.
 
-\end{abstract}
 
 \textsc{This chapter is based on: } \emph{UvT-WSD1: A Cross-Lingual Word Sense
 Disambiguation System} and \emph{WSD2: Parameter optimisation for Memory-based Cross-Lingual Word-Sense Disambiguation}
@@ -407,11 +392,12 @@ difference in trial data. %TODO: what is the difference in trial data?
 
 We submitted three configurations of our system to the shared task, the maximum
 number of runs. Adding lemma features to the local context window of three
-words proves beneficial in general, as shown in Table~\ref{tabtrialresults}.
-This is therefore the first configuration we submitted (\texttt{c1l}). As
-second configuration (\texttt{c1lN}) we submitted the same configuration
-without parameter optimisation on the classifiers. Note that neither of these
-include global context features.
+words, i.e. left word, focus word and right word, proves beneficial in general.
+This is shown in Table~\ref{tabtrialresults}.  This is therefore the first
+configuration we submitted (\texttt{c1l}). As second configuration
+(\texttt{c1lN}) we submitted the same configuration without parameter
+optimisation on the classifiers. Note that neither of these include global
+context features.
 
 \begin{table}[t]
 \footnotesize
@@ -550,13 +536,13 @@ option, a bad idea for CLWSD.
 %notably harder than others, and perform worse in any configuration. 
 
 In our UvT-WSD1 system, we used the same configuration of feature extraction,
-or a voter over a set of configurations, for all word experts. The actual
+or a voter over a predetermined set of configurations, for all word experts. The actual
 classifier parameters however, do differ per word expert, as they are the
 result of the automatic parameter optimisation algorithm. Our WSD2 system
-takesn parameter optimisation one step further by selecting system parameters
+takes parameter optimisation one step further by selecting system parameters
 per word expert from the best configurations on the trial data. Optimising the
-hyperparameter of the classifiers on the training data proves to have a
-slightly negative effect, especially when combined with the selection of
+hyperparameters of the classifiers on the training data proves to have a
+slightly negative effect though, especially when combined with the selection of
 features. This is likely due to the fact that feature selection was performed
 after hyperparameter optimisation, causing certain optimisations to be rendered
 ineffective.
@@ -565,37 +551,37 @@ Keeping in mind the fact that different word experts may perform differently,
 some \emph{general} conclusions can be drawn from the experiments on the trial
 data. It appears to be beneficial to include lemma features, rather than just
 word features. Both the 2010 and 2013 tasks corroborate this. However, adding
-Part-of-speech features tends to have a negative impact. For these local
+Part-of-Speech features tends to have a negative impact. For these local
 context features, the optimum context size is often two features to the left
 and two features to the right of the focus word, cf.  \cite{Hendrickx+02}.
 
 The global keyword features perform well for UvT-WSD1, but best results are
 achieved if they are not mixed with the local context features in one
 classifier. For WSD2 in the 2013 task, however, the global context features
-make much less of an impact in the feature exploration stage.
+make less an impact then even just the linguistically-uninformed local context
+feature, as became clear from the the feature exploration stage in
+Table~\ref{tab:tabtrialresults}. As the keyword selection algorithm is the same
+as in UvT-WSD1, this is surprising and must then be attributed to the dataset.
+Taking into account the earlier discrepancy between the results of UvT-WSD1 and
+WSD2, we may conclude that optimal configurations differ accross datasets.
 
 For UvT-WSD1, an arbiter voting approach over multiple classifiers helps to smooth out errors
 and yields the highest scores (see Tables \ref{tab:uvtwsd1clls} and
 \ref{tab:uvtwsd1clwsd}). When compared to the other
 participants, the UvT-WSD1 system in the voting configuration ranks first in
 the Word Sense Disambiguation task, for the two language pairs in which we
-participated.  
+participated. WSD2 does not use a voting approach, as it already explicitly
+attempts to assess the efficacy of various hyperparameter optimisations and
+feature selections. 
 
-%WSD2
-
-We can furthermore uphold the conclusion from previous research that including
-lemma features is generally a good idea. As to the number of local context
-features, we observed that a context size of one feature to the left, and one
-to the right, has the best overall average accuracy. Eventually, due to our
-feature selection without hyperparameter optimisation on the classifier not
-being available yet at the time of submission, our simplest system
-\texttt{c1lN} emerged as best in the contest.
-
-When asked to predict the best translation(s), our system comes out on top for
-four out of five languages; only for Spanish we are surpassed by two
-competitors. Our out-of-five predictions win for two out of five languages, and
-are fairly close the the best competitor for the others, except again for
-Spanish.   
+When asked to predict the best translation(s), our WSD2 system comes out on top
+for four out of five languages in the SemEval 2013 task; only for Spanish we
+are surpassed by two competitors. Our out-of-five predictions win for two out
+of five languages, and are fairly close the the best competitor for the others,
+except again for Spanish. It is interesting to observe that, due to our feature
+selection without hyperparameter optimisation on the classifier not being
+available yet at the time of submission, our simplest system \texttt{c1lN}
+emerged as best in the contest.
 
 We assumed independence between hyperparameter optimisation and feature
 selection, where the former was conducted using cross-validation on the
@@ -613,9 +599,3 @@ at the time of submission}. The experimental data and output of our
 participation in the 2013 SemEval task are included in
 this git repository as well.  
 
-\bibliographystyle{acl}
-\footnotesize{
-\bibliography{semeval2010_wsd1}
-}
-
-\end{document}
