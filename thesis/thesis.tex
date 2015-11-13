@@ -14,7 +14,16 @@
 \usepackage[utf8]{inputenc}
 \usepackage{covington}
 \usepackage[font={it}]{caption}
-
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amsthm}
+\newtheoremstyle{break}
+  {\topsep}{\topsep}%
+  {\itshape}{}%
+  {\bfseries}{}%
+  {\newline}{}%
+\theoremstyle{break}
+\newtheorem{exmp}{Example}[section]
 
 \thesistitle{Context as Linguistic Bridges}
 \supervisor{Antal van den Bosch}
@@ -61,7 +70,7 @@ Abstract
 \include{clwsd}
 \include{colibritapilot}
 \include{semeval2014task5}
-\include{colibrita}
+\include{colibritafinal}
 \include{sourcecontextinsmt}
 \include{conclusion}
 
