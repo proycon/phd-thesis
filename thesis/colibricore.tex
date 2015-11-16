@@ -458,7 +458,9 @@ the occurrence threshold ($t$) to $2$ and extract everything from unigrams to
 $8$-grams. 
 
 \begin{table}[h]
+
 \footnotesize{
+\noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lll}
 Experiment & CPU time & Memory  \\
 \hline
@@ -473,7 +475,7 @@ Indexed Pattern Model (preloaded corpus) & $13.6$ s & $148$ MB ($160$ MB) \\
 Indexed Pattern Model (preloaded corpus), with skipgrams & $24.2$ s & $165$ MB ($178$ MB) \\
 Indexed Pattern Pointer Model (preloaded corpus) & $11.0$ s & $134$ MB ($146$ MB) \\
 Unindexed Pattern Model (ordered map) & $30.5$ s & $84$ MB ($96$ MB) \\
-\end{tabular}
+\end{tabular}}
 \caption{Colibri Core performance benchmarks using the \texttt{colibri-benchmarks} tool and the 
 \texttt{benchmarks.py} script for the Python baselines. Memory usage is measured as the difference in resident memory after training
 and before training. Peak memory usage is measured absolutely as reported by
