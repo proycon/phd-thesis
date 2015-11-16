@@ -186,10 +186,10 @@ OpenSubtitles 2012\footnote{http://www.opensubtitles.org}
 corpora. 
 
 \begin{table}[htb]
-\begin{center}
 \caption{Corpora sizes for all of the language pairs}
 \label{tab:datasize}
-\begin{tabular}{|l|l|r|}
+\noindent\makebox[\textwidth][c]{%
+\begin{tabular}{llr}
 \hline
 L1 & L2 & Sentences \\
 \hline
@@ -198,8 +198,7 @@ English & German & 7,542,070 \\
 French & English & 24,862,173 \\
 Dutch & English & 26,347,136 \\
 \hline
-\end{tabular}
-\end{center}
+\end{tabular}}
 \end{table}
 
 For all our systems, a phrase-translation table was built using the Moses
@@ -373,10 +372,10 @@ metric, using the paired t-test, an asterisk indicates significance with respect
 MLF baseline, and a $\ddagger$ indicates significance with respect to the LM baseline, both at $p < 0.05$.
 
 \begin{table}[htb]
-\begin{center}
 \caption{Results of classifier-based experiments for English -- Spanish (left) and English -- German (right)}
 \label{tab:resultsclassifier12}
-\begin{tabular}{|l|rr|}
+\noindent\makebox[\textwidth][c]{%
+\begin{tabular}{lrr}
 %generated at 2014-10-15 16:19 in /home/proycon/exp/expcolibrita/semeval3/en-es
 %recall: 0.9538
 \hline
@@ -395,7 +394,7 @@ l3r3 & 0.627 & 0.715$*$ \\%&  0.8992 \\
 l3r3-lm & 0.649 & 0.729$*$ \\%& 0.9104 \\
 \hline
 \end{tabular}
-\begin{tabular}{|l|rr|}
+\begin{tabular}{lrr}
 %generated at 2014-10-15 16:20 in /home/proycon/exp/expcolibrita/semeval3/en-de
 %recall: 0.9459 
 \hline
@@ -413,17 +412,16 @@ l2r2-lm & 0.611 & 0.664 \\%&  0.8924 \\
 l3r3 & 0.620 & 0.672$*$\\% &  0.8871 \\
 l3r3-lm & 0.615 & 0.667$*$ \\%&  0.8913 \\
 \hline
-\end{tabular}
-\end{center}
+\end{tabular}}
 \end{table}
 
 
 
 \begin{table}[htb]
-\begin{center}
 \caption{Results of classifier-based experiments for French -- English (left) and Dutch -- English (right)}
 \label{tab:resultsclassifier34}
-\begin{tabular}{|l|rr|}
+\noindent\makebox[\textwidth][c]{%
+\begin{tabular}{lrr}
 %generated at 2014-10-15 16:22 in /home/proycon/exp/expcolibrita/semeval3/fr-en
 %recall: 0.8222 
 \hline
@@ -443,7 +441,7 @@ l3r3 & 0.499 & 0.600 \\%&  0.9155 \\
 l3r3-lm & 0.503 & 0.598 \\%&  0.917 \\
 \hline
 \end{tabular}
-\begin{tabular}{|l|rr|}
+\begin{tabular}{lrr}
 %generated at 2014-10-15 16:22 in /home/proycon/exp/expcolibrita/semeval3/nl-en
 %recall: 0.6511 
 \hline
@@ -461,8 +459,7 @@ l2r2-lm & 0.384 & 0.458 \\%&  0.9192 \\
 l3r3 & 0.419 & 0.485$\ddagger$ \\%&  0.9211 \\
 l3r3-lm & 0.378 & 0.454$*$ \\%&  0.9184 \\
 \hline
-\end{tabular}
-\end{center}
+\end{tabular}}
 \end{table}
 
 The main conclusion from the pilot study was that classifiers informed by
@@ -684,10 +681,10 @@ MLF baseline, and a $\ddagger$ indicates significance with respect to the MT bas
 
 
 \begin{table}[htb]
-\begin{center}
 \caption{Results of MT-based experiments for English-Spanish (left) \& English-German (right)}
 \label{tab:resultsmt12}
-\begin{tabular}{|l|rr|}
+\noindent\makebox[\textwidth][c]{%
+\begin{tabular}{lrr}
 %generated at 2014-10-15 16:19 in /home/proycon/exp/expcolibrita/semeval3/en-es
 \hline
 System & Accuracy & W.Acc. \\%& BLEU\\
@@ -719,7 +716,7 @@ l3r3-moses & 0.657 & 0.756$*$ \\%& 0.8979 \\
 %l3r3-mosesweighted & 0.6586 & 0.7587 & 0.898 \\
 \hline
 \end{tabular}
-\begin{tabular}{|l|rr|}
+\begin{tabular}{lrr}
 %generated at 2014-10-15 16:20 in /home/proycon/exp/expcolibrita/semeval3/en-de
 \hline
 System & Accuracy & W.Acc. \\%& BLEU\\
@@ -742,16 +739,15 @@ l2r1-mosesweighted & 0.599 & 0.675$*\ddagger$ \\%& 0.8795 \\
 l2r2-moses & 0.617 & 0.684$*\ddagger$ \\%& 0.8864 \\
 l3r3-moses & 0.633 & 0.693$*\ddagger$ \\%& 0.8901 \\
 \hline
-\end{tabular}
-\end{center}
+\end{tabular}}
 \end{table}
 
 
 \begin{table}[htb]
-\begin{center}
 \caption{Results of MT-based experiments for French-English (left) and Dutch-English (right)}
 \label{tab:resultsmt34}
-\begin{tabular}{|l|rr|}
+\noindent\makebox[\textwidth][c]{%
+\begin{tabular}{lrr}
 %generated at 2014-10-15 16:22 in /home/proycon/exp/expcolibrita/semeval3/fr-en
 \hline
 System & Accuracy & W.Acc. \\%& BLEU\\
@@ -783,7 +779,7 @@ l3r3-moses & 0.570 & 0.707$*\ddagger$ \\%& 0.9347 \\
 %l3r3-mosesweighted & 0.5616 & 0.6986 & 0.9332 \\
 \hline
 \end{tabular}
-\begin{tabular}{|l|rr|}
+\begin{tabular}{lrr}
 %generated at 2014-10-15 16:22 in /home/proycon/exp/expcolibrita/semeval3/nl-en
 \hline
 System & Accuracy & W.Acc \\%& BLEU\\
@@ -814,8 +810,7 @@ l3r3-moses & 0.497 & 0.654$*\ddagger$ \\%& 0.928 \\
 %l3r3-mosescut0.9 & 0.5283 & 0.6733 & 0.9314 \\
 %l3r3-mosesweighted & 0.4932 & 0.6481 & 0.927 \\
 \hline
-\end{tabular}
-\end{center}
+\end{tabular}}
 \end{table}
 
 First, we observe that the MT baseline is considerably higher compared to the
@@ -879,10 +874,10 @@ run\footnote{For French-English, the best run is the baseline system},
 compared to the other six participants in the SemEval task.
 
 \begin{table}[htb]
-\begin{center}
 \caption{Highest word accuracy per team, per language pair. The best score for each language-pair is marked in bold.}
 \label{tab:comparison}
-\begin{tabular}{|l|llll|}
+\noindent\makebox[\textwidth][c]{%
+\begin{tabular}{lllll}
 \hline
 Team & \textbf{en-es} & \textbf{en-de} & \textbf{fr-en} & \textbf{nl-en} \\ 
 \hline
@@ -896,8 +891,7 @@ Team & \textbf{en-es} & \textbf{en-de} & \textbf{fr-en} & \textbf{nl-en} \\
 \textbf{Sensible} \citep{SENSIBLE} & 0.351 & 0.233 & - & - \\
 \textbf{TeamZ} \citep{TEAMZ} & 0.333 &  0.293 & - & -  \\
 \hline
-\end{tabular}
-\end{center}
+\end{tabular}}
 \end{table}
 
 We have not been able to surpass the score of the winning system by

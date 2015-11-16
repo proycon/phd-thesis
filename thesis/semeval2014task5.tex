@@ -368,8 +368,9 @@ the system papers of the participants.
 
 
 \begin{table}[bt]
-{\small
-\begin{tabular}{|l|lll|}
+{\footnotesize
+\noindent\makebox[\textwidth][c]{%
+\begin{tabular}{llll}
 \hline
 System                & Acc & W.Acc. & Recall    \\ \hline
 \multicolumn{4}{|c|}{\textbf{English-Spanish (best)}} \\
@@ -425,7 +426,7 @@ Sensible-wtmxlingyu & 0.18     & 0.306         & 0.878\\
 Sensible-wtm        & 0.182    & 0.256         & 0.647\\
 Sensible-wtmxling   & 0.174    & 0.25          & 0.647\\
 \hline
-\end{tabular}
+\end{tabular}}
 \caption{Full results for English-Spanish and English-German.}
 \label{tab:fullresults1}
 }
@@ -435,7 +436,8 @@ Sensible-wtmxling   & 0.174    & 0.25          & 0.647\\
 
 \begin{table}[tb]
 {\small
-\begin{tabular}{|l|lll|}
+\noindent\makebox[\textwidth][c]{%
+\begin{tabular}{llll}
 \hline
 System                & Acc & W.Acc. & Recall    \\ \hline
 \multicolumn{4}{|c|}{\textbf{French-English (best)}} \\
@@ -489,7 +491,7 @@ CNRC-run2           & 0.602    & 0.721         & 1.0                 \\
 Sensible-wtmxlingyu & 0.123    & 0.171         & 0.335 \\
 Sensible-wtm        & 0.099    & 0.115         & 0.214 \\
 Sensible-wtmxling   & 0.096    & 0.112         & 0.214 \\ \hline
-\end{tabular}
+\end{tabular}}
 }
 \caption{Full results for French-English and Dutch-English.}
 \label{tab:fullresults2}
@@ -497,9 +499,12 @@ Sensible-wtmxling   & 0.096    & 0.112         & 0.214 \\ \hline
 
  
 \begin{figure*}[p]
-\includegraphics[width=16cm]{en-es-best-2.png}
-\includegraphics[width=16cm]{en-de-best-2.png}
-\includegraphics[width=16cm]{fr-en-best-2.png}
+\noindent\makebox[\textwidth][c]{%
+\includegraphics[width=16cm]{en-es-best-2.png}}
+\noindent\makebox[\textwidth][c]{%
+\includegraphics[width=16cm]{en-de-best-2.png}}
+\noindent\makebox[\textwidth][c]{%
+\includegraphics[width=16cm]{fr-en-best-2.png}}
 \caption{English to Spanish (top), English to German (middle) and French to English (bottom). The three bars, left-to-right, represent Accuracy (blue), Word Accuracy (green) and Recall (red).}
 \label{fig:graphs}
 \end{figure*}
@@ -611,7 +616,9 @@ significant impact on ranking.
 
 
 \begin{figure*}[bth] %cheating to get the figure at the same page
+\noindent\makebox[\textwidth][c]{%
 \includegraphics[width=16cm]{nl-en-best-2.png}
+}
 \caption{Dutch to English.}
 \label{fig:graphs2}
 \end{figure*}
