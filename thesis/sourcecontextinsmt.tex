@@ -2,14 +2,12 @@
 %\usetikzlibrary{external}
 %\tikzexternalize
 
-\DeclareMathOperator*{\argmin}{arg\,min}
-\DeclareMathOperator*{\argmax}{arg\,max}
+
 
 \chapter{Source-side context in Statistical Machine Translation}
 \title{Source-side context in Statistical Machine Translation}
 
 %\title{Language-independent classifier-based modelling of source-side context information in Statistical Machine Translation}
-\titlerunning{Source-side context in SMT}
 
 
 
@@ -961,7 +959,7 @@ confirm the trend followed by NIST.
 \newlength\figurewidth
 \setlength\figureheight{6cm}
 \setlength\figurewidth{8cm}
-\input{../EMEAlc0.tikz}
+\input{EMEAlc0.tikz}
 \end{center}
 \caption{Learning curve on EMEA, English to Spanish, measuring BLEU score, logarithmic scale}
 \label{fig:emealc}
@@ -972,8 +970,8 @@ confirm the trend followed by NIST.
 \begin{center}
 \setlength\figureheight{5cm}
 \setlength\figurewidth{6cm}
-\input{../JRClc0.tikz}
-\input{../JRClc2.tikz}
+\input{JRClc0.tikz}
+\input{JRClc2.tikz}
 \end{center}
 \caption{Learning curve on JRC Acquis, English to Spanish, measuring BLEU score (left) and NIST (right), logarithmic scale}
 \label{fig:jrclc}
@@ -1243,7 +1241,7 @@ Fryske Akademy & 137,937 & Frisian-Dutch & 213,573 \\
 \begin{center}
 \setlength\figureheight{6cm}
 \setlength\figurewidth{8cm}
-\input{../histogram.tikz}
+\input{histogram.tikz}
 \caption{Histogram showing the distribution of the number of instances (blue)
 and number of classes (red) in the classifier experts for IWSLT 2012 TED,
 Dutch to English (logarithmic).}
@@ -1348,8 +1346,8 @@ options.
 \begin{center}
 \setlength\figureheight{6cm}
 \setlength\figurewidth{6cm}
-\input{../scoredifference.tikz}
-\input{../scoredifference2.tikz}
+\input{scoredifference.tikz}
+\input{scoredifference2.tikz}
 %\includegraphics[width=90.00mm]{scoredifference.png}
 \caption{Scatter plot (logarithmic scale) illustrating the difference $\Delta$ between the classifier score and the original SMT score on the JRC250k English to Spanish test set. The right figure provides a zoomed view and illustrates that small changes are most prevalent.}
 \label{fig:scoredifference}

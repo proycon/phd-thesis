@@ -40,8 +40,8 @@ Statistical Machine Translation (SMT).
 
 The cross-lingual context in our research question may at first seem
 artificial, but its design explicitly aims at applications related to
-computer-aided language learning \cite{CALL2,CALL} and computer-aided
-translation \cite{CAT}. Currently, language learners need to refer to a
+computer-aided language learning \citep{CALL2,CALL} and computer-aided
+translation \citep{CAT}. Currently, language learners need to refer to a
 bilingual dictionary when in doubt about a translation of a word or phrase.
 Yet, this problem arises in a context, not in isolation; the learner may have
 already translated successfully a part of the text into L2 leading up to the
@@ -104,10 +104,10 @@ split shall become apparent soon.
 
 From each of the splits ($S$), a phrase-translation table is constructed
 automatically in an unsupervised fashion. This is done using the scripts
-provided by the Statistical Machine Translation system Moses \cite{MOSES}. It
-invokes GIZA++ \cite{GIZA} to establish statistical word alignments based on
+provided by the Statistical Machine Translation system Moses \citep{MOSES}. It
+invokes GIZA++ \citep{GIZA} to establish statistical word alignments based on
 the IBM Models and subsequently extracts phrases using the
-\texttt{grow-diag-final} algorithm \cite{OchNey2003}. The result, independent
+\texttt{grow-diag-final} algorithm \citep{OchNey2003}. The result, independent
 for each set, will be a phrase-translation table ($T$) that maps phrases in L1
 to L2. For each phrase-pair ($f_s,f_t$) this phrase-translation table holds the computed
 translation probabilities $P(f_s|f_t)$ and $P(f_t|f_s)$.
@@ -202,21 +202,19 @@ map to just a single translation, a classifier is trained.  The classifier maps
 the L1 word or phrase in its L2 context to its L2 translation. Words or phrases
 that always map to a single translation are stored in a simple mapping table,
 as a classifier would have no added value in such cases. The classifiers use
-the IB1 algorithm \cite{IB1} as implemented in TiMBL
-\cite{TIMBL}.\footnote{\url{http://ilk.uvt.nl/timbl}} IB1 implements
+the IB1 algorithm \citep{IB1} as implemented in TiMBL
+\citep{TIMBL}.\footnote{\url{http://ilk.uvt.nl/timbl}} IB1 implements
 $k$-nearest neighbour classification. The choice for this algorithm is
 motivated by the fact that it handles multiple classes with ease, but first and
 foremost because it has been successfully employed for word sense
-disambiguation in other studies \cite{Hoste+02,GAMBL}, in particular in
-cross-lingual word sense disambiguation as seen in \ref{chap:clwsd}. It has
+disambiguation in other studies \citep{Hoste+02,GAMBL}, in particular in
+cross-lingual word sense disambiguation as seen in Chapter~\ref{chap:clwsd}. It has
 also been used in machine translation studies in which local source context is
 used to classify source phrases into target phrases, rather than looking them
-up in a phrase table \cite{Stroppa+07,Haque+11}. The idea of local phrase
+up in a phrase table \citep{Stroppa+07,Haque+11}. The idea of local phrase
 selection with a discriminative machine learning classifier using additional
-local (source-language) context was introduced in parallel to Stroppa {\em et
-al.} \shortcite{Stroppa+07} by Carpuat and Wu \shortcite{Carpuat+07} and
-Gim\'{e}nez and M\'{a}rquez \shortcite{Gimenez+07}; cf. Haque {\em et al.}
-\shortcite{Haque+11} for an overview of more recent methods.
+local (source-language) context was introduced in parallel to \cite{Stroppa+07} by \cite{Carpuat+07} and
+\cite{Gimenez+07}; cf. \cite{Haque+11} for an overview of more recent methods.
 
 The feature vector for the classifiers represents a local context of
 neighbouring words, and optionally also global context keywords in a
@@ -240,7 +238,7 @@ global context features. These are a set of L2 contextual keywords for
 each L1 word/phrase and its L2 translation occurring in the same
 sentence, not necessarily in the immediate neighbourhood of the L1
 word/phrase. The keywords are selected to be indicative for a specific
-translation. We used the method of extraction by \newcite{NgL96} and
+translation. We used the method of extraction by \cite{NgL96} and
 encoded all keywords in a binary bag of words model. The experiments
 however showed that inclusion of such keywords did not make any
 noticeable impact on any of the results, so we restrict ourselves to
@@ -258,7 +256,7 @@ mentioning this negative result.
 %may be found.
 
 %The method used to extract these keywords ($k$) is proposed by
-%\newcite{NgL96}.
+%\newcitep{NgL96}.
 %Assume we have a fragment $f$, more precisely, an
 %L1 word or phrase.  We also have one of its aligned L2 translations
 %$s$. We can now estimate $P(s|k)$, the probability of translation $s$,
@@ -275,7 +273,7 @@ mentioning this negative result.
 %P(s|k) = \frac{N_{s,k_{local}}}{N_{k_{local}}}(\frac{1}{N_{k_{corpus}}})
 %\end{equation}
 
-%\newcite{Hoste+02} select a keyword $k$ for inclusion in the bag-of-words
+%\newcitep{Hoste+02} select a keyword $k$ for inclusion in the bag-of-words
 %representation if that keyword occurs more than $T_1$ times in that translation
 %$s$, and if $P(s|k) \ge T_2$. Both $T_1$ and $T_2$ are predefined thresholds,
 %which by default were set to $3$ and $0.001$ respectively. We adopted these same
@@ -298,7 +296,7 @@ representative for the version used in this research.
 We also implement a statistical language model as an optional component of our
 classifier-based system and also as a baseline to compare our system to.  The
 language model is a trigram-based back-off language model with Kneser-Ney
-smoothing, computed using SRILM \cite{SRILM} and trained on the same training
+smoothing, computed using SRILM \citep{SRILM} and trained on the same training
 data as the translation model. No additional external data was brought in, to
 keep the comparison fair.
 
@@ -383,7 +381,7 @@ probability from the classifier.
 \section{Experiments \& Results}
 
 The data for our experiments were drawn from the Europarl parallel corpus
-\cite{EUROPARL} from which we extracted two sets of $200,000$ sentence
+\citep{EUROPARL} from which we extracted two sets of $200,000$ sentence
 pairs each for several language pairs. These were used to form the
 training and test sets. The final test sets are a randomly sampled
 $5,000$ sentence pairs from the $200,000$-sentence test split for each
@@ -517,7 +515,7 @@ results in Table~\ref{tab:results}).  It appears that the classifier
 approach and the L2 language model are able to complement each other.
 
 Statistical significance on the BLEU scores was tested using pairwise bootstrap
-sampling \cite{KoehnStatSig}.  All significance tests were performed with
+sampling \citep{KoehnStatSig}.  All significance tests were performed with
 $5,000$ iterations.  We compared the outcomes of several key configurations. We
 first tested \texttt{l1r1} against both baselines; both differences are
 significant at $p<0.01$ for both. The same significance level was found when
@@ -652,7 +650,7 @@ models of other orders.
 %sentence pairs trigger a keyword match during testing.  During
 %training, keywords were found for $9,910$ out of $112,653$
 %classifiers.  The virtually absent impact of global context keywords
-%is also in agreement with findings from \newcite{WSD2}; the trend
+%is also in agreement with findings from \newcitep{WSD2}; the trend
 %seems to be that simplicity in feature selection pays off and holds
 %for all language pairs we tested.
 
@@ -660,7 +658,7 @@ models of other orders.
 \label{sec:optim}
 
 It has been argued that classifier experts in a word sense disambiguation
-ensemble should be individually optimised \cite{GAMBL}. This we have also shown
+ensemble should be individually optimised \citep{GAMBL}. This we have also shown
 in Chapter~\ref{chap:clwsd}, where we find a positive impact when conducting
 feature selection per classifier. This intuitively makes sense; a context of
 one may seem to be better than any other when uniformly applied to all
@@ -825,7 +823,7 @@ iwslt12ted & zh & en & auto$+$LM & 0.7230 & 0.7428 & 0.9719\\
 }
 \caption{Results on different datasets and language pairs. The
 \texttt{iwslt12ted} set is the dataset used in the IWSLT 2012 Evaluation
-Campaign \cite{IWSLT12}, and is formed by a collection of transcriptions of TED talks. Here we used 
+Campaign \citep{IWSLT12}, and is formed by a collection of transcriptions of TED talks. Here we used 
 of just over $70,000$ sentences for training. Recall for each of the four
 datasets is $0.9498$ (en-nl), $0.9494$ (en-fr), $0.9386$ (en-zh), and $0.9366$
 (zh-en)}

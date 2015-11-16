@@ -2,7 +2,9 @@
 \usepackage[english]{babel}
 \usepackage{classicthesis}
 
-\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+
 \usepackage{url}
 \usepackage{natbib}
 \usepackage{supertabular}
@@ -14,15 +16,18 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{listings}
-\usepackage[utf8]{inputenc}
 \usepackage{covington}
 \usepackage{titlesec}
 \usepackage[font={it}]{caption}
 \usepackage{algorithm} 
 \usepackage{algpseudocode} 
+\usepackage{gb4e}
+\usepackage{footnote}
+\usepackage{amsmath}
+\usepackage{amsopn}
+\usepackage{amsthm}
 \let\proof\relax
 \let\endproof\relax
-\usepackage{amsthm}
 \newtheoremstyle{break}
   {\topsep}{\topsep}%
   {\itshape}{}%
@@ -30,6 +35,9 @@
   {\newline}{}%
 \theoremstyle{break}
 \newtheorem{exmp}{Example}[section]
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
 
 % customize section
 \titleformat{\section}%
