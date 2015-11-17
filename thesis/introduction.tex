@@ -206,10 +206,10 @@ As said, the act of translation is expressed as the search for the most
 probable translation. Take $S$ to be a sentence in the source language, and $T$
 to be a translated sentence, i.e.\ a translation hypothesis, in the target
 language. The SMT process can then be formalised as in
-Equation~\ref{eq:introsmt1}, where the outcome $\^T$ corresponds to the most probable translation.
+Equation~\ref{eq:introsmt1}, where the outcome $\hat{T}$ corresponds to the most probable translation.
 
 \begin{equation}
-\^T = \argmax_T p(T|S) 
+\hat{T} = \argmax_T p(T|S) 
 \label{eq:introsmt1}
 \end{equation}
 
@@ -224,7 +224,7 @@ a translation it is of the original input. Note that we can drop the
 denominator $p(S)$ as it will the constant throughout the process.
 
 \begin{equation}
-\^T = \argmax_T p(T|S) = \argmax_T \frac{p(S|T)p(T)}{p(S)} = \argmax_T p(S|T)p(T)
+\hat{T} = \argmax_T p(T|S) = \argmax_T \frac{p(S|T)p(T)}{p(S)} = \argmax_T p(S|T)p(T)
 \label{eq:introsmt2}
 \end{equation}
 
@@ -268,7 +268,7 @@ components. Each of the components in this \emph{score function}
 is typically parametrised by a weight ($\lambda$). This is shown in equation~\ref{eq:introsmt3}.
 
 \begin{equation}
-P(S|T) = \prod_{i=1}{n} \lambda_1\p(s_i|t_i)\lambda_2\p(t_i|s_i)
+P(S|T) = \prod_{i=1}^{n} p(s_i|t_i)^{\lambda_1} p(t_i|s_i)^{\lambda_2}
 \label{eq:introsmt3}
 \end{equation}
 
@@ -295,7 +295,7 @@ A simple trigram-based language model is shown in equation~\ref{eq:intosmtlm1}, 
 \cite{Cole1997}, where we compute the probability of a sequence of words $W$.
 
 \begin{equation}
-p(W) = p(w_1,\ldots,w_n) = \prod_{i=1}{n} p(w_i|w_{i-2},w_{i-1})
+p(W) = p(w_1,\ldots,w_n) = \prod_{i=1}^{n} p(w_i|w_{i-2},w_{i-1})
 \label{eq:introsmtlm1}
 \end{equation}
 
