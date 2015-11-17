@@ -232,8 +232,69 @@ precisely to the \emph{translation model} and \emph{language model} respectively
 
 \subsubsection{Translation Model}
 
+The translation model is learned from parallel corpus data. Early SMT systems
+were word-based, i.e.\ the translation model consisted of probabilities for
+word translation pairs. These systems have been superseded by phrase-based
+systems, in which multiple words at once may be translated as an entity
+\citep{PBSMT}. This allows for translations in which multiple words in the
+source language translate to just one in the target language, or vice versa.
+
+The basis for training such a translation model is a parallel corpus, i.e.\ the
+same text in two languages. First a \emph{sentence alignment} is computed
+\citep{TIEDEMANN}. This identifies sentences that are translations of eachother
+through statistical means. Subsequently, a \emph{word alignment} is computed,
+according to a method pioneered by \cite{BROWN}. See also the work of
+\cite{OchNey2003} and \citep{TIEDEMANN}. The word alignment attempts to
+identify words that are translations of eachother, by means of a
+\emph{expectation maximisation} algorithm. Finally, we can derive phrase
+translation pairs from these word alignments, using algorithms such as
+\emph{grow-diag-final} as described in \citep{PBSMT}. 
+
+We outcome of the training stage is a \emph{phrase translation table}, which
+constitutes the translation model. It is a a collection of phrase pairs $(s,t)$
+in source and respectively target language language. Associated with each pair
+are the phrase-translation probabilities $p(s|t)$ and $p(t|s)$, derived from
+the joint frequency of the pair and the invididual frequencies of the parts in
+the data. Additional probabilities, such as lexical weights and word/phrase
+penalties, may be included as well. 
+
+At test time, the translation probability $P(S|T)$ for a given translation
+hypothesis is estimated by computing the product over all phrase pairs that
+make up the hypothesis ($s \in S$, $t \in T$). A score is computed for each
+based on the product of $p(s|t)$ with optionally $p(t|s)$ and other scoring
+components. Each of the components in this \emph{score function} 
+is typically parametrised by a weight ($\lambda$). This is shown in equation~\ref{eq:introsmt3}.
+
+\begin{equation}
+P(S|T) = \prod_{i=1}{n} \lambda_1\p(s_i|t_i)\lambda_2\p(t_i|s_i)
+\label{eq:introsmt3}
+\end{equation}
+
+The value of the weights for the score function can not be determined a priori,
+but has to be computed experimentally on held-out tuning data. This essentially
+comes down to trying a huge variety of parameter values and experimentally
+observe which performs best on the data.  This final\emph{parameter
+optimisation} step is an essential part of SMT \citep{MERT}.
+
 \subsubsection{Language Model}
 
+Note that the translation model is not sensitive to the order in which
+fragments are assembled. Ordering is instead directed by the language model,
+the second key component in an SMT system.
+
+The language model predicts the likelihood of a word given a previous history
+of predecessor words. This is a model of \emph{context}; the difference with
+the context that is the focus in this dissertation, however, is that it models
+the target language rather than source language. Moreover, it is a purely
+monolingual model whereas our investigation is aimed at modelling source-side
+context for translation directly.
+
+A simple trigram model is formalised in equation~\ref{eq:intosmtlm1}
+
+\begin{equation}
+p(w_i|w_{i-1},w_{i-2}) = 
+\label{eq:introsmtlm1}
+\end{equation}
 
 
 
@@ -244,9 +305,6 @@ precisely to the \emph{translation model} and \emph{language model} respectively
 
 
 
-This is unlike the statistical- and example-based methods that will be discussed in later sections.
-
-Early methods in Machine Translation 
 
 \subsection{Word Sense Disambiguation}
 
