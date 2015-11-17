@@ -289,21 +289,21 @@ the target language rather than source language. Moreover, it is a purely
 monolingual model whereas our investigation is aimed at modelling source-side
 context for translation directly.
 
-A simple trigram model is formalised in equation~\ref{eq:intosmtlm1}
+A simple trigram-based language model is shown in equation~\ref{eq:intosmtlm1}, adapted from
+\cite{Cole1997}, where we compute the probability of a sequence of words $W$.
 
 \begin{equation}
-p(w_i|w_{i-1},w_{i-2}) = 
+p(W) = p(w_1,\ldots,w_n) = \prod_{i=1}{n} p(w_i|w_{i-2},w_{i-1})
 \label{eq:introsmtlm1}
 \end{equation}
 
+An actual language model will likely also implement \emph{back-off} strategies and
+\emph{smoothing}, to avoid the problem of encountering words unseen during
+training, which would result in a probability score of $0$ otherwise. 
 
-
-
-
-
-
-
-
+The role of the language model is mainly to assign a higher probability to
+sentences in which the target-language phrases are ordered properly than
+phrases in an unnatural order. 
 
 
 \subsection{Word Sense Disambiguation}
