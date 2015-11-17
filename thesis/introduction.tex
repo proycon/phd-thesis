@@ -76,6 +76,7 @@ exists and is defined purely through \emph{its context} and can by definition
 never be seen as independent from it.
 
 \subsection{Linguistic Bridges}
+\label{sec:bridges}
 
 Whereas we humans all share an astounding capacity for language, history has
 given rise to numerous distinct and often mutually unintelligable languages.
@@ -133,7 +134,7 @@ right translation. Context plays a bridging function in translation, and this
 dissertation investigates techniques for machines to exploit this to attain
 better automatic translations.
 
-\section{Natural Language Processing}
+\section{Natural Language Processing: Theoretical Background}
 
 In our philosophical deliberations we briefly addressed the communication
 revolutions brought about by humanity evolving the faculty of language and
@@ -228,7 +229,8 @@ denominator $p(S)$ as it will the constant throughout the process.
 \end{equation}
 
 The two factors we end up with in Equation~\ref{eq:introsmt2} correspond
-precisely to the \emph{translation model} and \emph{language model} respectively.
+precisely to the \emph{translation model} and \emph{language model}
+respectively..
 
 \subsubsection{Translation Model}
 
@@ -305,34 +307,106 @@ The role of the language model is mainly to assign a higher probability to
 sentences in which the target-language phrases are ordered properly than
 phrases in an unnatural order. 
 
-
 \subsection{Word Sense Disambiguation}
 
+Word Sense Disambiguation (WSD) shares certain characteristics with
+translation. The idea in WSD is to disambiguate between multiple meanings of a
+polysemous words. Consider the following example: 
+
+\begin{enumerate}
+\item ``My money is safely deposited in the \textbf{bank}.''
+\item ``The ship avoided crashing into the \textbf{bank} of the river.''
+\end{enumerate}
+
+The first example refers to a bank as a financial institution, whereas the
+second refers to the boundary of a river. In Word Sense Disambiguation we
+attempt to automatically infer which sense is intended. The actual sense is
+typically represented in the form of a sort of identifier from a sense inventory
+such as WordNet.
+
+We already saw in Section~\ref{sec:bridges} that translation requires a very
+similar disambiguation. After all, translation usually aims to preserve the
+semantics. If we translate ``bank'' from these two examples from English to
+Spanish, we will obtain ``banco'' for the first example, but ``orilla'' for the
+latter. In Chapter~\ref{chapter:clwsd} we will take an in-depth look at using
+WSD techniques for localised translation problems.
 
 \section{Research Question}
+\label{sec:overallresearchquestion}
 
+In this introductory chapter, we have illustrated our intuition that
+source-side context information, i.e.\ words in the source-language from the
+surrounding context, provides valuable cues for translation. The over-arching
+question we posit for the dissertation is the following:
+
+\begin{enumerate}
+\item Can we improve automatic translation by considering source-side context information? 
+\item What context features prove most effective?
+\item How effective are linguistically uninformed features?
+\end{enumerate}
+
+Here \emph{automatic translation} is understood to be a more generic term that
+encompases the more localised translation of translation of fragments in a
+context, comparable to Word Sense Disambiguation, as well as a full integration
+of source-side context in Statistical Machine Translation.
+
+In the first chapters, some linguistically-informed features such as lemma
+features and Part-of-Speech tags are tested. Our emphasis in the overall study,
+however, is on assessing the efficiency of \emph{linguically uninformed}
+features, i.e.\ the raw textual data as it is. The reason for this is that we
+aim to assess the merit of the techniques as-such, a pure analysis without
+introducing another data dimension. Moreover, by choosing this approach we do
+not need to rely on external language-specific tools such as as lemmatisers and
+Part-of-Speech taggers. In subsequent chapters, we will also show that the
+inclusion of linguistically-informed features is something already studied and
+described in the literature by others. 
+
+Our hypothesis is that source-side context information, even without
+linguistically informed featured, results in a clear benefit in translation
+quality. 
 
 \section{Thesis structure}
 
+We begin our research on the level of translating simple words in context, and
+gradually move up in complexity and integration with SMT throughout the
+dissertation.
 
+Before we can go into the matter of translation, Chapter~\ref{chap:coco} first
+introduces the software that was needed to efficiently extract patterns such as
+n-grams, with their context, from corpus data. This software provides a
+necessary foundation that is in turn used by most of the software of the
+remaining chapters. It is a chapter of technical nature that can optionally be
+skipped if the reader wishes to more quickly proceed to the heart of the
+matter. At the same time, the chapter offers tools that are applicable
+well-beyond the present dissertation.
 
+Chapter~\ref{chap:clwsd} will introduce \emph{Cross-Lingual Word Sense
+Disambiguation} and presents a classifier-based system employing source-side
+context information. This system, when tested against competing systems, obtains the
+best or near-best accuracy. 
 
+Chapters~\ref{chap:colibritapilot},~\ref{chap:semeval2014task5} and~\ref{chap:colibritafinal}
+are strongly linked and open up a novel line of
+investigation. A Translation Assistance system capable of translating L1
+fragments in an L2 context is proposed, tested, and presented. It changes and
+investigates the notion of what source-side context is and may find practical
+application in Computer Assisted Translation and Computer Aided Language
+Learning. Chapter~\ref{chap:colibritapilot} conducts a pilot study to assess
+the feasibility of the idea. It applies the lessons learned from Cross-Lingual
+Word Sense Disambiguation (Chapter~\ref{chap:clswsd}) to a new task.
+Chapter~\ref{chap:semeval2014task5} subsequently brings the task to SemEval
+2014 as a shared-task. We manually construct a data set and evaluate the
+performance of several 3rd party participanting systems.
+In Chapter~\ref{chap:colibritafinal} we finally present our own reworked
+``Colibrita'' system on the basis of the pilot study and findings from the
+SemEval participants. Here we present the results and form conclusions
+regarding the role of context and the usefulness of classifiers versus
+Statistical Machine Translation techniques.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Chapter~\ref{chap:contextinsmt} is an attempt to directly integrate source-side
+context information in Statistical Machine Translation, by means of
+memory-based classifiers. It is here that we can come to our main conclusions.
+Chapter~\ref{chap:conclusion} briefly aggregates and summarizes the
+conclusion from earlier chapters, and forms a final answer to our research
+questions. 
 
