@@ -4,30 +4,31 @@
 
 
 
-\chapter{Source-side context in Statistical Machine Translation}
-\title{Source-side context in Statistical Machine Translation}
+\chapter{Uninformed source-side context in Statistical Machine Translation}
+\title{Uninformed source-side context in Statistical Machine Translation}
 \label{chap:contextinsmt}
 
 %\title{Language-independent classifier-based modelling of source-side context information in Statistical Machine Translation}
 
 
 
-In this chapter we present a series of experiments focusing on the modelling of source-side
-context to improve phrase-based Statistical Machine Translation. We attempt to
-independently reproduce a line of existing research and test whether
-considering source-side context information directly in the translation model has a
-positive effect on translation quality.  We furthermore investigate various
-ways in which discriminative classifier-based models can be integrated into Statical
-Machine Translation.  We use proven techniques from Word Sense
+In this chapter we present a series of experiments focusing on the modelling of
+source-side context to improve phrase-based Statistical Machine Translation. We
+attempt to independently reproduce a line of existing research and test whether
+considering source-side context information directly in the translation model
+has a positive effect on translation quality.  We furthermore investigate
+various ways in which discriminative classifier-based models can be integrated
+into Statical Machine Translation.  We use proven techniques from Word Sense
 Disambiguation, effectively integrating these techniques in Statistical Machine
-Translation. Our approach is language-independent and knowledge-poor: we do not
-employ any explicit linguistic features computed by part-of-speech taggers,
-word sense disambiguation systems, supertaggers, or parsers, as used by
-previous work. We observe improvements in translation quality by our method,
-but only clearly so for domain-specific corpora with a high degree of formulaic
-language. Lowering the expectations raised by previous work, we conclude that
-the explicit modeling of source-side context information does not generally add
-much information to that already implicitly available in the decoding process.  
+Translation. Our approach is language-independent and knowledge-poor or
+uninformed: we do not employ any explicit linguistic features computed by
+part-of-speech taggers, word sense disambiguation systems, supertaggers, or
+parsers, as used by previous work. We observe improvements in translation
+quality by our method, but only clearly so for domain-specific corpora with a
+high degree of formulaic language. Lowering the expectations raised by previous
+work, we conclude that the explicit modeling of source-side context information
+does not generally add much information to that already implicitly available in
+the decoding process.  
 
 
 \textsc{This chapter is based on: } \emph{TODO} %TODO
@@ -630,14 +631,17 @@ $p<0.05$ will be marked with an asterisk in the results.
 An SMT system relies heavily on parameter optimisation. Each component of the
 score vector is weighted by a separate parameter. These parameters are
 experimentally determined on development data using Minimum Error Rate
-Reduction \citep{MERT}, in which we optimise on the BLEU score. MERT is,
-however, known to have high variance across multiple runs, due to many local
-optima in the search space. We therefore do not run MERT independently on each
-experimental run, but only on the baseline run, and use those weights for
-subsequent runs using the replace method.\footnote{The append method would
-require an extra weight that MERT would not have optimised.} Again, the
-motivation here is to keep all variables equal except for the integration of
-context information, so we can make a fair assessment.
+Reduction \citep{MERT}, in which we optimise on the BLEU score. 
+
+%old situation:
+%MERT is,
+%however, known to have high variance across multiple runs, due to many local
+%optima in the search space. We therefore do not run MERT independently on each
+%experimental run, but only on the baseline run, and use those weights for
+%subsequent runs using the replace method.\footnote{The append method would
+%require an extra weight that MERT would not have optimised.} Again, the
+%motivation here is to keep all variables equal except for the integration of
+%context information, so we can make a fair assessment.
 
 %talk about parameter optimisation in classifier
 While we conduct parameter optimisation for the parameters of the SMT
