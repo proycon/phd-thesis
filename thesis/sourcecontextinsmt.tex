@@ -654,12 +654,35 @@ MERT is, however, known to have high variance across multiple runs, due to many
 local optima in the search space. We therefore can not simply run MERT once for
 each experiment, as that gives no basis for determining whether our results can
 be considered statistically significant. To remedy this issue, we have to
-control for optimizer instability. We do so by applying the methodology of
+control for optimiser instability. We do so by applying the methodology of
 \cite{MERTCONTROL}, which runs MERT multiple times, employs
 \emph{bootstrap resampling} to compute standard deviations and
-\emph{approximate randomization} to compute p-values for the assessment of
-statistical significance.\footnote{All this is implemented in the software
-\emph{MultEval}, available from \url{https://github.com/jhclark/multeval}}.
+\emph{approximate randomisation} to compute p-values for the assessment of
+statistical significance. All this is implemented in the software
+\emph{MultEval}\footnote{Available from \url{https://github.com/jhclark/multeval}}.
+
+For each of the evaluation metrics, BLUE, METEOR and TER. MultEval reports
+three numbers in parentheses, these are the following, from \cite{MERTCONTROL}:
+
+\begin{enumerate}
+\item $\overline{s}_{sel}$ - Variance due to \emph{test set selection},
+computed using bootstrap resampling for each optimiser run. This metric reports
+the average variance over all MERT runs. Higher values indicate that more
+replications, a larger test test, is desireable to draw reliable inferences.
+\item $s_{opt}$ - Variance due to \emph{optimiser instability}. Calculated
+directly as the variance of aggregate metric score over all MERT runs. Higher
+values are indicative of optimisation on development data generalising well to
+previously unseen test data, i.e.\ it leads to overfitting. 
+\item $p$, - The $p$-value s calculated through approximate randomisation. It roughly
+expresses the probability of the difference between the system output and
+baseline occurring due to chance. Approximate randomisation uses random
+permutations to similulate chance occurrences. The quality of this measure depends on the number of separate
+optimisation runs, and is conditioned on the test test. 
+\end{enumerate}
+
+In all our experiments, we use three seperate optimisation runs, tto keep
+complexity and experimental run-time to a minimum whilst still reaping the
+benefits of multiple runs.
 
 
 %talk about parameter optimisation in classifier
