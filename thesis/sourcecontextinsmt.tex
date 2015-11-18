@@ -588,7 +588,7 @@ freely downloaded.\footnote{Download archive of all experimental data \& results
 
 \subsection{Evaluation}
 
-We assess translation quality along five widely-used automated metrics,
+We assess translation quality along three widely-used automated metrics,
 as human evaluation is prohibitively expensive:
 
 \begin{enumerate} %paraphrased from PBMBMT thesis
@@ -596,22 +596,28 @@ as human evaluation is prohibitively expensive:
 in Machine Translation. It computes a weighted average of $n$-gram overlap
 between the system output and reference output. The score thus increases as
 more $n$-grams in the reference translation are found in the system output.
-\item \textbf{NIST} - NIST intends to improve upon BLEU. It takes into account
+%\item \textbf{NIST} - NIST intends to improve upon BLEU. It takes into account
 how informative a particular $n$-gram is by assigning more weight to rare
 $n$-grams and less to highly-frequent $n$-grams.  
 \item \textbf{METEOR} - METEOR \citep{METEOR} also attempts to improve upon
   BLEU and attempts to emulate human judgement better. Unlike the prior
   metrics, it places emphasis on recall rather than precision.
-\item \textbf{Word-Error Rate (WER)} - This is a simple metric derived from the
-minimum edit-distance, i.e. Levenshtein, algorithm. It counts the number of
-substitutions, insertions and deletions necessary to transform the translation
-into the reference sentence, with words as the basic unit. The lower
-the score, the more similar the translation is to the reference.  
-\item \textbf{Position Independent Word Error Rate (PER)} - This is a variant of the
-metric above, but here the order of the words is not taken into account. Any
-ordering of the same words will have the same score. The lower the score, the
-more similar the translation is to the reference.
+\item \textbf{TER} - Translation Error Rate \cite{TER} aims to measure the
+amount of editing that a human would have to perform to change a system output
+so it exactly matches a reference translation. 
+%\item \textbf{Word-Error Rate (WER)} - This is a simple metric derived from the
+%minimum edit-distance, i.e. Levenshtein, algorithm. It counts the number of
+%substitutions, insertions and deletions necessary to transform the translation
+%into the reference sentence, with words as the basic unit. The lower
+%the score, the more similar the translation is to the reference.  
+%\item \textbf{Position Independent Word Error Rate (PER)} - This is a variant of the
+%metric above, but here the order of the words is not taken into account. Any
+%ordering of the same words will have the same score. The lower the score, the
+%more similar the translation is to the reference.
 \end{enumerate}
+
+For BLEU and METEOR, higher scores a better, for TER, however, a lower score
+corresponds with a better translation quality.
 
 For each experiment we construct a non-context-informed baseline. This
 baseline does make use of our full pipeline, i.e. the bypass method described
@@ -620,10 +626,11 @@ classifiers.  We do this to ensure the only difference is the actual
 integration of context information, and that differences in results can not be
 attributed to minor idiosyncrasies of the implementation.
 
-We test statistical significance of our systems on the BLEU score, compared to
-the non-context informed baseline For this we use pairwise bootstrap sampling
-\citep{KoehnStatSig} with $5000$ iterations. Statistical significance at
-$p<0.05$ will be marked with an asterisk in the results.
+%old situation:
+%We test statistical significance of our systems on the BLEU score, compared to
+%the non-context informed baseline For this we use pairwise bootstrap sampling
+%\citep{KoehnStatSig} with $5000$ iterations. Statistical significance at
+%$p<0.05$ will be marked with an asterisk in the results.
 
 \subsection{Parameter optimisation}
 \label{sec:paropt}
@@ -642,6 +649,18 @@ Reduction \citep{MERT}, in which we optimise on the BLEU score.
 %require an extra weight that MERT would not have optimised.} Again, the
 %motivation here is to keep all variables equal except for the integration of
 %context information, so we can make a fair assessment.
+
+MERT is, however, known to have high variance across multiple runs, due to many
+local optima in the search space. We therefore can not simply run MERT once for
+each experiment, as that gives no basis for determining whether our results can
+be considered statistically significant. To remedy this issue, we have to
+control for optimizer instability. We do so by applying the methodology of
+\cite{MERTCONTROL}, which runs MERT multiple times, employs
+\emph{bootstrap resampling} to compute standard deviations and
+\emph{approximate randomization} to compute p-values for the assessment of
+statistical significance.\footnote{All this is implemented in the software
+\emph{MultEval}, available from \url{https://github.com/jhclark/multeval}}.
+
 
 %talk about parameter optimisation in classifier
 While we conduct parameter optimisation for the parameters of the SMT
