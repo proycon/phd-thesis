@@ -1030,23 +1030,22 @@ few of the data sets we used. We also show, in the last column, how many of the
 source-side fragments are not in the baseline, implying that the SMT decoder
 chose a different source-phrase to translate than the baseline did.
 
-%TODO: redo with new data
-\begin{table}
+\begin{table} %redone with new data (jan 2016)
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lllcc}
 \hline
 \textbf{Corpus} & \textbf{Language Pair} & \textbf{Configuration} & \textbf{Diff. pairs} & \textbf{Diff. source} \\
 \hline
-EMEA & English$\rightarrow$Spanish & l1r1 (M/uni/replace) & $43.68\%$ & $40.15\%$ \\
-JRC (250k) & English$\rightarrow$Spanish & l1r1 (M/uni/replace) & $41.14\%$ & $32.77\%$ \\
-Yandex (1M) & English$\rightarrow$Russian & l1r1 (M/opt/replace) & $37.72\%$ & $26.58\%$ \\
-Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (M/opt/replace) & $33.57\%$ & $32.50\%$ \\
-IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1 (M/opt/replace) & $26.86\%$ & $20.07\%$ \\
-IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (M/opt/replace) & $24.55\%$ & $12.49\%$ \\
+EMEA & English$\rightarrow$Spanish & l1r1 (monolithic/replace) & $15.73\%$ & $14.65\%$ \\
+JRC & English$\rightarrow$Spanish & l1r1 (monolithic/replace) & $41.59\%$ & $35.90\%$ \\
+Yandex (1M) & English$\rightarrow$Russian & l1r1 (monolithic/replace) & $48.92\%$ & $37.30\%$ \\
+Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (M/monolithic/replace) & $41.51\%$ & $40.07\%$ \\
+IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1 (M/monolithic/replace) & $43.78\%$ & $30.29\%$ \\
+IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (M/monolithic/replace) & $43.78\%$ & $30.29\%$ \\
 \hline
 \end{tabular}}
 \caption{The number of phrases in the context-informed test output that are not
-in the non-context-informed baseline.}
+in the non-context-informed baseline.} 
 \label{tab:decodediff}
 \end{table}
 
