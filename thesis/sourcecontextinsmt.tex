@@ -1008,14 +1008,28 @@ l2r1 (monolithic/replace/tribl2) & 15.0 (0.3/0.0/p=0.0) & -& 73.0 (0.3/0.1/p=0.0
 \subsection{Quantitative Analysis}
 \label{sec:quantanal}
 
-%TODO: verify that this still holds
 Are we placing our bets on the wrong horse by focussing solely on $p(t|s)$ and
-replacing it with $p(t|s,C)$? No, the optimised decoder parameters overall
-show that this feature receives significantly more weight than the other
-scores of the translation model. It is surpassed only by the language model for
-some experiments.
+\emph{replacing} it with $p(t|s,C)$? No, if we aggregate the results from all
+experiments that use the replace score weighting method, we find that the
+$p(t|s)$ or $p(t|s,C)$ feature receives the highest weight of the translation
+model scores in $63\%$ of the experiments\footnote{Multiple
+optimizer runs (3) are counted as separate experiments in this test}, the next runner-up with $25\%$ is the forward probability
+$p(s|t)$. 
 
-We have measured the impact of the classifier on translation quality. To get a
+We run the same test for the append score weighting method, which leaves the $p(t|s)$ feature as-is, and
+\emph{append} the $p(t|s,C)$ feature to the translation model.  We find that
+$p(t|s,C)$ still receives most weight in $33\%$ percent of the experiments.
+The unaltered $p(t|s)$ score wins in $29\%$ of the cases and $p(s|t)$ in
+$23\%$ \footnote{The remaining probability mass is distributed over the lexical
+weighting features}.
+
+These tests do show that our focus on this particular feature in the
+translation model is justified.
+
+In another test, we observe whether the language model receives more weight than the highest
+ranking feature in the translation model, 
+
+We have measured the impact of the classifier on translation quality.  To get a
 deeper understanding of the impact of the classifier(s), we measure to what
 extent the phrases used in the test set output of a context-informed system
 differ from the phrases used in the non-context informed output, irrespective
@@ -1023,25 +1037,41 @@ of whether that difference contributes positively or negatively to the
 translation quality. To this end, we ask Moses to verbosely output, for each
 output sentence, which phrases from the intermediate phrase-translation table
 are used. We then analyse how many phrase pairs are unique to the
-context-informed system. These phrases are indicative of the SMT decoder
-choosing a different translation option than it did for the baseline, due to
-the classifier information. Table~\ref{tab:decodediff} shows the results for a
-few of the data sets we used. We also show, in the last column, how many of the
-source-side fragments are not in the baseline, implying that the SMT decoder
-chose a different source-phrase to translate than the baseline did.
+context-informed system.
 
-\begin{table} %redone with new data (jan 2016)
+These phrases are indicative of the SMT decoder
+choosing a different translation option than it did for the baseline, due to
+either the classifier information or optimizer differences.
+Table~\ref{tab:decodediff} shows the results for a few of the data sets we
+used. We also show, in the last column, how many of the source-side fragments
+are not in the baseline, implying that the SMT decoder chose a different
+source-phrase to translate than the baseline did.
+
+To do this, however, we take the optimizer out of the equation by optimizing
+only once on the non-context-informed baseline, and use thise parameters on the
+context-informed experiments as well. Although this leads to sub-optimal
+translation quality, it guarantees that the difference we measure can be
+attributed solely to the inclusion of context information:
+
+
+\begin{table} 
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lllcc}
 \hline
 \textbf{Corpus} & \textbf{Language Pair} & \textbf{Configuration} & \textbf{Diff. pairs} & \textbf{Diff. source} \\
 \hline
-EMEA & English$\rightarrow$Spanish & l1r1 (monolithic/replace) & $15.73\%$ & $14.65\%$ \\
-JRC & English$\rightarrow$Spanish & l1r1 (monolithic/replace) & $41.59\%$ & $35.90\%$ \\
-Yandex (1M) & English$\rightarrow$Russian & l1r1 (monolithic/replace) & $48.92\%$ & $37.30\%$ \\
-Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (M/monolithic/replace) & $41.51\%$ & $40.07\%$ \\
-IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1 (M/monolithic/replace) & $43.78\%$ & $30.29\%$ \\
-IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (M/monolithic/replace) & $43.78\%$ & $30.29\%$ \\
+%old data, optimized on baseline only:
+Yandex (1M) & English$\rightarrow$Russian & l1r1 (M/opt/replace) & $37.72\%$ & $26.58\%$ \\
+Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (M/opt/replace) & $33.57\%$ & $32.50\%$ \\
+IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1 (M/opt/replace) & $26.86\%$ & $20.07\%$ \\
+IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (M/opt/replace) & $24.55\%$ & $12.49\%$ \\
+%new data, but changes may be due to optimiser differences:
+%EMEA & English$\rightarrow$Spanish & l1r1 (monolithic/replace) & $15.73\%$ & $14.65\%$ \\
+%JRC & English$\rightarrow$Spanish & l1r1 (monolithic/replace) & $41.59\%$ & $35.90\%$ \\
+%Yandex (1M) & English$\rightarrow$Russian & l1r1 (monolithic/replace) & $48.92\%$ & $37.30\%$ \\
+%Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (monolithic/replace) & $41.51\%$ & $40.07\%$ \\
+%IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1 (monolithic/replace) & $43.78\%$ & $30.29\%$ \\
+%IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (monolithic/replace) & $43.78\%$ & $30.29\%$ \\
 \hline
 \end{tabular}}
 \caption{The number of phrases in the context-informed test output that are not
@@ -1049,16 +1079,10 @@ in the non-context-informed baseline.}
 \label{tab:decodediff}
 \end{table}
 
-The corpus that scores best on translation quality above baseline, the EMEA
-corpus, also shows the largest difference in the output due to the inclusion of
-context information. Notable here is that the EMEA corpus has a higher fraction
-of source fragments that differ from the baseline. The JRC corpus, for which we
-found positives results as well, comes in second. However, a correlation
-between translation quality and the difference ratio of phrase pairs or source
-phrases, can not be discerned. The lowest difference was made by the IWSLT 2006
-corpus for which we \emph{did} get significant positive results in translation
-quality.
-
+We observe from this data our system does result in a decent amount of
+difference in phrase selection. A correlation between translation quality and
+the difference ratio of phrase pairs or source phrases, can not be discerned,
+however.
 
 \subsection{Classifier type}
 \label{sec:typeopt}
@@ -1164,8 +1188,7 @@ Comparing the two weighting methods, however, is far from trivial. When a
 discrepancy is found between a run with the replace method (4 scores) and the
 run with the append method (5 scores), we can not simply ascribe such a
 difference to the extra score, but must take into account that the very act of
-adding a score shifts the weights for the score vector, even if uniformly
-distributed. Any shift may likely affect the outcome. This
+adding a score shifts the weights for the score vector. Any shift may likely affect the outcome. This
 motivation is also the reason we included a separate baseline for the append
 method in the tables in which we reported it. Moreover, it explains why we can
 not just apply the results of the parameter optimisation of the replace method
