@@ -1183,34 +1183,29 @@ experiments have been conducted with the \emph{replace} method, as it is the
 simplest one. For EMEA (Table~\ref{tab:emea}) and JRC
 (Table~\ref{tab:jrc250k}), the \emph{append} method was tested as well.
 
-Comparing the two weighting methods, however, is far from trivial. When a
-discrepancy is found between a run with the replace method (4 scores) and the
-run with the append method (5 scores), we can not simply ascribe such a
-difference to the extra score, but must take into account that the very act of
-adding a score shifts the weights for the score vector. Any shift may likely affect the outcome. This
-motivation is also the reason we included a separate baseline for the append
-method in the tables in which we reported it. Moreover, it explains why we can
-not just apply the results of the parameter optimisation of the replace method
-to the append method.
+Comparing the two weighting methods, however, is not trivial.  The very act of
+adding a score, for the append method, shifts the weights for the score vector.
+Any shift may likely affect the outcome. This is also the reason that the
+replace and append methods have their own respective baselines in the result
+tables seen so far.
 
-Tables~\ref{tab:emea} (EMEA) and \ref{tab:jrc250k} (JRC) have been run without
-parameter optimisation. Even without context information, the baselines for the
-append method score better than those for the replace method. Effectively, the
-append method's baseline is simply a version with a double feature and
-functionally equivalent to just assigning double weight to the feature.
-
-A comparison is complicated by the fact that the $p(t|s,C)$ score is often simply
-equal to the $p(t|s)$ score, by definition so for any source phrases for which no
+For the append method, the $p(t|s,C)$ score is often simply
+equal to the $p(t|s)$ score, this is by definition so for any source phrases for which no
 classifier was needed, due to not being ambiguous in translation or context. 
 
-We can therefore not draw any satisfactory conclusions on the merit of the
+Given the over-all lack of impact above baseline observed across most
+experiments, we can not draw any satisfactory conclusion on the merit of the
 \emph{append} method versus the \emph{replace} method, given the experiments we
 conducted.
 
-We can, however, use the two different scoring methods to provide insight into
+We can, however, use the append scoring method to provide further insight into
 the classifier results. How often does the classifier assign a $p(t|s,C)$ that
-differs from $p(t|s)$? We compute this the test data of the JRC-Acquis corpus,
-from English to Spanish, as shown in Figure~\ref{fig:scoredifference}.
+differs from $p(t|s)$? We compute this on the test data of the JRC-Acquis corpus,
+from English to Spanish, as shown in Figure~\ref{fig:scoredifference}. For
+training we used a subset of $250,000$ sentences. To ensure measurements are
+not due to optimizer differences, we only optimized the decoder
+parameters on the baseline and applied those weights to the context-informed
+runs as well.
 
 For each occurrence of each source phrase in the test-data, we gathered all
 possible translations and compute the difference $\Delta$ between the
@@ -1227,7 +1222,7 @@ per Equation~\ref{eqn:scorediff}.
 \end{equation}
 
 For Figure~\ref{fig:scoredifference}, we set up bins of size 0.1, so each point
-on the x axis aggregates results of the specified $\Delta \pm 0.05$. A
+on the $x$ axis aggregates results of the specified $\Delta \pm 0.05$. A
 value of zero indicates there is no difference whatsoever, this includes all
 source phrases where either translation or context are unambiguous. A spike and
 outlier can be observed at this point, covering $9\%$ of
@@ -1237,7 +1232,7 @@ pairs to which the classifier assigns a higher probability; the value expresses
 the factor by which the probability is increased. No less than $75\%$ of the
 phrase pairs are in this region. This is a direct result of the discriminative
 filtering done by the classifiers, which prunes the weakest translation
-options, and therefore on the hole raises the probability of the remaining
+options, and therefore on the whole raises the probability of the remaining
 options.
 
 \begin{figure}
