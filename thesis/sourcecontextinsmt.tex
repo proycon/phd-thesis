@@ -1178,10 +1178,7 @@ well be the case in the EMEA experiment.
 
 Two weighting methods have been implemented: the \emph{append} method, adding
 $p(t|s,C)$ as an extra score to the score vector, and the \emph{replace}
-method, which replaces the existing $p(t|s)$ score with $p(t|s,C)$. Most
-experiments have been conducted with the \emph{replace} method, as it is the
-simplest one. For EMEA (Table~\ref{tab:emea}) and JRC
-(Table~\ref{tab:jrc250k}), the \emph{append} method was tested as well.
+method, which replaces the existing $p(t|s)$ score with $p(t|s,C)$.
 
 Comparing the two weighting methods, however, is not trivial.  The very act of
 adding a score, for the append method, shifts the weights for the score vector.
@@ -1200,17 +1197,12 @@ conducted.
 
 We can, however, use the append scoring method to provide further insight into
 the classifier results. How often does the classifier assign a $p(t|s,C)$ that
-differs from $p(t|s)$? We compute this on the test data of the JRC-Acquis corpus,
-from English to Spanish, as shown in Figure~\ref{fig:scoredifference}. For
-training we used a subset of $250,000$ sentences. To ensure measurements are
-not due to optimizer differences, we only optimized the decoder
-parameters on the baseline and applied those weights to the context-informed
-runs as well.
+differs from $p(t|s)$? And how big is this difference?
 
-For each occurrence of each source phrase in the test-data, we gathered all
-possible translations and compute the difference $\Delta$ between the
-context-informed translation probability and the non-context informed one as
-per Equation~\ref{eqn:scorediff}.
+For each occurrence of each source phrase in a given test set, we gather all
+possible translations from the phrase-translation table and compute the
+difference $\Delta$ between the context-informed translation probability and
+the non-context informed one as per Equation~\ref{eqn:scorediff}.
 
 \begin{equation}
   \Delta = 
@@ -1220,6 +1212,13 @@ per Equation~\ref{eqn:scorediff}.
 \end{cases}
 \label{eqn:scorediff}
 \end{equation}
+
+
+We compute this on the test data of the JRC-Acquis corpus,
+from English to Spanish, as shown in Figure~\ref{fig:scoredifference}. For
+training we used a subset of $250,000$ sentences. The measurements are taken
+from the phrase-translation table directly so the decoder and optimizer plays
+no role here. Our measurement merely assesses to what extent context-informed classifiers
 
 For Figure~\ref{fig:scoredifference}, we set up bins of size 0.1, so each point
 on the $x$ axis aggregates results of the specified $\Delta \pm 0.05$. A
