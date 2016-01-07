@@ -529,7 +529,7 @@ unicode support, \url{http://ilk.uvt.nl/ucto}, we used version 0.7.0} For the la
 simply reuse the target-side portion of the parallel corpus; we do not
 introduce additional data for the language model in our experiments.
 
-We use various corpora\footnote{Europarl, EMEA and JRC-Acquis can be obtained through
+We use various corpora\footnote{EMEA and JRC-Acquis can be obtained through
 \url{http://opus.lingfil.uu.se/}} and test various language pairs as we hope to
 come to a general conclusion. Table~\ref{tab:datasets} lists them all, along with the amount of
 sentence pairs we used for training, development and testing.
@@ -540,11 +540,11 @@ sentence pairs we used for training, development and testing.
 \hline
  & \textbf{Languages} & \textbf{Sentence Pairs} \\
 \hline
-\multicolumn{3}{l}{\pbox{12cm}{\textbf{Europarl} -- \emph{The proceedings of the
-European Parliament} \citep{EUROPARL,OPUS2012}} } \\
-& English to Spanish & $250,000$ / $2000$ / $2000$ \\
-& English to Dutch & $250,000$ / $5000$ / $5000$ \\
-\hline
+%\multicolumn{3}{l}{\pbox{12cm}{\textbf{Europarl} -- \emph{The proceedings of the
+%European Parliament} \citep{EUROPARL,OPUS2012}} } \\
+%& English to Spanish & $250,000$ / $2000$ / $2000$ \\
+%& English to Dutch & $250,000$ / $5000$ / $5000$ \\
+%\hline
 \multicolumn{3}{l}{\textbf{EMEA} -- \emph{Documents of the European Medicines
 Agency} \citep{OPUS2012} } \\
  & Spanish to English & $1,088,333$ / $5000$ / $5000$ \\
@@ -795,7 +795,8 @@ l3r3 (experts/append/ib1) & 26.3 (1.4/0.7/p=0.25) & 29.5 (0.7/0.1/p=0.14) & 58.7
 \end{tabular}}
 \caption{Results for Chinese to English on IWSLT 2006 Evaluation Campaign data.
 The numbers in the context-aware configurations (l$x$r$y$), refer to the size
-of the left respectively right context. In parentheses is the triplet $(\overline{s}_{sel},s_{opt},p}$.
+of the left respectively right context. In parentheses is the triplet
+$(\overline{s}_{sel},s_{opt},p)$.}
 \label{tab:iwslt2006zhen}
 \end{table}
 \end{savenotes}
@@ -835,6 +836,7 @@ Dutch to English.
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{TER}  \\ 
 \hline 
 Baseline (replace) & \textbf{31.3} (0.5/0.2/p=-) & \textbf{32.7} (0.2/0.1/p=-) & 47.9 (0.5/0.6/p=-) \\ 
+%TODO: l1r1M is missing
 l2r1 (monolithic/replace/tribl2) & 30.8 (0.5/0.1/p=0.0) & 32.5 (0.2/0.0/p=0.0) & 48.1 (0.5/0.2/p=0.04) \\ 
 l2r2 (monolithic/replace/tribl2) & 30.5 (0.5/0.1/p=0.0) & 32.4 (0.2/0.0/p=0.0) & 48.5 (0.4/0.2/p=0.0) \\ 
 l3r3 (monolithic/replace/tribl2) & 30.4 (0.5/0.1/p=0.0) & 32.3 (0.2/0.1/p=0.0) & 48.4 (0.4/0.2/p=0.0) \\ 
@@ -844,6 +846,7 @@ l2r2 (experts/replace/ib1) & 31.0 (0.5/0.1/p=0.0) & 32.5 (0.2/0.1/p=0.0) & 47.9 
 l3r3 (experts/replace/ib1) & 30.8 (0.5/0.2/p=0.0) & 32.4 (0.2/0.1/p=0.0) & 48.2 (0.5/0.4/p=0.04) \\ 
 \hline
 Baseline (append) & 31.1 (0.5/0.3/p=-) & 32.6 (0.2/0.0/p=-) & 48.1 (0.5/0.7/p=-) \\ 
+%TODO: l1r1M is missing
 l2r1 (monolithic/append/tribl2) & 30.8 (0.5/0.1/p=0.0) & 32.4 (0.2/0.0/p=0.0) & 47.4 (0.4/0.4/p=0.0) \\ 
 l2r2 (monolithic/append/tribl2) & 30.6 (0.5/0.4/p=0.0) & 32.4 (0.2/0.1/p=0.0) & 48.3 (0.4/1.1/p=0.12) \\ 
 l3r3 (monolithic/append/tribl2) & 30.5 (0.5/0.1/p=0.0) & 32.3 (0.2/0.0/p=0.0) & 48.5 (0.4/0.1/p=0.0) \\ 
@@ -942,11 +945,10 @@ l3r3 (experts/append/ib1) & 57.6 (0.5/0.3/p=0.0) & 72.8 (0.4/0.0/p=0.0) & 32.7 (
 From all sets of experiments, we again observe that the results do not surprass
 the baseline, although for JRC some configurations such as \emph{l2r1
 (experts/append/ib1)} do score slightly above threshold, with statistical
-significance, on two out of three metrics.
+significance, on two out of three metrics. It is clear that surpassing the
+non-context informed baseline seems a very tough problem.
 
-Surpassing the non-context informed baseline seems a very tough problem. With
-the JRC and EMEA corpora, we selected parallel corpora that contain highly
-formulaic language. 
+%With the JRC and EMEA corpora, we selected parallel corpora that contain highly formulaic language. 
 
 We have tried additional experiments on different corpora and language pairs. A
 Frisian-Dutch parallel corpus was assembled on mostly literary texts. This
@@ -1060,11 +1062,11 @@ attributed solely to the inclusion of context information:
 \hline
 \textbf{Corpus} & \textbf{Language Pair} & \textbf{Configuration} & \textbf{Diff. pairs} & \textbf{Diff. source} \\
 \hline
-%old data, optimized on baseline only:
-Yandex (1M) & English$\rightarrow$Russian & l1r1 (M/opt/replace) & $37.72\%$ & $26.58\%$ \\
-Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (M/opt/replace) & $33.57\%$ & $32.50\%$ \\
-IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1 (M/opt/replace) & $26.86\%$ & $20.07\%$ \\
-IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (M/opt/replace) & $24.55\%$ & $12.49\%$ \\
+%old data, optimized on baseline only (on purpose!):
+Yandex (1M) & English$\rightarrow$Russian & l1r1 (monolithic/replace) & $37.72\%$ & $26.58\%$ \\
+Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (monolithic/replace) & $33.57\%$ & $32.50\%$ \\
+IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1 (monolithic/replace) & $26.86\%$ & $20.07\%$ \\
+IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (monolithic/replace) & $24.55\%$ & $12.49\%$ \\
 %new data, but changes may be due to optimiser differences:
 %EMEA & English$\rightarrow$Spanish & l1r1 (monolithic/replace) & $15.73\%$ & $14.65\%$ \\
 %JRC & English$\rightarrow$Spanish & l1r1 (monolithic/replace) & $41.59\%$ & $35.90\%$ \\
@@ -1123,15 +1125,19 @@ other words, most ambiguity is present in classifier experts trained on less tha
 \hline
 \textbf{Corpus} & \textbf{Sentence pairs} & \textbf{Languages} & \textbf{Classifier Experts} \\
 \hline
-Europarl & 250,000 & English-Spanish & 828,326 \\
-JRC & 250,000 & English-Spanish & 635,547 \\
+%Europarl & 250,000 & English-Spanish & 828,326 \\
+JRC-Acquis & 1,233,670 & English-Spanish & TODO \\ %TODO: add new count
+%EMEA & 1,088,333 & English-Spanish & n/a \\ %not run with experts?
+%EMEA & 1,080,084 & English-Dutch & n/a  \\ %not run with experts?
 IWSLT 2012 TED & 127,806 & Dutch-English & 193,811 \\
 IWSLT 2006 & 40,274 & Chinese-English & 22,212 \\
 Fryske Akademy & 137,937 & Dutch-Frisian & 276,819 \\
 Fryske Akademy & 137,937 & Frisian-Dutch & 213,573 \\
 \hline
 \end{tabular}}
-\caption{Number of classifier experts generated per data set.}
+\caption{Number of classifier experts generated per data set. 
+%Classifier expert count is not available for EMEA, as it was only run using the monolithic classifier.
+}
 \label{tab:expertcount}
 \end{table}
 
@@ -1254,13 +1260,16 @@ In this section we take a closer look at the translations themselves and see if
 we can discern patterns that can tell us what the effect of source-side context
 information is and when it pays off.
 
-We zoom in on the corpus that performed best, the EMEA corpus -- English to
-Spanish, one million sentence pairs. We compare the context-informed
-\texttt{l1r1} system with the non-context informed baseline to assess the
-impact of the context information. Out of $5,000$ sentences in the test set,
-$3,863$ ($77\%$) are translated identically. This high number again shows that
-it is difficult to make a difference. Nevertheless, $22\%$ differs and results
-in a net gain in translation performance, as seen in Table~\ref{tab:emea}.
+We zoom in on the EMEA corpus -- English to Spanish, one million sentence
+pairs. We compare a special run of the context-informed \texttt{l1r1} system,
+with the non-context informed baseline to assess the impact of context
+information.  In this special run, the decoder parameters have not been
+optimized independently, but are set equal to those of the baseline. Although
+this leads to sub-optimal translation quality, it ensures we compare only the
+effect of the classifier rather than of the optimizer. Out of $5,000$ sentences
+in the test set, $3,863$ ($77\%$) are translated identically. This high number
+again shows that it is difficult to make a difference. Nevertheless, $23\%$
+differs.
 
 The next few examples will show some comparisons in which the context-informed
 improves over the baseline. 
