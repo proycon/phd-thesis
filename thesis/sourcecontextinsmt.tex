@@ -1261,9 +1261,9 @@ we can discern patterns that can tell us what the effect of source-side context
 information is and when it pays off.
 
 We zoom in on the EMEA corpus -- English to Spanish, one million sentence
-pairs. We compare a special run of the context-informed \texttt{l1r1} system,
-with the non-context informed baseline to assess the impact of context
-information.  In this special run, the decoder parameters have not been
+pairs. We compare a special run of the context-informed \texttt{l1r1} system
+with the non-context informed baseline in order to assess the impact of context
+information. In this special run, the decoder parameters have not been
 optimized independently, but are set equal to those of the baseline. Although
 this leads to sub-optimal translation quality, it ensures we compare only the
 effect of the classifier rather than of the optimizer. Out of $5,000$ sentences
@@ -1272,7 +1272,7 @@ again shows that it is difficult to make a difference. Nevertheless, $23\%$
 differs.
 
 The next few examples will show some comparisons in which the context-informed
-improves over the baseline. 
+system improves over the baseline. 
 
 Example~\ref{ex:QAsynonym} shows three examples of the selection of a better
 translation given the context, matching with the reference translation, even
@@ -1346,43 +1346,37 @@ was not available in this study.
 \section{Conclusions and Discussion} 
 \label{sec:conclusion}
 
-We have conducted numerous experiments to assess whether surface-form
+We have conducted a large number of experiments to assess whether surface-form
 source-side context information, i.e. without the use of any explicit
 linguistic features that require supervised parsers or taggers, can improve
 translation quality. Memory-based classifiers were used, and integrated in an
 SMT framework, following techniques commonly employed in WSD. Different
 classifier types, context sizes, and score weighting methods have been
-researched. Parameter optimisation was conducted on the decoder parameters for
-various experiments. Optimisation of classifier parameters and feature
-selection was omitted in order to contain the computational complexity of the
-problem, and considering experiences in prior research.
+researched. Multiple parameter optimisation runs were conducted to obtain the
+decoder parameter weights, compensating for decoder instability. Optimisation
+of classifier parameters and feature selection was omitted in order to contain
+the computational complexity of the problem, and considering lack of positive
+results for optimisation of classifier parameters in Chapter~\ref{chap:clswsd}.
 
 Various distinct corpora and language pairs have been employed for the
-experiments, this in order to ensure that conclusions are of a generic enough
+experiments in order to ensure that conclusions are of a generic enough
 nature rather than incidental artifacts of the type that have arguably steered
-conclusions in previous work. The results of the experiments, however, were
-often in contrast with one another; there was a high degree of variability
-between the corpora and language pairs. Positive results were attained on EMEA,
-for both English to Spanish and English to Dutch, JRC-Acquis (English to
-Spanish) and IWSLT 2006 (English to Chinese).  Especially the former two are
-highly formulaic corpora, and the touristic ``how to'' domain of the IWSLT 2006
-data has formulaic aspects as well, leading us to be cautiously optimistic
-source-side context does have merit under certain constraints.
+conclusions in previous work. Despite all efforts, clear positive results were only
+attained for IWSLT 2006 (English to Chinese). Other scores did not manage to
+surpass the baseline on all accounts.
 
-Finding these precise constraints, however, proved elusive. We hypothesised that
-source-side context information may contribute more when translating to a
-morphologically more complex language, but this was empirically refuted.
-An alternative hypothesis was that a certain quality of translation had to
-be reached before the source-side context can make an impact. This hypothesis
-could not be confirmed on Dutch-Frisian data, and is at odds with the positive
-results on IWSLT 2006 English-Chinese, which had relatively little data and low
-scores.
+%We hypothesised that source-side context information may contribute more when
+%translating to a morphologically more complex language, but this was
+%empirically refuted.  An alternative hypothesis was that a certain quality of
+%translation had to be reached before the source-side context can make an
+%impact. This hypothesis could not be confirmed on Dutch-Frisian data, and is at
+%odds with the positive results on IWSLT 2006 English-Chinese, which had
+%relatively little data and low scores.
 
 In this study, we effectively replicated and expanded upon the part of the work
 of \cite{Stroppa+07} and \cite{Rejwanul+11} that does not depend on further
-linguistic information. Except for the aforementioned formulaic data sets most
-results were below baseline. Inclusion of surface-form source-side context
-information is clearly not the most obvious road for the improvement of MT
+linguistic information. Inclusion of surface-form source-side context
+information is clearly not a good route for the improvement of MT
 quality. It is likely that improvement can be more easily achieved through for
 example optimisation of the target-side language model.
 
@@ -1408,7 +1402,5 @@ phrase in context, the decoder may thus opt to choose to include the context as
 integral part of the phrase.  The target-language model already plays an
 important role here, as it encourages the decoder to choose translation options
 that fit well together. Source-side context modelling, without additional
-linguistic features, seems to only have something to offer for highly formulaic
-corpora. 
-
+linguistic features, seems to have little to nothing to offer.
 
