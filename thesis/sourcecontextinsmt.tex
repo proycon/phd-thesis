@@ -31,8 +31,6 @@ does not generally add much information to that already implicitly available in
 the decoding process.  
 
 
-\textsc{This chapter is based on: } \emph{TODO} %TODO
-
 \section{Introduction}
 
 In phrase-based Statistical Machine Translation (SMT) the problem of
@@ -305,8 +303,9 @@ Now there are two ways in which we can construct a classifier:
 
 \begin{itemize}
   \item \textbf{Monolithic classifier} -- One aggregated classifier for all
-    source phrases.
-  \item \textbf{Classifier experts} -- One classifier per source phrase.
+    source phrases. Used with the TRIBL2 classifier.
+  \item \textbf{Classifier experts} -- One classifier per source phrase. Used
+      with the IB1 classifier.
 \end{itemize}
 
 In this study we will use and compare both methods, which is, for the task at
@@ -529,7 +528,7 @@ unicode support, \url{http://ilk.uvt.nl/ucto}, we used version 0.7.0} For the la
 simply reuse the target-side portion of the parallel corpus; we do not
 introduce additional data for the language model in our experiments.
 
-We use various corpora\footnote{Europarl, EMEA and JRC-Acquis can be obtained through
+We use various corpora\footnote{EMEA and JRC-Acquis can be obtained through
 \url{http://opus.lingfil.uu.se/}} and test various language pairs as we hope to
 come to a general conclusion. Table~\ref{tab:datasets} lists them all, along with the amount of
 sentence pairs we used for training, development and testing.
@@ -540,11 +539,11 @@ sentence pairs we used for training, development and testing.
 \hline
  & \textbf{Languages} & \textbf{Sentence Pairs} \\
 \hline
-\multicolumn{3}{l}{\pbox{12cm}{\textbf{Europarl} -- \emph{The proceedings of the
-European Parliament} \citep{EUROPARL,OPUS2012}} } \\
-& English to Spanish & $250,000$ / $2000$ / $2000$ \\
-& English to Dutch & $250,000$ / $5000$ / $5000$ \\
-\hline
+%\multicolumn{3}{l}{\pbox{12cm}{\textbf{Europarl} -- \emph{The proceedings of the
+%European Parliament} \citep{EUROPARL,OPUS2012}} } \\
+%& English to Spanish & $250,000$ / $2000$ / $2000$ \\
+%& English to Dutch & $250,000$ / $5000$ / $5000$ \\
+%\hline
 \multicolumn{3}{l}{\textbf{EMEA} -- \emph{Documents of the European Medicines
 Agency} \citep{OPUS2012} } \\
  & Spanish to English & $1,088,333$ / $5000$ / $5000$ \\
@@ -733,18 +732,14 @@ language-pairs. We feel that from such results, generic conclusions are drawn
 too quickly. To prevent this pitfall, our experiments are distributed amongst
 various corpora and language pairs.
 
-Section~\ref{sec:results1} will focus on our main hypothesis; does inclusion
-of surface-form source-side-context lead to improved translation quality? We
-will soon observe that this question is not straightforward to answer, as
-the different corpora and language pairs often paint a conflicting image. We
-posit a number of hypotheses to determine in which cases source-side-context
-might work. Section~\ref{sec:qqthreshold} investigates whether a certain
-critical mass of translation quality or quantity of training material is needed
-before source-side context can make an impact. Section~\ref{sec:morphdir}
-analyzes whether translation from morphologically simpler to more complex
-language is what makes the difference. Section~\ref{sec:quantanal} conducts
-a quantitative analysis to assess whether the classifiers make an impact even
-if this does not reflect in the translation quality.
+Section~\ref{sec:results1} will focus on our main hypothesis; does inclusion of
+surface-form source-side-context lead to improved translation quality? We will
+soon observe that this question is not straightforward to answer, as the
+different corpora and language pairs often paint a conflicting image. We posit
+a number of hypotheses to determine in which cases source-side-context might
+work. Section~\ref{sec:quantanal} conducts a quantitative analysis to assess
+whether the classifiers make an impact even if this does not reflect in the
+translation quality.
 
 Our secondary hypotheses concern the ways in which classifiers can be
 integrated in SMT. We investigate the impact of the classifier type and
@@ -766,63 +761,69 @@ training and test sets, whilst drawn from the same source, are distinct subsets
 from the ones used by \cite{Stroppa+07}.} was used in \cite{Stroppa+07}, who
 also reported positive results.
 
-\begin{savenotes}
+In all tables in this section, the context-aware configurations are named
+l$x$r$y$, in which $x$ and $y$ refer to the size of the left and right contexts
+respectively.  Recall that the classifiers may be built in two distinct ways, a
+single \emph{mono}lithic configuration (using \emph{tribl2}), or a classifier
+\emph{expert} configuration (using \emph{ib1}).  Secondly, score weighting can
+be done either through the \emph{replace}  or the \emph{append} method, as
+shown in respectively the upper and lower parts of the tables. 
+
+All experiments have been optimised with MERT on BLEU as described in
+Section~\ref{sec:paropt}.  The score-triple in parentheses corresponds to
+$(\overline{s}_{sel},s_{opt},p)$ and represents the measures discussed in
+Section~\ref{sec:paropt}: test set selection variance, optimizer instability
+variance, and p-value with respect to the baseline.
+
 \begin{table}
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lccc}
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{TER}  \\ 
 \hline
-Baseline (replace) & 26.8 (1.4/0.6) & 29.8 (0.7/0.2/-) & 56.8 (1.5/1.2/-) \\ 
-l1r1 (monolithic/replace/tribl2) & 27.7 (1.4/1.1/p=0.01) & \textbf{30.2} (0.7/0.1/p=0.01) & \textbf{55.5} (1.5/1.6/p=0.0) \\ 
-l2r1 (monolithic/replace/tribl2) & 27.2 (1.4/0.3/p=0.15) & 29.9 (0.7/0.2/p=0.47) & 56.5 (1.5/0.6/p=0.56) \\ 
-l2r2 (monolithic/replace/tribl2) & \textbf{28.0} (1.5/0.4/p=0.0) & 30.0 (0.7/0.2/p=0.26) & 55.8 (1.5/0.6/p=0.02) \\ 
-l3r3 (monolithic/replace/tribl2) & 27.2 (1.4/0.3/p=0.28) & 29.8 (0.7/0.1/p=0.95) & 57.6 (1.5/0.4/p=0.06) \\ 
-l1r1 (experts/replace/ib1) & 26.6 (1.4/0.2/p=0.58) & \textbf{30.2} (0.7/0.1/p=0.03) & 57.0 (1.5/0.1/p=0.57) \\ 
-l2r1 (experts/replace/ib1) & 27.0 (1.4/0.8/p=0.5) & 30.0 (0.7/0.1/p=0.39) & 56.9 (1.5/0.8/p=0.71) \\ 
-l2r2 (experts/replace/ib1)& 27.2 (1.4/0.3/p=0.21) & 30.1 (0.7/0.2/p=0.09) & 56.6 (1.5/0.9/p=0.7) \\ 
-l3r3 (experts/replace/ib1)& 26.2 (1.4/0.5/p=0.2) & 29.8 (0.7/0.2/p=0.83) & 58.1 (1.5/0.8/p=0.0) \\ 
+Baseline \footnotesize{(replace)} & 26.8 (1.4/0.6) & 29.8 (0.7/0.2/-) & 56.8 (1.5/1.2/-) \\ 
+l1r1 \footnotesize{(mono/replace)} & 27.7 (1.4/1.1/p=0.01) & \textbf{30.2} (0.7/0.1/p=0.01) & \textbf{55.5} (1.5/1.6/p=0.0) \\ 
+l2r1 \footnotesize{(mono/replace)} & 27.2 (1.4/0.3/p=0.15) & 29.9 (0.7/0.2/p=0.47) & 56.5 (1.5/0.6/p=0.56) \\ 
+l2r2 \footnotesize{(mono/replace)} & \textbf{28.0} (1.5/0.4/p=0.0) & 30.0 (0.7/0.2/p=0.26) & 55.8 (1.5/0.6/p=0.02) \\ 
+l3r3 \footnotesize{(mono/replace)} & 27.2 (1.4/0.3/p=0.28) & 29.8 (0.7/0.1/p=0.95) & 57.6 (1.5/0.4/p=0.06) \\ 
+l1r1 \footnotesize{(experts/replace)} & 26.6 (1.4/0.2/p=0.58) & \textbf{30.2} (0.7/0.1/p=0.03) & 57.0 (1.5/0.1/p=0.57) \\ 
+l2r1 \footnotesize{(experts/replace)} & 27.0 (1.4/0.8/p=0.5) & 30.0 (0.7/0.1/p=0.39) & 56.9 (1.5/0.8/p=0.71) \\ 
+l2r2 \footnotesize{(experts/replace)}& 27.2 (1.4/0.3/p=0.21) & 30.1 (0.7/0.2/p=0.09) & 56.6 (1.5/0.9/p=0.7) \\ 
+l3r3 \footnotesize{(experts/replace)}& 26.2 (1.4/0.5/p=0.2) & 29.8 (0.7/0.2/p=0.83) & 58.1 (1.5/0.8/p=0.0) \\ 
 \hline
-Baseline (append) & 26.8 (1.4/0.5/-) & 29.8 (0.7/0.1/-) & 57.2 (1.5/0.6/-) \\ 
-l1r1 (monolithic/append/tribl2) & 26.8 (1.4/0.3/p=0.92) & 30.0 (0.7/0.1/p=0.23) & 57.3 (1.5/0.5/p=0.84) \\ 
-l2r1 (monolithic/append/tribl2)& 27.6 (1.4/0.2/p=0.01) & 30.2 (0.7/0.0/p=0.04) & 55.9 (1.5/0.2/p=0.0) \\ 
-l2r2 (monolithic/append/tribl2)& 27.4 (1.4/0.8/p=0.09) & 29.7 (0.7/0.2/p=0.44) & 57.0 (1.5/0.9/p=0.62) \\ 
-l3r3 (monolithic/append/tribl2)& 27.1 (1.4/0.8/p=0.35) & 29.8 (0.7/0.2/p=0.91) & 57.2 (1.5/1.3/p=0.93) \\ 
-l1r1 (experts/append/ib1) & 25.9 (1.4/0.5/p=0.02) & 30.0 (0.7/0.0/p=0.34) & 57.6 (1.5/0.7/p=0.37) \\ 
-l2r1 (experts/append/ib1) & \textbf{27.9} (1.4/0.2/p=0.0) & \textbf{30.3} (0.7/0.2/p=0.01) & \textbf{55.6} (1.5/0.4/p=0.0) \\ 
-l2r2 (experts/append/ib1) & 27.3 (1.4/0.5/p=0.15) & 30.0 (0.7/0.3/p=0.25) & 56.5 (1.5/0.4/p=0.05) \\ 
-l3r3 (experts/append/ib1) & 26.3 (1.4/0.7/p=0.25) & 29.5 (0.7/0.1/p=0.14) & 58.7 (1.5/0.4/p=0.0) \\ 
+Baseline \footnotesize{(append)} & 26.8 (1.4/0.5/-) & 29.8 (0.7/0.1/-) & 57.2 (1.5/0.6/-) \\ 
+l1r1 \footnotesize{(mono/append)} & 26.8 (1.4/0.3/p=0.92) & 30.0 (0.7/0.1/p=0.23) & 57.3 (1.5/0.5/p=0.84) \\ 
+l2r1 \footnotesize{(mono/append)}& 27.6 (1.4/0.2/p=0.01) & 30.2 (0.7/0.0/p=0.04) & 55.9 (1.5/0.2/p=0.0) \\ 
+l2r2 \footnotesize{(mono/append)}& 27.4 (1.4/0.8/p=0.09) & 29.7 (0.7/0.2/p=0.44) & 57.0 (1.5/0.9/p=0.62) \\ 
+l3r3 \footnotesize{(mono/append)}& 27.1 (1.4/0.8/p=0.35) & 29.8 (0.7/0.2/p=0.91) & 57.2 (1.5/1.3/p=0.93) \\ 
+l1r1 \footnotesize{(experts/append)} & 25.9 (1.4/0.5/p=0.02) & 30.0 (0.7/0.0/p=0.34) & 57.6 (1.5/0.7/p=0.37) \\ 
+l2r1 \footnotesize{(experts/append)} & \textbf{27.9} (1.4/0.2/p=0.0) & \textbf{30.3} (0.7/0.2/p=0.01) & \textbf{55.6} (1.5/0.4/p=0.0) \\ 
+l2r2 \footnotesize{(experts/append)} & 27.3 (1.4/0.5/p=0.15) & 30.0 (0.7/0.3/p=0.25) & 56.5 (1.5/0.4/p=0.05) \\ 
+l3r3 \footnotesize{(experts/append)} & 26.3 (1.4/0.7/p=0.25) & 29.5 (0.7/0.1/p=0.14) & 58.7 (1.5/0.4/p=0.0) \\ 
 \end{tabular}}
 \caption{Results for Chinese to English on IWSLT 2006 Evaluation Campaign data.
 The numbers in the context-aware configurations (l$x$r$y$), refer to the size
-of the left respectively right context. In parentheses is the triplet $(\overline{s}_{sel},s_{opt},p}$.
+of the left respectively right context. }
+%In parentheses is the triplet ($\overline{s}_{sel}$,$s_{opt}$,$p$).}
 \label{tab:iwslt2006zhen}
 \end{table}
-\end{savenotes}
 
-Several local context sizes have been attempted. The number after l refers to
-the numbers of words to the left of the source phrase. The number after r
-denotes the right context size. Further parameters to the system are enclosed
-within parentheses.  Recall that the classifiers may be built in two distinct
-ways, a single \emph{monolithic} configuration (with \emph{tribl2}), as is used
-here, or a classifier \emph{expert} configuration (with \emph{ib1}).  Secondly,
-score weighting can be done either through the \emph{replace}  or the
-\emph{append} method, as shown in respectively the upper and lower parts of
-Table~\ref{tab:iwslt2006zhen}.  In this section we focus exclusively on the
+
+In this section we focus exclusively on the
 question whether context-informed systems are beneficial; a comparison of the
 score weighting methods and classifier configurations is postponed until a
-later section.  All experiments have been optimised with MERT on BLEU as
-described in Section~\ref{sec:paropt}.
+later section.  
 
-For this experiment we see scores over the baselines for all experiments.
-However, not all pass the strict significance tests we impose. Only
-configurations l1r1/monolithic/replace and l2r1/monolithic/append and
-l2r2/experts/append pass the significance tests on all metrics, where we
-consider a $p <= 0.05$ to be the pass criterium. Other configurations either do
-not pass the significance tests at all, or paint a conflicting picture for
-certain metrics. Nevertheless, we can conclude that in this experiment
-incorporating source-side context information using machine learning proves
-beneficial in at least certain configurations.
+For the Chinese to English experiment in Table~\ref{tab:iwslt2006zhen} we see
+scores over the baselines for all experiments.  However, not all pass the
+strict significance tests we impose. Only configurations
+l1r1/monolithic/replace and l2r1/monolithic/append and l2r2/experts/append pass
+the significance tests on all metrics, where we consider a $p <= 0.05$ to be
+the passing criterium. Other configurations either do not pass the significance
+tests at all, or paint a conflicting picture for certain metrics. Nevertheless,
+we can conclude that in this experiment incorporating source-side context
+information using machine learning proves beneficial in at least certain
+configurations.
 
 In Table~\ref{tab:iwslt2012} we see results on the IWSLT 2012 corpus, for the
 Dutch to English.  
@@ -834,23 +835,25 @@ Dutch to English.
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{TER}  \\ 
 \hline 
-Baseline (replace) & \textbf{31.3} (0.5/0.2/p=-) & \textbf{32.7} (0.2/0.1/p=-) & 47.9 (0.5/0.6/p=-) \\ 
-l2r1 (monolithic/replace/tribl2) & 30.8 (0.5/0.1/p=0.0) & 32.5 (0.2/0.0/p=0.0) & 48.1 (0.5/0.2/p=0.04) \\ 
-l2r2 (monolithic/replace/tribl2) & 30.5 (0.5/0.1/p=0.0) & 32.4 (0.2/0.0/p=0.0) & 48.5 (0.4/0.2/p=0.0) \\ 
-l3r3 (monolithic/replace/tribl2) & 30.4 (0.5/0.1/p=0.0) & 32.3 (0.2/0.1/p=0.0) & 48.4 (0.4/0.2/p=0.0) \\ 
-l1r1 (experts/replace/ib1) & \textbf{31.3} (0.5/0.0/p=0.63) & 32.6 (0.2/0.0/p=0.05) & \textbf{47.1} (0.4/0.3/p=0.0) \\ 
-l2r1 (experts/replace/ib1) & 30.9 (0.5/0.1/p=0.0) & 32.5 (0.2/0.0/p=0.0) & 48.3 (0.5/0.1/p=0.0) \\ 
-l2r2 (experts/replace/ib1) & 31.0 (0.5/0.1/p=0.0) & 32.5 (0.2/0.1/p=0.0) & 47.9 (0.5/0.1/p=0.82) \\ 
-l3r3 (experts/replace/ib1) & 30.8 (0.5/0.2/p=0.0) & 32.4 (0.2/0.1/p=0.0) & 48.2 (0.5/0.4/p=0.04) \\ 
+Baseline \footnotesize{(replace)} & \textbf{31.3} (0.5/0.2/p=-) & \textbf{32.7} (0.2/0.1/p=-) & 47.9 (0.5/0.6/p=-) \\ 
+%TODO: l1r1M is missing
+l2r1 \footnotesize{(mono/replace)} & 30.8 (0.5/0.1/p=0.0) & 32.5 (0.2/0.0/p=0.0) & 48.1 (0.5/0.2/p=0.04) \\ 
+l2r2 \footnotesize{(mono/replace)} & 30.5 (0.5/0.1/p=0.0) & 32.4 (0.2/0.0/p=0.0) & 48.5 (0.4/0.2/p=0.0) \\ 
+l3r3 \footnotesize{(mono/replace)} & 30.4 (0.5/0.1/p=0.0) & 32.3 (0.2/0.1/p=0.0) & 48.4 (0.4/0.2/p=0.0) \\ 
+l1r1 \footnotesize{(experts/replace)} & \textbf{31.3} (0.5/0.0/p=0.63) & 32.6 (0.2/0.0/p=0.05) & \textbf{47.1} (0.4/0.3/p=0.0) \\ 
+l2r1 \footnotesize{(experts/replace)} & 30.9 (0.5/0.1/p=0.0) & 32.5 (0.2/0.0/p=0.0) & 48.3 (0.5/0.1/p=0.0) \\ 
+l2r2 \footnotesize{(experts/replace)} & 31.0 (0.5/0.1/p=0.0) & 32.5 (0.2/0.1/p=0.0) & 47.9 (0.5/0.1/p=0.82) \\ 
+l3r3 \footnotesize{(experts/replace)} & 30.8 (0.5/0.2/p=0.0) & 32.4 (0.2/0.1/p=0.0) & 48.2 (0.5/0.4/p=0.04) \\ 
 \hline
-Baseline (append) & 31.1 (0.5/0.3/p=-) & 32.6 (0.2/0.0/p=-) & 48.1 (0.5/0.7/p=-) \\ 
-l2r1 (monolithic/append/tribl2) & 30.8 (0.5/0.1/p=0.0) & 32.4 (0.2/0.0/p=0.0) & 47.4 (0.4/0.4/p=0.0) \\ 
-l2r2 (monolithic/append/tribl2) & 30.6 (0.5/0.4/p=0.0) & 32.4 (0.2/0.1/p=0.0) & 48.3 (0.4/1.1/p=0.12) \\ 
-l3r3 (monolithic/append/tribl2) & 30.5 (0.5/0.1/p=0.0) & 32.3 (0.2/0.0/p=0.0) & 48.5 (0.4/0.1/p=0.0) \\ 
-l1r1 (experts/append/ib1) & \textbf{31.3} (0.5/0.1/p=0.11) & \textbf{32.6} (0.2/0.0/p=0.49) & \textbf{47.1} (0.4/0.5/p=0.0) \\ 
-l2r1 (experts/append/ib1) & 30.9 (0.5/0.3/p=0.05) & 32.5 (0.2/0.0/p=0.0) & 47.9 (0.5/0.8/p=0.01) \\ 
-l2r2 (experts/append/ib1) & 30.6 (0.5/0.3/p=0.0) & 32.4 (0.2/0.1/p=0.0) & 48.4 (0.5/0.8/p=0.01) \\ 
-l3r3 (experts/append/ib1) & 30.7 (0.5/0.2/p=0.0) & 32.4 (0.2/0.0/p=0.0) & 48.3 (0.4/0.2/p=0.08) \\ 
+Baseline \footnotesize{(append)} & 31.1 (0.5/0.3/p=-) & 32.6 (0.2/0.0/p=-) & 48.1 (0.5/0.7/p=-) \\ 
+%TODO: l1r1M is missing
+l2r1 \footnotesize{(mono/append)} & 30.8 (0.5/0.1/p=0.0) & 32.4 (0.2/0.0/p=0.0) & 47.4 (0.4/0.4/p=0.0) \\ 
+l2r2 \footnotesize{(mono/append)} & 30.6 (0.5/0.4/p=0.0) & 32.4 (0.2/0.1/p=0.0) & 48.3 (0.4/1.1/p=0.12) \\ 
+l3r3 \footnotesize{(mono/append)} & 30.5 (0.5/0.1/p=0.0) & 32.3 (0.2/0.0/p=0.0) & 48.5 (0.4/0.1/p=0.0) \\ 
+l1r1 \footnotesize{(experts/append)} & \textbf{31.3} (0.5/0.1/p=0.11) & \textbf{32.6} (0.2/0.0/p=0.49) & \textbf{47.1} (0.4/0.5/p=0.0) \\ 
+l2r1 \footnotesize{(experts/append)} & 30.9 (0.5/0.3/p=0.05) & 32.5 (0.2/0.0/p=0.0) & 47.9 (0.5/0.8/p=0.01) \\ 
+l2r2 \footnotesize{(experts/append)} & 30.6 (0.5/0.3/p=0.0) & 32.4 (0.2/0.1/p=0.0) & 48.4 (0.5/0.8/p=0.01) \\ 
+l3r3 \footnotesize{(experts/append)} & 30.7 (0.5/0.2/p=0.0) & 32.4 (0.2/0.0/p=0.0) & 48.3 (0.4/0.2/p=0.08) \\ 
 \hline
 \end{tabular}}
 \caption{Results on IWSLT 2012, Dutch to English}
@@ -871,33 +874,33 @@ to Dutch. These results are shown in Table~\ref{tab:emea} for EMEA, and Table~\r
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{TER} \\ 
 \hline
-\multicolumn{6}{|c|}{EMEA-en-es} \\
+\multicolumn{4}{|c|}{EMEA-en-es} \\
 \hline
-Baseline (replace/tribl2) & 71.5 (0.5/0.0/p=-) & 80.9 (0.4/0.0/p=-) & 25.8 (0.6/0.0/p=-) \\ 
-l1r1 (monolithic/replace/tribl2) & 71.5 (0.5/0.0/p=0.89) & \textbf{81.0} (0.4/0.1/p=0.49) & \textbf{25.7} (0.6/0.1/p=0.02) \\ 
-l2r1 (monolithic/replace/tribl2) & 71.5 (0.5/0.0/p=0.43) & 80.9 (0.4/0.0/p=0.75) & 25.8 (0.6/0.1/p=0.78) \\ 
-l2r2 (monolithic/replace/tribl2) & 71.5 (0.5/0.1/p=0.65) & 80.9 (0.4/0.1/p=0.62) & 25.8 (0.6/0.1/p=0.44) \\ 
-l3r3 (monolithic/replace/tribl2) & 71.5 (0.5/0.0/p=0.72) & 80.9 (0.4/0.1/p=0.93) & 25.8 (0.6/0.1/p=0.32) \\ 
+Baseline \footnotesize{(replace)} & 71.5 (0.5/0.0/p=-) & 80.9 (0.4/0.0/p=-) & 25.8 (0.6/0.0/p=-) \\ 
+l1r1 \footnotesize{(mono/replace)} & 71.5 (0.5/0.0/p=0.89) & \textbf{81.0} (0.4/0.1/p=0.49) & \textbf{25.7} (0.6/0.1/p=0.02) \\ 
+l2r1 \footnotesize{(mono/replace)} & 71.5 (0.5/0.0/p=0.43) & 80.9 (0.4/0.0/p=0.75) & 25.8 (0.6/0.1/p=0.78) \\ 
+l2r2 \footnotesize{(mono/replace)} & 71.5 (0.5/0.1/p=0.65) & 80.9 (0.4/0.1/p=0.62) & 25.8 (0.6/0.1/p=0.44) \\ 
+l3r3 \footnotesize{(mono/replace)} & 71.5 (0.5/0.0/p=0.72) & 80.9 (0.4/0.1/p=0.93) & 25.8 (0.6/0.1/p=0.32) \\ 
 \hline
-Baseline (append/tribl2) & 71.5 (0.5/0.0/p=-) & 80.9 (0.4/0.0/p=-) & 25.8 (0.6/0.0/p=-) \\ 
-l1r1 (monolithic/append/tribl2) & 71.5 (0.5/0.0/p=0.74) & 80.9 (0.4/0.1/p=0.43) & 25.8 (0.6/0.1/p=0.92) \\ 
-l2r1 (monolithic/append/tribl2) & \textbf{71.6} (0.5/0.0/p=0.03) & \textbf{81.0} (0.4/0.0/p=0.42) & 25.8 (0.6/0.1/p=0.39) \\ 
-l2r2 (monolithic/append/tribl2) & 71.5 (0.5/0.1/p=0.4) & 80.9 (0.4/0.0/p=0.07) & 25.9 (0.6/0.1/p=0.17) \\ 
-l3r3 (monolithic/append/tribl2) & 71.5 (0.5/0.1/p=0.51) & 80.9 (0.4/0.1/p=0.74) & 25.8 (0.6/0.1/p=0.9) \\ 
+Baseline \footnotesize{(append)} & 71.5 (0.5/0.0/p=-) & 80.9 (0.4/0.0/p=-) & 25.8 (0.6/0.0/p=-) \\ 
+l1r1 \footnotesize{(mono/append)} & 71.5 (0.5/0.0/p=0.74) & 80.9 (0.4/0.1/p=0.43) & 25.8 (0.6/0.1/p=0.92) \\ 
+l2r1 \footnotesize{(mono/append)} & \textbf{71.6} (0.5/0.0/p=0.03) & \textbf{81.0} (0.4/0.0/p=0.42) & 25.8 (0.6/0.1/p=0.39) \\ 
+l2r2 \footnotesize{(mono/append)} & 71.5 (0.5/0.1/p=0.4) & 80.9 (0.4/0.0/p=0.07) & 25.9 (0.6/0.1/p=0.17) \\ 
+l3r3 \footnotesize{(mono/append)} & 71.5 (0.5/0.1/p=0.51) & 80.9 (0.4/0.1/p=0.74) & 25.8 (0.6/0.1/p=0.9) \\ 
 \hline
-\multicolumn{6}{|c|}{EMEA-en-nl} \\
+\multicolumn{4}{|c|}{EMEA-en-nl} \\
 \hline
-Baseline (replace/tribl2) & \textbf{68.9} (0.6/0.1/p=-) & \textbf{0.0} (0.0/0.0/p=-) & 28.3 (0.7/0.1/p=-) \\ 
-l1r1 (monolithic/replace/tribl2) & \textbf{68.9} (0.6/0.0/p=0.83) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.0/p=0.04) \\ 
-l2r1 (monolithic/replace/tribl2) & 68.8 (0.6/0.0/p=0.28) & \textbf{0.0} (0.0/0.0/p=0.0) & 28.3 (0.7/0.1/p=0.2) \\ 
-l2r2 (monolithic/replace/tribl2) & 68.8 (0.6/0.0/p=0.32) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.1/p=0.03) \\ 
-l3r3 (monolithic/replace/tribl2) & \textbf{68.9} (0.6/0.1/p=0.8) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.0/p=0.01) \\ 
+Baseline  \footnotesize{(replace)}& \textbf{68.9} (0.6/0.1/p=-) & \textbf{0.0} (0.0/0.0/p=-) & 28.3 (0.7/0.1/p=-) \\ 
+l1r1 \footnotesize{(mono/replace)} & \textbf{68.9} (0.6/0.0/p=0.83) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.0/p=0.04) \\ 
+l2r1 \footnotesize{(mono/replace)} & 68.8 (0.6/0.0/p=0.28) & \textbf{0.0} (0.0/0.0/p=0.0) & 28.3 (0.7/0.1/p=0.2) \\ 
+l2r2 \footnotesize{(mono/replace)} & 68.8 (0.6/0.0/p=0.32) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.1/p=0.03) \\ 
+l3r3 \footnotesize{(mono/replace)} & \textbf{68.9} (0.6/0.1/p=0.8) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.0/p=0.01) \\ 
 \hline
-Baseline (append/tribl2) & 68.8 (0.6/0.1/p=-) & \textbf{0.0} (0.0/0.0/p=-) & 28.3 (0.7/0.0/p=-) \\ 
-l1r1 (monolithic/append/tribl2) & \textbf{68.9} (0.6/0.1/p=0.12) & \textbf{0.0} (0.0/0.0/p=0.0) & 28.3 (0.7/0.1/p=0.56) \\ 
-l2r1 (monolithic/append/tribl2) & 68.8 (0.6/0.1/p=0.9) & \textbf{0.0} (0.0/0.0/p=0.0) & 28.3 (0.7/0.1/p=0.32) \\ 
-l2r2 (monolithic/append/tribl2) & 68.8 (0.6/0.1/p=0.76) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.1/p=0.02) \\ 
-l3r3 (monolithic/append/tribl2) & 68.8 (0.6/0.0/p=0.69) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.0/p=0.04) \\ 
+Baseline  \footnotesize{(append)}& 68.8 (0.6/0.1/p=-) & \textbf{0.0} (0.0/0.0/p=-) & 28.3 (0.7/0.0/p=-) \\ 
+l1r1 \footnotesize{(mono/append)} & \textbf{68.9} (0.6/0.1/p=0.12) & \textbf{0.0} (0.0/0.0/p=0.0) & 28.3 (0.7/0.1/p=0.56) \\ 
+l2r1 \footnotesize{(mono/append)} & 68.8 (0.6/0.1/p=0.9) & \textbf{0.0} (0.0/0.0/p=0.0) & 28.3 (0.7/0.1/p=0.32) \\ 
+l2r2 \footnotesize{(mono/append)} & 68.8 (0.6/0.1/p=0.76) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.1/p=0.02) \\ 
+l3r3 \footnotesize{(mono/append)} & 68.8 (0.6/0.0/p=0.69) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.0/p=0.04) \\ 
 \hline
 \end{tabular}}
 \caption{Results on EMEA, English to Spanish and English to Dutch}
@@ -911,27 +914,27 @@ l3r3 (monolithic/append/tribl2) & 68.8 (0.6/0.0/p=0.69) & \textbf{0.0} (0.0/0.0/
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{TER} \\ 
 \hline
-\multicolumn{6}{|c|}{JRC-en-es} \\
+\multicolumn{4}{|c|}{JRC-en-es} \\
 \hline
-Baseline (replace) & 57.6 (0.5/0.2/p=-) & \textbf{73.1} (0.4/0.0/p=-) & 32.7 (0.5/0.2/p=-) \\ 
-l1r1 (monolithic/replace/tribl2) & 57.2 (0.5/0.1/p=0.0) & 72.2 (0.4/0.1/p=0.0) & 33.1 (0.5/0.4/p=0.0) \\ 
-l2r1 (monolithic/replace/tribl2) & 57.6 (0.5/0.1/p=0.74) & 72.5 (0.4/0.1/p=0.0) & 32.7 (0.5/0.2/p=0.86) \\ 
-l2r2 (monolithic/replace/tribl2) & 57.7 (0.5/0.1/p=0.0) & 72.6 (0.4/0.1/p=0.0) & 32.8 (0.5/0.2/p=0.23) \\ 
-l3r3 (monolithic/replace/tribl2) & \textbf{57.8} (0.5/0.0/p=0.01) & 72.7 (0.4/0.0/p=0.0) & \textbf{32.5} (0.5/0.2/p=0.0) \\ 
-l1r1 (experts/replace/ib1) & 57.2 (0.5/0.1/p=0.0) & 72.1 (0.4/0.0/p=0.0) & 33.4 (0.5/0.2/p=0.0) \\ 
-l2r1 (experts/replace/ib1) & 57.0 (0.5/0.4/p=0.0) & 72.2 (0.4/0.1/p=0.0) & 33.5 (0.5/0.4/p=0.0) \\ 
-l2r2 (experts/replace/ib1) & 57.6 (0.5/0.2/p=0.26) & 72.5 (0.4/0.1/p=0.0) & 32.8 (0.5/0.4/p=0.03) \\ 
-l3r3 (experts/replace/ib1) & \textbf{57.8} (0.5/0.0/p=0.0) & 72.7 (0.4/0.1/p=0.0) & 32.7 (0.5/0.1/p=0.89) \\ 
+Baseline  \footnotesize{(replace)}& 57.6 (0.5/0.2/p=-) & \textbf{73.1} (0.4/0.0/p=-) & 32.7 (0.5/0.2/p=-) \\ 
+l1r1 \footnotesize{\footnotesize{(mono/replace)}} & 57.2 (0.5/0.1/p=0.0) & 72.2 (0.4/0.1/p=0.0) & 33.1 (0.5/0.4/p=0.0) \\ 
+l2r1 \footnotesize{(mono/replace)} & 57.6 (0.5/0.1/p=0.74) & 72.5 (0.4/0.1/p=0.0) & 32.7 (0.5/0.2/p=0.86) \\ 
+l2r2 \footnotesize{(mono/replace)} & 57.7 (0.5/0.1/p=0.0) & 72.6 (0.4/0.1/p=0.0) & 32.8 (0.5/0.2/p=0.23) \\ 
+l3r3 \footnotesize{(mono/replace)} & \textbf{57.8} (0.5/0.0/p=0.01) & 72.7 (0.4/0.0/p=0.0) & \textbf{32.5} (0.5/0.2/p=0.0) \\ 
+l1r1 \footnotesize{(experts/replace)} & 57.2 (0.5/0.1/p=0.0) & 72.1 (0.4/0.0/p=0.0) & 33.4 (0.5/0.2/p=0.0) \\ 
+l2r1 \footnotesize{(experts/replace)} & 57.0 (0.5/0.4/p=0.0) & 72.2 (0.4/0.1/p=0.0) & 33.5 (0.5/0.4/p=0.0) \\ 
+l2r2 \footnotesize{(experts/replace)} & 57.6 (0.5/0.2/p=0.26) & 72.5 (0.4/0.1/p=0.0) & 32.8 (0.5/0.4/p=0.03) \\ 
+l3r3 \footnotesize{(experts/replace)} & \textbf{57.8} (0.5/0.0/p=0.0) & 72.7 (0.4/0.1/p=0.0) & 32.7 (0.5/0.1/p=0.89) \\ 
 \hline
-Baseline (append) & 57.6 (0.5/0.1/p=-) & \textbf{73.1} (0.4/0.0/p=-) & 32.8 (0.5/0.1/p=-) \\ 
-l1r1 (monolithic/append/tribl2) & 57.6 (0.5/0.1/p=0.07) & 72.7 (0.4/0.0/p=0.0) & 32.7 (0.5/0.1/p=0.18) \\ 
-l2r1 (monolithic/append/tribl2) & 57.6 (0.5/0.1/p=0.02) & 72.8 (0.4/0.1/p=0.0) & 32.7 (0.5/0.2/p=0.05) \\ 
-l2r2 (monolithic/append/tribl2) & 57.5 (0.5/0.1/p=0.25) & 72.7 (0.4/0.1/p=0.0) & 32.9 (0.5/0.0/p=0.04) \\ 
-l3r3 (monolithic/append/tribl2) & 57.5 (0.5/0.3/p=0.58) & 72.7 (0.4/0.1/p=0.0) & 32.9 (0.5/0.3/p=0.02) \\ 
-l1r1 (experts/append/ib1) & \textbf{57.7} (0.5/0.1/p=0.07) & 72.8 (0.4/0.1/p=0.0) & 32.7 (0.5/0.1/p=0.29) \\ 
-l2r1 (experts/append/ib1) & \textbf{57.7} (0.5/0.1/p=0.0) & 72.8 (0.4/0.0/p=0.0) & \textbf{32.6} (0.5/0.2/p=0.0) \\ 
-l2r2 (experts/append/ib1) & 57.5 (0.5/0.3/p=0.44) & 72.7 (0.4/0.1/p=0.0) & 32.9 (0.5/0.2/p=0.01) \\ 
-l3r3 (experts/append/ib1) & 57.6 (0.5/0.3/p=0.0) & 72.8 (0.4/0.0/p=0.0) & 32.7 (0.5/0.4/p=0.05) \\ 
+Baseline  \footnotesize{(append)}& 57.6 (0.5/0.1/p=-) & \textbf{73.1} (0.4/0.0/p=-) & 32.8 (0.5/0.1/p=-) \\ 
+l1r1 \footnotesize{(mono/append)} & 57.6 (0.5/0.1/p=0.07) & 72.7 (0.4/0.0/p=0.0) & 32.7 (0.5/0.1/p=0.18) \\ 
+l2r1 \footnotesize{(mono/append)} & 57.6 (0.5/0.1/p=0.02) & 72.8 (0.4/0.1/p=0.0) & 32.7 (0.5/0.2/p=0.05) \\ 
+l2r2 \footnotesize{(mono/append)} & 57.5 (0.5/0.1/p=0.25) & 72.7 (0.4/0.1/p=0.0) & 32.9 (0.5/0.0/p=0.04) \\ 
+l3r3 \footnotesize{(mono/append)} & 57.5 (0.5/0.3/p=0.58) & 72.7 (0.4/0.1/p=0.0) & 32.9 (0.5/0.3/p=0.02) \\ 
+l1r1 \footnotesize{(experts/append)} & \textbf{57.7} (0.5/0.1/p=0.07) & 72.8 (0.4/0.1/p=0.0) & 32.7 (0.5/0.1/p=0.29) \\ 
+l2r1 \footnotesize{(experts/append)} & \textbf{57.7} (0.5/0.1/p=0.0) & 72.8 (0.4/0.0/p=0.0) & \textbf{32.6} (0.5/0.2/p=0.0) \\ 
+l2r2 \footnotesize{(experts/append)} & 57.5 (0.5/0.3/p=0.44) & 72.7 (0.4/0.1/p=0.0) & 32.9 (0.5/0.2/p=0.01) \\ 
+l3r3 \footnotesize{(experts/append)} & 57.6 (0.5/0.3/p=0.0) & 72.8 (0.4/0.0/p=0.0) & 32.7 (0.5/0.4/p=0.05) \\ 
 \hline
 \end{tabular}}
 \caption{Results on JRC, English to Spanish}
@@ -941,12 +944,9 @@ l3r3 (experts/append/ib1) & 57.6 (0.5/0.3/p=0.0) & 72.8 (0.4/0.0/p=0.0) & 32.7 (
 
 From all sets of experiments, we again observe that the results do not surprass
 the baseline, although for JRC some configurations such as \emph{l2r1
-(experts/append/ib1)} do score slightly above threshold, with statistical
-significance, on two out of three metrics.
-
-Surpassing the non-context informed baseline seems a very tough problem. With
-the JRC and EMEA corpora, we selected parallel corpora that contain highly
-formulaic language. 
+\footnotesize{(experts/append)}} do score slightly above threshold, with statistical
+significance, on two out of three metrics. It is clear that surpassing the
+non-context informed baseline seems a very tough problem.
 
 We have tried additional experiments on different corpora and language pairs. A
 Frisian-Dutch parallel corpus was assembled on mostly literary texts. This
@@ -964,15 +964,15 @@ Table~\ref{tab:fa} shows an excerpt of these experimental results.
 \hline
 \multicolumn{4}{|c|}{FryskeAkademy-nl-fy} \\
 \hline
-Baseline (replace) & \textbf{60.7} (0.6/0.1/p=-) & \textbf{73.9} (0.4/0.0/p=-) & 33.6 (0.6/0.1/p=-) \\ 
-l1r1 (monolithic/replace) & 60.3 (0.6/0.1/p=0.0) & 73.7 (0.5/0.0/p=0.0) & \textbf{33.5} (0.6/0.1/p=0.2) \\ 
-l2r1 (monolithic/replace) & 60.3 (0.6/0.1/p=0.0) & 73.7 (0.5/0.0/p=0.0) & \textbf{33.5} (0.6/0.1/p=0.2) \\ 
+Baseline  \footnotesize{(replace)}& \textbf{60.7} (0.6/0.1/p=-) & \textbf{73.9} (0.4/0.0/p=-) & 33.6 (0.6/0.1/p=-) \\ 
+l1r1 \footnotesize{(mono/replace)} & 60.3 (0.6/0.1/p=0.0) & 73.7 (0.5/0.0/p=0.0) & \textbf{33.5} (0.6/0.1/p=0.2) \\ 
+l2r1 \footnotesize{(mono/replace)} & 60.3 (0.6/0.1/p=0.0) & 73.7 (0.5/0.0/p=0.0) & \textbf{33.5} (0.6/0.1/p=0.2) \\ 
 \hline
 \multicolumn{4}{|c|}{FryskeAkademy-fy-nl} \\
 \hline
-Baseline (replace) & \textbf{55.3} (0.7/0.0/p=-) & - & \textbf{28.6} (0.6/0.0/p=-) \\ 
-l1r1 (monolithic/replace/tribl2) & 54.9 (0.6/0.0/p=0.0) & -& 28.8 (0.5/0.0/p=0.0) \\ 
-l2r1 (monolithic/replace/tribl2) & 54.9 (0.6/0.1/p=0.0) & -& 28.9 (0.6/0.0/p=0.0) \\ 
+Baseline  \footnotesize{(replace)}& \textbf{55.3} (0.7/0.0/p=-) & - & \textbf{28.6} (0.6/0.0/p=-) \\ 
+l1r1 \footnotesize{(mono/replace)} & 54.9 (0.6/0.0/p=0.0) & -& 28.8 (0.5/0.0/p=0.0) \\ 
+l2r1 \footnotesize{(mono/replace)} & 54.9 (0.6/0.1/p=0.0) & -& 28.9 (0.6/0.0/p=0.0) \\ 
 \hline
 \end{tabular}}
 \caption{An excerpt of the results on the Frisian parallel corpus, Dutch to Frisian and Frisian to Dutch. For the latter, no METEOR scores are available} %TODO: why?
@@ -995,9 +995,9 @@ of these results is shown in Table~\ref{tab:yandex}
 \hline
 \multicolumn{4}{|c|}{Yandex English-Russian} \\
 \hline
-Baseline (replace) & \textbf{15.7} (0.3/0.0/p=-) & -& \textbf{72.0} (0.3/0.0/p=-) \\ 
-l1r1 (monolithic/replace/tribl2) & 14.7 (0.3/0.0/p=0.0) & -& 73.3 (0.3/0.0/p=0.0) \\ 
-l2r1 (monolithic/replace/tribl2) & 15.0 (0.3/0.0/p=0.0) & -& 73.0 (0.3/0.1/p=0.0) \\ 
+Baseline  \footnotesize{(replace)}& \textbf{15.7} (0.3/0.0/p=-) & -& \textbf{72.0} (0.3/0.0/p=-) \\ 
+l1r1 \footnotesize{(mono/replace)} & 14.7 (0.3/0.0/p=0.0) & -& 73.3 (0.3/0.0/p=0.0) \\ 
+l2r1 \footnotesize{(mono/replace)} & 15.0 (0.3/0.0/p=0.0) & -& 73.0 (0.3/0.1/p=0.0) \\ 
 \hline
 \end{tabular}}
 \caption{An excerpt of the results on the Yandex corpus, English to Russian. No METEOR scores are available.} %TODO: why?
@@ -1008,14 +1008,28 @@ l2r1 (monolithic/replace/tribl2) & 15.0 (0.3/0.0/p=0.0) & -& 73.0 (0.3/0.1/p=0.0
 \subsection{Quantitative Analysis}
 \label{sec:quantanal}
 
-%TODO: verify that this still holds
 Are we placing our bets on the wrong horse by focussing solely on $p(t|s)$ and
-replacing it with $p(t|s,C)$? No, the optimised decoder parameters overall
-show that this feature receives significantly more weight than the other
-scores of the translation model. It is surpassed only by the language model for
-some experiments.
+\emph{replacing} it with $p(t|s,C)$? No, if we aggregate the results from all
+experiments that use the replace score weighting method, we find that the
+$p(t|s)$ or $p(t|s,C)$ feature receives the highest weight of the translation
+model scores in $63\%$ of the experiments\footnote{Multiple
+optimizer runs (3) are counted as separate experiments in this test}, the next runner-up with $25\%$ is the forward probability
+$p(s|t)$. 
 
-We have measured the impact of the classifier on translation quality. To get a
+We run the same test for the append score weighting method, which leaves the $p(t|s)$ feature as-is, and
+\emph{append} the $p(t|s,C)$ feature to the translation model.  We find that
+$p(t|s,C)$ still receives most weight in $33\%$ percent of the experiments.
+The unaltered $p(t|s)$ score wins in $29\%$ of the cases and $p(s|t)$ in
+$23\%$ \footnote{The remaining probability mass is distributed over the lexical
+weighting features}.
+
+These tests do show that our focus on this particular feature in the
+translation model is justified.
+
+In another test, we observe whether the language model receives more weight than the highest
+ranking feature in the translation model, 
+
+We have measured the impact of the classifier on translation quality.  To get a
 deeper understanding of the impact of the classifier(s), we measure to what
 extent the phrases used in the test set output of a context-informed system
 differ from the phrases used in the non-context informed output, irrespective
@@ -1023,43 +1037,51 @@ of whether that difference contributes positively or negatively to the
 translation quality. To this end, we ask Moses to verbosely output, for each
 output sentence, which phrases from the intermediate phrase-translation table
 are used. We then analyse how many phrase pairs are unique to the
-context-informed system. These phrases are indicative of the SMT decoder
-choosing a different translation option than it did for the baseline, due to
-the classifier information. Table~\ref{tab:decodediff} shows the results for a
-few of the data sets we used. We also show, in the last column, how many of the
-source-side fragments are not in the baseline, implying that the SMT decoder
-chose a different source-phrase to translate than the baseline did.
+context-informed system.
 
-%TODO: redo with new data
-\begin{table}
+These phrases are indicative of the SMT decoder
+choosing a different translation option than it did for the baseline, due to
+either the classifier information or optimizer differences.
+Table~\ref{tab:decodediff} shows the results for a few of the data sets we
+used. We also show, in the last column, how many of the source-side fragments
+are not in the baseline, implying that the SMT decoder chose a different
+source-phrase to translate than the baseline did.
+
+To do this, however, we take the optimizer out of the equation by optimizing
+only once on the non-context-informed baseline, and use thise parameters on the
+context-informed experiments as well. Although this leads to sub-optimal
+translation quality, it guarantees that the difference we measure can be
+attributed solely to the inclusion of context information:
+
+
+\begin{table} 
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lllcc}
 \hline
 \textbf{Corpus} & \textbf{Language Pair} & \textbf{Configuration} & \textbf{Diff. pairs} & \textbf{Diff. source} \\
 \hline
-EMEA & English$\rightarrow$Spanish & l1r1 (M/uni/replace) & $43.68\%$ & $40.15\%$ \\
-JRC (250k) & English$\rightarrow$Spanish & l1r1 (M/uni/replace) & $41.14\%$ & $32.77\%$ \\
-Yandex (1M) & English$\rightarrow$Russian & l1r1 (M/opt/replace) & $37.72\%$ & $26.58\%$ \\
-Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (M/opt/replace) & $33.57\%$ & $32.50\%$ \\
-IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1 (M/opt/replace) & $26.86\%$ & $20.07\%$ \\
-IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (M/opt/replace) & $24.55\%$ & $12.49\%$ \\
+%old data, optimized on baseline only (on purpose!):
+Yandex (1M) & English$\rightarrow$Russian & l1r1 \footnotesize{(mono/replace)} & $37.72\%$ & $26.58\%$ \\
+Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1  \footnotesize{(mono/replace)}& $33.57\%$ & $32.50\%$ \\
+IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1  \footnotesize{(mono/replace)}& $26.86\%$ & $20.07\%$ \\
+IWSLT 2006 & Chinese$\rightarrow$English & l1r1  \footnotesize{(mono/replace)}& $24.55\%$ & $12.49\%$ \\
+%new data, but changes may be due to optimiser differences:
+%EMEA & English$\rightarrow$Spanish & l1r1 (monolithic/replace) & $15.73\%$ & $14.65\%$ \\
+%JRC & English$\rightarrow$Spanish & l1r1 (monolithic/replace) & $41.59\%$ & $35.90\%$ \\
+%Yandex (1M) & English$\rightarrow$Russian & l1r1 (monolithic/replace) & $48.92\%$ & $37.30\%$ \\
+%Fryske Akademy & Frisian$\rightarrow$Dutch & l1r1 (monolithic/replace) & $41.51\%$ & $40.07\%$ \\
+%IWSLT 2012 TED & Dutch$\rightarrow$English & l1r1 (monolithic/replace) & $43.78\%$ & $30.29\%$ \\
+%IWSLT 2006 & Chinese$\rightarrow$English & l1r1 (monolithic/replace) & $43.78\%$ & $30.29\%$ \\
 \hline
 \end{tabular}}
 \caption{The number of phrases in the context-informed test output that are not
-in the non-context-informed baseline.}
+in the non-context-informed baseline.} 
 \label{tab:decodediff}
 \end{table}
 
-The corpus that scores best on translation quality above baseline, the EMEA
-corpus, also shows the largest difference in the output due to the inclusion of
-context information. Notable here is that the EMEA corpus has a higher fraction
-of source fragments that differ from the baseline. The JRC corpus, for which we
-found positives results as well, comes in second. However, a correlation
-between translation quality and the difference ratio of phrase pairs or source
-phrases, can not be discerned. The lowest difference was made by the IWSLT 2006
-corpus for which we \emph{did} get significant positive results in translation
-quality.
-
+We observe from this data that our system does have a decent impact on phrase
+selection. A correlation between translation quality and the difference ratio
+of phrase pairs or source phrases, can not be discerned, however.
 
 \subsection{Classifier type}
 \label{sec:typeopt}
@@ -1101,21 +1123,27 @@ other words, most ambiguity is present in classifier experts trained on less tha
 \hline
 \textbf{Corpus} & \textbf{Sentence pairs} & \textbf{Languages} & \textbf{Classifier Experts} \\
 \hline
-Europarl & 250,000 & English-Spanish & 828,326 \\
-JRC & 250,000 & English-Spanish & 635,547 \\
+%Europarl & 250,000 & English-Spanish & 828,326 \\
+JRC-Acquis & 1,233,670 & English-Spanish & 12,652,153 \\
+%EMEA & 1,088,333 & English-Spanish & n/a \\ %not run with experts?
+%EMEA & 1,080,084 & English-Dutch & n/a  \\ %not run with experts?
 IWSLT 2012 TED & 127,806 & Dutch-English & 193,811 \\
 IWSLT 2006 & 40,274 & Chinese-English & 22,212 \\
 Fryske Akademy & 137,937 & Dutch-Frisian & 276,819 \\
 Fryske Akademy & 137,937 & Frisian-Dutch & 213,573 \\
 \hline
 \end{tabular}}
-\caption{Number of classifier experts generated per data set.}
+\caption{Number of classifier experts generated per data set. 
+%Classifier expert count is not available for EMEA, as it was only run using the monolithic classifier.
+}
 \label{tab:expertcount}
 \end{table}
 
 
 \begin{figure}
 \begin{center}
+\newlength\figureheight
+\newlength\figurewidth
 \setlength\figureheight{6cm}
 \setlength\figurewidth{8cm}
 \input{histogram.tikz}
@@ -1126,29 +1154,18 @@ Dutch to English (logarithmic).}
 \end{center}
 \end{figure}
 
-Most of the tables in Section~\ref{sec:results1} list results for both classifier
-types.  We find the classifier experts outperforming the monolithic classifier
-for Chinese-English (Table~\ref{tab:iwslt2006zhen} (for all context sizes except
-\texttt{l3r3}), for  IWSLT 2012 TED Dutch-English (Table~\ref{tab:iwslt2012},
-mostly below baseline), Europarl250k Dutch-English
-(Table~\ref{tab:europarl250k}, mostly below baseline), and Frisian-Dutch
-(Table~\ref{tab:fa2}, all below baseline).
+Various of the tables in Section~\ref{sec:results1} list results for both classifier
+types. As both methods fail to surpass baseline in most cases, and the
+differences in translation score between classifier experts and monolithic
+classifier appear minimal, we can not reach a strong conclusion regarding their
+respective merit.
 
-These results suggest that the classifier experts perform better than the
-monolithic classifier. When inspecting the two 250,000 instance samples of
-JRC-Acquis (Table~\ref{tab:jrc250k}), we see a conflicting image. One sample
-confirms our hypothesis that the classifier experts are better, whereas in the
-other the monolithic classifier has the upper-hand. Moreover, when we look at
-the EMEA data (Table~\ref{tab:emea}), where we had the most significant gains
-above baseline, we find the monolithic system strongest. 
-
-Despite the results not being unanimous, the case for the classifier experts is
-strong and can be motivated by the fact that feature weights are computed on a
-per-source-phrase basis, rather than on the aggregation of all. It can be
-considered as a kind of optimisation step, in absence of classifier parameter
-optimisation and explicit variable context selection (see Section~\ref{sec:paropt}). The
-disadvantage is that such systems may be more prone to overfitting, which might
-well be the case in the EMEA experiment.
+%The case for the classifier experts can be motivated by the fact that feature weights are computed on a
+%per-source-phrase basis, rather than on the aggregation of all. It can be
+%considered as a kind of optimisation step, in absence of classifier parameter
+%optimisation and explicit variable context selection (see Section~\ref{sec:paropt}). The
+%disadvantage is that such systems may be more prone to overfitting, which might
+%well be the case in the EMEA experiment.
 
 
 \subsection{Weighting methods and score analysis}
@@ -1156,45 +1173,31 @@ well be the case in the EMEA experiment.
 
 Two weighting methods have been implemented: the \emph{append} method, adding
 $p(t|s,C)$ as an extra score to the score vector, and the \emph{replace}
-method, which replaces the existing $p(t|s)$ score with $p(t|s,C)$. Most
-experiments have been conducted with the \emph{replace} method, as it is the
-simplest one. For EMEA (Table~\ref{tab:emea}) and JRC
-(Table~\ref{tab:jrc250k}), the \emph{append} method was tested as well.
+method, which replaces the existing $p(t|s)$ score with $p(t|s,C)$.
 
-Comparing the two weighting methods, however, is far from trivial. When a
-discrepancy is found between a run with the replace method (4 scores) and the
-run with the append method (5 scores), we can not simply ascribe such a
-difference to the extra score, but must take into account that the very act of
-adding a score shifts the weights for the score vector, even if uniformly
-distributed. Any shift may likely affect the outcome. This
-motivation is also the reason we included a separate baseline for the append
-method in the tables in which we reported it. Moreover, it explains why we can
-not just apply the results of the parameter optimisation of the replace method
-to the append method.
+Comparing the two weighting methods, however, is not trivial.  The very act of
+adding a score, for the append method, shifts the weights for the score vector.
+Any shift may likely affect the outcome. This is also the reason that the
+replace and append methods have their own respective baselines in the result
+tables seen so far.
 
-Tables~\ref{tab:emea} (EMEA) and \ref{tab:jrc250k} (JRC) have been run without
-parameter optimisation. Even without context information, the baselines for the
-append method score better than those for the replace method. Effectively, the
-append method's baseline is simply a version with a double feature and
-functionally equivalent to just assigning double weight to the feature.
-
-A comparison is complicated by the fact that the $p(t|s,C)$ score is often simply
-equal to the $p(t|s)$ score, by definition so for any source phrases for which no
+For the append method, the $p(t|s,C)$ score is often simply
+equal to the $p(t|s)$ score, this is by definition so for any source phrases for which no
 classifier was needed, due to not being ambiguous in translation or context. 
 
-We can therefore not draw any satisfactory conclusions on the merit of the
+As seen before, given the over-all lack of impact above baseline observed across most
+experiments, we can not draw any satisfactory conclusion on the merit of the
 \emph{append} method versus the \emph{replace} method, given the experiments we
 conducted.
 
-We can, however, use the two different scoring methods to provide insight into
+We can, however, use the append scoring method to provide further insight into
 the classifier results. How often does the classifier assign a $p(t|s,C)$ that
-differs from $p(t|s)$? We compute this the test data of the JRC-Acquis corpus,
-from English to Spanish, as shown in Figure~\ref{fig:scoredifference}.
+differs from $p(t|s)$? And how big is this difference?
 
-For each occurrence of each source phrase in the test-data, we gathered all
-possible translations and compute the difference $\Delta$ between the
-context-informed translation probability and the non-context informed one as
-per Equation~\ref{eqn:scorediff}.
+For each occurrence of each source phrase in a given test set, we gather all
+possible translations from the phrase-translation table and compute the
+difference $\Delta$ between the context-informed translation probability and
+the non-context informed one as per Equation~\ref{eqn:scorediff}.
 
 \begin{equation}
   \Delta = 
@@ -1205,8 +1208,15 @@ per Equation~\ref{eqn:scorediff}.
 \label{eqn:scorediff}
 \end{equation}
 
+
+We compute this on the test data of the JRC-Acquis corpus,
+from English to Spanish, as shown in Figure~\ref{fig:scoredifference}. For
+training we used a subset of $250,000$ sentences. The measurements are taken
+from the phrase-translation table directly so the decoder and optimizer plays
+no role here. Our measurement merely assesses to what extent context-informed classifiers
+
 For Figure~\ref{fig:scoredifference}, we set up bins of size 0.1, so each point
-on the x axis aggregates results of the specified $\Delta \pm 0.05$. A
+on the $x$ axis aggregates results of the specified $\Delta \pm 0.05$. A
 value of zero indicates there is no difference whatsoever, this includes all
 source phrases where either translation or context are unambiguous. A spike and
 outlier can be observed at this point, covering $9\%$ of
@@ -1216,7 +1226,7 @@ pairs to which the classifier assigns a higher probability; the value expresses
 the factor by which the probability is increased. No less than $75\%$ of the
 phrase pairs are in this region. This is a direct result of the discriminative
 filtering done by the classifiers, which prunes the weakest translation
-options, and therefore on the hole raises the probability of the remaining
+options, and therefore on the whole raises the probability of the remaining
 options.
 
 \begin{figure}
@@ -1239,16 +1249,19 @@ In this section we take a closer look at the translations themselves and see if
 we can discern patterns that can tell us what the effect of source-side context
 information is and when it pays off.
 
-We zoom in on the corpus that performed best, the EMEA corpus -- English to
-Spanish, one million sentence pairs. We compare the context-informed
-\texttt{l1r1} system with the non-context informed baseline to assess the
-impact of the context information. Out of $5,000$ sentences in the test set,
-$3,863$ ($77\%$) are translated identically. This high number again shows that
-it is difficult to make a difference. Nevertheless, $22\%$ differs and results
-in a net gain in translation performance, as seen in Table~\ref{tab:emea}.
+We zoom in on the EMEA corpus -- English to Spanish, one million sentence
+pairs. We compare a special run of the context-informed \texttt{l1r1} system
+with the non-context informed baseline in order to assess the impact of context
+information. In this special run, the decoder parameters have not been
+optimized independently, but are set equal to those of the baseline. Although
+this leads to sub-optimal translation quality, it ensures we compare only the
+effect of the classifier rather than of the optimizer. Out of $5,000$ sentences
+in the test set, $3,863$ ($77\%$) are translated identically. This high number
+again shows that it is difficult to make a difference. Nevertheless, $23\%$
+differs.
 
 The next few examples will show some comparisons in which the context-informed
-improves over the baseline. 
+system improves over the baseline. 
 
 Example~\ref{ex:QAsynonym} shows three examples of the selection of a better
 translation given the context, matching with the reference translation, even
@@ -1322,43 +1335,37 @@ was not available in this study.
 \section{Conclusions and Discussion} 
 \label{sec:conclusion}
 
-We have conducted numerous experiments to assess whether surface-form
+We have conducted a large number of experiments to assess whether surface-form
 source-side context information, i.e. without the use of any explicit
 linguistic features that require supervised parsers or taggers, can improve
 translation quality. Memory-based classifiers were used, and integrated in an
 SMT framework, following techniques commonly employed in WSD. Different
 classifier types, context sizes, and score weighting methods have been
-researched. Parameter optimisation was conducted on the decoder parameters for
-various experiments. Optimisation of classifier parameters and feature
-selection was omitted in order to contain the computational complexity of the
-problem, and considering experiences in prior research.
+researched. Multiple parameter optimisation runs were conducted to obtain the
+decoder parameter weights, compensating for decoder instability. Optimisation
+of classifier parameters and feature selection was omitted in order to contain
+the computational complexity of the problem, and considering lack of positive
+results for optimisation of classifier parameters in Chapter~\ref{chap:clswsd}.
 
 Various distinct corpora and language pairs have been employed for the
-experiments, this in order to ensure that conclusions are of a generic enough
+experiments in order to ensure that conclusions are of a generic enough
 nature rather than incidental artifacts of the type that have arguably steered
-conclusions in previous work. The results of the experiments, however, were
-often in contrast with one another; there was a high degree of variability
-between the corpora and language pairs. Positive results were attained on EMEA,
-for both English to Spanish and English to Dutch, JRC-Acquis (English to
-Spanish) and IWSLT 2006 (English to Chinese).  Especially the former two are
-highly formulaic corpora, and the touristic ``how to'' domain of the IWSLT 2006
-data has formulaic aspects as well, leading us to be cautiously optimistic
-source-side context does have merit under certain constraints.
+conclusions in previous work. Despite all efforts, clear positive results were only
+attained for IWSLT 2006 (English to Chinese). Other scores did not manage to
+unequivocally surpass the baseline.
 
-Finding these precise constraints, however, proved elusive. We hypothesised that
-source-side context information may contribute more when translating to a
-morphologically more complex language, but this was empirically refuted.
-An alternative hypothesis was that a certain quality of translation had to
-be reached before the source-side context can make an impact. This hypothesis
-could not be confirmed on Dutch-Frisian data, and is at odds with the positive
-results on IWSLT 2006 English-Chinese, which had relatively little data and low
-scores.
+%We hypothesised that source-side context information may contribute more when
+%translating to a morphologically more complex language, but this was
+%empirically refuted.  An alternative hypothesis was that a certain quality of
+%translation had to be reached before the source-side context can make an
+%impact. This hypothesis could not be confirmed on Dutch-Frisian data, and is at
+%odds with the positive results on IWSLT 2006 English-Chinese, which had
+%relatively little data and low scores.
 
 In this study, we effectively replicated and expanded upon the part of the work
 of \cite{Stroppa+07} and \cite{Rejwanul+11} that does not depend on further
-linguistic information. Except for the aforementioned formulaic data sets most
-results were below baseline. Inclusion of surface-form source-side context
-information is clearly not the most obvious road for the improvement of MT
+linguistic information. Inclusion of surface-form source-side context
+information is clearly not a good route for the improvement of MT
 quality. It is likely that improvement can be more easily achieved through for
 example optimisation of the target-side language model.
 
@@ -1384,7 +1391,5 @@ phrase in context, the decoder may thus opt to choose to include the context as
 integral part of the phrase.  The target-language model already plays an
 important role here, as it encourages the decoder to choose translation options
 that fit well together. Source-side context modelling, without additional
-linguistic features, seems to only have something to offer for highly formulaic
-corpora. 
-
+linguistic features, seems to have little to nothing to offer.
 
