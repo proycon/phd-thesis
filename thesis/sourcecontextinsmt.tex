@@ -732,18 +732,14 @@ language-pairs. We feel that from such results, generic conclusions are drawn
 too quickly. To prevent this pitfall, our experiments are distributed amongst
 various corpora and language pairs.
 
-Section~\ref{sec:results1} will focus on our main hypothesis; does inclusion
-of surface-form source-side-context lead to improved translation quality? We
-will soon observe that this question is not straightforward to answer, as
-the different corpora and language pairs often paint a conflicting image. We
-posit a number of hypotheses to determine in which cases source-side-context
-might work. Section~\ref{sec:qqthreshold} investigates whether a certain
-critical mass of translation quality or quantity of training material is needed
-before source-side context can make an impact. Section~\ref{sec:morphdir}
-analyzes whether translation from morphologically simpler to more complex
-language is what makes the difference. Section~\ref{sec:quantanal} conducts
-a quantitative analysis to assess whether the classifiers make an impact even
-if this does not reflect in the translation quality.
+Section~\ref{sec:results1} will focus on our main hypothesis; does inclusion of
+surface-form source-side-context lead to improved translation quality? We will
+soon observe that this question is not straightforward to answer, as the
+different corpora and language pairs often paint a conflicting image. We posit
+a number of hypotheses to determine in which cases source-side-context might
+work. Section~\ref{sec:quantanal} conducts a quantitative analysis to assess
+whether the classifiers make an impact even if this does not reflect in the
+translation quality.
 
 Our secondary hypotheses concern the ways in which classifiers can be
 integrated in SMT. We investigate the impact of the classifier type and
@@ -764,6 +760,20 @@ not have the exact set used by \cite{Stroppa+07}, we have to assume our
 training and test sets, whilst drawn from the same source, are distinct subsets
 from the ones used by \cite{Stroppa+07}.} was used in \cite{Stroppa+07}, who
 also reported positive results.
+
+In all tables in this section, the context-aware configurations are named
+l$x$r$y$, in which $x$ and $y$ refer to the size of the left and right contexts
+respectively.  Recall that the classifiers may be built in two distinct ways, a
+single \emph{mono}lithic configuration (using \emph{tribl2}), or a classifier
+\emph{expert} configuration (using \emph{ib1}).  Secondly, score weighting can
+be done either through the \emph{replace}  or the \emph{append} method, as
+shown in respectively the upper and lower parts of the tables. 
+
+All experiments have been optimised with MERT on BLEU as described in
+Section~\ref{sec:paropt}.  The score-triple in parentheses corresponds to
+$(\overline{s}_{sel},s_{opt},p)$ and represents the measures discussed in
+Section~\ref{sec:paropt}: test set selection variance, optimizer instability
+variance, and p-value with respect to the baseline.
 
 \begin{table}
 \noindent\makebox[\textwidth][c]{%
@@ -798,29 +808,22 @@ of the left respectively right context. }
 \label{tab:iwslt2006zhen}
 \end{table}
 
-Several local context sizes have been attempted. The number after l refers to
-the numbers of words to the left of the source phrase. The number after r
-denotes the right context size. Further parameters to the system are enclosed
-within parentheses.  Recall that the classifiers may be built in two distinct
-ways, a single \emph{monolithic} configuration (with \emph{tribl2}), as is used
-here, or a classifier \emph{expert} configuration (with \emph{ib1}).  Secondly,
-score weighting can be done either through the \emph{replace}  or the
-\emph{append} method, as shown in respectively the upper and lower parts of
-Table~\ref{tab:iwslt2006zhen}.  In this section we focus exclusively on the
+
+In this section we focus exclusively on the
 question whether context-informed systems are beneficial; a comparison of the
 score weighting methods and classifier configurations is postponed until a
-later section.  All experiments have been optimised with MERT on BLEU as
-described in Section~\ref{sec:paropt}.
+later section.  
 
-For this experiment we see scores over the baselines for all experiments.
-However, not all pass the strict significance tests we impose. Only
-configurations l1r1/monolithic/replace and l2r1/monolithic/append and
-l2r2/experts/append pass the significance tests on all metrics, where we
-consider a $p <= 0.05$ to be the pass criterium. Other configurations either do
-not pass the significance tests at all, or paint a conflicting picture for
-certain metrics. Nevertheless, we can conclude that in this experiment
-incorporating source-side context information using machine learning proves
-beneficial in at least certain configurations.
+For the Chinese to English experiment in Table~\ref{tab:iwslt2006zhen} we see
+scores over the baselines for all experiments.  However, not all pass the
+strict significance tests we impose. Only configurations
+l1r1/monolithic/replace and l2r1/monolithic/append and l2r2/experts/append pass
+the significance tests on all metrics, where we consider a $p <= 0.05$ to be
+the passing criterium. Other configurations either do not pass the significance
+tests at all, or paint a conflicting picture for certain metrics. Nevertheless,
+we can conclude that in this experiment incorporating source-side context
+information using machine learning proves beneficial in at least certain
+configurations.
 
 In Table~\ref{tab:iwslt2012} we see results on the IWSLT 2012 corpus, for the
 Dutch to English.  
