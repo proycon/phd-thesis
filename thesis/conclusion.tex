@@ -1,4 +1,4 @@
-\chapter{Conclusion}
+\chapter{Summary \& Conclusion}
 \label{chap:conclusion}
 
 In this dissertation, we posited the main hypothesis that inclusion of source-side context information, without
@@ -31,17 +31,50 @@ beneficial indeed, whereas part-of-speech tags failed to make a positive
 impact. Nevertheless, our study's explicit focus is to assess the efficacy of
 the surface features in their pure form, i.e. not enriched with any linguistic
 information. We employed multiple classifiers or word experts in which the
-feature vector consists of a simple local context window. In the cross-lingual WSD task our linguistically-uninformed
-classifiers easily surpass the non-context-informed baselines. So for this
-task, we find evidence that corroborates our main hypothesis and can answer yes
-to both our first and third question.
+feature vector consists of a simple local context window. In the cross-lingual
+WSD task our linguistically-uninformed classifiers easily surpass the
+non-context-informed baselines. So for this task, we find evidence that
+corroborates our main hypothesis and can answer yes to both our first and third
+question.
 
 We extensively experimented with global context features at this stage but find
 a discrepancy in results between the SemEval 2010 and 2012 runs. Subsequent
 attempts in later chapters support the SemEval 2012 findings, in which global
 context features do not lead to an improvement in translation quality.
 
+The initial successes with translation aided by source-side context information
+led us to propose this technique for a novel application in computer-aided translation
+assistance. In this task, we translate L1 fragments in an L2 context.
+In Chapter~\ref{chap:colibritapilot} we tested the feasibility of this idea and
+found our context-sensitive classifiers improves both upon a non-context informed
+baseline, as well a baseline enriched with a language model. We then
+propose our task for SemEval 2014 in Chapter~\ref{chap:semeval2014task5}, and gain
+participation by five participants, some of whom achieve high results. It
+becomes apparent, specifically, that statistical machine translation is able to
+achieve better results than pure classifier-based approaches, despite the
+localised and cross-lingual nature of the task.
 
+We confirm this in Chapter~\ref{chap:colibritafinal}, where we conducted an
+extensive comparison of the pure classifier-based and SMT-based solutions to
+our L2 Translation Assistance task. We then seek to integrate classifiers in
+the SMT-based solution, but find that this does not lead to improved
+translation quality. Nevertheless, our hypothesis that translation can be
+improved by considering source-side context information is still upheld
+throughout these studies. 
+
+In Chapter~\ref{chap:sourcecontextinsmt} we moved away from the translation of
+mere localised fragments in a context, and experimented with full Statistical
+Machine Translation, i.e. translation of whole sentences. We incorporated
+source-side context information using classifiers in the SMT decoder, using a
+bypass method. We tested various forms of integration, but found that we could
+only really improve upon the baseline for one corpus (IWSLT 2006, Chinese to
+English). All other results turned out on or below baseline, or failed to pass
+rigid significance testing. Our main hypothesis therefore does not hold for
+full statistical machine translation. In the discussion of these results we
+posited that it seems likely that the information we attempt to explicitly
+model in the translation model, is already implicitly and satisfactorily
+covered by the target-side language. Integration of linguistically-uninformed
+classifiers in statistical machine translation has no added value.
 
 
 
