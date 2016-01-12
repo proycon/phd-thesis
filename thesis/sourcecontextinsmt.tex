@@ -45,13 +45,15 @@ sense are sequences of one or more words, i.e. $n$-grams of variable
 length (including unigrams). They are not constrained to form a
 proper linguistic constituent of any kind.
 
-Two models are at the core of phrase-based SMT: first there is the translation
-model which maps the translation phrases in the source language ($S$) to
-phrases in target language ($T$). Each mapping between phrases is associated
-with a vector of probabilities, $p({phrase}_S|{phrase}_T)$ and
-$p({phrase}_T|{phrase}_S)$. They can be seen to model the notion of
-\emph{``semantic faithfulness''}; if a phrase is translated from one language
-to another, the meaning should be preserved as accurately as possible.
+We introduced phrase-based SMT in Chapter~\ref{chap:intro},
+Section~\ref{chap:intromt}. To recap, two models are at the core of
+phrase-based SMT: first there is the translation model which maps the
+translation phrases in the source language ($S$) to phrases in target language
+($T$). Each mapping between phrases is associated with a vector of
+probabilities, $p({phrase}_S|{phrase}_T)$ and $p({phrase}_T|{phrase}_S)$. They
+can be seen to model the notion of \emph{``semantic faithfulness''}; if a
+phrase is translated from one language to another, the meaning should be
+preserved as accurately as possible.
 
 The second core model is the language model. This model is monolingual
 in nature and models the target language. It models what words are
@@ -247,10 +249,11 @@ implementation of $k$-Nearest Neighbour classification; IGTree
 thereof; and TRIBL2, a mixture of IB1 and IGTree.
 
 These algorithms are all implemented in the software package TiMBL
-\citep{TIMBL}\footnote{\url{http://ilk.uvt.nl/timbl}, version 6.4.5 is the
+\citep{TIMBL}\footnote{\url{http://languagemachines.github.io/timbl}, version 6.4.5 is the
 version we used.} and are well-suited for symbolic data and highly multivariate
 class spaces.  Moreover, memory-based classification has been a successful
-method in the field of Word Sense Disambiguation \citep{SENSEVAL2}.
+method in the field of Word Sense Disambiguation \citep{SENSEVAL2}, as
+demonstrated already in Chapter~\ref{chap:clwsd}).
 
 When speaking of the $k$ nearest neighbours in the implementation of IB1,
 IGTree and TRIBL2, we are actually referring to the neighbours at nearest
