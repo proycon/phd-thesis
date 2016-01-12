@@ -56,11 +56,11 @@ localised and cross-lingual nature of the task.
 
 We confirm this in Chapter~\ref{chap:colibritafinal}, where we conducted an
 extensive comparison of the pure classifier-based and SMT-based solutions to
-our L2 Translation Assistance task. We then seek to integrate classifiers in
-the SMT-based solution, but find that this does not lead to improved
-translation quality. Nevertheless, our hypothesis that translation can be
-improved by considering source-side context information is still upheld
-throughout these studies. 
+our L2 Translation Assistance task. We then proceed to integrate classifiers in
+the SMT-based solution, in an attempt to gain the best of both worlds. However,
+we find that this does not lead to improved translation quality. Nevertheless,
+our hypothesis that translation can be improved by considering source-side
+context information is still upheld here. 
 
 In Chapter~\ref{chap:sourcecontextinsmt} we moved away from the translation of
 mere localised fragments in a context, and experimented with full Statistical
@@ -69,19 +69,26 @@ source-side context information using classifiers in the SMT decoder, using a
 bypass method. We tested various forms of integration, but found that we could
 only really improve upon the baseline for one corpus (IWSLT 2006, Chinese to
 English). All other results turned out on or below baseline, or failed to pass
-rigid significance testing. Our main hypothesis therefore does not hold for
-full statistical machine translation. In the discussion of these results we
-posited that it seems likely that the information we attempt to explicitly
-model in the translation model, is already implicitly and satisfactorily
-covered by the target-side language. Integration of linguistically-uninformed
-classifiers in statistical machine translation has no added value.
+rigid significance tests. Our main hypothesis therefore does not hold for full
+statistical machine translation. We ask ourselves why this is the case and
+suggest that that the information we attempt to explicitly model in the
+translation model, is already implicitly and satisfactorily covered by the
+target-side language model. Integration of linguistically-uninformed
+classifiers in statistical machine translation therefore has no added value.
 
+Our efforts only prove fruitful when used standalone or for localised problems,
+whereas statistical machine translation proves to be a superior technique,
+leading to higher translation quality, for those translation tasks that it can
+tackle.
 
-
-
-
-
-
+When it comes to classifiers and their integration in SMT, Future related
+research can continue in the direction that past studies have already
+proceeded, that of incorporating linguistic features. The integration and score
+weighting methods from Chapters~\ref{chap:colibritafinal} and especially
+\ref{chap:sourcecontextinsmt} lay a foundation upon which expansions with
+specific linguistic features can be built, either through classifiers or
+without.  Comparative analysis of these integration and weighting methods will
+deliver more insight when the results make a clear impact above baseline. 
 
 
 
