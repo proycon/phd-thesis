@@ -46,7 +46,7 @@ length (including unigrams). They are not constrained to form a
 proper linguistic constituent of any kind.
 
 We introduced phrase-based SMT in Chapter~\ref{chap:intro},
-Section~\ref{chap:intromt}. To recap, two models are at the core of
+Section~\ref{sec:intromt}. To recap, two models are at the core of
 phrase-based SMT: first there is the translation model which maps the
 translation phrases in the source language ($S$) to phrases in target language
 ($T$). Each mapping between phrases is associated with a vector of
@@ -110,14 +110,13 @@ phrases rather than just words.
 WSD systems often employ a variety of linguistic features. The focus of our
 study, however, is to be independent of the explicit computation of
 linguistically abstract features with language-dependent tools such as
-lemmatisers, part-of-speech taggers, supertaggers, or dependency parsers
-\cite{Rejwanul+11}. 
+lemmatisers, part-of-speech taggers, supertaggers, or dependency parsers.
+Integration of such techniques has already been researched by \cite{Rejwanul+11}. 
 %We are interested only in the surface
 %forms, the text as-is, and stay as close as possible to vanilla Phrase-Based
 %Statistical Machine Translation, without using any language-specific external
 %resources. 
-In this fashion, we attempt to assess the merit of source-side
-context information as purely as possible.
+We attempt to assess the merit of source-side context information as purely as possible.
 
 Not introducing extra data for the translation system means our goals have to
 be set more modest as well. We may not expect the same gains as are achieved by
@@ -126,7 +125,7 @@ introducing extra data from linguistic preprocessors.
 In the next section, we will sketch an overview of previous research.
 Section~\ref{sec:methodology} describes how our system is set up. In
 Section~\ref{sec:experiments} we introduce the data sets used and the
-experiments we conducted, the many results of which are presented, analysed and
+experiments we conducted. The results are presented, analysed and
 discussed in Section~\ref{sec:results}. In Section~\ref{sec:conclusion} we come
 to the final conclusion.
 
@@ -196,7 +195,7 @@ pair fails to pass the significance test. We attempt to reproduce the
 Chinese--English experiment in this study.
 
 Source-context aware translation has also been attempted outside of the
-predominant SMT framework. \cite{MBMT} implement a
+predominant SMT framework. For instance, \cite{MBMT} implement a
 form of example-based machine translation that is word-based and relies
 chiefly on classifiers for the translation model component. Two studies derive
 from the same concept while transcending a word-based paradigm:
@@ -217,7 +216,8 @@ linguistically abstract features. Furthermore, we intend to settle the
 conflicting reports on whether this may lead to an improvement in translation
 quality. A notable focus in our study will be possible methods of integrating
 the classifier probabilities in the SMT, as recommended also by
-\cite{Gimenez+07}.
+\cite{Gimenez+07}. Furthermore, we take into account and compensate for the
+instability of parameter optimisation techniques.
 
 
 \section{Methodology}
@@ -252,11 +252,11 @@ These algorithms are all implemented in the software package TiMBL
 \citep{TIMBL}\footnote{\url{http://languagemachines.github.io/timbl}, version 6.4.5 is the
 version we used.} and are well-suited for symbolic data and highly multivariate
 class spaces.  Moreover, memory-based classification has been a successful
-method in the field of Word Sense Disambiguation \citep{SENSEVAL2}, as
-demonstrated already in Chapter~\ref{chap:clwsd}).
+method in the field of Word Sense Disambiguation \citep{SENSEVAL2}, and as
+demonstrated as well in Chapter~\ref{chap:clwsd}.
 
 When speaking of the $k$ nearest neighbours in the implementation of IB1,
-IGTree and TRIBL2, we are actually referring to the neighbours at nearest
+IGTree and TRIBL2; we are actually referring to the neighbours at nearest
 distance $k$. So even with $k=1$ we may be talking about multiple data points
 that are all at equal distance.
 
