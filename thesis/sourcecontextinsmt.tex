@@ -306,9 +306,9 @@ Now there are two ways in which we can construct a classifier:
 
 \begin{itemize}
   \item \textbf{Monolithic classifier} -- One aggregated classifier for all
-    source phrases. Used with the TRIBL2 classifier.
+    source phrases. Used with the TRIBL2 algorithm.
   \item \textbf{Classifier experts} -- One classifier per source phrase. Used
-      with the IB1 classifier.
+      with the IB1 algorithm.
 \end{itemize}
 
 In this study we will use and compare both methods, which is, for the task at
@@ -352,12 +352,14 @@ phrase to the locations in the corpus where it occurs.  Additionally, a reverse
 index is included in the model for the target-side of the corpus, which maps
 any given $(sentence, token)$ position to a set of phrases that begins at that
 position.  This is computed using the software package
-\emph{colibri-core},\footnote{\url{http://proycon.github.io/colibri-core} \\ \texttt{ae04607b2f2354c702c15350fc4fdd1a673b7bcb} is the git commit that represents a fair state of the software version during this study.}
-, as introduced in Chapter~\ref{chapter:coco},  which takes care of a losslessly compressed in-memory representation for all
-phrases, and allows us to cope with large corpora. Given these two pattern
-models $M_{source}$ and $M_{target}$ we can extract the context for each phrase
-pair quickly and efficiently, as shown in simplified form in
-Algorithm~\ref{alg:featureextract}.
+\emph{colibri-core},\footnote{\url{http://proycon.github.io/colibri-core},
+release v2.1.2 fair state of the software version during this study, although
+some experiments were conducted with older versions}, as introduced in
+Chapter~\ref{chap:coco},  which takes care of a losslessly compressed in-memory
+representation for all phrases, and allows us to cope with large corpora. Given
+these two pattern models $M_{source}$ and $M_{target}$ we can extract the
+context for each phrase pair quickly and efficiently, as shown in simplified
+form in Algorithm~\ref{alg:featureextract}.
 
 \begin{algorithm}
 \caption{Algorithm for feature extraction for training classifiers.  Take $n$
@@ -382,7 +384,8 @@ vector.  The algorithm will return a list containing two-tuples $(C,t)$.  }
     
 \noindent
 This algorithm is implemented in \emph{colibri-mt}.
-\footnote{\url{https://github.com/proycon/colibri-mt} \\ \texttt{7abeac5a139779ab9c9c4e1b275cf801ed38c232} is the git commit that represents a fair state of the software version during this study.}
+\footnote{\url{https://github.com/proycon/colibri-mt} \\ version v0.2
+represents a fair state of the software version during this study.}
 
 The returned instances can be stored directly, either in a single model for the
 monolithic approach or in separate models for each $s$ for the classifier
@@ -430,7 +433,7 @@ often included as components in the score vector. During decoding, the total
 score of the translation model and other models is expressed as a log-linear
 combination, in which different weights can be assigned to each of the
 components of the score vector. These weights are hyperparameters to the task and
-are typically optimised automatically on development data using for instance
+are typically \emph{optimised} automatically on development data using for instance
 Minimum Error Rate Reduction (MERT) \citep{MERT}.
 
 The probability $p(t|s)$ is the one we are interested in. Recall that the
@@ -445,7 +448,7 @@ version used in this study.} \citep{MOSES}. Moses offers no facilities to take
 source-side context information in account. We considered three options to
 achieve our goal of integrating source-side context: 1) creating a new decoder;
 2) enhancing Moses; or 3) using a bypass method. Although we initially set out
-to create a new decoder, it proved to be too difficult to attain the same
+to create a new decoder, it proved to be too time-consuming to attain the same
 quality as Moses.  We therefore decided, in line also with most of the
 literature, to follow the third option and use a bypass method; this allows us
 to use Moses as a black box.
@@ -527,7 +530,7 @@ an improvement in translation quality.
 For the translation model, we rely on a parallel corpus as our main source of
 input. Whenever the source is untokenised, we tokenise the data using
 \emph{ucto}.\footnote{An open-source regular-expression based tokeniser with
-unicode support, \url{http://ilk.uvt.nl/ucto}, we used version 0.7.0} For the language model, we
+unicode support, \url{http://languagemachines.github.io/ucto}, we used version 0.7.0} For the language model, we
 simply reuse the target-side portion of the parallel corpus; we do not
 introduce additional data for the language model in our experiments.
 
@@ -587,6 +590,7 @@ set, respectively.}
 All our experimental end-results and all non-restricted data sets used can be
 freely downloaded.\footnote{Download archive of all experimental data \& results:
 \url{http://academictorrents.com/details/3cc11d076c62bfa0480afc187a4bb6e4759e5c16}}
+%TODO: update with new results!!
 
 \subsection{Evaluation}
 
@@ -618,7 +622,7 @@ so it exactly matches a reference translation.
 %more similar the translation is to the reference.
 \end{enumerate}
 
-For BLEU and METEOR, higher scores a better, for TER, however, a lower score
+For BLEU and METEOR, higher scores are better, for TER, however, a lower score
 corresponds with a better translation quality.
 
 For each experiment we construct a non-context-informed baseline. This
@@ -703,25 +707,25 @@ metrics. This, however, is prohibitively expensive as it vastly increases the
 parameter search space and thus the complexity of the problem. As a concession
 for the sake of computability, classifier parameter optimisation can be considered
 independently and assessed through simpler cross-validation or leave-one-out
-methods (depending on the number of instances in the classifier expert).  This
+methods (depending on the number of instances in the classifier expert).  It
 still introduces a significant computational bottleneck.  
-
-Optimisation can be taken a step further by also optimising the local context
-size, i.e. the make up of the feature vector, on a by-classifier basis, as
-opposed to using the same context size for all classifiers. This has been
-extensively researched in Chapter~\ref{chap:clwsd}, Section~\ref{sec:wsd2} in
+This has been extensively researched in Chapter~\ref{chap:clwsd}, Section~\ref{sec:wsd2} in
 the context of cross-lingual Word Sense Disambiguation, rather than full
 Machine Translation. There classifier parameter optimisation showed an
 overall negative effect, most likely due to overfitting, especially when
-combined with variable context selection. Variable context selection by itself
-did make a small positive impact.
+combined with variable context selection. 
+
+Optimisation can be taken a step further by also optimising the local context
+size, i.e. the make up of the feature vector, on a by-classifier basis, as
+opposed to using the same context size for all classifiers.  Variable context selection by itself
+did make a small positive impact in a WSD context (See Section~\ref{sec:wsd2}).
 
 Given the results of this prior study, and due to the inherent computational
 complexity of different layers of optimisation (even under an independence
 assumption) we choose to limit ourselves to just optimisation of the SMT
 decoder parameters in this study. These parameters have the most immediate and
-largest impact as they are directly optimised on the evaluation metric used.
-Note that although we forego on explicit variable context selection, an
+largest impact as they are directly optimised on an evaluation metric that is
+used.  Note that although we forego on explicit variable context selection, an
 implicit form is still there for the classifier experts; the feature weights
 are computed on a by-classifier basis.
 
@@ -731,18 +735,17 @@ are computed on a by-classifier basis.
 In this section we will present the results of our experiments.  Our largest
 issue with the present MT literature on this subject is that we too often see
 that hypotheses are tested only on one or two corpora, with just one or two
-language-pairs. We feel that from such results, generic conclusions are drawn
-too quickly. To prevent this pitfall, our experiments are distributed amongst
-various corpora and language pairs.
+language-pairs, and sometimes without proper significance testing. We feel that
+from such results, generic conclusions are drawn too quickly. To prevent this
+pitfall, our experiments are distributed amongst various corpora and language
+pairs, and are subject to rigid significance tests.
 
 Section~\ref{sec:results1} will focus on our main hypothesis; does inclusion of
-surface-form source-side-context lead to improved translation quality? We will
-soon observe that this question is not straightforward to answer, as the
-different corpora and language pairs often paint a conflicting image. We posit
-a number of hypotheses to determine in which cases source-side-context might
-work. Section~\ref{sec:quantanal} conducts a quantitative analysis to assess
-whether the classifiers make an impact even if this does not reflect in the
-translation quality.
+surface-form source-side context information lead to improved translation
+quality?  We posit a number of hypotheses to determine in which cases
+source-side-context might work. Section~\ref{sec:quantanal} conducts a
+quantitative analysis to assess whether the classifiers make an impact even if
+this does not reflect in the translation quality.
 
 Our secondary hypotheses concern the ways in which classifiers can be
 integrated in SMT. We investigate the impact of the classifier type and
@@ -755,17 +758,10 @@ qualitative analysis in Section~\ref{sec:qualanal}.
 
 The primary objective of our study is to assess the role of source-side context
 information. To this end we conducted a series of experiments on various
-corpora and language pairs. The first results, on the IWSLT 2006 Evaluation
-Campaign, Chinese to English, are listed in Table~\ref{tab:iwslt2006zhen}. They
-show a consistent advantage of having the source-side classifiers. A dataset
-from the same source\footnote{This dataset is not publicly available. As we do
-not have the exact set used by \cite{Stroppa+07}, we have to assume our
-training and test sets, whilst drawn from the same source, are distinct subsets
-from the ones used by \cite{Stroppa+07}.} was used in \cite{Stroppa+07}, who
-also reported positive results.
+corpora and language pairs. 
 
 In all tables in this section, the context-aware configurations are named
-l$x$r$y$, in which $x$ and $y$ refer to the size of the left and right contexts
+l$x$r$y$, in which $x$ and $y$ refer to the size (in words/tokens) of the left and right contexts
 respectively.  Recall that the classifiers may be built in two distinct ways, a
 single \emph{mono}lithic configuration (using \emph{tribl2}), or a classifier
 \emph{expert} configuration (using \emph{ib1}).  Secondly, score weighting can
@@ -775,7 +771,7 @@ shown in respectively the upper and lower parts of the tables.
 All experiments have been optimised with MERT on BLEU as described in
 Section~\ref{sec:paropt}.  The score-triple in parentheses corresponds to
 $(\overline{s}_{sel},s_{opt},p)$ and represents the measures discussed in
-Section~\ref{sec:paropt}: test set selection variance, optimizer instability
+Section~\ref{sec:paropt}: test set selection variance, optimiser instability
 variance, and p-value with respect to the baseline.
 
 \begin{table}
@@ -817,19 +813,25 @@ question whether context-informed systems are beneficial; a comparison of the
 score weighting methods and classifier configurations is postponed until a
 later section.  
 
-For the Chinese to English experiment in Table~\ref{tab:iwslt2006zhen} we see
-scores over the baselines for all experiments.  However, not all pass the
-strict significance tests we impose. Only configurations
-l1r1/monolithic/replace and l2r1/monolithic/append and l2r2/experts/append pass
-the significance tests on all metrics, where we consider a $p <= 0.05$ to be
-the passing criterium. Other configurations either do not pass the significance
-tests at all, or paint a conflicting picture for certain metrics. Nevertheless,
-we can conclude that in this experiment incorporating source-side context
-information using machine learning proves beneficial in at least certain
-configurations.
+The first results, on the IWSLT 2006 Evaluation Campaign, Chinese to English,
+are listed in Table~\ref{tab:iwslt2006zhen}. A dataset from the same
+source\footnote{This dataset is not publicly available. As we do not have the
+exact set used by \cite{Stroppa+07}, we have to assume our training and
+test sets, whilst drawn from the same source, are different subsets than the
+ones used by \cite{Stroppa+07}.} was used in \cite{Stroppa+07}, who also
+reported positive results.  We observe scores over the baselines for all
+experiments.  However, not all pass the strict significance tests we impose.
+Only configurations l1r1/monolithic/replace and l2r1/monolithic/append and
+l2r2/experts/append pass the significance tests on all metrics, where we
+consider a $p <= 0.05$ to be the passing criterium. Other configurations either
+do not pass the significance tests at all, or paint a conflicting picture for
+certain metrics. Nevertheless, we can conclude that in this batch of
+experiments incorporating source-side context information using machine learning proves
+beneficial for certain configurations.
 
 In Table~\ref{tab:iwslt2012} we see results on the IWSLT 2012 corpus, for the
-Dutch to English.  
+Dutch to English.  Here we observe that we do not manage to surpass the non-context informed baseline with
+an acceptable degree of significance.
 
 \begin{savenotes}
 \begin{table}
@@ -864,11 +866,9 @@ l3r3 \footnotesize{(experts/append)} & 30.7 (0.5/0.2/p=0.0) & 32.4 (0.2/0.0/p=0.
 \end{table}
 \end{savenotes}
 
-We observe we do not manage to surpass the non-context informed baseline with
-an acceptable degree of significance in this experiment. 
 
 We move on to larger corpora, such as the EMEA corpus and the JRC corpus, and
-run experiments for English to Spanish and in the former case also for English
+run experiments for English to Spanish and in the former corpus also for English
 to Dutch. These results are shown in Table~\ref{tab:emea} for EMEA, and Table~\ref{tab:jrc} for JRC.
 
 \begin{table}
@@ -948,7 +948,7 @@ l3r3 \footnotesize{(experts/append)} & 57.6 (0.5/0.3/p=0.0) & 72.8 (0.4/0.0/p=0.
 From all sets of experiments, we again observe that the results do not surprass
 the baseline, although for JRC some configurations such as \emph{l2r1
 \footnotesize{(experts/append)}} do score slightly above threshold, with statistical
-significance, on two out of three metrics. It is clear that surpassing the
+significance, on two out of three metrics. It is clear by now that surpassing the
 non-context informed baseline seems a very tough problem.
 
 We have tried additional experiments on different corpora and language pairs. A
@@ -987,7 +987,7 @@ stands to gain most when translating from morphologically simpler languages to
 morphologically richer languages, as the source-side context information may
 help in determining the proper morphological form. We test this with English to
 Russian on the Yandex corpus, but consistently score below baseline. An excerpt
-of these results is shown in Table~\ref{tab:yandex}
+of these results is shown in Table~\ref{tab:yandex}.
 
 
 \begin{table}
@@ -1016,21 +1016,21 @@ Are we placing our bets on the wrong horse by focussing solely on $p(t|s)$ and
 experiments that use the replace score weighting method, we find that the
 $p(t|s)$ or $p(t|s,C)$ feature receives the highest weight of the translation
 model scores in $63\%$ of the experiments\footnote{Multiple
-optimizer runs (3) are counted as separate experiments in this test}, the next runner-up with $25\%$ is the forward probability
+optimiser runs (3) are counted as separate experiments in this test}, the next runner-up with $25\%$ is the forward probability
 $p(s|t)$. 
 
 We run the same test for the append score weighting method, which leaves the $p(t|s)$ feature as-is, and
-\emph{append} the $p(t|s,C)$ feature to the translation model.  We find that
+\emph{appends} the $p(t|s,C)$ feature to the translation model.  We find that
 $p(t|s,C)$ still receives most weight in $33\%$ percent of the experiments.
 The unaltered $p(t|s)$ score wins in $29\%$ of the cases and $p(s|t)$ in
 $23\%$ \footnote{The remaining probability mass is distributed over the lexical
 weighting features}.
 
-These tests do show that our focus on this particular feature in the
+These tests show that our focus on this particular feature in the
 translation model is justified.
 
-In another test, we observe whether the language model receives more weight than the highest
-ranking feature in the translation model, 
+%In another test, we observe whether the language model receives more weight than the highest
+%ranking feature in the translation model, 
 
 We have measured the impact of the classifier on translation quality.  To get a
 deeper understanding of the impact of the classifier(s), we measure to what
@@ -1044,17 +1044,17 @@ context-informed system.
 
 These phrases are indicative of the SMT decoder
 choosing a different translation option than it did for the baseline, due to
-either the classifier information or optimizer differences.
+either the classifier information or optimiser differences.
 Table~\ref{tab:decodediff} shows the results for a few of the data sets we
 used. We also show, in the last column, how many of the source-side fragments
 are not in the baseline, implying that the SMT decoder chose a different
 source-phrase to translate than the baseline did.
 
-To do this, however, we take the optimizer out of the equation by optimizing
-only once on the non-context-informed baseline, and use thise parameters on the
-context-informed experiments as well. Although this leads to sub-optimal
-translation quality, it guarantees that the difference we measure can be
-attributed solely to the inclusion of context information:
+For this experiment, however, we had to take the optimiser out of the equation
+by optimising only once on the non-context-informed baseline, and use thise
+parameters on the context-informed experiments as well. Although this leads to
+sub-optimal translation quality, it guarantees that the difference we measure
+can be attributed solely to the inclusion of context information:
 
 
 \begin{table} 
@@ -1158,7 +1158,7 @@ Dutch to English (logarithmic).}
 \end{figure}
 
 Various of the tables in Section~\ref{sec:results1} list results for both classifier
-types. As both methods fail to surpass baseline in most cases, and the
+types. As both methods generally fail to surpass the baseline, and the
 differences in translation score between classifier experts and monolithic
 classifier appear minimal, we can not reach a strong conclusion regarding their
 respective merit.
@@ -1214,7 +1214,7 @@ the non-context informed one as per Equation~\ref{eqn:scorediff}.
 
 We compute this on the test data of the JRC-Acquis corpus,
 from English to Spanish, as shown in Figure~\ref{fig:scoredifference}. For
-training we used a subset of $250,000$ sentences. The measurements are taken
+training we used a reduced subset of $250,000$ sentences. The measurements are taken
 from the phrase-translation table directly so the decoder and optimizer plays
 no role here. Our measurement merely assesses to what extent context-informed classifiers
 
@@ -1234,12 +1234,13 @@ options.
 
 \begin{figure}
 \begin{center}
-\setlength\figureheight{6cm}
-\setlength\figurewidth{6cm}
-\input{scoredifference.tikz}
-\input{scoredifference2.tikz}
+\setlength\figureheight{5cm}
+\setlength\figurewidth{5cm}
+\input{scoredifference.tikz} \input{scoredifference2.tikz}
 %\includegraphics[width=90.00mm]{scoredifference.png}
-\caption{Scatter plot (logarithmic scale) illustrating the difference $\Delta$ between the classifier score and the original SMT score on the JRC250k English to Spanish test set. The right figure provides a zoomed view and illustrates that small changes are most prevalent.}
+\caption{Scatter plot (logarithmic scale) illustrating the difference $\Delta$
+between the classifier score and the original SMT score on the JRC-Acquis
+ test set, English to Spanish, trained on 250,000 sentences. The second figure provides a zoomed view and illustrates that small changes are most prevalent.}
 \label{fig:scoredifference}
 \end{center}
 \end{figure}
@@ -1256,9 +1257,9 @@ We zoom in on the EMEA corpus -- English to Spanish, one million sentence
 pairs. We compare a special run of the context-informed \texttt{l1r1} system
 with the non-context informed baseline in order to assess the impact of context
 information. In this special run, the decoder parameters have not been
-optimized independently, but are set equal to those of the baseline. Although
+optimised independently, but are set equal to those of the baseline. Although
 this leads to sub-optimal translation quality, it ensures we compare only the
-effect of the classifier rather than of the optimizer. Out of $5,000$ sentences
+effect of the classifier rather than of the optimiser. Out of $5,000$ sentences
 in the test set, $3,863$ ($77\%$) are translated identically. This high number
 again shows that it is difficult to make a difference. Nevertheless, $23\%$
 differs.
@@ -1348,7 +1349,7 @@ researched. Multiple parameter optimisation runs were conducted to obtain the
 decoder parameter weights, compensating for decoder instability. Optimisation
 of classifier parameters and feature selection was omitted in order to contain
 the computational complexity of the problem, and considering lack of positive
-results for optimisation of classifier parameters in Chapter~\ref{chap:clswsd}.
+results for optimisation of classifier parameters in Chapter~\ref{chap:clwsd}.
 
 Various distinct corpora and language pairs have been employed for the
 experiments in order to ensure that conclusions are of a generic enough
