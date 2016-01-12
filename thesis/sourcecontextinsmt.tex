@@ -350,7 +350,7 @@ index is included in the model for the target-side of the corpus, which maps
 any given $(sentence, token)$ position to a set of phrases that begins at that
 position.  This is computed using the software package
 \emph{colibri-core},\footnote{\url{http://proycon.github.io/colibri-core} \\ \texttt{ae04607b2f2354c702c15350fc4fdd1a673b7bcb} is the git commit that represents a fair state of the software version during this study.}
-, as introduced in Chapter~\ref{chapter:coco},  which takes care of a losslessly compressed in-memory representation for all
+, as introduced in Chapter~\ref{chap:coco},  which takes care of a losslessly compressed in-memory representation for all
 phrases, and allows us to cope with large corpora. Given these two pattern
 models $M_{source}$ and $M_{target}$ we can extract the context for each phrase
 pair quickly and efficiently, as shown in simplified form in
@@ -654,11 +654,11 @@ local optima in the search space. We therefore can not simply run MERT once for
 each experiment, as that gives no basis for determining whether our results can
 be considered statistically significant. To remedy this issue, we have to
 control for optimiser instability. We do so by applying the methodology of
-\cite{MERTCONTROL}, which runs MERT multiple times, employs
-\emph{bootstrap resampling} to compute standard deviations and
-\emph{approximate randomisation} to compute p-values for the assessment of
-statistical significance. All this is implemented in the software
-\emph{MultEval}\footnote{Available from \url{https://github.com/jhclark/multeval}}.
+\cite{MERTCONTROL}, which runs MERT multiple times, employs \emph{bootstrap
+resampling} to compute standard deviations and \emph{approximate randomisation}
+to compute p-values for the assessment of statistical significance. All this is
+implemented in the software \emph{MultEval}\footnote{Available from
+\url{https://github.com/jhclark/multeval}} by Jonathan Clark.
 
 For each of the evaluation metrics, BLUE, METEOR and TER. MultEval reports
 three numbers in parentheses, these are the following, from \cite{MERTCONTROL}:
