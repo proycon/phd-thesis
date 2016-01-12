@@ -11,7 +11,7 @@
 
 To even begin to merit the title of ``Doctor of Philosophy'', it is only proper
 to start this dissertation with some philosophical deliberations. This will be
-in sharp contrast to more technical nature of the rest of these chapters.
+in sharp contrast to the more technical nature of the rest of these chapters.
 
 The study you are about to read sprung from the intuition that \emph{context}
 is an important, if not the most important, characteristic that defines
@@ -27,13 +27,13 @@ This was an unparalleled revolution in \emph{communication}, which has
 undoubtedly played a leading role in us becoming the dominant intelligent
 species on the planet. It has put us in a position where we can communicate our
 thoughts and feelings about the world to one another on a more fine-grained
-level than any other species can. Moreover, it has given us the ability of ever
-increasing \emph{abstraction}. The context of our language is no longer limited
-to just refer to objects in our immediate vicinity, but we can even refer to
-abstract thought itself. Whenever communication is attempted between people who
-do not share a language, the context to which can be referred is dramatically
-restricted.  Just imagine tourists in a foreign bakery lustfully pointing at
-the pastries they desire. 
+level than any other species can. It has given us the ability of
+ever-increasing \emph{abstraction}. The context of our language is no longer
+limited to just refer to objects in our immediate vicinity, but we can even
+refer to abstract thought itself. Whenever communication is attempted between
+people who do not share a language, the context to which can be referred is
+dramatically restricted.  Just imagine tourists in a foreign bakery lustfully
+pointing at the pastries they desire to buy and devour. 
 
 Another major revolution in communication has been the development of writing,
 and much later that of print technology. This and the accompanied literacy of
@@ -70,8 +70,8 @@ dictionary defines words in terms of other words.
 %main point relates to the meaning of this word. 
 
 Buddhist philosophy has a concept called \emph{``sh\=unyat\=a''}. Sh\=unyat\=a is Sanskrit and can
-very roughly be translated into English as ``emptiness''. It  refers to the
-idea that everything, not just words, is interrelated and nothing has any
+very roughly be translated into English as ``emptiness''. It is a notion of
+ontology that states that that everything, not just words, is interrelated and nothing has any
 existence or essence of or by itself: this philosophy posits that everything
 exists and is defined purely through \emph{its context} and can by definition
 never be seen as independent from it.
@@ -80,7 +80,7 @@ never be seen as independent from it.
 \label{sec:bridges}
 
 Whereas we humans all share an astounding capacity for language, history has
-given rise to numerous distinct and often mutually unintelligable languages.
+given rise to numerous distinct and often mutually unintelligible languages.
 This bring us back to the predicament of our pastry-loving tourist in the
 foreign bakery, unable to express his choice in the language of the baker and
 therefore resorting to pointing. If we situate the bakery in France, the baker
@@ -100,7 +100,7 @@ refers to carrying (l\=ati\=o) accross (trans) something. The focus is generally
 accurate preservation of the semantics of message.  Although in some arts, such
 as poetry, form or emotion may take presendence over the substance.
 
-The intuition underlying our research is that the context of word or phrase is
+The intuition underlying our entire research is that the context of a word or phrase is
 an important cue for the translation of that word or phrase. A word in context
 A, may be translated differently than the same word in context B. Consider the
 Portuguese word ``tempo'' in the following sentences:
@@ -116,9 +116,9 @@ English uses two distinct words; context provides cues to disambiguate into the
 proper translation. Another example shows where English has one word and French has two:
 
 \begin{enumerate}
-\item ``J'ai tué \textbf{la mouche}'' -- ``I killed \textbf{the fly}''
+\item ``J'ai tué la \textbf{mouche}'' -- ``I killed the \textbf{fly}''
 \item ``Je \textbf{vole} à Paris'' - ``I \textbf{fly} to Paris''
-\item ``Je \textbf{vole} l'horloge de mon père'' -- ``I steal my father's watch''
+\item ``Je \textbf{vole} l'horloge de mon père'' -- ``I \textbf{steal} my father's watch''
 \end{enumerate}
 
 In this latter example, disambiguation between the first two sentences is
@@ -140,9 +140,9 @@ better automatic translations.
 In our philosophical deliberations we briefly addressed the communication
 revolutions brought about by humanity evolving the faculty of language and
 speech, and later the technological development of writing and print. We all
-live in fortunate times to have just witnessed the biggest revolution in
+live in fortunate times to have just witnessed the next biggest revolution in
 communication since the invention of print: the information revolution. Text is
-not just printed anymore, it is digitized; i.e.\ made available, distributable,
+not just printed anymore, it is digitised; i.e.\ made available, distributable,
 and searchable in digital form. The internet enables these digital resources to
 be collected, shared, and exploited at unpredecented rate and allows us to
 communicate instantaneously with people from all over the planet. 
@@ -152,16 +152,16 @@ communicate instantaneously with people from all over the planet.
 %will be made available primarily in an open digital form, rather than printed
 %book form.
 
-This wealth of digitized data fuels our field of research: Natural Language
+This wealth of digitised data fuels our field of research: Natural Language
 Processing (NLP). We attempt to extract meaningful data from natural language.
 Most contemporary techniques in NLP are grounded in Machine Learning, which
-employs statistical principles to learn whatever patterns from big collections
+employs statistical principles to learn desired patterns from big collections
 of natural language data. These data-driven approaches in NLP can be contrasted
 to the more rule-based approaches, not without their own merit, that are
 directly derived from human expert knowledge.
 
 This dissertation strictly follows the data-driven trend and we therefore rely
-on large amounts of digitized text to conduct our research. In this section we
+on large amounts of digitised text to conduct our research. In this section we
 give some theoretical background on \emph{Machine Translation} and \emph{Word
 Sense Disambiguation}, in order to be able to understand the subject matter of
 this dissertation.
@@ -178,16 +178,16 @@ These classical methods each have an \emph{analysis} stage, a \emph{transfer}
 stage according to a set of rules, and a \emph{generation} stage. Such transfer may occur on a shallow, a syntactic or a semantic level. 
 
 Statistical Machine Translation treats translation as a problem where an
-ordered sequence of words or phrases has to be found that is the most probable
-translation of the input sentence. It effectively tests many possible
-translation for individual fragments, and various ways in which these
+ordered sequence of words or phrases has to be found that is the most
+\emph{probable} translation of the input sentence. It effectively tests many possible
+translations for individual fragments, and various ways in which these
 translated fragments can be recombined. Each test is a \emph{translation
 hypothesis}, and thousands or of such hypotheses are evaluated by the system
 for a single sentence. The one with the highest probability score is eventually
 selected.
 
 Statistical Machine Translation is an integrated solution that handles two
-problems at once; that of finding the best lexical translation for word or
+problems at once; that of finding the best lexical translation for words or
 phrases, and that of reassembling those in a natural order. This corresponds to
 two key properties of translation:
 
@@ -215,15 +215,15 @@ Equation~\ref{eq:introsmt1}, where the outcome $\hat{T}$ corresponds to the most
 \label{eq:introsmt1}
 \end{equation}
 
-By applying Bayes' theorem we can invert this. The denominator can be dropped
-as it is the same throughout the search. This inversion is necessary as we can
-not model $p{T|S}$ directly. Instead, we apply what is known as the \emph{noisy
-channel model}. This is formalised in Equation~\ref{eq:introsmt2}. The system
-generates a huge amount of translation hypotheses. Interpret this as if our
-original sentence in the source language entered a noisy channel and comes out
-scrambled in the target language at the other end. We then compute how probable
-a translation it is of the original input. Note that we can drop the
-denominator $p(S)$ as it will the constant throughout the process.
+By applying Bayes' theorem we can invert this to Equation~\ref{eq:introsmt2}.
+The denominator can be dropped as it is the same throughout the search. This
+inversion is necessary as we can not model $p{T|S}$ directly. Instead, we apply
+what is known as the \emph{noisy channel model}. The system generates a huge
+amount of translation hypotheses. Interpret this as if our original sentence in
+the source language entered a noisy channel and comes out scrambled in the
+target language at the other end. We then compute how probable a translation it
+is of the original input. Note that we can drop the denominator $p(S)$ as it
+will the constant throughout the process.
 
 \begin{equation}
 \hat{T} = \argmax_T p(T|S) = \argmax_T \frac{p(S|T)p(T)}{p(S)} = \argmax_T p(S|T)p(T)
@@ -248,11 +248,11 @@ same text in two languages. First a \emph{sentence alignment} is computed
 \citep{TIEDEMANN}. This identifies sentences that are translations of eachother
 through statistical means. Subsequently, a \emph{word alignment} is computed,
 according to a method pioneered by \cite{BROWN}. See also the work of
-\cite{OchNey2003} and \citep{TIEDEMANN}. The word alignment attempts to
-identify words that are translations of eachother, by means of a
-\emph{expectation maximisation} algorithm. Finally, we can derive phrase
+\cite{OchNey2003} and \cite{TIEDEMANN}. The word alignment attempts to
+identify words that are translations of eachother, by means of an
+\emph{expectation maximisation} algorithm \citep{EXPMAX}. Finally, we can derive phrase
 translation pairs from these word alignments, using algorithms such as
-\emph{grow-diag-final} as described in \citep{PBSMT}. 
+\emph{grow-diag-final} as described in \cite{PBSMT}. 
 
 We outcome of the training stage is a \emph{phrase translation table}, which
 constitutes the translation model. It is a a collection of phrase pairs $(s,t)$
@@ -277,7 +277,7 @@ P(S|T) = \prod_{i=1}^{n} p(s_i|t_i)^{\lambda_1} p(t_i|s_i)^{\lambda_2}
 The value of the weights for the score function can not be determined a priori,
 but has to be computed experimentally on held-out tuning data. This essentially
 comes down to trying a huge variety of parameter values and experimentally
-observe which performs best on the data.  This final\emph{parameter
+observe which performs best on the data.  This final \emph{parameter
 optimisation} step is an essential part of SMT \citep{MERT}.
 
 \subsubsection{Language Model}
@@ -293,7 +293,7 @@ the target language rather than source language. Moreover, it is a purely
 monolingual model whereas our investigation is aimed at modelling source-side
 context for translation directly.
 
-A simple trigram-based language model is shown in equation~\ref{eq:intosmtlm1}, adapted from
+A simple trigram-based language model is shown in equation~\ref{eq:introsmtlm1}, adapted from
 \cite{Cole1997}, where we compute the probability of a sequence of words $W$.
 
 \begin{equation}
@@ -330,7 +330,7 @@ We already saw in Section~\ref{sec:bridges} that translation requires a very
 similar disambiguation. After all, translation usually aims to preserve the
 semantics. If we translate ``bank'' from these two examples from English to
 Spanish, we will obtain ``banco'' for the first example, but ``orilla'' for the
-latter. In Chapter~\ref{chapter:clwsd} we will take an in-depth look at using
+latter. In Chapter~\ref{chap:clwsd} we will take an in-depth look at using
 WSD techniques for localised translation problems.
 
 \section{Research Question}
@@ -398,7 +398,7 @@ the feasibility of the idea. It applies the lessons learned from Cross-Lingual
 Word Sense Disambiguation (Chapter~\ref{chap:clswsd}) to a new task.
 Chapter~\ref{chap:semeval2014task5} subsequently brings the task to SemEval
 2014 as a shared-task. We manually construct a data set and evaluate the
-performance of several 3rd party participanting systems.
+performance of several 3rd party participating systems.
 In Chapter~\ref{chap:colibritafinal} we finally present our own reworked
 ``Colibrita'' system on the basis of the pilot study and findings from the
 SemEval participants. Here we present the results and form conclusions
