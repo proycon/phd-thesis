@@ -97,11 +97,12 @@ word ``trust'' could be seen to be a clue for ``bank'' denoting a
 financial institution.
 
 We hypothesise that the inclusion of source-side context information in the
-translation model improves translation results, as the context helps in
-providing a more accurate disambiguation. A counter-hypothesis to this would be
-that although source-side context information is not modelled explicitly, it is
-implicitly captured by the combination of translation model and target language
-model, and explicit modelling has no added value.
+translation model of a phrased-based SMT system improves translation results,
+as the context helps in providing a more accurate disambiguation. A
+counter-hypothesis to this would be that although source-side context
+information is not modelled explicitly in this paradigm, it is implicitly captured by the
+combination of translation model and target language model, and explicit
+modelling has no added value. 
 
 There is an obvious overlap between what we aim to do here and the field of
 Word Sense Disambiguation (WSD). We effectively test an integration of proven
@@ -149,7 +150,7 @@ such as part-of-speech tags and lemmas, as well as more complex syntactic
 relations.  They test on a single Chinese-to-English test set only, and only
 evaluate with BLEU, which leaves open the question whether their conclusions
 would hold on different language pairs, test sets, and using different
-evaluation metrics.  Their approach is word-based, however, and the level of
+evaluation metrics.  Their approach is word-based and the level of
 integration is also limited.
 
 Carpuat and Wu focus on the WSD model rather than on the SMT
@@ -160,9 +161,7 @@ simple.
 Despite their efforts, they reach the surprising conclusion that inclusion of
 WSD techniques does \emph{not} yield better translation quality. Will these
 results hold in a more modern phrase-based Statistical Machine Translation
-approach?
-
-Two years later they expanded their study to full phrasal units
+approach? Indeed, two years later they expanded their study to full phrasal units
 \citep{CarpuatWu07} and, for the first time, found results that did support the
 hypothesis that SMT benefits from the integration of WSD techniques. They now
 focus on better integration in \emph{phrase-based} SMT: ``Rather than using a
@@ -1349,14 +1348,14 @@ classifier types, context sizes, and score weighting methods have been
 researched. Multiple parameter optimisation runs were conducted to obtain the
 decoder parameter weights, compensating for decoder instability. Optimisation
 of classifier parameters and feature selection was omitted in order to contain
-the computational complexity of the problem, and considering lack of positive
+the computational complexity of the problem, and considering the lack of positive
 results for optimisation of classifier parameters in Chapter~\ref{chap:clwsd}.
 
 Various distinct corpora and language pairs have been employed for the
 experiments in order to ensure that conclusions are of a generic enough
 nature rather than incidental artifacts of the type that have arguably steered
 conclusions in previous work. Despite all efforts, clear positive results were only
-attained for IWSLT 2006 (English to Chinese). Other scores did not manage to
+attained for IWSLT 2006 (Chinese to English). Other scores did not manage to
 unequivocally surpass the baseline.
 
 %We hypothesised that source-side context information may contribute more when
@@ -1369,13 +1368,14 @@ unequivocally surpass the baseline.
 
 In this study, we effectively replicated and expanded upon the part of the work
 of \cite{Stroppa+07} and \cite{Rejwanul+11} that does not depend on further
-linguistic information. Inclusion of surface-form source-side context
-information is clearly not a good route for the improvement of MT
-quality. It is likely that improvement can be more easily achieved through for
-example optimisation of the target-side language model.
+linguistic information. Despite a small number of positive results reported in these
+studies, we have to conclude that inclusion of surface-form source-side context
+information is not a good route for the improvement of MT quality. It is likely
+that improvement can be more easily achieved through for example optimisation
+of the target-side language model.
 
 Finally, we would like to focus on why the results of our study
-overall do not exceed above the baseline.  There may be an explanation for this
+overall do not exceed the baseline.  There may be an explanation for this
 if we look at the interplay between the SMT decoder and the classifiers. The
 classifier instances are generated with the phrase-translation table as input,
 looking up the context in the corpus. There will therefore never be phrases in
@@ -1385,7 +1385,7 @@ context $C$ and mapping to translation $t$, and $C$ is a context that occurs
 multiple times in the corpus, then there is often a source fragment $s'$ in the
 phrase-translation table that is the conjunction of $s$ and $C$, and which maps
 to a $t'$ of which $t$ is at least a substring. In other words, if a context
-for a source phrase is prevalent enough in the data, then this context may be
+for a source phrase is sufficnetly attested in the data, then this context may be
 an integral part of a larger source phrase. Only if the context is not
 prevalent at all, then no such $s'$ exists, in which case one may also posit
 that the context is less likely to occur in test data and the training instance

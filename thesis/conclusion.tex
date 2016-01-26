@@ -7,14 +7,14 @@ assessed this question from various different angles. We set out to answer
 the following inter-related questions:
 
 \begin{enumerate}
-\item Can we improve translation by considering source-side context information? 
+\item To what extent can we improve translation by considering source-side
+    context information?
 \item What context features prove most effective?
-\item Are linguistically uninformed features effective?
+\item To what extent are linguistically uninformed features effective?
 \item How can source-side classifiers be used in translation tasks?
-\item What optimisation techniques can we employ to achieve better translation quality?
 \end{enumerate}
 
-Chapter~\ref{chap:clwsd} showed an application in cross-lingual word sense
+Chapter~\ref{chap:clwsd} demonstrated an application in cross-lingual word sense
 disambiguation, where word expert classifiers succesfully tackled the problem
 of translating a word in context. Our system emerged as the winning system in
 the SemEval 2010 Cross Lingual Word Sense Disambiguation task, and achieved
@@ -25,7 +25,7 @@ supersedes the voting approach we used the first time. Automatic feature
 selection indeed leads to a modest improvement, whereas classifier parameter
 optimisation does not.
 
-At this stage, we still experimented with some basic linguistically informed
+At this stage, we experimented with some basic linguistically informed
 features as well, i.e. part-of-speech tags and lemmas. Lemmas proved to be
 beneficial indeed, whereas part-of-speech tags failed to make a positive
 impact. Nevertheless, our study's explicit focus is to assess the efficacy of
@@ -33,14 +33,15 @@ the surface features in their pure form, i.e. not enriched with any linguistic
 information. We employed multiple classifiers or word experts in which the
 feature vector consists of a simple local context window. In the cross-lingual
 WSD task our linguistically-uninformed classifiers easily surpass the
-non-context-informed baselines. So for this task, we find evidence that
-corroborates our main hypothesis and can answer yes to both our first and third
-question.
+non-context-informed baselines. In other words, for this task, we find evidence that
+corroborates our main hypothesis and gives positive support to our first and third question.
 
-We extensively experimented with global context features at this stage but find
-a discrepancy in results between the SemEval 2010 and 2012 runs. Subsequent
-attempts in later chapters support the SemEval 2012 findings, in which global
-context features do not lead to an improvement in translation quality.
+We extensively experimented with global context features at this stage, as
+opposed to local context features found in the immediate neighbourhood of the
+phrase to be translated. We found a discrepancy in results between the SemEval
+2010 and 2012 runs. Subsequent attempts in later chapters support the SemEval
+2012 findings, in which global context features do not lead to an improvement
+in translation quality.
 
 The initial successes with translation aided by source-side context information
 led us to propose this technique for a novel application in computer-aided translation
@@ -48,7 +49,7 @@ assistance. In this task, we translate L1 fragments in an L2 context.
 In Chapter~\ref{chap:colibritapilot} we tested the feasibility of this idea and
 found our context-sensitive classifiers improves both upon a non-context informed
 baseline, as well a baseline enriched with a language model. We then
-propose our task for SemEval 2014 in Chapter~\ref{chap:semeval2014task5}, and gain
+proposed our task for SemEval 2014 in Chapter~\ref{chap:semeval2014task5}, and gain
 participation by five participants, some of whom achieve high results. It
 becomes apparent, specifically, that statistical machine translation is able to
 achieve better results than pure classifier-based approaches, despite the
