@@ -32,25 +32,25 @@ ever-increasing \emph{abstraction}. The context of our language is no longer
 limited to just refer to objects in our immediate vicinity, but we can even
 refer to abstract thought itself. Whenever communication is attempted between
 people who do not share a language, the context to which can be referred is
-dramatically restricted.  Just imagine tourists in a foreign bakery lustfully
+restricted.  Just imagine tourists in a foreign bakery lustfully
 pointing at the pastries they desire to buy and devour. 
 
 Another major revolution in communication has been the development of writing,
 and much later that of print technology. This and the accompanied literacy of
 populations allows for our thoughts and ideas to be preserved more easily and
 accurately than oral traditions can accomplish. The ability to read and write
-broadens one's world, one's context, and is therefore even deemed a fundamental
-human right. 
+broadens one's world, one's context, and receiving language education is
+therefore even deemed a fundamental human right. 
 
 Language is inherently ambiguous and context is the disambiguating factor
-without which it can not exist. The context of a bakery and a neatly arranged
+without which it cannot exist. The context of a bakery and a neatly arranged
 line of pastries is essential for the baker to be able to disambiguate the
 pointing of the clueless foreign tourist and discern which pastry he actually
 wants. Demonstrative pronouns such as ``he'', ``she'', ``this'', or even
-definite noun phrases such as ``the house'' convey little information if not
-for the context they're employed in.  In fact, any word by itself is pretty
+definite noun phrases such as ``the house'' convey little information, if not
+for the context they are employed in.  In fact, any word by itself is pretty
 limited, can never exist in total isolation, and only derives meaning from the
-further context. It is even defined purely through the context, just like a
+further context. It is defined through the context, just like a
 dictionary defines words in terms of other words.
 
 %If the context of your own
@@ -70,8 +70,8 @@ dictionary defines words in terms of other words.
 %main point relates to the meaning of this word. 
 
 Buddhist philosophy has a concept called \emph{``sh\=unyat\=a''}. Sh\=unyat\=a is Sanskrit and can
-very roughly be translated into English as ``emptiness''. It is a notion of
-ontology that states that that everything, not just words, is interrelated and nothing has any
+roughly be translated into English as ``emptiness''. It is an ontological
+notion that states that that everything, not just words, is interrelated and nothing has any
 existence or essence of or by itself: this philosophy posits that everything
 exists and is defined purely through \emph{its context} and can by definition
 never be seen as independent from it.
@@ -96,13 +96,13 @@ The \emph{linguistic bridges} of this dissertation refer to these acts of
 translation. We can define translation as \emph{a process that yields a
 representation of a message initially expressed in one language, in another}.
 Etymologically, the word \emph{translation}, from the latin \emph{transl\=ati\=o},
-refers to carrying (l\=ati\=o) accross (trans) something. The focus is generally on
-accurate preservation of the semantics of message.  Although in some arts, such
-as poetry, form or emotion may take presendence over the substance.
+refers to carrying (l\=ati\=o) across (trans) something. The focus is generally on
+accurate preservation of the semantics of message, although in some arts, such
+as poetry, form or emotion may take precendence over the substance.
 
 The intuition underlying our entire research is that the context of a word or phrase is
 an important cue for the translation of that word or phrase. A word in context
-A, may be translated differently than the same word in context B. Consider the
+A may be translated differently than the same word in context B. Consider the
 Portuguese word ``tempo'' in the following sentences:
 
 \begin{enumerate}
@@ -129,11 +129,12 @@ rules out a translation to a verb. The French verb ``voler'' in turn does not
 just translate to ``to fly'', but can also mean ``to steal'', as shown in
 the last sentence. 
 
-These examples illustrate that languages are almost never translatable on a naive
-word-by-word basis, and that context plays an major role in determining the
-right translation. Context plays a bridging function in translation, and this
-dissertation investigates techniques for machines to exploit this to attain
-better automatic translations.
+These examples illustrate that languages are almost never translatable on a
+naive word-by-word basis, leaving aside from the issue of word order, as
+determined by a language's syntax. Context plays an major role in determining
+the right translation. We can say context fulfills a bridging function in
+translation, and this dissertation investigates techniques for machines to
+exploit this to attain better automatic translations.
 
 \section{Natural Language Processing: Theoretical Background}
 
@@ -152,13 +153,13 @@ communicate instantaneously with people from all over the planet.
 %will be made available primarily in an open digital form, rather than printed
 %book form.
 
-This wealth of digitised data fuels our field of research: Natural Language
-Processing (NLP). We attempt to extract meaningful data from natural language.
-Most contemporary techniques in NLP are grounded in Machine Learning, which
-employs statistical principles to learn desired patterns from big collections
-of natural language data. These data-driven approaches in NLP can be contrasted
-to the more rule-based approaches, not without their own merit, that are
-directly derived from human expert knowledge.
+This wealth of digital textual data fuels our field of research: Natural
+Language Processing (NLP). We attempt to extract meaningful patterns from
+natural language data.  Most contemporary techniques in NLP are grounded in
+Machine Learning, which employs statistical principles to learn desired
+patterns from big collections of natural language data. These data-driven
+approaches in NLP can be contrasted to rule-based approaches, not
+without their own merit, that are directly derived from human expert knowledge.
 
 This dissertation strictly follows the data-driven trend and we therefore rely
 on large amounts of digitised text to conduct our research. In this section we
@@ -173,33 +174,34 @@ The area of research dedicated to the automatic translation of data from one
 natural language to another is called \emph{Machine Translation} (MT).
 State-of-the-art techniques in this field are primarily based on statistical
 methods, in which case we can speak of \emph{Statistical Machine Translation}
-(SMT). These can contrasted to earlier rule-based Machine Translation systems.
-These classical methods each have an \emph{analysis} stage, a \emph{transfer}
+(SMT). These can contrasted to earlier rule-based Machine Translation systems,
+which are characterised by an \emph{analysis} stage, a \emph{transfer}
 stage according to a set of rules, and a \emph{generation} stage. Such transfer may occur on a shallow, a syntactic or a semantic level. 
 
-Statistical Machine Translation treats translation as a problem where an
+Statistical Machine Translation, in contrast, treats translation as a problem where an
 ordered sequence of words or phrases has to be found that is the most
 \emph{probable} translation of the input sentence. It effectively tests many possible
 translations for individual fragments, and various ways in which these
-translated fragments can be recombined. Each test is a \emph{translation
-hypothesis}, and thousands or of such hypotheses are evaluated by the system
+translated fragments can be ordered. Each test is a \emph{translation
+hypothesis}, and many such hypotheses are evaluated by the system
 for a single sentence. The one with the highest probability score is eventually
 selected.
 
 Statistical Machine Translation is an integrated solution that handles two
 problems at once; that of finding the best lexical translation for words or
-phrases, and that of reassembling those in a natural order. This corresponds to
+phrases, and that of reassembling those in an acceptable order. This corresponds to
 two key properties of translation:
 
 \begin{enumerate}
 	\item \textbf{Semantic faithfulness} - A translation must accurately transfer meaning for all of its parts. The right lexical translation has to be found for the words and expressions in the source.
-	\item \textbf{Syntactic fluency} - The translated result must be fluently expressed, the sentence must have proper syntax..
+	\item \textbf{Syntactic fluency} - The translated result must be fluently
+        expressed, the sentence must be syntactically well-formed.
 \end{enumerate}
 
 In Statistical Machine Translation, two key models tackle these issues. The
 \emph{translation model} models the translation of words or phrases from the
 source language to the target language. The \emph{language model}, for the
-target language, provides the means to reassemble translated fragments. Both
+target language, provides the means to select reassembled translated fragments. Both
 are probablistic models that are learned from data. The translation model
 requires a \emph{parallel corpus} as input, and the language model can be
 trained on monolingual data.
@@ -216,14 +218,13 @@ Equation~\ref{eq:introsmt1}, where the outcome $\hat{T}$ corresponds to the most
 \end{equation}
 
 By applying Bayes' theorem we can invert this to Equation~\ref{eq:introsmt2}.
-The denominator can be dropped as it is the same throughout the search. This
-inversion is necessary as we can not model $p{T|S}$ directly. Instead, we apply
-what is known as the \emph{noisy channel model}. The system generates a huge
-amount of translation hypotheses. Interpret this as if our original sentence in
-the source language entered a noisy channel and comes out scrambled in the
-target language at the other end. We then compute how probable a translation it
-is of the original input. Note that we can drop the denominator $p(S)$ as it
-will the constant throughout the process.
+This inversion is necessary as we cannot model $p(T|S)$ directly. Instead, we
+apply what is known as the \emph{noisy channel model}. The system generates a
+large amount of translation hypotheses. This can be interpreted as if our
+original sentence in the source language entered a noisy channel and comes out
+scrambled in the target language at the other end. We then compute how probable
+a translation it is of the original input. Note that we can drop the
+denominator $p(S)$ as it will the constant throughout the process.
 
 \begin{equation}
 \hat{T} = \argmax_T p(T|S) = \argmax_T \frac{p(S|T)p(T)}{p(S)} = \argmax_T p(S|T)p(T)
@@ -231,34 +232,35 @@ will the constant throughout the process.
 \end{equation}
 
 The two factors we end up with in Equation~\ref{eq:introsmt2} correspond
-precisely to the \emph{translation model} and \emph{language model}
-respectively..
+precisely to the \emph{translation model} ($p(S|T)$) and \emph{language model}
+($p(t)$) respectively.
 
 \subsubsection{Translation Model}
 
-The translation model is learned from parallel corpus data. Early SMT systems
-were word-based, i.e.\ the translation model consisted of probabilities for
-word translation pairs. These systems have been superseded by phrase-based
-systems, in which multiple words at once may be translated as an entity
-\citep{PBSMT}. This allows for translations in which multiple words in the
-source language translate to just one in the target language, or vice versa.
+The translation model is learned from parallel corpus data. A parallel corpus
+has the same text in two or more languages, i.e. are translated versions of
+each other. Early SMT systems were word-based, i.e.\ the translation model
+consisted of probabilities for word translation pairs. These systems have been
+superseded by phrase-based systems, in which multiple words at once may be
+translated as an entity \citep{PBSMT}. This allows for translations in which
+multiple words in the source language translate to just one in the target
+language, or vice versa.
 
 The basis for training such a translation model is a parallel corpus, i.e.\ the
 same text in two languages. First a \emph{sentence alignment} is computed
-\citep{TIEDEMANN}. This identifies sentences that are translations of eachother
+\citep{TIEDEMANN}. This identifies sentences that are translations of each other
 through statistical means. Subsequently, a \emph{word alignment} is computed,
 according to a method pioneered by \cite{BROWN}. See also the work of
 \cite{OchNey2003} and \cite{TIEDEMANN}. The word alignment attempts to
-identify words that are translations of eachother, by means of an
+identify words that are translations of each other, by means of an
 \emph{expectation maximisation} algorithm \citep{EXPMAX}. Finally, we can derive phrase
-translation pairs from these word alignments, using algorithms such as
-\emph{grow-diag-final} as described in \cite{PBSMT}. 
+translation pairs from these word alignments.
 
-We outcome of the training stage is a \emph{phrase translation table}, which
-constitutes the translation model. It is a a collection of phrase pairs $(s,t)$
+The outcome of the training stage is a \emph{phrase translation table}, which
+constitutes the translation model. It is a collection of phrase pairs $(s,t)$
 in source and respectively target language language. Associated with each pair
 are the phrase-translation probabilities $p(s|t)$ and $p(t|s)$, derived from
-the joint frequency of the pair and the invididual frequencies of the parts in
+the joint frequency of the pair and the individual frequencies of the parts in
 the data. Additional probabilities, such as lexical weights and word/phrase
 penalties, may be included as well. 
 
@@ -274,8 +276,8 @@ P(S|T) = \prod_{i=1}^{n} p(s_i|t_i)^{\lambda_1} p(t_i|s_i)^{\lambda_2}
 \label{eq:introsmt3}
 \end{equation}
 
-The value of the weights for the score function can not be determined a priori,
-but has to be computed experimentally on held-out tuning data. This essentially
+The value of the weights $\lambda_1$ and $\lambda_2$ for the score function cannot be determined a priori,
+but have to be computed experimentally on held-out tuning data. This essentially
 comes down to trying a huge variety of parameter values and experimentally
 observe which performs best on the data.  This final \emph{parameter
 optimisation} step is an essential part of SMT \citep{MERT}.
@@ -283,7 +285,7 @@ optimisation} step is an essential part of SMT \citep{MERT}.
 \subsubsection{Language Model}
 
 Note that the translation model is not sensitive to the order in which
-fragments are assembled. Ordering is instead directed by the language model,
+fragments are assembled. Ordering is instead guided by the language model,
 the second key component in an SMT system.
 
 The language model predicts the likelihood of a word given a previous history
@@ -307,13 +309,13 @@ training, which would result in a probability score of $0$ otherwise.
 
 The role of the language model is mainly to assign a higher probability to
 sentences in which the target-language phrases are ordered properly than
-phrases in an unnatural order. 
+to sentences in which phrases are in an unnatural order. 
 
 \subsection{Word Sense Disambiguation}
 
 Word Sense Disambiguation (WSD) shares certain characteristics with
 translation. The idea in WSD is to disambiguate between multiple meanings of a
-polysemous words. Consider the following example: 
+polysemous words given a context. Consider the following example: 
 
 \begin{enumerate}
 \item ``My money is safely deposited in the \textbf{bank}.''
@@ -326,39 +328,40 @@ attempt to automatically infer which sense is intended. The actual sense is
 typically represented in the form of a sort of identifier from a sense inventory
 such as WordNet.
 
-We already saw in Section~\ref{sec:bridges} that translation requires a very
+We already saw in Section~\ref{sec:bridges} that translation requires a 
 similar disambiguation. After all, translation usually aims to preserve the
 semantics. If we translate ``bank'' from these two examples from English to
 Spanish, we will obtain ``banco'' for the first example, but ``orilla'' for the
 latter. In Chapter~\ref{chap:clwsd} we will take an in-depth look at using
 WSD techniques for localised translation problems.
 
-\section{Research Question}
+\section{Research Questions}
 \label{sec:overallresearchquestion}
 
-In this introductory chapter, we have illustrated our intuition that
-source-side context information, i.e.\ words in the source-language from the
-surrounding context, provides valuable cues for translation. The over-arching
+Our intuition is that source-side context information, i.e.\ words in the
+source-language from the surrounding context, provides valuable cues for
+translation. The examples we have discussed hitherto aim to illustrate this
+intuition. The over-arching
 question we posit for the dissertation is the following:
 
 \begin{enumerate}
-\item Can we improve translation by considering source-side context information? 
+\item To what extent can we improve translation by considering source-side
+    context information?
 \item What context features prove most effective?
-\item Are linguistically uninformed features effective?
+\item To what extent are linguistically uninformed features effective?
 \item How can source-side classifiers be used in translation tasks?
-\item What optimisation techniques can we employ to achieve better translation quality?
 \end{enumerate}
 
 Here \emph{translation} is understood to be a generic term that
-encompases the more localised translation of translation of fragments in a
+encompasses the more localised translation of fragments in a
 context, comparable to Word Sense Disambiguation, as well as a full integration
 of source-side context in Statistical Machine Translation.
 
 In the first chapters, some linguistically-informed features such as lemma
 features and Part-of-Speech tags are tested. Our emphasis in the overall study,
-however, is on assessing the efficiency of \emph{linguically uninformed}
-features, i.e.\ the raw textual data as it is. The reason for this is that we
-aim to assess the merit of the techniques as-such, a pure analysis without
+however, is on assessing the efficiency of \emph{linguistically uninformed}
+features, i.e.\ the raw textual data. The reason for this is that we
+aim to assess the merit of the techniques as such, a pure analysis without
 introducing another data dimension. Moreover, by choosing this approach we do
 not need to rely on external language-specific tools such as as lemmatisers and
 Part-of-Speech taggers. In subsequent chapters, we will also show that the
@@ -366,7 +369,7 @@ inclusion of linguistically-informed features is something already studied and
 described in the literature by others. 
 
 Our main hypothesis is that inclusion of source-side context information, without
-linguistically informed features, still benefits translation quality.
+linguistically informed features, benefits translation quality.
 
 \section{Thesis structure}
 
@@ -381,26 +384,29 @@ necessary foundation that is in turn used by most of the software of the
 remaining chapters. It is a chapter of technical nature that can optionally be
 skipped if the reader wishes to more quickly proceed to the heart of the
 matter. At the same time, the chapter offers tools that are applicable
-well-beyond the present dissertation.
+well beyond the present dissertation.
 
-Chapter~\ref{chap:clwsd} will introduce \emph{Cross-Lingual Word Sense
+Chapter~\ref{chap:clwsd} introduces \emph{Cross-Lingual Word Sense
 Disambiguation} and presents a classifier-based system employing source-side
 context information. This system, when tested against competing systems, obtains the
 best or near-best accuracy. 
 
-Chapters~\ref{chap:colibritapilot},~\ref{chap:semeval2014task5} and~\ref{chap:colibritafinal}
-are strongly linked and open up a novel line of
-investigation. A Translation Assistance system capable of translating L1
-fragments in an L2 context is proposed, tested, and presented. It changes and
-investigates the notion of what source-side context is and may find practical
-application in Computer Assisted Translation and Computer Aided Language
-Learning. Chapter~\ref{chap:colibritapilot} conducts a pilot study to assess
-the feasibility of the idea. It applies the lessons learned from Cross-Lingual
-Word Sense Disambiguation (Chapter~\ref{chap:clswsd}) to a new task.
-Chapter~\ref{chap:semeval2014task5} subsequently brings the task to SemEval
-2014 as a shared-task. We manually construct a data set and evaluate the
-performance of several 3rd party participating systems.
-In Chapter~\ref{chap:colibritafinal} we finally present our own reworked
+Chapters~\ref{chap:colibritapilot},~\ref{chap:semeval2014task5}
+and~\ref{chap:colibritafinal} are strongly linked and open up a novel line of
+investigation. We propose, test and present a translation assistance system
+capable of translating fragments in a cross-lingual context, i.e. fragments in
+language different from the language of the context. Translation subsequently
+proceeds to translate these other-language fragments to the language of the context.
+This system changes and investigates the notion of what source-side context is and may
+find practical application in Computer Assisted Translation and Computer Aided
+Language Learning. In Chapter~\ref{chap:colibritapilot} we describe a pilot study to
+assess the feasibility of the idea. It applies the lessons learned from
+Cross-Lingual Word Sense Disambiguation (Chapter~\ref{chap:clwsd}) to a new
+task.  In chapter~\ref{chap:semeval2014task5} we 
+manually construct a data set and evaluate
+the performance of several 3rd party participating systems that attempt to
+solve this task we posit for the SemEval 2014 conference.
+.  In Chapter~\ref{chap:colibritafinal} we finally present our own reworked
 ``Colibrita'' system on the basis of the pilot study and findings from the
 SemEval participants. Here we present the results and form conclusions
 regarding the role of context and the usefulness of classifiers versus
@@ -408,8 +414,7 @@ Statistical Machine Translation techniques.
 
 Chapter~\ref{chap:contextinsmt} is an attempt to directly integrate source-side
 context information in Statistical Machine Translation, by means of
-memory-based classifiers. It is here that we can come to our main conclusions.
-Chapter~\ref{chap:conclusion} briefly aggregates and summarizes the
-conclusion from earlier chapters, and forms a final answer to our research
-questions. 
+memory-based classifiers.  Chapter~\ref{chap:conclusion} aggregates and
+summarizes the conclusions from earlier chapters, and forms a final answer to
+our research questions. 
 

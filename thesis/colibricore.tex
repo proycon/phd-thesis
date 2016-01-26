@@ -17,8 +17,7 @@
 \chapter{Efficient n-gram, skipgram and flexgram modelling with Colibri Core}
 \label{chap:coco}
 
-In this chapter, we do not yet tackle the issue of translation at all, but
-instead focus on how we can computationally extract patterns in an efficient
+In this chapter, we focus on how we can computationally extract patterns in an efficient
 way that also allows for modelling their context. This is a necessary
 prerequisite for the further stages of the research.  The chapter has a strong
 software-oriented focus and format. It explicitly introduces the software \emph{Colibri
@@ -65,8 +64,7 @@ Core, on the other hand, offers tools and programming libraries that are
 heavily optimised to 1) reduce memory usage, and 2) offer high-speed performance.
 
 The task of finding $n$-grams is generalised in Colibri Core to the task of
-finding \emph{patterns} or \emph{constructions} (we use the terms
-interchangeably). Furthermore, once patterns are identified, resulting in a
+finding \emph{patterns}. Furthermore, once patterns are identified, resulting in a
 \emph{pattern model}, Colibri Core can extract relations between the patterns.
 
 As the name Colibri Core suggests, the software is geared to provide
@@ -88,7 +86,7 @@ We distinguish three categories of patterns, and define them as follows:
         For example: ``\texttt{to be or not to be}''
     \item Skipgrams -- A fixed-length sequence of $p$ word tokens and $q$ token
         placeholders/wildcards with total length $n$ ($n=p+q$), the
-        placeholders constitute gaps or skips and a skipgram can contain
+        placeholders constitute gaps, or skips, and a skipgram can contain
         multiple of these. In turn, a gap can span one or more tokens. For
     example: ``\texttt{``to \_ or \_ \_ be}''
     \item Flexgrams -- A sequence with one or more gaps of variable length,
@@ -99,7 +97,7 @@ We distinguish three categories of patterns, and define them as follows:
 Our definitions are defined narrowly and, with exception of $n$-grams do not
 necessarily match up precisely to the way the concepts are used in other studies. Some
 may use the term skipgram to include what we call flexgram, or use another term
-such as ``elastigram'' to refer to flexgrams. 
+such as ``elastigram'' to refer to flexgrams. %TODO: references!!
 
 Skipgrams are used in the field to obtain a higher level of generalisation than
 can be offered by n-grams. They can, for instance, be found as features in
