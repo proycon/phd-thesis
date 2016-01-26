@@ -188,11 +188,12 @@ our present study.
 The year 2007 saw a culmination of various studies integrating WSD techniques
 in SMT using classifiers. A third study in this trend was \cite{Stroppa+07}.
 They focus on the word form, as does this present study, and add only
-part-of-speech features. On a dataset from the IWSLT 2006 challenge, for
-Chinese--English and Italian--English, they achieve a significant improvement
-for the former language pair, whereas the BLEU score for the latter language
-pair fails to pass the significance test. We attempt to reproduce the
-Chinese--English experiment in this study.
+part-of-speech features. On a dataset from the IWSLT 2006 challenge, drawn from
+a corpus of Basic Travel Expression, for Chinese--English and Italian--English,
+they achieve a significant improvement for the former language pair, whereas
+the BLEU score for the latter language pair fails to pass the significance
+test. We attempt to reproduce the Chinese--English experiment in this study,
+\cite{CarpuatWu07} also based their research on the same data.
 
 Source-context aware translation has also been attempted outside of the
 predominant SMT framework. For instance, \cite{MBMT} implement a
@@ -1352,11 +1353,19 @@ the computational complexity of the problem, and considering the lack of positiv
 results for optimisation of classifier parameters in Chapter~\ref{chap:clwsd}.
 
 Various distinct corpora and language pairs have been employed for the
-experiments in order to ensure that conclusions are of a generic enough
-nature rather than incidental artifacts of the type that have arguably steered
-conclusions in previous work. Despite all efforts, clear positive results were only
-attained for IWSLT 2006 (Chinese to English). Other scores did not manage to
-unequivocally surpass the baseline.
+experiments in order to ensure that conclusions are of a generic enough nature
+rather than incidental artifacts of the type that have arguably steered
+conclusions in previous work. Despite all efforts, clear positive results were
+only attained for IWSLT 2006 (Chinese to English). Other scores did not manage
+to unequivocally surpass the baseline. The IWSLT 2006 Chinese-English data set
+was used by both \cite{CarpuatWu07}, as well as \cite{Stroppa+07}, albeit a
+different subset. The study of \cite{CarpuatWu07} reports positive results on
+this data set using various linguistic features from WSD. But most interesting
+is an experiment without linguistic feature conducted by \cite{Stroppa+07}
+where they find positive results above baseline, which we in turn have indeed
+reproduced with the same positive result. On their other language pair
+(Italian-English) from the same dataset, however, they too fail to make a
+statistically significant impact above baseline. 
 
 %We hypothesised that source-side context information may contribute more when
 %translating to a morphologically more complex language, but this was

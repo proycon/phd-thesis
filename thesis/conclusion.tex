@@ -70,19 +70,20 @@ source-side context information using classifiers in the SMT decoder, using a
 bypass method. We tested various forms of integration, but found that we could
 only really improve upon the baseline for one corpus (IWSLT 2006, Chinese to
 English). All other results turned out on or below baseline, or failed to pass
-rigid significance tests. Our main hypothesis therefore does not hold for full
-statistical machine translation. We ask ourselves why this is the case and
+rigourous significance tests. Our main hypothesis therefore does not hold for
+full statistical machine translation. We ask ourselves why this is the case and
 suggest that that the information we attempt to explicitly model in the
-translation model, is already implicitly and satisfactorily covered by the
-target-side language model. Integration of linguistically-uninformed
-classifiers in statistical machine translation therefore has no added value.
+translation model, is already implicitly and satisfactorily covered by both the
+target-side language model as well as the translation model. Integration of
+linguistically-uninformed classifiers in statistical machine translation
+therefore has no added value.
 
 Our efforts only prove fruitful when used standalone or for localised problems,
 whereas statistical machine translation proves to be a superior technique,
 leading to higher translation quality, for those translation tasks that it can
 tackle.
 
-When it comes to classifiers and their integration in SMT, Future related
+When it comes to classifiers and their integration in SMT, future related
 research can continue in the direction that past studies have already
 proceeded, that of incorporating linguistic features. The integration and score
 weighting methods from Chapters~\ref{chap:colibritafinal} and especially
