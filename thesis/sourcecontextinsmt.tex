@@ -1342,8 +1342,7 @@ causes these positive results, whereas most other experiments fail to surpass
 baseline. As we used three optimisation runs, we have three outputs available
 for the baseline and for three for the best performing system (l2r1 (experts/append)), we
 select one of each at random and manually inspect the output.
-
-Out of 485 test sentences, 45 are translated perfectly with respect to the
+Out of 485 test sentences, 44 are translated perfectly with respect to the
 reference, for both the system and the baseline. Often, however, the baseline
 and system choose different words that still make sense, as in
 Example~\ref{ex:QA2synonym}. In some cases, the baseline and the system are
@@ -1358,14 +1357,62 @@ output.
 \label{ex:QA2synonym}
 \end{exe}
 
-The baseline and the system are in complete agreement for 200 sentences (41\%).
-Our focus goes to the remainder where they differ.
+The baseline and the system are in complete agreement for 241 sentences (50\%).
+Our focus goes to the remainder where they differ.  We first look at instances
+where the system output is a better match with the reference translation than
+the baseline. Example~\ref{ex:QA2better} illustrates this.
 
+\begin{exe}
+\footnotesize
+\ex \textbf{Baseline:}  my watch in ten minutes slow a day .  \\
+\textbf{l2r1:} my watch loses about ten minutes a day .  \\
+\textbf{Reference:} my watch loses ten minutes a day .
+\label{ex:QA2better}
+\end{exe}
 
+\begin{exe}
+\footnotesize
+\ex \textbf{Baseline:} how much is the his room number ?  \\
+\textbf{l2r1:} what 's his room number ?  \\
+\textbf{Reference:} what is his room number ?
+\label{ex:QA2better2}
+\end{exe}
 
+We can not directly ascribe the differences to the presence of context
+information, as we selected output from just one out of three optimiser runs.
+In this example however, all optimiser runs of the l2r1 system, as well as the
+baseline, produce the same output for Example~\ref{ex:QA2better} and therefore
+we can conclude that the inclusion of context information has a positive result
+in this case. Almost the same goes for Example~\ref{ex:QA2better2}, where only
+the baseline output slightly differs for one optimiser run.
 
+In our selected system outputs, when manually inspecting the data and comparing
+it the reference, we count that the l2r1 system performs better than baseline
+in 36 cases, the baseline performs better in 25 cases.\footnote{This analysis
+does not compensate for different optimiser, and was moreover conducted in
+non-blinded fashion by a single person. It is only meant to give an impression
+of the data.}. For the remaining instances, no easy judgement of one above the
+other could be made. 
 
+Again, the absence of multiple reference translations has to be reiterated.
+Example~\label{ex:QA2allnice} shows two translations that both seem fine, but
+both do not match the reference well. Different lexical choices that can be
+considered good translations in their own right prevalent throughout this
+dataset.
 
+\begin{exe}
+\footnotesize
+\ex \textbf{Baseline:} my stomach hurts  \\
+\textbf{l1r1:} i have a pain in my stomach \\
+\textbf{Reference:} i have a stomach ache
+\label{ex:QA2allnice}
+\end{exe}
+
+The IWSLT 2006 dataset is characterised by short phrases, whereas other the
+other data sets tend to contain longer phrases. We can hypothesize that
+source-side context information may have a slight local positive effect that
+is, however, lost in translation quality as sentences grow longer and other
+local mismatches are made.
 
 \section{Conclusions and Discussion} 
 \label{sec:conclusion}
