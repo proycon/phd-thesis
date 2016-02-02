@@ -1466,13 +1466,14 @@ information is not a good route for the improvement of MT quality. It is likely
 that improvement can be more easily achieved through for example optimisation
 of the target-side language model.
 
-Though upon inspection of the output, we do at times find that inclusion of
-context information produces a better lexical choice than the baseline. These
-changes are fairly localised, however, and fail to show in the evaluation
-metrics. An important factor in this is the lack of multiple reference
-translations, as such datasets are unfortunately rare. Moreover, in longer
-sentences it often occurs that a modest gain at one place may be lost against
-mistranslations elsewhere.
+Upon inspection of the output, we do at times find that inclusion of context
+information produces a better lexical choice than the baseline. These changes
+are fairly localised, however, and fail to show in the evaluation metrics or
+pass significance tests. An important factor in this is the lack of multiple
+reference translations, as such datasets are unfortunately rare. More balances
+judgement could be made if we could compare against multiple reference
+translation. Moreover, in longer sentences it often occurs that a modest gain
+at one place may be lost against mistranslations elsewhere.
 
 Finally, we would like to focus deeper on why the results of our study
 overall do not exceed the baseline.  There may be an explanation for this
