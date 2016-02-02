@@ -1336,6 +1336,36 @@ was not available in this study.
 \label{ex:QAnegative}
 \end{exe}
 
+We also zoom on the IWSLT 2006 Chinese to English experiment, which is the only
+one that managed to make a positive impact. We wonder whether we can find what
+causes these positive results, whereas most other experiments fail to surpass
+baseline. As we used three optimisation runs, we have three outputs available
+for the baseline and for three for the best performing system (l2r1 (experts/append)), we
+select one of each at random and manually inspect the output.
+
+Out of 485 test sentences, 45 are translated perfectly with respect to the
+reference, for both the system and the baseline. Often, however, the baseline
+and system choose different words that still make sense, as in
+Example~\ref{ex:QA2synonym}. In some cases, the baseline and the system are
+hindered by out-of-vocabulary words, and retain some chinese characters in the
+output.
+
+\begin{exe}
+\footnotesize
+\ex \textbf{Baseline:} where is the \underline{currency exchange office} ?  \\
+\textbf{l2r1:} where is the \underline{currency exchange office} ? \\
+\textbf{Reference:} where is the \underline{money exchange} ?
+\label{ex:QA2synonym}
+\end{exe}
+
+The baseline and the system are in complete agreement for 200 sentences (41\%).
+Our focus goes to the remainder where they differ.
+
+
+
+
+
+
 
 \section{Conclusions and Discussion} 
 \label{sec:conclusion}
