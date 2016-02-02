@@ -1408,11 +1408,11 @@ dataset.
 \label{ex:QA2allnice}
 \end{exe}
 
-The IWSLT 2006 dataset is characterised by short phrases, whereas the
-other data sets tend to contain longer phrases. We can hypothesize that
-source-side context information may have a slight local positive effect that
-is, however, lost in translation quality as sentences grow longer and other
-local mismatches are made.
+The IWSLT 2006 dataset is characterised by short and relatively simple
+sentences, whereas the other data sets tend to contain longer phrases. We can
+hypothesize that whilst source-side context information may have a slight local
+positive effect, this is often lost in translation quality as sentences grow
+longer and other local mismatches are made.
 
 \section{Conclusions and Discussion} 
 \label{sec:conclusion}
@@ -1442,7 +1442,13 @@ is an experiment without linguistic feature conducted by \cite{Stroppa+07}
 where they find positive results above baseline, which we in turn have indeed
 reproduced with the same positive result. On their other language pair
 (Italian-English) from the same dataset, however, they too fail to make a
-statistically significant impact above baseline. 
+statistically significant impact above baseline. What sets the IWSLT 2006
+Chinese-English set apart? Can the slight positive results be attributed to the
+language pair or the fact that the data set is characterised by short and
+simple sentences? Possibly a combination of these two factors is most probable,
+as \cite{Stroppa+07} did not attain positive results with the Italian-English
+variant of this same dataset either, although it did consist of the same short
+sentences.
 
 %We hypothesised that source-side context information may contribute more when
 %translating to a morphologically more complex language, but this was
@@ -1460,7 +1466,15 @@ information is not a good route for the improvement of MT quality. It is likely
 that improvement can be more easily achieved through for example optimisation
 of the target-side language model.
 
-Finally, we would like to focus on why the results of our study
+Though upon inspection of the output, we do at times find that inclusion of
+context information produces a better lexical choice than the baseline. These
+changes are fairly localised, however, and fail to show in the evaluation
+metrics. An important factor in this is the lack of multiple reference
+translations, as such datasets are unfortunately rare. Moreover, in longer
+sentences it often occurs that a modest gain at one place may be lost against
+mistranslations elsewhere.
+
+Finally, we would like to focus deeper on why the results of our study
 overall do not exceed the baseline.  There may be an explanation for this
 if we look at the interplay between the SMT decoder and the classifiers. The
 classifier instances are generated with the phrase-translation table as input,
