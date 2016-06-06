@@ -597,9 +597,10 @@ efficient, but at the cost of a much higher memory footprint compared to
 the simpler unindexed models\footnote{Use the \texttt{--unindexed} flag to
 buidl an unindexed model}.
 
-We can now read the model from file and produce output in the form of 1) a print of all
-patterns in the model, 2) a statistical report summarizing counts for various
-groups of patterns, 3) a histogram of pattern frequencies:
+We can now read the model from file and produce output to standard output in
+the form of \emph{1)} a print of all patterns in the model, \emph{2)} a
+statistical report summarizing counts for various groups of patterns, and
+\emph{3)} a histogram of pattern frequencies:
 
 \begin{verbatim}
 $ colibri-patternmodeller --inputfile corpus.colibri.patternmodel \
@@ -610,7 +611,8 @@ $ colibri-patternmodeller --inputfile corpus.colibri.patternmodel \
 This step could have been combined with the previous one as well.
 
 We again urge the reader to consult the documentation and tutorials for a more
-extensive description of all available options and use cases, as this falls beyond
+extensive description of all available options and use cases, as this example
+only covers one out of many use cases, and further in-depth examples fall beyond
 the scope of this paper.
 
 \subsubsection{Support} 
