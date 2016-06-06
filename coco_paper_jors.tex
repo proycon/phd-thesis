@@ -319,6 +319,7 @@ of the main assets of Colibri Core. Parameters exist to affect the following:
 \end{itemize}
 
 \subsubsection{Pattern Models}
+\label{sec:patternmodels}
 
 A pattern model is a $key \mapsto value$ store, where the keys correspond to
 patterns and the values typically correspond to occurrence counts, although any
@@ -556,7 +557,10 @@ Although we refer to the aforementioned documentation and the Python tutorial
 for extensive usage instructions, we include a short use case in this section
 and show how to use the command line tools.  Assume you have a corpus
 ``corpus.txt`` and you want to extract all n-grams, skipgrams and flexgrams
-that occur more than five times.
+that occur more than five times. For skipgrams, we add the additional
+constraint that it abstracts over at least three distinct ngrams, i.e. there
+are three different ways of filling the gaps. Flexgrams we derive from
+skipgrams.
 
 First we should ensure this corpus is properly tokenised and that sentence
 splitting has been performed, putting each sentence on one line to make this
@@ -568,8 +572,8 @@ $ ucto ucto -L en -n corpus.txt > corpus.tok.txt
 \end{verbatim}
 
 Once preprocessing is done, we can encode the corpus in a form suitable for
-Colibri Core, converting it into the \emph{class encoding} illustrated in
-Section~\ref{sec:patterns}:
+Colibri Core, computing a \emph{class encoding} and converting the data to it,
+as explained in Section~\ref{sec:patterns}:
 
 \begin{verbatim}
 $ colibri-classencode corpus.tok.txt 
@@ -577,16 +581,39 @@ $ colibri-classencode corpus.tok.txt
 
 This will result in the encoded corpus \texttt{corpus.tok.colibri.dat} and the corresponding vocabulary file \texttt{corpus.tok.colibri.cls}.
 
+The main tool \texttt{colibri-patternmodeller} can now be invoked to extract
+ngrams, skipgrams and flexgrams and output a pattern model, as described in
+Section~\ref{sec:patternmodels}, to file:
 
+\begin{verbatim}
+$ colibri-patternmodeller --datafile corpus.tok.colibri.dat \
+--outputmodel corpus.colibri.patternmodel \
+--threshold 5 --skipgrams --skiptypes 3 --flexgrams S
+\end{verbatim}
 
+We have opted for an indexed pattern model, which gives us more thresholding
+options such as \texttt{--skiptypes}, and makes skipgram extraction more
+efficient, but at the cost of a much higher memory footprint compared to
+the simpler unindexed models\footnote{Use the \texttt{--unindexed} flag to
+buidl an unindexed model}.
 
+We can now read the model from file and produce output to standard output in
+the form of \emph{1)} a print of all patterns in the model, \emph{2)} a
+statistical report summarizing counts for various groups of patterns, and
+\emph{3)} a histogram of pattern frequencies:
 
+\begin{verbatim}
+$ colibri-patternmodeller --inputfile corpus.colibri.patternmodel \
+--classfile corpus.tok.colibri.cls \
+--print --report --histogram
+\end{verbatim}
 
+This step could have been combined with the previous one as well.
 
-
-
-
-
+We again urge the reader to consult the documentation and tutorials for a more
+extensive description of all available options and use cases, as this example
+only covers one out of many use cases, and further in-depth examples fall beyond
+the scope of this paper.
 
 \subsubsection{Support} 
 
