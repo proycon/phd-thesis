@@ -207,14 +207,14 @@ pattern model in memory, with unigrams already counted in the more trivial fashi
 \begin{algorithmic}
 \For {$n \in 2..m$}
     \For {$line \in corpus$}
-        \For {$ngram \in extractngrams(line,n)$}
-            \State  $nm1gram_1, nm1gram_2 \leftarrow extractngrams(ngram,n-1)$
+        \For {$ngram \in extractNGrams(line,n)$}
+            \State  $nm1gram_1, nm1gram_2 \leftarrow extractNGrams(ngram,n-1)$
             \If {$M(nm1gram_1) \geq t$ \& $M(nm1gram_2) \geq t$}
                 \State $M(ngram) \leftarrow M(ngram) + 1$
             \EndIf
         \EndFor 
     \EndFor
-    \State $M \leftarrow prunengrams(M,n,t)$
+    \State $M \leftarrow pruneNGrams(M,n,t)$
 \EndFor \\
 \Return{M}
 \end{algorithmic}
@@ -246,8 +246,8 @@ pattern model in memory, with ngrams already counted.}
 \label{alg:skipgramcount}
 \begin{algorithmic}
 \For {$n \in 3..l$}
-    \For {$ngram \in getngrams(M,n,t)$}
-        \For {$skipgram \in possibleconfigurations(ngram)$}
+    \For {$ngram \in getNGrams(M,n,t)$}
+        \For {$skipgram \in possibleConfigurations(ngram)$}
             \State $docount \leftarrow True$
             \For {$part \in parts(skipgram)$}
             \If {$M(part) < t$}
@@ -260,13 +260,13 @@ pattern model in memory, with ngrams already counted.}
             \EndIf
             \EndFor 
             \EndFor
-    \State $M \leftarrow pruneskipgrams(M,n,t)$
+    \State $M \leftarrow pruneSkipgrams(M,n,t)$
 \EndFor \\
 \Return{M}
 \end{algorithmic}
 \end{algorithm}
 
-In this algorithm, the $possibleconfigurations(ngram)$ function returns
+In this algorithm, the $possibleConfigurations(ngram)$ function returns
 all possible skipgram configurations for the given $n$-gram. Note that
 the configuration of gaps depends only on the length of the $n$-gram, regardless
 of its content, and can therefore easily be pre-computed. The
