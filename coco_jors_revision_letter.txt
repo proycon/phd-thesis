@@ -1,7 +1,7 @@
 
 > Enrich the literature review with respect to the related work
 
-I added a dedicated "Related Work" section after the introduction, althoguh this was not part of the original JORS template.
+I added a dedicated "Related Work" subsection at the end of the introduction
 
 > One reviewer felt that pointing the reader to the documentation is not
 > sufficient for a quick understanding on how the software can be used for
@@ -9,7 +9,7 @@ I added a dedicated "Related Work" section after the introduction, althoguh this
 > usage.
 
 - Very well, I added a "Usage example" section to "Quality Control", with a specific
-  example (his too was not in the original JORS template however, so it an extension)
+  example (this was not in the original JORS template however, so it is an extension)
 
 > Declare that the support mechanisms are provided by the GitHub issue system  (https://github.com/proycon/colibri-core/issues), or other means.
 
