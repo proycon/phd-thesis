@@ -117,6 +117,7 @@ NLP software developers and researchers with a solid technical background.
 \subsection{Implementation and Architecture}
 
 \subsubsection{Patterns}
+\label{sec:patterns}
 
 We distinguish three categories of patterns, and define them as follows:
 
@@ -491,7 +492,7 @@ Table~\ref{tab:benchmarks} we used a corpus of Dutch
 translations of TED talks of $127,806$ sentences and $2,330,075$
 words\footnote{The data is from the IWSLT 2012 Evaluation Campaign,
     \url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html\#MTtrack}.
-Tokenisation was performed using ucto, \url{http://ilk.uvt.nl/ucto}.}. We set
+Tokenisation was performed using ucto, \url{https://languagemachines.github.io/ucto}.}. We set
 the occurrence threshold ($t$) to $2$ and extract everything from unigrams to
 $8$-grams. 
 
@@ -547,7 +548,45 @@ and does not yield a memory advantage either.
 
 Extensive documentation, including API references for both Python and C++, is provided at
 \url{https://proycon.github.io/colibri-core}. An interactive tutorial for Python is also
-available.
+available. The next section will provide a small example of possible usage from the command line.
+
+\subsubsection{Usage Example}
+
+Although we refer to the aforementioned documentation and the Python tutorial
+for extensive usage instructions, we include a short use case in this section
+and show how to use the command line tools.  Assume you have a corpus
+``corpus.txt`` and you want to extract all n-grams, skipgrams and flexgrams
+that occur more than five times.
+
+First we should ensure this corpus is properly tokenised and that sentence
+splitting has been performed, putting each sentence on one line to make this
+the basic unit Colibri Core can count with. This preprocessing is not done by
+Colibri Core but using an external tokeniser such as ucto\url{https://languagemachines.github.io/ucto}:
+
+\begin{verbatim}
+$ ucto ucto -L en -n corpus.txt > corpus.tok.txt
+\end{verbatim}
+
+Once preprocessing is done, we can encode the corpus in a form suitable for
+Colibri Core, converting it into the \emph{class encoding} illustrated in
+Section~\ref{sec:patterns}:
+
+\begin{verbatim}
+$ colibri-classencode corpus.tok.txt 
+\end{verbatim}
+
+This will result in the encoded corpus \texttt{corpus.tok.colibri.dat} and the corresponding vocabulary file \texttt{corpus.tok.colibri.cls}.
+
+
+
+
+
+
+
+
+
+
+
 
 \subsubsection{Support} 
 
