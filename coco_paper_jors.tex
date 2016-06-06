@@ -314,13 +314,13 @@ of the main assets of Colibri Core. Parameters exist to affect the following:
         and all bigrams and unigrams that make up the trigrams, but not the
         bigrams and unigrams that are not subsumed in trigrams. 
     \item Skipgrams can be constrained using the \emph{skip type threshold}. This
-        requires that at least this number of distinct patterns must fit in the
+        requires that at least the specified number of distinct patterns must fit in the
         gaps of the skipgram. Higher values will produce less skipgrams, but
-        typically more generic ones. A skipgram such as \emph{The \_ house} will
+        typically more generic ones. For instance, a skipgram such as \emph{The \_ house} will
         then only be included in the model if the corpus has instances in which the gap is
         filled by at least the specified number of distinct patterns. 
-        An example is if the threshold is set to 2, and the corpus contains \emph{The
-        big house} and \emph{The small house}. If the corpus  only has
+        If the threshold is set to 2 for example, and the corpus contains \emph{The
+        big house} and \emph{The small house}. If the corpus only has
         one of these instantiations, and no other instantiations either, then the skipgram would not be included.
     \item Skipgrams and n-grams are typically computed using the same
         occurrence threshold, but it is also possible to use a different threshold
@@ -349,24 +349,26 @@ degree. To conserve memory, the models can store pattern pointers\footnote{Each
 pattern pointer takes up 16 bytes} instead. These point to the original corpus
 data.
 
-The use of hash maps can be contrasted to the use of suffix (or prefix) tries,
-a common datastructure for storing n-grams. Although suffix tries also benefit
-from decreased memory use due to no overlap in pattern data, the strongly
-linked nature of tries causes a significant overhead in memory
-use\footnote{Each pointer consuming 8 bytes on 64-bit architectures, and one
-would be needed between every two tokens.} that quickly exceeds the memory
-footprint of hash maps.  For this reason, hash maps are the default and tries
-are currently not implemented in Colibi Core. The templating, however, does
-allow for such an implementation to be added in the future.
+The use of hash maps can be contrasted to the use of suffix (or prefix) tries
+\cite{Weiner73}, a common datastructure for storing n-grams in which a tree is
+constructed and any path in the tree, complete or incomplete, corresponds to a
+suffix (or prefix).  Although suffix tries also benefit from decreased memory
+use due to no overlap in pattern data, the strongly linked nature of tries
+causes a significant overhead in memory use\footnote{Each pointer consuming 8
+    bytes on 64-bit architectures, and one would be needed for every transition
+between two tokens.} that quickly exceeds the memory footprint of hash maps.
+For this reason, hash maps are the default and tries are currently not
+implemented in Colibi Core. The templating, however, does allow for such an
+implementation to be added in the future.
 
 At this point, we need to address suffix arrays \cite{Manber90} as well, which
-are derived from suffix tries but with significantly decreased space
-requirements. Suffix arrays with longest common prefix (LCP) arrays will
-consume less memory than our hash maps, but are typically much slower to
-construct and query. Though no exhaustive experiment was conducted to this
-end, we did compare a predecessor of Colibri Core with a suffix array implementation
-\cite{Stehouwer10} and found our implementation to be significantly faster in model
-construction.
+is a sorted array of suffixes, derived from suffix tries but with significantly
+decreased space requirements. Suffix arrays with longest common prefix (LCP)
+arrays will consume less memory than our hash maps, but are typically much
+slower to construct and query. Though no exhaustive experiment was conducted to
+this end, we did compare a predecessor of Colibri Core with a suffix array
+implementation \cite{Stehouwer10} and found our implementation to be
+significantly faster in model construction.
 
 We distinguish two types of pattern model, depending on the type of the values,
 which in the underlying C++ implementation is subject to templating as well:

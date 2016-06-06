@@ -31,26 +31,40 @@ skipped + non-skipped tokens. I reworded some things and added more clarificatio
 Also, later, when you describe possible configurations, could you give                                                                                                                
 some examples? 
 
-- I added examples 
+- I added examples to illustrate this point
 
 > For the algorithms, I would recommend using CamelCase or underscores for more clarity.
 
 - Agreed, added camelcasing for function names in algorithms
 
+> What counts? : “A secondary word occurrence threshold” -> word frequency threshold?.
 
+- Yes, that would be the same. I rather use the term occurrence threshold as it
+  refers to absolute counts rather than any normalised frequency.
 
+> Also, the skip type threshold bullet wasn’t entirely clear to me.
+> Could you revise it?
 
+- I rephrased some minor parts but I'm not sure what is not clear. The examples
+  should hopefully illustrate the point adequately.
 
-- Informed Skipgram Counting: “in the number of tokens” -> you mean skipped
-tokens?. Also, later, when you describe possibleconigurations, could you give
-some examples?
-- What counts? : “A secondary word occurrence threshold” -> word frequency
-threshold?. Also, the skip type threshold bullet wasn’t entirely clear to me.
-Could you revise it?
-- Pattern models: I understand that tries should have a large memory footprint,
-but I didn’t quite get what you mean by “strongly linked nature”. Also, you may
-want to explain what suffix tries and suffix arrays are (for example, I don’t
-know the latter, so it’s hard to follow the discussion).
+> Pattern models: I understand that tries should have a large memory footprint,
+but I didn’t quite get what you mean by “strongly linked nature”.
+
+- The footnote should address this. The nodes of the trie are linked obviously,
+  which would require a pointer (8 byte on a 64 bit architecture) for every transition between two
+  tokens. This gets expensive memory-wise. I did some minor rewording of the
+  footnote the paper to clarify this.
+
+> Also, you may want to explain what suffix tries and suffix arrays are (for
+> example, I don’t know the latter, so it’s hard to follow the discussion).
+
+- I added a citation for suffix tries and a one-sentence explanation. I also
+  added a minor clarification for suffix arrays, but I think a deeper
+  explanation would take up too much space and distract from the main topic.
+  The suffix arrays are mainly included as I expected readers who were already familiar
+  with them to bring them up and wonder how they'd compare to Colibri Core.
+
 - Corpus comparison: “the training corpus, it is therefore asymmetric” ->
 revise grammar. Also, I know what log-likelihood is, but didn’t get what it
 stands for in this context. Perhaps a short formula would clarify?
