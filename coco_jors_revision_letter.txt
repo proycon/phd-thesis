@@ -3,7 +3,8 @@
 > research. My advise is to provide a working (concrete) example of the software
 > usage.
 
-
+- Ok, I added a "Usage example" section to "Quality Control", with a specific
+  example.
 
 > Declare that the support mechanisms are provided by the GitHub issue system  (https://github.com/proycon/colibri-core/issues), or other means.
 
@@ -11,6 +12,16 @@
 
 
 > Please consider the enhancements offered by reviewer G regarding the paper clarity
+
+
+> I felt it was a bit loose in it’s structure.
+> Each of the sections come un-announced without a clear thread that relates them
+> to each other. Perhaps some higher-order titles like “Features”,
+> “Optimizations”, etc. would help a lot in the readability.                                                                                                                                   
+I added higher order prefixes to the various section titles (Features:,
+Optimisation:, Parametrisation:) and added some introductory text for the "Implementation & Architecture" section to provide some further glue.
+I felt rather constrained, however,  by the JORS template and the unorthodox lack of section numbers. I hope this is an acceptable solution.
+                                                                                                                                                                                         
 
 > For the algorithms, I would recommend using CamelCase or underscores for more clarity.
 

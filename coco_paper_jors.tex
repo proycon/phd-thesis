@@ -116,7 +116,10 @@ NLP software developers and researchers with a solid technical background.
 
 \subsection{Implementation and Architecture}
 
-\subsubsection{Patterns}
+We will discuss the various features and optimisations that are implemented in Colibri Core. We start with a introduction of patterns and their encoding,
+Then discuss the implemented optimisation we use to count n-grams, and subsequently skipgrams. We then discuss more advanced parametrisation and end with a section on the computation of flexgrams.
+
+\subsubsection{Feature: Patterns}
 \label{sec:patterns}
 
 We distinguish three categories of patterns, and define them as follows:
@@ -182,7 +185,8 @@ To encode a text corpus, a class encoding needs to be computed first. To decode
 the encoded corpus back to plain text, the class encoding is needed again.
 Colibri Core provides tools and exposes library functions to do this.
 
-\subsubsection{Informed Iterative Counting}
+\subsubsection{Optimisation: Informed Iterative Counting}
+\label{sec:iterativecounting}
 
 N-gram frequency lists are often parametrised by a certain threshold. All
 $n$-grams below this occurrence threshold are pruned. We can circumvent the
@@ -229,7 +233,7 @@ fine-tuned.
 A performance evaluation of this algorithm will be addressed later in the
 section on \emph{Quality Control}.
 
-\subsubsection{Informed Skipgram Counting}
+\subsubsection{Optimisation: Informed Skipgram Counting}
 \label{sec:skipgramcount}
 
 The computation of skipgrams is parametrised by an upper limit $l\leq m$ in the number of
@@ -280,7 +284,7 @@ invoked, as the user does not want to prune anything. These make only a single
 pass over the data. For skipgrams this leads to an explosion of
 resulting patterns, exponential with number of tokens, and is best avoided.
 
-\subsubsection{What counts?}
+\subsubsection{Parametrisation: What counts?}
 \label{sec:whatcounts}
 
 The counting algorithms are parametrised by a various other parameters which
@@ -318,7 +322,7 @@ of the main assets of Colibri Core. Parameters exist to affect the following:
         for skipgrams.
 \end{itemize}
 
-\subsubsection{Pattern Models}
+\subsubsection{Feature: Pattern Models}
 \label{sec:patternmodels}
 
 A pattern model is a $key \mapsto value$ store, where the keys correspond to
@@ -372,7 +376,7 @@ Obviously, indexed pattern models make a considerably higher demand on memory.
 They do, however, allow for a broader range of computations, as shall become
 apparent in subsequent sections.
 
-\subsubsection{Two-step training}
+\subsubsection{Optimisation: Two-step training}
 
 Training indexed patterns models is more memory intensive than training
 unindexed models, especially in very large corpora (say at least a hundred
@@ -385,7 +389,7 @@ will not pass the occurrence threshold but that cannot be ruled out a priori by 
 informed counting algorithm.  This conservation of memory comes at the cost of
 a extended execution time.
 
-\subsubsection{Corpus Comparison}
+\subsubsection{Feature: Corpus Comparison}
 
 The computation of pattern models on two or more distinct corpora, provided the
 class encoding is the same for all of them, provides a basis for comparative
@@ -417,7 +421,7 @@ likely any given pattern is for either of the two models. It therefore allows
 you to identify how indicative a pattern is for a particular corpus. Our
 implementation follows the methodology of~\cite{Rayson00comparingcorpora}.
 
-\subsubsection{Relations between Patterns}
+\subsubsection{Feature: Relations between Patterns}
 
 Various relations can be extracted between patterns in a pattern model, either
 through the API or a dedicated query tool. For all but the first of the
@@ -450,7 +454,7 @@ position. The reverse index is not modelled in memory as an explicit mapping fro
 positions to patterns, but computed on-the-fly based on the loaded corpus data
 and a simple reverse index keeping track of where each unit/sentence starts.
 
-\subsubsection{Flexgram Counting}
+\subsubsection{Feature: Flexgram Counting}
 
 Thus far, we have explained the algorithms for n-gram counting and skipgram
 counting, but have not yet done so for flexgrams, i.e. patterns with
@@ -573,7 +577,7 @@ $ ucto ucto -L en -n corpus.txt > corpus.tok.txt
 
 Once preprocessing is done, we can encode the corpus in a form suitable for
 Colibri Core, computing a \emph{class encoding} and converting the data to it,
-as explained in Section~\ref{sec:patterns}:
+as explained in section ``Feature: Patterns''.
 
 \begin{verbatim}
 $ colibri-classencode corpus.tok.txt 
@@ -583,7 +587,7 @@ This will result in the encoded corpus \texttt{corpus.tok.colibri.dat} and the c
 
 The main tool \texttt{colibri-patternmodeller} can now be invoked to extract
 ngrams, skipgrams and flexgrams and output a pattern model, as described in
-Section~\ref{sec:patternmodels}, to file:
+section ``Feature: Pattern models'', to file:
 
 \begin{verbatim}
 $ colibri-patternmodeller --datafile corpus.tok.colibri.dat \
