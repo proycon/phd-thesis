@@ -11,6 +11,7 @@
 \usepackage{algpseudocode} 
 \usepackage{parskip}
 \usepackage{sectsty}
+\usepackage{amsmath}
 \sectionfont{\fontsize{13}{13}\selectfont}
 \subsectionfont{\fontsize{13}{13}\selectfont}
 \subsubsectionfont{\fontsize{11}{11}\selectfont}
@@ -403,7 +404,7 @@ class encoding is the same for all of them, provides a basis for comparative
 corpus analysis. One measure for corpus comparison introduced in the software
 is the notion of \emph{coverage}. This metric is expressed as the number of
 tokens in the test corpus that is covered by the patterns from the training
-corpus, it is therefore asymmetric and the choice of training and test corpus
+corpus. This makes it an asymmetric metric, so the choice of training and test corpus
 matters.  The metric can be represented either in absolute counts, or in
 normalised form as a fraction of the total amount of tokens in the test corpus.
 
@@ -423,10 +424,19 @@ model, i.e.\ for each value of $n$.
 
 The coverage metric is a fairly crude metric of corpus overlap, despite the
 ability to assess it for different aggregates. A more widely established metric
-for corpus comparison is \emph{log-likelihood}. Log likelihood expresses how much more
-likely any given pattern is for either of the two models. It therefore allows
-you to identify how indicative a pattern is for a particular corpus. Our
-implementation follows the methodology of~\cite{Rayson00comparingcorpora}.
+for corpus comparison is \emph{log-likelihood}. Log likelihood expresses how
+much more likely any given pattern is for either of the two models. It
+therefore allows you to identify how indicative a pattern is for a particular
+corpus. Our implementation follows the methodology
+of~\cite{Rayson00comparingcorpora}. They compute the log-likelihood ($L$)
+given the frequency of a pattern in corpus 1 ($a$), and corpus 2 ($b$) as
+follows\footnote{Here, $E_i$ expresses expected values, $N_i$ is the
+total amount of tokens in the respective corpus}:
+
+\begin{equation}
+L = 2a(\log \frac{a}{E_1}) + b(\log \frac{b}{E_2})\text{, where } E_i = \frac{N_i(a+b)}{N_1 + N_2} 
+\end{equation}
+
 
 \subsubsection{Feature: Relations between Patterns}
 

@@ -65,9 +65,19 @@ but I didn’t quite get what you mean by “strongly linked nature”.
   The suffix arrays are mainly included as I expected readers who were already familiar
   with them to bring them up and wonder how they'd compare to Colibri Core.
 
-- Corpus comparison: “the training corpus, it is therefore asymmetric” ->
-revise grammar. Also, I know what log-likelihood is, but didn’t get what it
-stands for in this context. Perhaps a short formula would clarify?
+> Corpus comparison: “the training corpus, it is therefore asymmetric” ->
+revise grammar. 
+
+- Rephrased
+
+> Also, I know what log-likelihood is, but didn’t get what it
+> stands for in this context. Perhaps a short formula would clarify?
+
+- Added the formula.
+
+
+
+
 - Relations between patterns: when you say that the reverse index is computed
 on the fly, you mean when some “load model” primitive is executed? Does it take
 too long? It would be nice to see some experiments on the functionaliti
