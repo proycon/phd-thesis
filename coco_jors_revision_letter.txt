@@ -1,18 +1,21 @@
+
+> Enrich the literature review with respect to the related work
+
+I added a dedicated "Related Work" section after the introduction, althoguh this was not part of the original JORS template.
+
 > One reviewer felt that pointing the reader to the documentation is not
 > sufficient for a quick understanding on how the software can be used for
 > research. My advise is to provide a working (concrete) example of the software
 > usage.
 
-- Ok, I added a "Usage example" section to "Quality Control", with a specific
-  example.
+- Very well, I added a "Usage example" section to "Quality Control", with a specific
+  example (his too was not in the original JORS template however, so it an extension)
 
 > Declare that the support mechanisms are provided by the GitHub issue system  (https://github.com/proycon/colibri-core/issues), or other means.
 
-- Added a subsection "Support" to "Quality Control", which explicitly refers to the Github issue tracker as requested
-
+- Added a subsection "Support" to "Quality Control", which explicitly refers to the Github issue tracker as requested. (extends the JORS template again)
 
 > Please consider the enhancements offered by reviewer G regarding the paper clarity
-
 
 > I felt it was a bit loose in it’s structure.
 > Each of the sections come un-announced without a clear thread that relates them
@@ -39,7 +42,7 @@ some examples?
 
 > What counts? : “A secondary word occurrence threshold” -> word frequency threshold?.
 
-- Yes, that would be the same. I rather use the term occurrence threshold as it
+- Yes, that would be the same. I myself rather use the term occurrence threshold as it
   refers to absolute counts rather than any normalised frequency.
 
 > Also, the skip type threshold bullet wasn’t entirely clear to me.
@@ -76,9 +79,7 @@ revise grammar.
 - Added the formula.
 
 
-
-
-- Relations between patterns: when you say that the reverse index is computed
-on the fly, you mean when some “load model” primitive is executed? Does it take
-too long? It would be nice to see some experiments on the functionaliti
+> Relations between patterns: when you say that the reverse index is computed
+> on the fly, you mean when some “load model” primitive is executed? Does it take
+> too long? It would be nice to see some experiments on the functionaliti
 
