@@ -21,7 +21,17 @@
 I added higher order prefixes to the various section titles (Features:,
 Optimisation:, Parametrisation:) and added some introductory text for the "Implementation & Architecture" section to provide some further glue.
 I felt rather constrained, however,  by the JORS template and the unorthodox lack of section numbers. I hope this is an acceptable solution.
-                                                                                                                                                                                         
+
+- Informed Skipgram Counting: “in the number of tokens” -> you mean skipped
+- tokens?.
+
+I mean the the length of the skipgram in general, expressed in tokens, so
+skipped + non-skipped tokens. I reworded some things and added more clarification in the text.
+
+Also, later, when you describe possible configurations, could you give                                                                                                                
+some examples? 
+
+- I added examples 
 
 > For the algorithms, I would recommend using CamelCase or underscores for more clarity.
 
