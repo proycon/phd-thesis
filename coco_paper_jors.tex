@@ -114,6 +114,41 @@ provide a solid foundation upon which more specialised software can be built,
 such as software for language modelling. The software is aimed at
 NLP software developers and researchers with a solid technical background. 
 
+\subsection{Related Work}
+
+Pattern extraction, and with it pattern matching, play an important role in the
+computer science in general. In the NLP literature, extraction of patterns
+often implies n-gram extraction, which is often researched in the context of
+statistical language modelling.  Software that springs from such studies are
+widespread in the field. Examples, by no means exhaustive, are SRILM
+\cite{SRILM}, IRSTLM \cite{IRSTLM}, and KenLM \cite{KENLM}. Focus on efficient
+modelling with regards to memory consumption and look-up speed is an important
+component in such studies. KenLM is one of the newer systems that implements
+various optimisations and generally has an edge over the others in this regard. There is other
+noticable work on big data storage in this field \cite{Guthrie2012}, though this study did not
+produce a usable open source software solution. 
+
+Colibri Core, however, takes a step back and is not a language modelling
+toolkit and therefore can't be readily compared with one. It is, however, very
+suitable to be used as a foundation to that end, which has been done by
+\cite{COCOCPYP}. What we do have in common with language modelling toolkits is
+that both types of systems contain a store of patterns (i.e. n-grams or beyond)
+and their frequencies, in which quick look-up is essential, and they provide a
+procedure to compute such a model. Both LM toolkits as well as Colibri Core
+employ various optimisations to reduce the memory usage of this store, and keep
+access times high. 
+
+Language Modelling toolkits do not generally offer any of the functionality
+Colibri Core offers when it comes to thresholding, indexing, nor the modelling of
+non-consecutive patterns such as skipgrams. The issue of skipgram extraction
+and modelling gained more traction in the past decade, see for instance
+\cite{Guthrie06}. The notion of skipgram (or rather flexgram in our terms, as
+shall become apparent later) also plays a part in vector space representations
+\cite{Mikolov08}.
+
+We think Colibri Core fills an interesting niche that is not covered by other
+readily available software. It provides solutions for the modelling of n-grams and 
+skipgrams/flexgrams in an efficient and sufficiently extensible manner.
 
 \subsection{Implementation and Architecture}
 
