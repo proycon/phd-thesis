@@ -3,12 +3,17 @@
 
 I added a dedicated "Related Work" subsection at the end of the introduction
 
+> Consider providing corpora of different (bigger) size for the quality
+> controls of the software
+
+- I added 
+
 > One reviewer felt that pointing the reader to the documentation is not
 > sufficient for a quick understanding on how the software can be used for
 > research. My advise is to provide a working (concrete) example of the software
 > usage.
 
-- Very well, I added a "Usage example" section to "Quality Control", with a specific
+- Ok, I added a "Usage example" section to "Quality Control", with a specific
   example (this was not in the original JORS template however, so it is an extension)
 
 > Declare that the support mechanisms are provided by the GitHub issue system  (https://github.com/proycon/colibri-core/issues), or other means.
@@ -21,12 +26,13 @@ I added a dedicated "Related Work" subsection at the end of the introduction
 > Each of the sections come un-announced without a clear thread that relates them
 > to each other. Perhaps some higher-order titles like “Features”,
 > “Optimizations”, etc. would help a lot in the readability.                                                                                                                                   
+
 I added higher order prefixes to the various section titles (Features:,
 Optimisation:, Parametrisation:) and added some introductory text for the "Implementation & Architecture" section to provide some further glue.
 I felt rather constrained, however,  by the JORS template and the unorthodox lack of section numbers. I hope this is an acceptable solution.
 
-- Informed Skipgram Counting: “in the number of tokens” -> you mean skipped
-- tokens?.
+> Informed Skipgram Counting: “in the number of tokens” -> you mean skipped
+> tokens?.
 
 I mean the the length of the skipgram in general, expressed in tokens, so
 skipped + non-skipped tokens. I reworded some things and added more clarification in the text.
@@ -52,7 +58,7 @@ some examples?
   should hopefully illustrate the point adequately.
 
 > Pattern models: I understand that tries should have a large memory footprint,
-but I didn’t quite get what you mean by “strongly linked nature”.
+> but I didn’t quite get what you mean by “strongly linked nature”.
 
 - The footnote should address this. The nodes of the trie are linked obviously,
   which would require a pointer (8 byte on a 64 bit architecture) for every transition between two
@@ -82,4 +88,9 @@ revise grammar.
 > Relations between patterns: when you say that the reverse index is computed
 > on the fly, you mean when some “load model” primitive is executed? Does it take
 > too long? It would be nice to see some experiments on the functionaliti
+
+I adapted the phrasing to clarify this point. The on-the-fly resolution was on
+per-request basis.
+
+
 

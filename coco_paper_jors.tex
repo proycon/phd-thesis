@@ -117,9 +117,9 @@ NLP software developers and researchers with a solid technical background.
 \subsubsection{Related Work}
 
 Pattern extraction, and with it pattern matching, play an important role in the
-computer science in general. In the NLP literature, extraction of patterns
-often implies n-gram extraction, which is often researched in the context of
-statistical language modelling.  Software that springs from such studies are
+computer science in general. In the NLP literature, n-grams are a common type
+of pattern, and their modelling is often researched in the context of
+statistical language modelling.  Software that springs from such studies is
 widespread in the field. Examples, by no means exhaustive, are SRILM
 \cite{SRILM}, IRSTLM \cite{IRSTLM}, and KenLM \cite{KENLM}. Focus on efficient
 modelling with regards to memory consumption and look-up speed is an important
@@ -198,16 +198,21 @@ on the basis of a lossless compression, in which each unique word token is
 assigned a numeric type identifier, which we call a \emph{class}. This
 effectively defines the \emph{vocabulary} of your data, which we call a
 \emph{class encoding}. A pattern is not represented as an array of
-characters, but as an array of these classes instead. Further lossless
-compression is achieved by holding this array of classes in a dynamic-length
-byte representation, in which low class values can be stored in fewer bytes
-than high class values. Classes $0$ to $127$ can be stored in a single byte,
-higher classes require at least two bytes. To achieve maximum compression,
-classes are assigned to word tokens based on frequency (i.e.\ entropy
-encoding): words with the highest frequency receive the lowest classes.  This
-is essentially a variant of Huffman coding \citep{HUFFMAN}. Some of the lowest
-classes are reserved for special purposes, e.g. to delimit sentences (class 0) or as
-markers for out-of-vocabulary words (class 2) or skipped content (classes 3 and 4).
+characters, but as an array of these classes instead. Such methods are commonly
+employed in Language Modelling toolkits as well, where 24 or 32-bit integers
+uniquely assigned to words are typically chosen \cite{Guthrie2010}.
+
+In Colibri Core, further lossless compression is achieved by holding this array of
+classes in a dynamic-length byte representation rather than fixed-sized
+integers. This allows  for low class values to be stored in fewer bytes than
+high class values. Classes $0$ to $127$ can be stored in a single byte, higher
+classes require at least two bytes. To achieve maximum compression, classes are
+assigned to word tokens based on frequency (i.e.\ entropy encoding): words with
+the highest frequency receive the lowest classes.  This is essentially a
+variant of Huffman coding \citep{HUFFMAN}. Some of the lowest classes are
+reserved for special purposes, e.g. to delimit sentences (class 0) or as
+markers for out-of-vocabulary words (class 2) or skipped content (classes 3 and
+4).
 
 Of each byte in the class representation, the highest bit is reserved as a continuation
 marker. As long as the continuation marker is set, the next byte is still part of
@@ -215,7 +220,9 @@ the class. When it is low, we know we are at the final byte of a class
 representation. The class itself is stored in the remaining 7-bits of each
 byte. In practise this results in good compression and reduces memory usage; an
 example corpus taking up $221$ MB on disk in plaintext form is reduced to just $60$ MB
-when compressed.
+when compressed. A subset of the Google billion word corpus, 769 million words
+in 30 million sentences, takes $3.9$ GB in plaintext form, and $1.2$ GB when
+compressed in this matter.
 
 To encode a text corpus, a class encoding needs to be computed first. To decode
 the encoded corpus back to plain text, the class encoding is needed again.
@@ -382,8 +389,9 @@ http://burtleburtle.net/bob/hash/spooky.html} is computed directly from the
 binary representation of a pattern. Storing each pattern individually results
 in a lot of redundant information to be stored, as patterns overlap to a large
 degree. To conserve memory, the models can store pattern pointers\footnote{Each
-pattern pointer takes up 16 bytes} instead. These point to the original corpus
-data.
+pattern pointer takes up 16 bytes} instead. Instead of duplicating the content
+for each pattern, these point to the original corpus data which is held in
+memory.
 
 The use of hash maps can be contrasted to the use of suffix (or prefix) tries
 \cite{Weiner73}, a common datastructure for storing n-grams in which a tree is
@@ -503,8 +511,9 @@ These latter three relationships rely on both the \emph{forward index} inherent
 in an indexed pattern model, as well as the \emph{reverse index}, a function
 from positions in the corpus to an array of patterns that are found at said
 position. The reverse index is not modelled in memory as an explicit mapping from
-positions to patterns, but computed on-the-fly based on the loaded corpus data
-and a simple reverse index keeping track of where each unit/sentence starts.
+positions to patterns, but as a simpler reverse index that only keeps track of where
+each unit/sentence starts. This can then be used to quickly resolve specific positions
+to possible patterns.
 
 \subsubsection{Feature: Flexgram Counting}
 
@@ -538,40 +547,90 @@ Testing in the form of continuous integration is made possible through
 
 \subsubsection{Performance Evaluation}
 
-A performance evaluation of our iterative counting algorithm has been performed
-by comparing our optimised C++ implementation with a naive implementation in
-Python, as well as a simple implementation of informed iterative counting in
-Python. These baselines are unindexed and simply store occurrence count in a
-Python dictionary. Comparisons can also be made between Colibri Core's
-unindexed vs indexed models, and between the optimised pointer models vs
-standard pattern models.  For the experiments, shown in
+In this section we conduct a performance evaluation of Colibri Core by
+measuring the time to compute a pattern model, and the memory resources used.
+
+Comparisons can be made between Colibri Core's
+unindexed vs indexed models, between the optimised pointer models vs
+standard pattern models, and between preloading a corpus in memory or reading
+it directly from file.  For the experiments, shown in
 Table~\ref{tab:benchmarks} we used a corpus of Dutch
 translations of TED talks of $127,806$ sentences and $2,330,075$
 words\footnote{The data is from the IWSLT 2012 Evaluation Campaign,
     \url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html\#MTtrack}.
-Tokenisation was performed using ucto, \url{https://languagemachines.github.io/ucto}.}. We set
-the occurrence threshold ($t$) to $2$ and extract everything from unigrams to
-$8$-grams. 
+Tokenisation was performed using ucto,
+\url{https://languagemachines.github.io/ucto}.}. 
+
+We perform tests without thresholding as well as with an occurrence threshold
+of $2$, and extract anything from unigrams to $8$-grams. 
+
+For reference, we include a naive Python implementation that simply counts
+n-grams and stores them in a Python dictionary where the keys are strings and
+the values integers. We also include a comparable implementation that uses
+NLTK\footnote{Natural Language Toolkit, a popular platform for NLP on Python:
+    \url{http://www.nltk.org}. Our implementation follows the naive approach
+    but uses \texttt{ngrams()} from \texttt{nltk.util} and \texttt{FreqDist} from
+\texttt{nltk.probability}}. Similarly, we include a naive C++ implementation based on
+a \verb|std::unordered_map<string,uint32_t>|. The memory reduction that can be
+observed when comparing these against the Colibri Core models is attributed to
+the class encoding scheme we use. These memory optimisations do come with a
+performance drawback that is especially noticeable when no thresholding is
+applied.
+
+The pattern pointer models prove capable of further reduction in memory
+consumption, and offer a clear speed advantage as well. The pointer models use a
+representation of patterns that refer to the original corpus data, which is
+fully loaded into memory, rather than storing a separate copy for each pattern. 
+
+For the experiments with thresholding, we added a simple Python implementation of
+iterative counting and assess the value of the algorithm as such by comparing
+it against the naive Python implementation that simply prunes values below
+threshold at the very end. We clearly observe a drastic reduction in memory
+usage, at the cost of a longer execution time due to the multiple iterations.
+
+Though Colibri Core is not a Language Modelling toolkit in itself, a comparison
+with a popular third-party LM software may be of interest. We compare an
+unindexed pattern model containing unigrams, bigrams and trigrams to a similar
+model in SRILM \cite{SRILM}. \footnote{SRILM's \texttt{ngram-count} is run in
+vanilla form, i.e. no smoothing or interpolation, with the options \verb|-no-bos -no-eos|. Note that the
+encoding of classes is a separate step in Colibri Core, so our total CPU time
+should be considered to be a second longer than reported for a more fair comparison.}
 
 \begin{table}[h]
 \footnotesize{
 \begin{tabular}{lll}
 Experiment & CPU time & Memory  \\
 \hline
-Naive Python implementation & $37.2$ s & $2848$ MB \\
-Python with iterative counting  & $65.7$ s & $170$ MB \\
+\multicolumn{3}{\textbf{IWSLT data, without thresholding} ($t=1,l=8$)}
 \hline
+$\ast$ Naive Python implementation & $20.0$ s & $1404$ MB \\
+$\ast$ Python NLTK implementation & $18.7$ s & $1413$ MB \\
+$\ast$ Naive C++ implementation  & $10.5$ s & $1398$ MB \\
+Unindexed Pattern Model (from file) & $29.7$ s & $775$ MB ($787$ MB) \\
+Unindexed Pattern Pointer Model (preloaded corpus) & $19.8$ s & $615$ MB ($627$ MB) \\
+\hline
+\multicolumn{3}{\textbf{IWSLT data, with thresholding ($t=2,l=8$)}}
+\hline
+$\ast$ Naive Python implementation & $28.8$ s & $1485$ MB \\
+$\ast$ Python with iterative counting  & $70.9$ s & $171$ MB \\
 Unindexed Pattern Model (from file) & $14.6$ s & $64$ MB ($76$ MB) \\
 Unindexed Pattern Model (preloaded corpus) & $11.3$ s & $64$ MB ($76$ MB) \\
-Unindexed Pattern Model (preloaded corpus), with skipgrams & $60.4$ s & $118$ MB ($131$ MB) \\
-Unindexed Pattern Pointer Model (preloaded corpus)  & $9.4$ s & $50$ MB ($62$ MB) \\
+Unindexed Pattern Model (preloaded corpus), with skipgrams & $62.4$ s & $105$ MB ($118$ MB) \\
+Unindexed Pattern Pointer Model (preloaded corpus)  & $9.0$ s & $50$ MB ($62$ MB) \\
+Unindexed Pattern Pointer Model (preloaded), skipgrams  & $50.0$ s & $89$ MB ($102$ MB) \\
 Indexed Pattern Model (preloaded corpus) & $13.6$ s & $148$ MB ($160$ MB) \\
 Indexed Pattern Model (preloaded corpus), with skipgrams & $24.2$ s & $165$ MB ($178$ MB) \\
-Indexed Pattern Pointer Model (preloaded corpus) & $11.0$ s & $134$ MB ($146$ MB) \\
+Indexed Pattern Pointer Model (preloaded corpus) & $10.1$ s & $133$ MB ($146$ MB) \\
 Unindexed Pattern Model (ordered map) & $30.5$ s & $84$ MB ($96$ MB) \\
+\hline
+\multicolumn{3}{\textbf{IWSLT data, LM comparison, trigram model ($t=1,l=3$)}}
+\hline
+Unindexed Pattern Model (from file) & $5.9$ s & $152$ MB ($164$ MB) \\
+$\ast$ SRILM ngram-count & $11.9$ s & $347$ MB & \\
 \end{tabular}
 \caption{Colibri Core performance benchmarks using the \texttt{colibri-benchmarks} tool and the 
-\texttt{benchmarks.py} script for the Python baselines. Memory usage is measured as the difference in resident memory after training
+\texttt{benchmarks.py} script for the Python baselines. All non-Colibri Core
+references are marked with an asterisk ($\ast$). Memory usage is measured as the difference in resident memory after training
 and before training. Peak memory usage is measured absolutely as reported by
 the OS and included in parentheses. All experiments were performed on a Linux system
 with an Intel Xeon CPU (E5-2630L v3) at 1.80GHz and 256GB RAM.
@@ -580,26 +639,43 @@ with an Intel Xeon CPU (E5-2630L v3) at 1.80GHz and 256GB RAM.
 \label{tab:benchmarks}
 \end{table}
 
-From the data in Table~\ref{tab:benchmarks} we observe that the Python
-implementation of iterative counting already shows a drastic reduction in
-memory usage compared to the naive python implementation\footnote{The naive
-    implementation also seems to not recover well from peak memory consumption
-after pruning of all patterns occurring only once.}. The first two experiments
-with Colibri Core's unindexed pattern models shows that memory is succesfully
-reduced further due to the class encoding. It also demonstrates the clear
-advantage in execution time offered by Colibri Core.
-
-The pattern pointer models prove capable of further reduction in memory
-consumption, and offer a clear speed advantage. The pointer models use a
-representation of patterns that refer to the original corpus data, which is
-fully loaded into memory, rather than storing a separate copy for each pattern. 
+Indexed Pattern Models are by definition larger in memory than unindexed
+models, but they do offer a significant speed benefit in the computation of
+skipgrams, both of this can be observed in Table~\ref{tab:benchmarks}.
 
 The C++ library allows for easy swapping of the underlying datastructure for
 pattern models. The default hashmap (\texttt{std::unordered\_map}) solution can
 be contrasted to a pattern model using using an ordered map
 (\texttt{std::map}\footnote{the hash key is still computed as it determines
-the ordering}, the last experiment in the table). As expected, the ordered map proves to be significantly slower
+    the ordering}, the last experiment in the mid-section of
+Table~\ref{tab:benchmarks}). As expected, the ordered map proves to be significantly slower
 and does not yield a memory advantage either.
+
+As Colibri Core is also aimed at large data sets, provided sensible thresholds
+are set, we conduct extra experiments on the JRC-Acquis corpus, containing
+$31.3$ million words in over $850,000$ sentences, and on a portion of the
+Google Billion Word corpus, where we use a set of $768$ million words in $30$
+million sentences.
+
+
+\begin{table}[h]
+\footnotesize{
+\begin{tabular}{lll}
+Experiment & CPU time & Memory  \\
+\hline
+\multicolumn{3}{\textbf{JRC-Acquis data, with thresholding ($t=2,l=8$)}}
+\hline
+$\ast$ Naive Python implementation & $484$ s & $11407$ MB \\
+Unindexed Pattern Model (from file) & $258$ s & $1704$ MB ($1803$ MB) \\
+Unindexed Pattern Model (preloaded corpus) & $238$ s & $1700$ MB ($1800$ MB) \\
+Unindexed Pattern Model (preloaded corpus), with skipgrams & $3715$ s & $30420$ MB ($30520$ MB) \\
+\end{tabular}
+\caption{Benchmarks on large data sets}
+}
+}
+\label{tab:bigbenchmarks}
+\end{table}
+
 
 \subsubsection{Documentation} 
 
