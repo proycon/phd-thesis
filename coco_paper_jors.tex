@@ -665,16 +665,25 @@ Experiment & CPU time & Memory  \\
 \hline
 \multicolumn{3}{\textbf{JRC-Acquis data, with thresholding ($t=2,l=8$)}}
 \hline
-$\ast$ Naive Python implementation & $484$ s & $11407$ MB \\
-Unindexed Pattern Model (from file) & $258$ s & $1704$ MB ($1803$ MB) \\
-Unindexed Pattern Model (preloaded corpus) & $238$ s & $1700$ MB ($1800$ MB) \\
-Unindexed Pattern Model (preloaded corpus), with skipgrams & $3715$ s & $30420$ MB ($30520$ MB) \\
+$\ast$ Naive Python implementation & 8m 4s & $11407$ MB \\
+Unindexed Pattern Model (from file) & 4m 18s & $1704$ MB ($1803$ MB) \\
+Unindexed Pattern Model (preloaded corpus) & 3m 58s & $1700$ MB ($1800$ MB) \\
+Unindexed Pattern Pointer Model (preloaded corpus) & 3m 1s & $1344$ MB ($1445$ MB) \\
+Unindexed Pattern Model (preloaded corpus), with skipgrams & 61m 1s & $30420$ MB ($30520$ MB) \\
+Indexed Pattern Model (preloaded corpus) &  4m 36s & $4117$ MB & $4217$ MB \\
 \end{tabular}
 \caption{Benchmarks on large data sets}
 }
 }
 \label{tab:bigbenchmarks}
 \end{table}
+
+Noticeable in the big data experiments is the explosion in memory consumption
+when skipgrams are computed on an unindexed pattern model. This is attributed
+directly to the sheer amount of skipgrams that can be extracted from the data,
+and the fact that unindexed models can only compute skipgrams exhaustively and
+do not support the skip type threshold discussed in Section ``Parametrisation:
+What counts?''.
 
 
 \subsubsection{Documentation} 
