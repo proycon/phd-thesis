@@ -283,8 +283,8 @@ The computation of skipgrams is parametrised by an upper limit $l\leq m$ in the 
 tokens, i.e. the total length of the skipgram expressed in tokens. The possible configuration of gaps increase exponentially with the
 total length spanned. A skipgram of size three has only one possible
 gap configuration\footnote{The initial and final token may never be gaps in the extracted skipgrams};
-\texttt{a ? z}, a skipgram of size four already has three possible configurations;
-\texttt{a ? ? z}, \texttt{a b ? z}, \texttt{a ? y z}.
+\texttt{a \_ z}, a skipgram of size four already has three possible configurations;
+\texttt{a \_ \_ z}, \texttt{a b \_ z}, \texttt{a \_ y z}.
 
 The algorithm, shown in Algorithm~\ref{alg:skipgramcount} considers all
 possible configurations in which skips can be inserted in all of the n-grams in the model. It can
