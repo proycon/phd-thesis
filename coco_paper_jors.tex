@@ -593,7 +593,7 @@ with a popular third-party LM software may be of interest. We compare an
 unindexed pattern model containing unigrams, bigrams and trigrams to a similar
 model in SRILM \cite{SRILM}. \footnote{SRILM's \texttt{ngram-count} is run in
 vanilla form, i.e. no smoothing or interpolation, with the options
-\verb|-no-bos -no-eos|. Note that the encoding of classes is a separate step in
+\texttt{-no-bos -no-eos}. Note that the encoding of classes is a separate step in
 Colibri Core, so our total CPU time should be considered to be a second longer
 than reported for a more fair comparison.}. Due to the many other features
 Colibri Core offers regarding thresholding, indexing, skipgrams and flexgrams, it
@@ -605,7 +605,7 @@ which allow for more specific optimisations.
 \begin{tabular}{lll}
 Experiment & CPU time & Memory  \\
 \hline
-\multicolumn{3}{\textbf{IWSLT data, without thresholding} ($t=1,l=8$)}
+\multicolumn{3}{c}{\textbf{IWSLT data, without thresholding} ($t=1,l=8$)} \\
 \hline
 $\ast$ Naive Python implementation & $20.0$ s & $1404$ MB \\
 $\ast$ Python NLTK implementation & $18.7$ s & $1413$ MB \\
@@ -613,7 +613,7 @@ $\ast$ Naive C++ implementation  & $10.5$ s & $1398$ MB \\
 Unindexed Pattern Model (from file) & $29.7$ s & $775$ MB ($787$ MB) \\
 Unindexed Pattern Pointer Model (preloaded corpus) & $19.8$ s & $615$ MB ($627$ MB) \\
 \hline
-\multicolumn{3}{\textbf{IWSLT data, with thresholding ($t=2,l=8$)}}
+\multicolumn{3}{c}{\textbf{IWSLT data, with thresholding ($t=2,l=8$)}} \\
 \hline
 $\ast$ Naive Python implementation & $28.8$ s & $1485$ MB \\
 $\ast$ Python with iterative counting  & $70.9$ s & $171$ MB \\
@@ -628,10 +628,10 @@ Unindexed Pattern Model (preloaded corpus), with skipgrams & $62.4$ s & $105$ MB
 Unindexed Pattern Pointer Model (preloaded), skipgrams  & $50.0$ s & $89$ MB ($102$ MB) \\
 Indexed Pattern Model (preloaded corpus), with skipgrams & $24.2$ s & $165$ MB ($178$ MB) \\
 \hline
-\multicolumn{3}{\textbf{IWSLT data, LM comparison, trigram model ($t=1,l=3$)}}
+\multicolumn{3}{c}{\textbf{IWSLT data, LM comparison, trigram model ($t=1,l=3$)}} \\
 \hline
 Unindexed Pattern Model (from file) & $5.9$ s & $152$ MB ($164$ MB) \\
-$\ast$ SRILM ngram-count & $1.5$ s & $80$ MB & \\
+$\ast$ SRILM ngram-count & $1.5$ s & $80$ MB  \\
 \end{tabular}
 \caption{Colibri Core performance benchmarks using the \texttt{colibri-benchmarks} tool and the 
 \texttt{benchmarks.py} script for the Python baselines. All non-Colibri Core
@@ -651,40 +651,39 @@ skipgrams, both of this can be observed in Table~\ref{tab:benchmarks}.
 The C++ library allows for easy swapping of the underlying datastructure for
 pattern models. The default hashmap (\texttt{std::unordered\_map}) solution can
 be contrasted to a pattern model using using an ordered map
-(\texttt{std::map}\footnote{the hash key is still computed as it determines
-    the ordering}, the last experiment in the mid-section of
-Table~\ref{tab:benchmarks}). As expected, the ordered map proves to be significantly slower
-and does not yield a memory advantage either.
+(\texttt{std::map}\footnote{the hash key is still computed as it determines the
+ordering}. As expected, the ordered map proves to be significantly slower and
+does not yield a memory advantage either.
 
 As Colibri Core is suited for the processing of large data sets, provided sensible
 thresholds are set, we conduct extra experiments on the JRC-Acquis corpus,
 containing $31.3$ million words in over $850,000$ sentences, and on a portion
 of the Google Billion Word corpus, where we use a set of $768$ million words in
-$30$ million sentences.
+$30$ million sentences. These results are shown in Table~\ref{tab:bigbenchmarks}.
 
 \begin{table}[h]
 \footnotesize{
 \begin{tabular}{lll}
 Experiment & CPU time & Memory  \\
 \hline
-\multicolumn{3}{\textbf{JRC-Acquis data, with thresholding ($t=2,l=8$)}}
+\multicolumn{3}{c}{\textbf{JRC-Acquis data, with thresholding ($t=2,l=8$)}} \\
 \hline
 $\ast$ Naive Python implementation & 8m 4s & $11407$ MB \\
 Unindexed Pattern Model (from file) & 4m 18s & $1704$ MB ($1803$ MB) \\
 Unindexed Pattern Model (preloaded corpus) & 3m 58s & $1700$ MB ($1800$ MB) \\
 Unindexed Pattern Pointer Model (preloaded corpus) & 3m 1s & $1344$ MB ($1445$ MB) \\
-Indexed Pattern Model (preloaded corpus) &  4m 36s & $4117$ MB & $4217$ MB \\
+Indexed Pattern Model (preloaded corpus) &  4m 36s & $4117$ MB ($4217$ MB) \\
 \hline
 Unindexed Pattern Model (preloaded corpus), with skipgrams & 61m 1s & $30420$ MB ($30520$ MB) \\
 \hline
 Indexed Pattern Model (preloaded), skipgrams, skiptypes$=12$ & 80m 11s & $29746$ MB ($29846$ MB) \\
 \hline
-\multicolumn{3}{\textbf{JRC-Acquis data, LM comparison, trigram model ($t=1,l=3$)}}
+\multicolumn{3}{c}{\textbf{JRC-Acquis data, LM comparison, trigram model ($t=1,l=3$)}} \\
 \hline
-Unindexed Pattern Model (from file) & 42 s & $716$ MB & $847$ MB \\
-$\ast$ SRILM ngram-count & 12 s & $348$ MB & \\
+Unindexed Pattern Model (from file) & 42 s & $716$ MB ($847$ MB) \\
+$\ast$ SRILM ngram-count & 12 s & $348$ MB  \\
 \hline
-\multicolumn{3}{\textbf{Google Billion Words corpus, with heavy thresholding ($t=10,l=4,y=20$)}}
+\multicolumn{3}{c}{\textbf{Google Billion Words corpus, with heavy thresholding ($t=10,l=4,y=20$)}} \\
 \hline
 Unindexed Pattern Pointer Model (preloaded corpus) & 83m 14s & $12279$ MB ($15317$ MB) \\
 \end{tabular}

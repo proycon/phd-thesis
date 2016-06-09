@@ -6,7 +6,23 @@ I added a dedicated "Related Work" subsection at the end of the introduction
 > Consider providing corpora of different (bigger) size for the quality
 > controls of the software
 
-- I added 
+- I revised the quality control section and added an extra table (2) including bigger corpora.
+  The experiments in Table 1 have been rerun with the latest Colibri Core as well and extended.
+
+> (Reviewer I) Table 1 shows the CPU time and memory used by the system but a comparison
+> with existing system help to appreciate the existing work.  
+> (Reviewer G) The result must be compare with existing software so that the result can be                                                                                                                                                             > more appreciated.
+
+- I added a comparison with NLTK (alongside the naive Python implementation)
+and SRILM (optimised Language Modelling, though Colibri Core is not a LM
+toolkit). These, however, do not support many of the features Colibri Core does
+so the comparison is inherently limited.
+
+> (Reviewer I) Since the program is written in C++, I think it would be useful to include some
+> baseline C++ program (not just Python), e..g naive C implementation. This is my
+> main concern (i.e. compulsory).        
+
+- I added a naive C++ implementation alongside the naive Python implementation (table 1)
 
 > One reviewer felt that pointing the reader to the documentation is not
 > sufficient for a quick understanding on how the software can be used for
@@ -18,9 +34,12 @@ I added a dedicated "Related Work" subsection at the end of the introduction
 
 > Declare that the support mechanisms are provided by the GitHub issue system  (https://github.com/proycon/colibri-core/issues), or other means.
 
-- Added a subsection "Support" to "Quality Control", which explicitly refers to the Github issue tracker as requested. (extends the JORS template again)
+- Added a subsection "Support" to "Quality Control", which now explicitly refers to the Github issue tracker as requested. (extends the JORS template again)
 
-> Please consider the enhancements offered by reviewer G regarding the paper clarity
+
+> Please consider the enhancements offered by reviewer H regarding the paper clarity
+
+Addressing the issues individually below:
 
 > I felt it was a bit loose in it’s structure.
 > Each of the sections come un-announced without a clear thread that relates them
