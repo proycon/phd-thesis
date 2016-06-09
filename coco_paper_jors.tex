@@ -9,6 +9,8 @@
 \usepackage{hyperref}
 \usepackage{algorithm} 
 \usepackage{algpseudocode} 
+\usepackage{graphicx} 
+\usepackage{placeins}
 \usepackage{parskip}
 \usepackage{sectsty}
 \usepackage{amsmath}
@@ -116,22 +118,20 @@ NLP software developers and researchers with a solid technical background.
 
 \subsubsection{Related Work}
 
-Pattern extraction, and with it pattern matching, play an important role in the
-computer science in general. In the NLP literature, n-grams are a common type
-of pattern, and their modelling is often researched in the context of
-statistical language modelling.  Software that springs from such studies is
-widespread in the field. Examples, by no means exhaustive, are SRILM
-\cite{SRILM}, IRSTLM \cite{IRSTLM}, and KenLM \cite{KENLM}. Focus on efficient
-modelling with regards to memory consumption and look-up speed is an important
-component in such studies. KenLM is one of the newer systems that implements
-various optimisations and generally has an edge over the others in this regard. There is other
-noticable work on big data storage in this field \cite{Guthrie2012}, though this study did not
-produce a usable open source software solution. 
+Pattern extraction, and with it pattern matching, plays an important role in
+computer science. In the NLP literature, n-grams are a common type of pattern,
+and their modelling is often researched in the context of statistical language
+modelling.  Software that springs from such studies is widespread in the field.
+Examples, by no means exhaustive, are SRILM \cite{SRILM}, IRSTLM \cite{IRSTLM},
+and KenLM \cite{KENLM}. Focus on efficient modelling with regards to memory
+consumption and look-up speed is an important component in such studies.
+Others also focus on big data storage in this field \cite{Guthrie2010}, though
+this study did not produce a usable open source software solution. 
 
 Colibri Core, however, takes a step back and is not a language modelling
 toolkit and therefore can't be readily compared with one. It is, however, very
 suitable to be used as a foundation to that end, which has been done by
-\cite{COCOCPYP}. What we do have in common with language modelling toolkits is
+one study already \cite{COCOCPYP}. What we do have in common with language modelling toolkits is
 that both types of systems contain a store of patterns (i.e. n-grams or beyond)
 and their frequencies, in which quick look-up is essential, and they provide a
 procedure to compute such a model. Both LM toolkits as well as Colibri Core
@@ -144,7 +144,7 @@ non-consecutive patterns such as skipgrams. The issue of skipgram extraction
 and modelling gained more traction in the past decade, see for instance
 \cite{Guthrie06}. The notion of skipgram (or rather flexgram in our terms, as
 shall become apparent later) also plays a part in vector space representations
-\cite{Mikolov08}.
+\cite{Mikolov08} that have become increasingly popular.
 
 We think Colibri Core fills an interesting niche that is not covered by other
 readily available software. It provides solutions for the modelling of n-grams and 
@@ -152,8 +152,21 @@ skipgrams/flexgrams in an efficient and sufficiently extensible manner.
 
 \subsection{Implementation and Architecture}
 
-We will discuss the various features and optimisations that are implemented in Colibri Core. We start with a introduction of patterns and their encoding,
-Then discuss the implemented optimisation we use to count n-grams, and subsequently skipgrams. We then discuss more advanced parametrisation and end with a section on the computation of flexgrams.
+The overall architecture of Colibri Core is visualised in
+Figure~\ref{fig:architecture}, from a data flow perspective.  The components
+shown here will be discussed in this section. 
+
+\begin{figure}[h]
+\includegraphics[width=14.0cm]{cocoarch.png}
+\caption{The Colibri Core architecture; light green squares represent data models, yellowish rounded squares represent processes that manipulate data.}
+\label{fig:architecture}
+\end{figure}
+
+We will present the various features and optimisations that are implemented in
+Colibri Core. We start with a introduction of patterns and their encoding, Then
+discuss the implemented optimisation we use to count n-grams, and subsequently
+skipgrams. We then discuss more advanced parametrisation and end with a section
+on the computation of flexgrams.
 
 \subsubsection{Feature: Patterns}
 \label{sec:patterns}
@@ -284,7 +297,7 @@ tokens, i.e. the total length of the skipgram expressed in tokens. The possible 
 total length spanned. A skipgram of size three has only one possible
 gap configuration\footnote{The initial and final token may never be gaps in the extracted skipgrams};
 \texttt{a \_ z}, a skipgram of size four already has three possible configurations;
-\texttt{a \_ \_ z}, \texttt{a b \_ z}, \texttt{a \_ y z}.
+\texttt{a \_ \_ z}, \texttt{a b \_ z} or \texttt{a \_ y z}.
 
 The algorithm, shown in Algorithm~\ref{alg:skipgramcount} considers all
 possible configurations in which skips can be inserted in all of the n-grams in the model. It can
@@ -427,6 +440,11 @@ Obviously, indexed pattern models make a considerably higher demand on memory.
 They do, however, allow for a broader range of computations, as shall become
 apparent in subsequent sections.
 
+The command-line tool \texttt{colibri-patternmodeller} exposes most of the
+functionality for training, viewing and editing pattern models (see also
+Figure~\ref{fig:architecture}). In the C++ and Python APIs, this functionality is
+generally available through methods on some flavour of the PatternModel class.
+
 \subsubsection{Optimisation: Two-step training}
 
 Training indexed patterns models is more memory intensive than training
@@ -513,7 +531,7 @@ from positions in the corpus to an array of patterns that are found at said
 position. The reverse index is not modelled in memory as an explicit mapping from
 positions to patterns, but as a simpler reverse index that only keeps track of where
 each unit/sentence starts. This can then be used to quickly resolve specific positions
-to possible patterns.
+to all possible patterns.
 
 \subsubsection{Feature: Flexgram Counting}
 
@@ -531,6 +549,12 @@ single variable-width gap. This method is recommended when the user is
 interested in long-distance flexgrams, whereas the abstraction method is
 recommended when the user is more interested in having multiple gaps or
 the relationship between flexgrams and skipgrams.
+
+
+
+
+
+
 
 \subsection{Quality Control}
 \label{sec:qc}
@@ -633,12 +657,12 @@ Indexed Pattern Model (preloaded corpus), with skipgrams & $24.2$ s & $165$ MB (
 Unindexed Pattern Model (from file) & $5.9$ s & $152$ MB ($164$ MB) \\
 $\ast$ SRILM ngram-count & $1.5$ s & $80$ MB  \\
 \end{tabular}
-\caption{Colibri Core performance benchmarks using the \texttt{colibri-benchmarks} tool and the 
+\caption{Colibri Core performance benchmarks on the IWSLT data set. Performed by the \texttt{colibri-benchmarks} tool and the 
 \texttt{benchmarks.py} script for the Python baselines. All non-Colibri Core
 references are marked with an asterisk ($\ast$). Memory usage is measured as the difference in resident memory after training
 and before training. Peak memory usage is measured absolutely as reported by
 the OS and included in parentheses. All experiments were performed on a Linux system
-with an Intel Xeon CPU (E5-2630L v3) at 1.80GHz and 256GB RAM.
+with an Intel Xeon CPU (E5-2630L v3) at 1.80GHz and 256GB RAM. Parameter $t$ refers to the occurrence threshold, $l$ to the maximum pattern length.
 }
 }
 \label{tab:benchmarks}
@@ -687,7 +711,8 @@ $\ast$ SRILM ngram-count & 12 s & $348$ MB  \\
 \hline
 Unindexed Pattern Pointer Model (preloaded corpus) & 83m 14s & $12279$ MB ($15317$ MB) \\
 \end{tabular}
-\caption{Benchmarks on two large data sets}
+\caption{Benchmarks on two large data sets. Same setup as Table~\ref{tag:benchmarks}.Parameter $y$ represents the occurrence threshold specifically for skipgrams.
+}
 }
 \label{tab:bigbenchmarks}
 \end{table}
@@ -699,6 +724,7 @@ and the fact that unindexed models can only compute skipgrams exhaustively and
 do not support the skip type threshold discussed in Section ``Parametrisation:
 What counts?''. 
 
+\FloatBarrier
 
 \subsubsection{Documentation} 
 
@@ -711,7 +737,7 @@ available. The next section will provide a small example of possible usage from 
 Although we refer to the aforementioned documentation and the Python tutorial
 for extensive usage instructions, we include a short use case in this section
 and show how to use the command line tools.  Assume you have a corpus
-``corpus.txt`` and you want to extract all n-grams, skipgrams and flexgrams
+\texttt{corpus.txt} and you want to extract all n-grams, skipgrams and flexgrams
 that occur more than five times. For skipgrams, we add the additional
 constraint that it abstracts over at least three distinct ngrams, i.e. there
 are three different ways of filling the gaps. Flexgrams we derive from
@@ -720,7 +746,7 @@ skipgrams.
 First we should ensure this corpus is properly tokenised and that sentence
 splitting has been performed, putting each sentence on one line to make this
 the basic unit Colibri Core can count with. This preprocessing is not done by
-Colibri Core but using an external tokeniser such as ucto\url{https://languagemachines.github.io/ucto}:
+Colibri Core but using an external tokeniser such as ucto\footnote{\url{https://languagemachines.github.io/ucto}}:
 
 \begin{verbatim}
 $ ucto ucto -L en -n corpus.txt > corpus.tok.txt
@@ -750,7 +776,7 @@ We have opted for an indexed pattern model, which gives us more thresholding
 options such as \texttt{--skiptypes}, and makes skipgram extraction more
 efficient, but at the cost of a much higher memory footprint compared to
 the simpler unindexed models\footnote{Use the \texttt{--unindexed} flag to
-buidl an unindexed model}.
+build an unindexed model}.
 
 We can now read the model from file and produce output to standard output in
 the form of \emph{1)} a print of all patterns in the model, \emph{2)} a
@@ -861,6 +887,7 @@ Modelling\footnote{\url{https://github.com/naiaden/cococpyp}}, Kneser-Ney Langua
 Modelling\footnote{\url{https://github.com/naiaden/apodiformes}}, spelling
 correction\footnote{\url{https://github.com/proycon/gecco}}, and event
 prediction in social media streams\footnote{\url{https://github.com/fkunneman/ADNEXT\_predict}}.
+This has culminated in the publication of several studies that use Colibri Core \cite{COCOCPYP,Kunneman+16}
 
 As a programming library for both C++ and Python, Colibri Core can be
 potentially adopted by a wide variety of third party developers. As a set of

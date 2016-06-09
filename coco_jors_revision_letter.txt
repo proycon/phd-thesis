@@ -32,6 +32,11 @@ so the comparison is inherently limited.
 - Ok, I added a "Usage example" section to "Quality Control", with a specific
   example (this was not in the original JORS template however, so it is an extension)
 
+> Two reviewers suggested the use of "diagrams" to document the implementation                                                                                                                                                                         
+> and architecture sections. 
+
+- I added an architecture overview scheme at the beginning of that section.
+
 > Declare that the support mechanisms are provided by the GitHub issue system  (https://github.com/proycon/colibri-core/issues), or other means.
 
 - Added a subsection "Support" to "Quality Control", which now explicitly refers to the Github issue tracker as requested. (extends the JORS template again)
@@ -110,6 +115,9 @@ revise grammar.
 
 I adapted the phrasing to clarify this point. The on-the-fly resolution was on
 per-request basis.
+
+
+
 
 
 
