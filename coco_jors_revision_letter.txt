@@ -67,7 +67,7 @@ I felt rather constrained, however,  by the JORS template and the unorthodox lac
 > [Reviewer H] Informed Skipgram Counting: “in the number of tokens” -> you mean skipped
 > tokens?.
 
-I mean the the length of the skipgram in general, expressed in tokens, so
+I mean the length of the skipgram in general, expressed in tokens, so
 skipped + non-skipped tokens. I reworded some things and added more clarification in the text.
 
 Also, later, when you describe possible configurations, could you give                                                                                                                
