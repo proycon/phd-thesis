@@ -70,8 +70,8 @@ I felt rather constrained, however,  by the JORS template and the unorthodox lac
 I mean the length of the skipgram in general, expressed in tokens, so
 skipped + non-skipped tokens. I reworded some things and added more clarification in the text.
 
-Also, later, when you describe possible configurations, could you give                                                                                                                
-some examples? 
+> [Reviewer H] Also, later, when you describe possible configurations, could you give                                                                                                                
+> some examples? 
 
 I added examples to illustrate this point
 
