@@ -1,52 +1,61 @@
+> [Editor] Clarify how the software would run under Python 2.7 
 
-> Enrich the literature review with respect to the related work
+> [Reviewer I] One small problem is that the tutorial has some part of the tutorial is not
+> compatible with Python 2.7. Perhaps the authors can include a modified version
+> of the Tutorial for Python 2.7
+
+I understand the issue concerning Python 2.7 was mainly related to the Python
+tutorial and not the paper itself. I have now updated the Python tutorial so it
+is now fully compatible with both Python 2.7 and Python 3.
+
+> [Editor] Enrich the literature review with respect to the related work
+> [Reviewer G] There should be a proper literature survey
 
 I added a dedicated "Related Work" subsection at the end of the introduction
 
-> Consider providing corpora of different (bigger) size for the quality
+> [Editor] Consider providing corpora of different (bigger) size for the quality
 > controls of the software
 
-- I revised the quality control section and added an extra table (2) including bigger corpora.
-  The experiments in Table 1 have been rerun with the latest Colibri Core as well and extended.
+I  revised the quality control section and added an extra table (2) including bigger corpora.
+The experiments in Table 1 have been rerun with the latest Colibri Core as well and extended.
 
-> (Reviewer I) Table 1 shows the CPU time and memory used by the system but a comparison
+> [Reviewer I] Table 1 shows the CPU time and memory used by the system but a comparison
 > with existing system help to appreciate the existing work.  
-> (Reviewer G) The result must be compare with existing software so that the result can be                                                                                                                                                             > more appreciated.
+> [Reviewer G] The result must be compare with existing software so that the result can be                                                                                                                                                             > more appreciated.
 
-- I added a comparison with NLTK (alongside the naive Python implementation)
+I added a comparison with NLTK (alongside the naive Python implementation)
 and SRILM (optimised Language Modelling, though Colibri Core is not a LM
 toolkit). These, however, do not support many of the features Colibri Core does
 so the comparison is inherently limited.
 
-> (Reviewer I) Since the program is written in C++, I think it would be useful to include some
+> [Reviewer I] Since the program is written in C++, I think it would be useful to include some
 > baseline C++ program (not just Python), e..g naive C implementation. This is my
 > main concern (i.e. compulsory).        
 
-- I added a naive C++ implementation alongside the naive Python implementation (table 1)
+I added a naive C++ implementation alongside the naive Python implementation (table 1)
 
-> One reviewer felt that pointing the reader to the documentation is not
+> [Editor] One reviewer felt that pointing the reader to the documentation is not
 > sufficient for a quick understanding on how the software can be used for
 > research. My advise is to provide a working (concrete) example of the software
 > usage.
 
-- Ok, I added a "Usage example" section to "Quality Control", with a specific
-  example (this was not in the original JORS template however, so it is an extension)
+Ok, I added a "Usage example" section to "Quality Control", with a specific
+ example (this was not in the original JORS template however, so it is an extension)
 
-> Two reviewers suggested the use of "diagrams" to document the implementation                                                                                                                                                                         
-> and architecture sections. 
+> [Editor] Two reviewers suggested the use of "diagrams" to document the
+> implementation and architecture sections. 
 
-- I added an architecture overview scheme at the beginning of that section.
+I added an architecture overview scheme at the beginning of that section. This should also be beneficial in addressing the concern of reviewer H that the paper was a bit loose in structure.
 
-> Declare that the support mechanisms are provided by the GitHub issue system  (https://github.com/proycon/colibri-core/issues), or other means.
+> [Editor] Declare that the support mechanisms are provided by the GitHub issue system  (https://github.com/proycon/colibri-core/issues), or other means.
 
-- Added a subsection "Support" to "Quality Control", which now explicitly refers to the Github issue tracker as requested. (extends the JORS template again)
+Added a subsection "Support" to "Quality Control", which now explicitly refers to the Github issue tracker as requested. (extends the JORS template again)
 
+> [Editor] Please consider the enhancements offered by reviewer H regarding the paper clarity
 
-> Please consider the enhancements offered by reviewer H regarding the paper clarity
+Addressing these issues individually below:
 
-Addressing the issues individually below:
-
-> I felt it was a bit loose in it’s structure.
+> [Reviewer H] I felt it was a bit loose in it’s structure.
 > Each of the sections come un-announced without a clear thread that relates them
 > to each other. Perhaps some higher-order titles like “Features”,
 > “Optimizations”, etc. would help a lot in the readability.                                                                                                                                   
@@ -55,7 +64,7 @@ I added higher order prefixes to the various section titles (Features:,
 Optimisation:, Parametrisation:) and added some introductory text for the "Implementation & Architecture" section to provide some further glue.
 I felt rather constrained, however,  by the JORS template and the unorthodox lack of section numbers. I hope this is an acceptable solution.
 
-> Informed Skipgram Counting: “in the number of tokens” -> you mean skipped
+> [Reviewer H] Informed Skipgram Counting: “in the number of tokens” -> you mean skipped
 > tokens?.
 
 I mean the the length of the skipgram in general, expressed in tokens, so
@@ -64,57 +73,63 @@ skipped + non-skipped tokens. I reworded some things and added more clarificatio
 Also, later, when you describe possible configurations, could you give                                                                                                                
 some examples? 
 
-- I added examples to illustrate this point
+I added examples to illustrate this point
 
-> For the algorithms, I would recommend using CamelCase or underscores for more clarity.
+> [Reviewer H] For the algorithms, I would recommend using CamelCase or underscores for more clarity.
 
-- Agreed, added camelcasing for function names in algorithms
+Agreed, added camelcasing for function names in algorithms
 
-> What counts? : “A secondary word occurrence threshold” -> word frequency threshold?.
+> [Reviewer H] What counts? : “A secondary word occurrence threshold” -> word frequency threshold?.
 
-- Yes, that would be the same. I myself rather use the term occurrence threshold as it
-  refers to absolute counts rather than any normalised frequency.
+Yes, that would be the same. I myself rather use the term occurrence threshold as it
+refers to absolute counts rather than any normalised frequency.
 
-> Also, the skip type threshold bullet wasn’t entirely clear to me.
+> [Reviewer H] Also, the skip type threshold bullet wasn’t entirely clear to me.
 > Could you revise it?
 
-- I rephrased some minor parts but I'm not sure what is not clear. The examples
-  should hopefully illustrate the point adequately.
+I rephrased some minor parts but I'm not sure what is not clear. The examples
+should hopefully illustrate the point adequately.
 
-> Pattern models: I understand that tries should have a large memory footprint,
+> [Reviewer H]  Pattern models: I understand that tries should have a large memory footprint,
 > but I didn’t quite get what you mean by “strongly linked nature”.
 
-- The footnote should address this. The nodes of the trie are linked obviously,
-  which would require a pointer (8 byte on a 64 bit architecture) for every transition between two
-  tokens. This gets expensive memory-wise. I did some minor rewording of the
-  footnote the paper to clarify this.
+The footnote should address this. The nodes of the trie are linked obviously,
+which would require a pointer (8 byte on a 64 bit architecture) for every transition between two
+tokens. This gets expensive memory-wise. I did some minor rewording of the
+footnote the paper to clarify this.
 
-> Also, you may want to explain what suffix tries and suffix arrays are (for
+> [Reviewer H] Also, you may want to explain what suffix tries and suffix arrays are (for
 > example, I don’t know the latter, so it’s hard to follow the discussion).
 
-- I added a citation for suffix tries and a one-sentence explanation. I also
-  added a minor clarification for suffix arrays, but I think a deeper
-  explanation would take up too much space and distract from the main topic.
-  The suffix arrays are mainly included as I expected readers who were already familiar
-  with them to bring them up and wonder how they'd compare to Colibri Core.
+I added a citation for suffix tries and a one-sentence explanation. I also
+added a minor clarification for suffix arrays, but I think a deeper
+explanation would take up too much space and distract from the main topic.
+The suffix arrays are mainly included as I expected readers who were already familiar
+with them to bring them up and wonder how they'd compare to Colibri Core.
 
-> Corpus comparison: “the training corpus, it is therefore asymmetric” ->
+> [Reviewer H] Corpus comparison: “the training corpus, it is therefore asymmetric” ->
 revise grammar. 
 
-- Rephrased
+Rephrased
 
-> Also, I know what log-likelihood is, but didn’t get what it
+> [Reviewer H] Also, I know what log-likelihood is, but didn’t get what it
 > stands for in this context. Perhaps a short formula would clarify?
 
-- Added the formula.
+ Added the formula.
 
-
-> Relations between patterns: when you say that the reverse index is computed
+> [Reviewer H] Relations between patterns: when you say that the reverse index is computed
 > on the fly, you mean when some “load model” primitive is executed? Does it take
 > too long? It would be nice to see some experiments on the functionaliti
 
 I adapted the phrasing to clarify this point. The on-the-fly resolution was on
 per-request basis.
+
+Other changes: the paper now refers to the latest Colibri Core version (v2.4.1)
+rather than the version first submitted (v2.1), as there have been various fixes
+and improvements in the meantime (some concerning Python 2.7 compatibility).
+
+
+
 
 
 
