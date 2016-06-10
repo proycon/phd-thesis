@@ -11,12 +11,12 @@ is now fully compatible with both Python 2.7 and Python 3.
 > [Editor] Enrich the literature review with respect to the related work
 > [Reviewer G] There should be a proper literature survey
 
-I added a dedicated "Related Work" subsection at the end of the introduction
+I added a dedicated "Related Work" subsection at the end of the introduction.
 
 > [Editor] Consider providing corpora of different (bigger) size for the quality
 > controls of the software
 
-I  revised the quality control section and added an extra table (2) including bigger corpora.
+I revised the quality control section and added an extra table (2) including bigger corpora.
 The experiments in Table 1 have been rerun with the latest Colibri Core as well and extended.
 
 > [Reviewer I] Table 1 shows the CPU time and memory used by the system but a comparison
@@ -45,11 +45,14 @@ Ok, I added a "Usage example" section to "Quality Control", with a specific
 > [Editor] Two reviewers suggested the use of "diagrams" to document the
 > implementation and architecture sections. 
 
-I added an architecture overview scheme at the beginning of that section. This should also be beneficial in addressing the concern of reviewer H that the paper was a bit loose in structure.
+I added an architecture overview scheme at the beginning of that section. This
+should also be beneficial in addressing the concern of reviewer H that the
+paper was a bit loose in structure.
 
 > [Editor] Declare that the support mechanisms are provided by the GitHub issue system  (https://github.com/proycon/colibri-core/issues), or other means.
 
-Added a subsection "Support" to "Quality Control", which now explicitly refers to the Github issue tracker as requested. (extends the JORS template again)
+Added a subsection "Support" to "Quality Control", which now explicitly refers
+to the Github issue tracker as requested. (extends the JORS template again)
 
 > [Editor] Please consider the enhancements offered by reviewer H regarding the paper clarity
 
@@ -61,8 +64,10 @@ Addressing these issues individually below:
 > “Optimizations”, etc. would help a lot in the readability.                                                                                                                                   
 
 I added higher order prefixes to the various section titles (Features:,
-Optimisation:, Parametrisation:) and added some introductory text for the "Implementation & Architecture" section to provide some further glue.
-I felt rather constrained, however,  by the JORS template and the unorthodox lack of section numbers. I hope this is an acceptable solution.
+Optimisation:, Parametrisation:) and added some introductory text for the
+"Implementation & Architecture" section to provide some further glue.  I felt
+rather constrained, however,  by the JORS template and the unorthodox lack of
+section numbers. I hope this is an acceptable solution.
 
 > [Reviewer H] Informed Skipgram Counting: “in the number of tokens” -> you mean skipped
 > tokens?.
@@ -124,9 +129,13 @@ Rephrased
 I adapted the phrasing to clarify this point. The on-the-fly resolution was on
 per-request basis.
 
-Other changes: the paper now refers to the latest Colibri Core version (v2.4.1)
+Other changes: 
+- The paper now refers to the latest Colibri Core version (v2.4.1)
 rather than the version first submitted (v2.1), as there have been various fixes
 and improvements in the meantime (some concerning Python 2.7 compatibility).
+- Benchmarks in quality control section have been redone with the latest version,
+  extra benchmarks have been included and the discussion of the results has been updated.
+- References made to work using Colibri Core
 
 
 
