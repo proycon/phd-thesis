@@ -376,8 +376,10 @@ of the main assets of Colibri Core. Parameters exist to affect the following:
         then only be included in the model if the corpus has instances in which the gap is
         filled by at least the specified number of distinct patterns. 
         If the threshold is set to 2 for example, and the corpus contains \emph{The
-        big house} and \emph{The small house}. If the corpus only has
-        one of these instantiations, and no other instantiations either, then the skipgram would not be included.
+            big house} and \emph{The small house}, then the skipgram \emph{The
+        \_ house} is included. If the corpus only has
+        one of these instantiations, and no other instantiations of the
+        skipgram either, then the skipgram would not be included.
     \item Skipgrams and n-grams are typically computed using the same
         occurrence threshold, but it is also possible to use a different threshold
         for skipgrams.
@@ -411,7 +413,7 @@ The use of hash maps can be contrasted to the use of suffix (or prefix) tries
 constructed and any path in the tree, complete or incomplete, corresponds to a
 suffix (or prefix).  Although suffix tries also benefit from decreased memory
 use due to no overlap in pattern data, the strongly linked nature of tries
-causes a significant overhead in memory use\footnote{Each pointer consuming 8
+causes a significant overhead in memory use\footnote{Each pointer consumes 8
     bytes on 64-bit architectures, and one would be needed for every transition
 between two tokens.} that quickly exceeds the memory footprint of hash maps.
 For this reason, hash maps are the default and tries are currently not

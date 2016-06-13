@@ -16,7 +16,7 @@ I added a dedicated "Related Work" subsection at the end of the introduction.
 > [Editor] Consider providing corpora of different (bigger) size for the quality
 > controls of the software
 
-I revised the quality control section and added an extra table (2) including bigger corpora.
+I revised the quality control section significantly and added an extra table (2) including bigger corpora.
 The experiments in Table 1 have been rerun with the latest Colibri Core as well and extended.
 
 > [Reviewer I] Table 1 shows the CPU time and memory used by the system but a comparison
@@ -51,7 +51,7 @@ paper was a bit loose in structure.
 
 > [Editor] Declare that the support mechanisms are provided by the GitHub issue system  (https://github.com/proycon/colibri-core/issues), or other means.
 
-Added a subsection "Support" to "Quality Control", which now explicitly refers
+I added a subsection "Support" to "Quality Control", which now explicitly refers
 to the Github issue tracker as requested. (extends the JORS template again)
 
 > [Editor] Please consider the enhancements offered by reviewer H regarding the paper clarity
@@ -65,52 +65,103 @@ Addressing these issues individually below:
 
 I added higher order prefixes to the various section titles (Features:,
 Optimisation:, Parametrisation:) and added some introductory text for the
-"Implementation & Architecture" section to provide some further glue.  I felt
-rather constrained, however,  by the JORS template and the unorthodox lack of
-section numbers. I hope this is an acceptable solution.
+"Implementation & Architecture" section to provide some further glue:
+
+"""
+We will present the various features and optimisations that are implemented in
+Colibri Core. We start with a introduction of patterns and their encoding, Then
+discuss the implemented optimisation we use to count n-grams, and subsequently
+skipgrams. We then discuss more advanced parametrisation and end with a section
+on the computation of flexgrams.
+"""
+
+I lack of section numbers in the JORS template were a bit constraining with
+regard to making reference. I hope this is an acceptable solution.
 
 > [Reviewer H] Informed Skipgram Counting: “in the number of tokens” -> you mean skipped
-> tokens?.
-
-I mean the length of the skipgram in general, expressed in tokens, so
-skipped + non-skipped tokens. I reworded some things and added more clarification in the text.
-
-> [Reviewer H] Also, later, when you describe possible configurations, could you give                                                                                                                
+> tokens?. Also, later, when you describe possible configurations, could you give                                                                                                                
 > some examples? 
 
-I added examples to illustrate this point
+I mean the length of the skipgram in general, expressed in tokens, so
+skipped + non-skipped tokens. I reworded some things and added more
+clarification in the text and added examples to accommodate your second request:
+
+"""
+The computation of skipgrams is parametrised by an upper limit $l\leq m$ in the number of
+tokens, i.e. the total length of the skipgram expressed in tokens. The possible configuration of gaps increase exponentially with the
+total length spanned. A skipgram of size three has only one possible
+gap configuration\footnote{The initial and final token may never be gaps in the extracted skipgrams};
+\texttt{a \_ z}, a skipgram of size four already has three possible configurations;
+\texttt{a \_ \_ z}, \texttt{a b \_ z} or \texttt{a \_ y z}.
+"""
 
 > [Reviewer H] For the algorithms, I would recommend using CamelCase or underscores for more clarity.
 
-Agreed, added camelcasing for function names in algorithms
+Agreed, I added camelcasing for function names in algorithms.
 
 > [Reviewer H] What counts? : “A secondary word occurrence threshold” -> word frequency threshold?.
 
 Yes, that would be the same. I myself rather use the term occurrence threshold as it
-refers to absolute counts rather than any normalised frequency.
+unambiguously refers to absolute count rather than any kind of normalised frequency.
 
 > [Reviewer H] Also, the skip type threshold bullet wasn’t entirely clear to me.
 > Could you revise it?
 
-I rephrased some minor parts but I'm not sure what is not clear. The examples
-should hopefully illustrate the point adequately.
+I rephrased some parts but I'm not sure whether I understood precisely what
+was unclear. I hope the revised examples illustrate the point adequately now:
+
+"""
+Skipgrams can be constrained using the \emph{skip type threshold}. This
+requires that at least the specified number of distinct patterns must fit in the
+gaps of the skipgram. Higher values will produce less skipgrams, but
+typically more generic ones. For instance, a skipgram such as \emph{The \_ house} will
+then only be included in the model if the corpus has instances in which the gap is
+filled by at least the specified number of distinct patterns. 
+If the threshold is set to 2 for example, and the corpus contains \emph{The
+    big house} and \emph{The small house}, then the skipgram \emph{The
+\_ house} is included. If the corpus only has
+one of these instantiations, and no other instantiations of the
+skipgram either, then the skipgram would not be included.
+"""
 
 > [Reviewer H]  Pattern models: I understand that tries should have a large memory footprint,
 > but I didn’t quite get what you mean by “strongly linked nature”.
 
-The footnote should address this. The nodes of the trie are linked obviously,
-which would require a pointer (8 byte on a 64 bit architecture) for every transition between two
+The footnote addresses this point. The nodes of the trie are linked through a
+pointer commonly (8 byte on a 64 bit architecture) for every distinct transition between two
 tokens. This gets expensive memory-wise. I did some minor rewording of the
-footnote the paper to clarify this.
+footnote the paper to clarify this:
+
+"""
+Each pointer consumes 8 bytes on 64-bit architectures, and one would be needed
+for every transition between two tokens.
+"""
+
 
 > [Reviewer H] Also, you may want to explain what suffix tries and suffix arrays are (for
 > example, I don’t know the latter, so it’s hard to follow the discussion).
 
-I added a citation for suffix tries and a one-sentence explanation. I also
-added a minor clarification for suffix arrays, but I think a deeper
-explanation would take up too much space and distract from the main topic.
-The suffix arrays are mainly included as I expected readers who were already familiar
-with them to bring them up and wonder how they'd compare to Colibri Core.
+I added a citation and short explanation for suffix tries:
+
+"""
+The use of hash maps can be contrasted to the use of suffix (or prefix) tries
+\cite{Weiner73}, a common datastructure for storing n-grams in which a tree is
+constructed and any path in the tree, complete or incomplete, corresponds to a
+suffix (or prefix).  Although suffix tries also benefit from decreased memory
+"""
+
+And a short phrase describing suffix arrays:
+
+"""
+At this point, we need to address suffix arrays \cite{Manber90} as well, which
+is a sorted array of suffixes, derived from suffix tries but with significantly
+decreased space requirements. Suffix arrays with longest common prefix (LCP)
+"""
+
+I think a deeper explanation would take up too much space and distract from the
+main topic.  The suffix arrays are mainly included because I expected readers who
+were already familiar with them to bring them up and wonder how it would relate
+to Colibri Core.
 
 > [Reviewer H] Corpus comparison: “the training corpus, it is therefore asymmetric” ->
 revise grammar. 
@@ -120,7 +171,7 @@ Rephrased
 > [Reviewer H] Also, I know what log-likelihood is, but didn’t get what it
 > stands for in this context. Perhaps a short formula would clarify?
 
- Added the formula.
+I added the formula with clarification.
 
 > [Reviewer H] Relations between patterns: when you say that the reverse index is computed
 > on the fly, you mean when some “load model” primitive is executed? Does it take
@@ -129,16 +180,17 @@ Rephrased
 I adapted the phrasing to clarify this point. The on-the-fly resolution was on
 per-request basis.
 
-Other changes: 
+
+
+Other changes in the paper:
+
 - The paper now refers to the latest Colibri Core version (v2.4.1)
 rather than the version first submitted (v2.1), as there have been various fixes
 and improvements in the meantime (some concerning Python 2.7 compatibility).
 - Benchmarks in quality control section have been redone with the latest version,
   extra benchmarks have been included and the discussion of the results has been updated.
-- References made to work using Colibri Core
-
-
-
+- References are made to work using Colibri Core, in the "Reuse Potential"
+  section.
 
 
 
