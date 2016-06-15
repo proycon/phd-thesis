@@ -72,7 +72,7 @@ The need to operate on big corpus data does so even more.  Lossless compression
 and non-trivial algorithms are needed to lower the memory demands, yet retain
 good speed. Colibri Core is software for the efficient computation of n-grams,
 skipgrams and flexgrams from corpus data. The resulting pattern models can be
-analyzed and compared in various ways. The software offers a programming
+analysed and compared in various ways. The software offers a programming
 library for C++ and Python, as well as command-line tools.
 
 \subsection{Keywords}
@@ -96,7 +96,7 @@ N-grams are typically distributed in a Zipfian fashion, implying there are only
 a few high-frequency patterns, with words such as common function words in the
 lead, and there is a long tail of patterns that occur only very sparsely. This
 basic fact makes counting a notoriously memory-hungry enterprise, as patterns
-occurring below a minimum frequency treshold can not be discarded from
+occurring below a minimum frequency threshold can not be discarded from
 memory until the entire corpus has been processed sequentially. 
 
 When working with large data sets and higher-order $n$-ngrams, this memory
@@ -357,11 +357,11 @@ of the main assets of Colibri Core. Parameters exist to affect the following:
 \begin{itemize}
     \item The minimum and maximum length (in words/tokens) of the n-grams
         and/or skipgrams to be extracted. Setting minimum and maximum length to
-        the same value will produce a model of homogenous pattern length
+        the same value will produce a model of homogeneous pattern length
         (e.g.\ only trigrams or words).
     \item A secondary \emph{word} occurrence threshold can be configured. This is a value set higher than
         the primary occurrence threshold. Only patterns
-        occuring above the primary threshold, and for which each of the
+        occurring above the primary threshold, and for which each of the
         individual words/unigrams in the pattern passes the secondary threshold as well, will
         be included in the model.
     \item N-grams that are not subsumed by higher order n-grams, i.e.\ which do
@@ -544,7 +544,7 @@ different ways. The first is by extracting skipgrams first, and then
 abstracting flexgrams from these skipgrams. In this case the flexgram
 computation is constrained by the same maximum-size limit under which the
 skipgrams have been extracted.  The second method for flexgram extraction
-proceeds through the co-occurence relation. A flexgram is formed whenever two
+proceeds through the co-occurrence relation. A flexgram is formed whenever two
 patterns (within the same structural unit) occur above a set threshold. The
 implementation of this latter method is currently limited to flexgrams with a
 single variable-width gap. This method is recommended when the user is
@@ -713,8 +713,7 @@ $\ast$ SRILM ngram-count & 12 s & $348$ MB  \\
 \hline
 Unindexed Pattern Pointer Model (preloaded corpus) & 83m 14s & $12279$ MB ($15317$ MB) \\
 \end{tabular}
-\caption{Benchmarks on two large data sets. Same setup as Table~\ref{tab:benchmarks}.Parameter $y$ represents the occurrence threshold specifically for skipgrams.
-}
+\caption{Benchmarks on two large data sets. Same setup as Table~\ref{tab:benchmarks}. Parameter $y$ represents the occurrence threshold specifically for skipgrams.}
 }
 \label{tab:bigbenchmarks}
 \end{table}
@@ -782,7 +781,7 @@ build an unindexed model}.
 
 We can now read the model from file and produce output to standard output in
 the form of \emph{1)} a print of all patterns in the model, \emph{2)} a
-statistical report summarizing counts for various groups of patterns, and
+statistical report summarising counts for various groups of patterns, and
 \emph{3)} a histogram of pattern frequencies:
 
 \begin{verbatim}
@@ -894,7 +893,7 @@ This has culminated in the publication of several studies that use Colibri Core 
 As a programming library for both C++ and Python, Colibri Core can be
 potentially adopted by a wide variety of third party developers. As a set of
 tools and scripts, Colibri Core also has merit standalone. It is, however,
-focussed on command-line usage and therefore still requires a certain technical
+focused on command-line usage and therefore still requires a certain technical
 expertise from the end-user.
 
 To increase the accessibility of Colibri Core, a RESTful webservice as well as
