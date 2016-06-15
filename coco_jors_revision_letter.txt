@@ -88,7 +88,7 @@ clarification in the text and added examples to accommodate your second request:
 
 """
 The computation of skipgrams is parametrised by an upper limit $l\leq m$ in the number of
-tokens, i.e. the total length of the skipgram expressed in tokens. The possible configuration of gaps increase exponentially with the
+tokens, i.e. the total length of the skipgram (including gaps) expressed in tokens. The possible configuration of gaps increase exponentially with the
 total length spanned. A skipgram of size three has only one possible
 gap configuration\footnote{The initial and final token may never be gaps in the extracted skipgrams};
 \texttt{a \_ z}, a skipgram of size four already has three possible configurations;

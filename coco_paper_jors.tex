@@ -70,10 +70,10 @@ often considered a trivial matter. Going beyond consecutive n-grams to patterns
 such as skipgrams and flexgrams increases the demand for efficient solutions.
 The need to operate on big corpus data does so even more.  Lossless compression
 and non-trivial algorithms are needed to lower the memory demands, yet retain
-good speed. Colibri Core is software for the efficient computation of n-grams,
-skipgrams and flexgrams from corpus data. The resulting pattern models can be
-analysed and compared in various ways. The software offers a programming
-library for C++ and Python, as well as command-line tools.
+good speed. Colibri Core is software for the efficient computation and querying
+of n-grams, skipgrams and flexgrams from corpus data. The resulting pattern
+models can be analysed and compared in various ways. The software offers a
+programming library for C++ and Python, as well as command-line tools.
 
 \subsection{Keywords}
 Natural Language Processing; n-grams; skipgrams; corpus frequency; corpus analysis
@@ -133,7 +133,7 @@ toolkit and therefore can't be readily compared with one. It is, however, very
 suitable to be used as a foundation to that end, which has been done by
 one study already \cite{COCOCPYP}. What we do have in common with language modelling toolkits is
 that both types of systems contain a store of patterns (i.e. n-grams or beyond)
-and their frequencies, in which quick look-up is essential, and they provide a
+and their frequencies, in which quick look-up is essential, and both provide a
 procedure to compute such a model. Both LM toolkits as well as Colibri Core
 employ various optimisations to reduce the memory usage of this store, and keep
 access times high. 
@@ -194,7 +194,7 @@ such as ``elastigram'' to refer to flexgrams.
 Skipgrams are used in the field to obtain a higher level of generalisation than
 can be offered by n-grams. They can, for instance, be found as features in
 classification tasks \cite{DHONDT}, or as a means in language modelling to
-decrease perplexity \cite{Guthrie06}.
+decrease perplexity \cite{Guthrie06,COCOCPYP}.
 
 Dealing with word tokens implies that the corpus data has to be in a
 tokenised form. We start from the basis of plain-text corpus data, containing one
@@ -237,7 +237,8 @@ when compressed. A subset of the Google billion word corpus, 769 million words
 in 30 million sentences, takes $3.9$ GB in plaintext form, and $1.2$ GB when
 compressed in this matter.
 
-To encode a text corpus, a class encoding needs to be computed first. To decode
+To encode a text corpus, a class encoding needs to be computed first, as
+visualised in the top-left corner of Figure~\ref{fig:architecture}. To decode
 the encoded corpus back to plain text, the class encoding is needed again.
 Colibri Core provides tools and exposes library functions to do this.
 
@@ -286,14 +287,15 @@ implementation accounts for more parameters, such as setting a lower bound to
 $n$. The amount of back-off, going all the way up to $m-1$ here, can also be
 fine-tuned.
 
-A performance evaluation of this algorithm will be addressed later in the
-section on \emph{Quality Control}.
+This algorithm makes concessions to processing speed, as multiple passes over
+the data are needed, to conserve memory. A performance evaluation of this
+algorithm will be addressed later in the section on \emph{Quality Control}.
 
 \subsubsection{Optimisation: Informed Skipgram Counting}
 \label{sec:skipgramcount}
 
 The computation of skipgrams is parametrised by an upper limit $l\leq m$ in the number of
-tokens, i.e. the total length of the skipgram expressed in tokens. The possible configuration of gaps increase exponentially with the
+tokens, i.e. the total length of the skipgram (including gaps) expressed in tokens. The possible configuration of gaps increase exponentially with the
 total length spanned. A skipgram of size three has only one possible
 gap configuration\footnote{The initial and final token may never be gaps in the extracted skipgrams};
 \texttt{a \_ z}, a skipgram of size four already has three possible configurations;
@@ -348,7 +350,7 @@ resulting patterns, exponential with number of tokens, and is best avoided.
 \subsubsection{Parametrisation: What counts?}
 \label{sec:whatcounts}
 
-The counting algorithms are parametrised by a various other parameters which
+The counting algorithms are parametrised by various other parameters which
 are not shown in Algorithm~\ref{alg:ngramcounting} and
 Algorithm~\ref{alg:skipgramcount} to reduce complexity. The wide variety of
 parameters allow the user to influence precisely what is counted and this is one
@@ -373,7 +375,8 @@ of the main assets of Colibri Core. Parameters exist to affect the following:
         requires that at least the specified number of distinct patterns must fit in the
         gaps of the skipgram. Higher values will produce less skipgrams, but
         typically more generic ones. For instance, a skipgram such as \emph{The \_ house} will
-        then only be included in the model if the corpus has instances in which the gap is
+        then only be included in the model if the corpus has instances in which
+        the gap can be
         filled by at least the specified number of distinct patterns. 
         If the threshold is set to 2 for example, and the corpus contains \emph{The
             big house} and \emph{The small house}, then the skipgram \emph{The
@@ -418,7 +421,8 @@ causes a significant overhead in memory use\footnote{Each pointer consumes 8
 between two tokens.} that quickly exceeds the memory footprint of hash maps.
 For this reason, hash maps are the default and tries are currently not
 implemented in Colibi Core. The templating, however, does allow for such an
-implementation to be added in the future.
+implementation to be added in the future. This flexibility to abstract over the
+underlying data structure is one of the assets of Colibri Core.
 
 At this point, we need to address suffix arrays \cite{Manber90} as well, which
 is a sorted array of suffixes, derived from suffix tries but with significantly
@@ -458,7 +462,7 @@ basis of that, by making another pass over the corpus and gathering all
 indices. The gain here is in avoiding temporary storage of the indices that
 will not pass the occurrence threshold but that cannot be ruled out a priori by the
 informed counting algorithm.  This conservation of memory comes at the cost of
-a extended execution time.
+extended execution time.
 
 \subsubsection{Feature: Corpus Comparison}
 
@@ -530,10 +534,11 @@ abstractions. The co-occurrence relationship is fully symmetrical.
 These latter three relationships rely on both the \emph{forward index} inherent
 in an indexed pattern model, as well as the \emph{reverse index}, a function
 from positions in the corpus to an array of patterns that are found at said
-position. The reverse index is not modelled in memory as an explicit mapping from
-positions to patterns, but as a simpler reverse index that only keeps track of where
-each unit/sentence starts. This can then be used to quickly resolve specific positions
-to all possible patterns.
+position. The reverse index is not modelled in memory as an explicit mapping
+from positions to patterns, that would use too much memory, but as a simpler
+reverse index that only keeps track of where each unit/sentence starts. This
+can then be used to quickly resolve specific positions to all possible
+patterns.
 
 \subsubsection{Feature: Flexgram Counting}
 
@@ -545,7 +550,7 @@ abstracting flexgrams from these skipgrams. In this case the flexgram
 computation is constrained by the same maximum-size limit under which the
 skipgrams have been extracted.  The second method for flexgram extraction
 proceeds through the co-occurrence relation. A flexgram is formed whenever two
-patterns (within the same structural unit) occur above a set threshold. The
+patterns (within the same structural unit) co-occur above a set threshold. The
 implementation of this latter method is currently limited to flexgrams with a
 single variable-width gap. This method is recommended when the user is
 interested in long-distance flexgrams, whereas the abstraction method is
@@ -580,7 +585,7 @@ Comparisons can be made between Colibri Core's
 unindexed vs indexed models, between the optimised pointer models vs
 standard pattern models, and between preloading a corpus in memory or reading
 it directly from file.  For the experiments, shown in
-Table~\ref{tab:benchmarks} we used a corpus of Dutch
+Table 1, we used a corpus of Dutch
 translations of TED talks of $127,806$ sentences and $2,330,075$
 words\footnote{The data is from the IWSLT 2012 Evaluation Campaign,
     \url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html\#MTtrack}.
@@ -615,7 +620,7 @@ threshold at the very end. We clearly observe a drastic reduction in memory
 usage, at the cost of a longer execution time due to the multiple iterations.
 
 Though Colibri Core is not a Language Modelling toolkit in itself, a comparison
-with a popular third-party LM software may be of interest. We compare an
+with a popular third-party LM toolkit may be of interest. We compare an
 unindexed pattern model containing unigrams, bigrams and trigrams to a similar
 model in SRILM \cite{SRILM}. \footnote{SRILM's \texttt{ngram-count} is run in
 vanilla form, i.e. no smoothing or interpolation, with the options
@@ -672,20 +677,20 @@ with an Intel Xeon CPU (E5-2630L v3) at 1.80GHz and 256GB RAM. Parameter $t$ ref
 
 Indexed Pattern Models are by definition larger in memory than unindexed
 models, but they do offer a significant speed benefit in the computation of
-skipgrams, both of this can be observed in Table~\ref{tab:benchmarks}.
+skipgrams, both of this can be observed in Table 1.
 
 The C++ library allows for easy swapping of the underlying datastructure for
 pattern models. The default hashmap (\texttt{std::unordered\_map}) solution can
 be contrasted to a pattern model using using an ordered map
 (\texttt{std::map}\footnote{the hash key is still computed as it determines the
-ordering}. As expected, the ordered map proves to be significantly slower and
+ordering}). As expected, the ordered map proves to be significantly slower and
 does not yield a memory advantage either.
 
 As Colibri Core is suited for the processing of large data sets, provided sensible
 thresholds are set, we conduct extra experiments on the JRC-Acquis corpus,
 containing $31.3$ million words in over $850,000$ sentences, and on a portion
 of the Google Billion Word corpus, where we use a set of $768$ million words in
-$30$ million sentences. These results are shown in Table~\ref{tab:bigbenchmarks}.
+$30$ million sentences. These results are shown in Table 2.
 
 \begin{table}[h]
 \footnotesize{
@@ -712,8 +717,12 @@ $\ast$ SRILM ngram-count & 12 s & $348$ MB  \\
 \multicolumn{3}{c}{\textbf{Google Billion Words corpus, with heavy thresholding ($t=10,l=4,y=20$)}} \\
 \hline
 Unindexed Pattern Pointer Model (preloaded corpus) & 83m 14s & $12279$ MB ($15317$ MB) \\
+\hline
+\multicolumn{3}{c}{\textbf{Google Billion Words corpus, trigram model ($t=1,l=3$)}} \\
+\hline
+Unindexed Pattern Model (from file) & $25m 16s$ & $16568$ MB ($19788$ MB) \\
 \end{tabular}
-\caption{Benchmarks on two large data sets. Same setup as Table~\ref{tab:benchmarks}. Parameter $y$ represents the occurrence threshold specifically for skipgrams.}
+\caption{Benchmarks on two large data sets. Same setup as Table 1. Parameter $y$ represents the occurrence threshold specifically for skipgrams.}
 }
 \label{tab:bigbenchmarks}
 \end{table}
@@ -738,11 +747,11 @@ available. The next section will provide a small example of possible usage from 
 Although we refer to the aforementioned documentation and the Python tutorial
 for extensive usage instructions, we include a short use case in this section
 and show how to use the command line tools.  Assume you have a corpus
-\texttt{corpus.txt} and you want to extract all n-grams, skipgrams and flexgrams
-that occur more than five times. For skipgrams, we add the additional
-constraint that it abstracts over at least three distinct ngrams, i.e. there
-are three different ways of filling the gaps. Flexgrams we derive from
-skipgrams.
+\texttt{corpus.txt} and you want to extract all n-grams, skipgrams and
+flexgrams that occur more than five times. We set the maximum length to $8$. For
+skipgrams, we add the additional constraint that it abstracts over at least
+three distinct ngrams, i.e. there are three different ways of filling the gaps.
+Flexgrams we derive from skipgrams.
 
 First we should ensure this corpus is properly tokenised and that sentence
 splitting has been performed, putting each sentence on one line to make this
@@ -755,7 +764,9 @@ $ ucto ucto -L en -n corpus.txt > corpus.tok.txt
 
 Once preprocessing is done, we can encode the corpus in a form suitable for
 Colibri Core, computing a \emph{class encoding} and converting the data to it,
-as explained in section ``Feature: Patterns''.
+as explained in section ``Feature: Patterns''.  The flow of this and all
+subsequent steps is also visualised in the architectural scheme in
+Figure~\ref{fig:architecture}.
 
 \begin{verbatim}
 $ colibri-classencode corpus.tok.txt 
@@ -770,7 +781,7 @@ section ``Feature: Pattern models'', to file:
 \begin{verbatim}
 $ colibri-patternmodeller --datafile corpus.tok.colibri.dat \
 --outputmodel corpus.colibri.patternmodel \
---threshold 5 --skipgrams --skiptypes 3 --flexgrams S
+--threshold 5 --maxlength 8 --skipgrams --skiptypes 3 --flexgrams S
 \end{verbatim}
 
 We have opted for an indexed pattern model, which gives us more thresholding
@@ -785,7 +796,7 @@ statistical report summarising counts for various groups of patterns, and
 \emph{3)} a histogram of pattern frequencies:
 
 \begin{verbatim}
-$ colibri-patternmodeller --inputfile corpus.colibri.patternmodel \
+$ colibri-patternmodeller --inputmodel corpus.colibri.patternmodel \
 --classfile corpus.tok.colibri.cls \
 --print --report --histogram
 \end{verbatim}
