@@ -1,3 +1,9 @@
+Dear editors and reviewers,
+
+I have submitted a revised version of "Efficient n-gram, skipgram and flexgram
+modelling with Colibri Core" according to the excellent feedback I received. I
+shall address all the changes made and answer reviewer questions here:
+
 > [Editor] Clarify how the software would run under Python 2.7 
 
 > [Reviewer I] One small problem is that the tutorial has some part of the tutorial is not
@@ -17,7 +23,8 @@ I added a dedicated "Related Work" subsection at the end of the introduction.
 > controls of the software
 
 I revised the quality control section significantly and added an extra table (2) including bigger corpora.
-The experiments in Table 1 have been rerun with the latest Colibri Core as well and extended.
+The experiments in Table 1 have been rerun with the latest Colibri Core as well
+and have been extended.
 
 > [Reviewer I] Table 1 shows the CPU time and memory used by the system but a comparison
 > with existing system help to appreciate the existing work.  
@@ -40,7 +47,8 @@ I added a naive C++ implementation alongside the naive Python implementation (ta
 > usage.
 
 Ok, I added a "Usage example" section to "Quality Control", with a specific
- example (this was not in the original JORS template however, so it is an extension)
+ example (this was not in the original JORS template however, so it is an
+ extension, I hope this is not a problem)
 
 > [Editor] Two reviewers suggested the use of "diagrams" to document the
 > implementation and architecture sections. 
@@ -191,6 +199,22 @@ and improvements in the meantime (some concerning Python 2.7 compatibility).
   extra benchmarks have been included and the discussion of the results has been updated.
 - References are made to work using Colibri Core, in the "Reuse Potential"
   section.
+
+Kind regards,
+
+--
+
+Maarten van Gompel
+ Centre for Language Studies
+ Radboud Universiteit Nijmegen
+
+proycon@anaproy.nl
+http://proycon.anaproy.nl
+http://github.com/proycon
+
+GnuPG key:  0x1A31555C  XMPP: proycon@anaproy.nl 
+Telegram:   proycon     IRC: proycon (freenode)
+Bitcoin:    1BRptZsKQtqRGSZ5qKbX2azbfiygHxJPsd 
 
 
 
