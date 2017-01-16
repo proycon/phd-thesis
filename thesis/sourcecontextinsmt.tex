@@ -47,7 +47,7 @@ length (including unigrams). They are not constrained to form a
 proper linguistic constituent of any kind.
 
 We introduced phrase-based SMT in Chapter~\ref{chap:intro},
-Section~\ref{sec:intromt}. To recap, two models are at the core of
+Section~\ref{sec:intromt}. To recapitulate, two models are at the core of
 phrase-based SMT: first there is the translation model which maps the
 translation phrases in the source language ($S$) to phrases in target language
 ($T$). Each mapping between phrases is associated with a vector of
@@ -63,8 +63,8 @@ likely to follow others and can be interpreted as modelling the
 in a natural word order and be a typical sequence of words for the
 target language.
 
-A Machine Translation \emph{decoder} optimises a log-linear model of that
-combined these two, and optionally other models as well. Given an input
+A Machine Translation \emph{decoder} optimises a log-linear model of the
+combination of these two, and optionally other models as well. Given an input
 sentence in the source language, it searches through a vast space of all
 ``possible'' translation options, most nonsensical, for a path maximising the
 probabilities according to each of the models, taking into account different
@@ -170,20 +170,18 @@ training and the WSD predictions are integrated into the phrase-based SMT
 framework.'' \citep{CarpuatWu07}. They also broaden their use of evaluation
 metrics, yet still test on only Chinese to English.
 
-The work of \cite{Gimenez+07}, from the same year, follows a similar
-strategy. They use support vector machines to predict the phrase
-translation probabilities for the phrase-translation table component
-of SMT, rather than relying on the context-unaware Maximum Likehood
-Estimate the statistical process produces. The feature vector for
-their classifiers consists of both local context as well as global
-context features.  In addition to the surface forms of the words, they
-rely on shallow linguistic features such as part-of-speech tags and
-lemmas. They conduct a manual evaluation judging fluency and
-adequacy, and conclude that considering context improves semantic
-adequacy, yet does not benefit syntactic fluency. They remark that the
-integration of the classifier probabilities in an SMT framework needs
-further research, which is something that will indeed be a focus in
-our present study.
+The work of \cite{Gimenez+07}, from the same year, follows a similar strategy.
+They use support vector machines to predict the phrase translation
+probabilities for the phrase-translation table component of SMT, rather than
+relying on the context-unaware Maximum Likehood Estimate the statistical
+process produces. The feature vector for their classifiers consists of local
+context and global context features.  In addition to the surface forms of the
+words, they rely on shallow linguistic features such as part-of-speech tags and
+lemmas. They conduct a manual evaluation judging fluency and adequacy, and
+conclude that considering context improves semantic adequacy, yet does not
+benefit syntactic fluency. They remark that the integration of the classifier
+probabilities in an SMT framework needs further research, which is something
+that will indeed be a focus in our present study.
 
 The year 2007 saw a culmination of various studies integrating WSD techniques
 in SMT using classifiers. A third study in this trend was \cite{Stroppa+07}.
@@ -216,7 +214,7 @@ presuppose the presence of natural language processing tools for computing
 linguistically abstract features. Furthermore, we intend to settle the
 conflicting reports on whether this may lead to an improvement in translation
 quality. A notable focus in our study will be possible methods of integrating
-the classifier probabilities in the SMT, as recommended also by
+the classifier probabilities in SMT, as recommended also by
 \cite{Gimenez+07}. Furthermore, we take into account and compensate for the
 instability of parameter optimisation techniques.
 
@@ -247,7 +245,7 @@ build a translation model informed by source-side context
 information. More specifically, we will be using IB1 \citep{IB1}, an
 implementation of $k$-Nearest Neighbour classification; IGTree
 \citep{IGTree}, an optimised and lossless tree-based approximation
-thereof; and TRIBL2, a mixture of IB1 and IGTree.
+thereof; and TRIBL2, a hybrid between IB1 and IGTree.
 
 These algorithms are all implemented in the software package TiMBL
 \citep{TIMBL}\footnote{\url{http://languagemachines.github.io/timbl}, version 6.4.5 is the
@@ -257,7 +255,7 @@ method in the field of Word Sense Disambiguation \citep{SENSEVAL2}, and as
 demonstrated as well in Chapter~\ref{chap:clwsd}.
 
 When speaking of the $k$ nearest neighbours in the implementation of IB1,
-IGTree and TRIBL2; we are actually referring to the neighbours at nearest
+IGTree and TRIBL2; we are actually referring to the neighbours at the nearest
 distance $k$. So even with $k=1$ we may be talking about multiple data points
 that are all at equal distance.
 
@@ -279,18 +277,16 @@ IGTree and switches to a IB1 variant when a value mismatch occurs in the tree.
 In this study, we therefore opt to use TRIBL2 over plain IGTree, but only when
 using IB1 would have a prohibitively large impact on performance.
 
-In our classifier-based translation model we model the probability
-of a target phrase ($t$) given a source phrase ($s$) and context information
-($C$). We can express this as $p(t|s,C)$.  \cite{Stroppa+07} state that
-direct estimation of this probability using relative frequencies would result
-in overestimation of large phrases, and that therefore a smoothing factor is
-required. They proceed to say that through memory-based classification they
-introduce precisely such a smoothing factor implicitly.
-
-Given a source phrase and context information, the classifier yields classes
-corresponding to target phrases, with an associated weight. After
-normalization, these can be considered a posterior distribution of
-target phrases. 
+In our classifier-based translation model we model the probability of a target
+phrase ($t$) given a source phrase ($s$) and context information ($C$). We can
+express this as $p(t|s,C)$.  \cite{Stroppa+07} state that direct estimation of
+this probability using relative frequencies would result in overestimation of
+large phrases, and that therefore a smoothing factor is required. They proceed
+to say that through memory-based classification they introduce precisely such a
+smoothing factor implicitly. Given a source phrase and context information, the
+classifier yields classes corresponding to target phrases, with an associated
+weight. After normalization, these can be considered a posterior distribution
+of target phrases. 
 
 We focus on the modelling of local context, i.e. words in the
 immediate vicinity of the source phrase. Take $w_0$ to be the first word of
@@ -307,9 +303,8 @@ Now there are two ways in which we can construct a classifier:
 
 \begin{itemize}
   \item \textbf{Monolithic classifier} -- One aggregated classifier for all
-    source phrases. Used with the TRIBL2 algorithm.
-  \item \textbf{Classifier experts} -- One classifier per source phrase. Used
-      with the IB1 algorithm.
+    source phrases. For this type of large-scale classifier we use the TRIBL2 algorithm, as the IB1 algorithm would be prohibitively slow.
+  \item \textbf{Classifier experts} -- One classifier per source phrase. For these smaller-type classifiers we use the IB1 algorithm.
 \end{itemize}
 
 In this study we will use and compare both methods, which is, for the task at
@@ -342,9 +337,10 @@ section. %This phrase-translation table effectively constitutes the translation
 %model.
 
 The translation model would be finished if we would want to leave it to be
-non-context-informed. We have some additional steps to perform to train our
-context-informed classifiers. We take the phrase-translation table, along with
-the parallel corpus, as a basis for extracting training instances.
+uninformed about source-side context. We have some additional steps to perform
+to train our context-informed classifiers. We take the phrase-translation
+table, along with the parallel corpus, as a basis for extracting training
+instances.
 
 We build indexed pattern models of all source phrases and target phrases that
 occur on their respective side of the parallel corpus, and which also occur in
@@ -354,8 +350,7 @@ index is included in the model for the target-side of the corpus, which maps
 any given $(sentence, token)$ position to a set of phrases that begins at that
 position.  This is computed using the software package
 \emph{colibri-core},\footnote{\url{http://proycon.github.io/colibri-core},
-release v2.1.2 fair state of the software version during this study, although
-some experiments were conducted with older versions}, as introduced in
+release v2.1.2 represents a fair state of the software version during this study, although some experiments were conducted with older versions}, as introduced in
 Chapter~\ref{chap:coco},  which takes care of a losslessly compressed in-memory
 representation for all phrases, and allows us to cope with large corpora. Given
 these two pattern models $M_{source}$ and $M_{target}$ we can extract the
@@ -384,9 +379,7 @@ vector.  The algorithm will return a list containing two-tuples $(C,t)$.  }
 \end{algorithm}
     
 \noindent
-This algorithm is implemented in \emph{colibri-mt}.
-\footnote{\url{https://github.com/proycon/colibri-mt} \\ version v0.2
-represents a fair state of the software version during this study.}
+This algorithm is implemented in \emph{colibri-mt}.\footnote{\url{https://github.com/proycon/colibri-mt} \\ version v0.2 represents a fair state of the software version during this study.}
 
 The returned instances can be stored directly, either in a single model for the
 monolithic approach or in separate models for each $s$ for the classifier
@@ -404,7 +397,7 @@ and therefore such instances are omitted from the training data.
 
 The task of an SMT decoder is to find the best translation among a pool
 of possible translation hypotheses. The best translation hypothesis is the
-translation hypothesis that maximises a log-linear combination and is sought
+hypothesis that maximises a log-linear combination and is sought
 after in a beam-search algorithm. This log-linear combination draws from
 various models, such as a translation model (i.e. the phrase-translation
 table), a target-language model, and optionally additional models such as a
@@ -442,11 +435,11 @@ classifiers seek to model $p(t|s,C)$, where $C$ constitutes the vector of
 context information. The hypothesis under investigation in the present study is
 that $p(t|s,C)$ is a more accurate measure than $p(t|s)$.
 
-The state-of-the-art SMT decoder used in the majority of MT studies is Moses
-\footnote{\url{http://statmt.org/moses/}, \\ git commit
-\texttt{1615d56b69df5d959de9c5416cf628d76ac99169} represents a fair state of the
-version used in this study.} \citep{MOSES}. Moses offers no facilities to take
-source-side context information in account. We considered three options to
+The state-of-the-art SMT decoder used in the majority of MT studies is
+Moses\footnote{\url{http://statmt.org/moses/}, \\ git commit
+\texttt{1615d56b69df5d959de9c5416cf628d76ac99169} represents a fair state of
+the version used in this study.} \citep{MOSES}. Moses offers no facilities to
+take source-side context information in account. We considered three options to
 achieve our goal of integrating source-side context: 1) creating a new decoder;
 2) enhancing Moses; or 3) using a bypass method. Although we initially set out
 to create a new decoder, it proved to be too time-consuming to attain the same
@@ -503,7 +496,7 @@ appropriate classifier. This is either the monolithic classifier, or the
 classifier expert pertaining to the source phrase under consideration. The
 result of this classification is a distribution of translation options for that
 source phrase in the given context, along with a classifier score for each
-option. After normalisation, this score is $p(t|s,C)$. We now have two score
+option. After normalisation, this score is $p(t|s,C)$. We now have two alternative score
 weighting methods for integrating this in the score vector for the phrase pair:
 
 \begin{itemize}
@@ -588,7 +581,7 @@ set, respectively.}
 \label{tab:datasets}
 \end{table}
 
-All our experimental end-results and all non-restricted data sets used can be
+All our experimental end results and all non-restricted data sets used can be
 freely downloaded.\footnote{Download archive of all experimental data \& results:
 \url{http://academictorrents.com/details/3cc11d076c62bfa0480afc187a4bb6e4759e5c16}}
 %TODO: update with new results!!
@@ -680,7 +673,7 @@ replications, a larger test test, is desireable to draw reliable inferences.
 directly as the variance of aggregate metric score over all MERT runs. Higher
 values are indicative of optimisation on development data generalising well to
 previously unseen test data, i.e.\ it leads to overfitting. 
-\item $p$, - The $p$-value s calculated through approximate randomisation. It roughly
+\item $p$, - The $p$-value is calculated through approximate randomisation. It roughly
 expresses the probability of the difference between the system output and
 baseline occurring due to chance. Approximate randomisation uses random
 permutations to similulate chance occurrences. The quality of this measure depends on the number of separate
@@ -688,19 +681,13 @@ optimisation runs, and is conditioned on the test test.
 \end{enumerate}
 
 In all our experiments, we use three seperate optimisation runs, to keep
-complexity and experimental run-time to a minimum whilst still reaping the
+complexity and experimental run time to a minimum whilst still reaping the
 benefits of multiple runs.
 
 %talk about parameter optimisation in classifier
 While we conduct parameter optimisation for the parameters of the SMT
 decoder, we do not do so for the classifiers. Yet, these too could
-be optimised. This is only feasible for the classifier experts; recall
-that the monolithic classifier necessarily has extra constraints
-imposed on it to prevent translations that do not occur in the
-phrase-translation table. This has the disadvantage of making it hard
-to run standard parameter optimisation algorithms.
-
-Optimisation of classifier parameters comes with a number of challenges.
+be optimised. Optimisation of classifier parameters comes with a number of challenges.
 Ideally, it should not be independent of the optimisation of the decoder
 parameters, and the classifier parameters should be evaluated on the
 end result, i.e. the full sentential translations, according to one or more MT
@@ -733,25 +720,25 @@ are computed on a by-classifier basis.
 \section{Results}
 \label{sec:results}
 
-In this section we will present the results of our experiments.  Our largest
+In this section we present the results of our experiments.  Our largest
 issue with the present MT literature on this subject is that we too often see
 that hypotheses are tested only on one or two corpora, with just one or two
-language-pairs, and sometimes without proper significance testing. We feel that
+language pairs, and sometimes without proper significance testing. We feel that
 from such results, generic conclusions are drawn too quickly. To prevent this
 pitfall, our experiments are distributed amongst various corpora and language
 pairs, and are subject to rigid significance tests.
 
-Section~\ref{sec:results1} will focus on our main hypothesis; does inclusion of
+Section~\ref{sec:results1} focuses on our main hypothesis; does inclusion of
 surface-form source-side context information lead to improved translation
 quality?  We posit a number of hypotheses to determine in which cases
-source-side-context might work. Section~\ref{sec:quantanal} conducts a
+source-side-context might work. In Section~\ref{sec:quantanal} we conduct a
 quantitative analysis to assess whether the classifiers make an impact even if
 this does not reflect in the translation quality.
 
 Our secondary hypotheses concern the ways in which classifiers can be
 integrated in SMT. We investigate the impact of the classifier type and
 weighting methods.  These are assessed in Sections~\ref{sec:typeopt} and
-\ref{sec:weighting}, respectively. We conclude the result section with a
+\ref{sec:weighting}, respectively. We conclude the results section with a
 qualitative analysis in Section~\ref{sec:qualanal}.
 
 \subsection{Source-side context vs. no context}
@@ -764,13 +751,13 @@ corpora and language pairs.
 In all tables in this section, the context-aware configurations are named
 l$x$r$y$, in which $x$ and $y$ refer to the size (in words/tokens) of the left and right contexts
 respectively.  Recall that the classifiers may be built in two distinct ways, a
-single \emph{mono}lithic configuration (using \emph{tribl2}), or a classifier
-\emph{expert} configuration (using \emph{ib1}).  Secondly, score weighting can
+single \emph{mono}lithic configuration (using TRIBL2), or a classifier
+\emph{expert} configuration (using IB1).  Secondly, score weighting can
 be done either through the \emph{replace}  or the \emph{append} method, as
 shown in respectively the upper and lower parts of the tables. 
 
 All experiments have been optimised with MERT on BLEU as described in
-Section~\ref{sec:paropt}.  The score-triple in parentheses corresponds to
+Section~\ref{sec:paropt}.  The score triple in parentheses corresponds to
 $(\overline{s}_{sel},s_{opt},p)$ and represents the measures discussed in
 Section~\ref{sec:paropt}: test set selection variance, optimiser instability
 variance, and p-value with respect to the baseline.
@@ -811,18 +798,18 @@ of the left respectively right context. }
 
 In this section we focus exclusively on the
 question whether context-informed systems are beneficial; a comparison of the
-score weighting methods and classifier configurations is postponed until a
-later section.  
+score weighting methods and classifier configurations is postponed until 
+Section~\ref{sec:weighting} and Section~\ref{sec:typeopt}, respectively.
 
 The first results, on the IWSLT 2006 Evaluation Campaign, Chinese to English,
 are listed in Table~\ref{tab:iwslt2006zhen}. A dataset from the same
 source\footnote{This dataset is not publicly available. As we do not have the
 exact set used by \cite{Stroppa+07}, we have to assume our training and
 test sets, whilst drawn from the same source, are different subsets than the
-ones used by \cite{Stroppa+07}.} was used in \cite{Stroppa+07}, who also
-reported positive results.  We observe scores over the baselines for all
+ones used by \cite{Stroppa+07}.} was used in \cite{Stroppa+07}, who 
+reported positive results.  We observe scores outperforming the baselines for all
 experiments.  However, not all pass the strict significance tests we impose.
-Only configurations l1r1/monolithic/replace and l2r1/monolithic/append and
+Only configurations l1r1/monolithic/replace, l2r1/monolithic/append and
 l2r2/experts/append pass the significance tests on all metrics, where we
 consider a $p <= 0.05$ to be the passing criterium. Other configurations either
 do not pass the significance tests at all, or paint a conflicting picture for
@@ -830,7 +817,7 @@ certain metrics. Nevertheless, we can conclude that in this batch of
 experiments incorporating source-side context information using machine learning proves
 beneficial for certain configurations.
 
-In Table~\ref{tab:iwslt2012} we see results on the IWSLT 2012 corpus, for the
+In Table~\ref{tab:iwslt2012} we see results on the IWSLT 2012 corpus, for 
 Dutch to English.  Here we observe that we do not manage to surpass the non-context informed baseline with
 an acceptable degree of significance.
 
@@ -950,15 +937,16 @@ From all sets of experiments, we again observe that the results do not surprass
 the baseline, although for JRC some configurations such as \emph{l2r1
 \footnotesize{(experts/append)}} do score slightly above threshold, with statistical
 significance, on two out of three metrics. It is clear by now that surpassing the
-non-context informed baseline seems a very tough problem.
+non-context informed baseline seems a very tough challenge.
 
 We have tried additional experiments on different corpora and language pairs. A
-Frisian-Dutch parallel corpus was assembled on mostly literary texts. This
-language pair benefits from high BLEU scores due to the high similarity between
-the two languages. Running our experiments on this corpus, both for Dutch to
-Frisian as well as Frisian to Dutch scores below baseline, and the TER score
-that does exceed baseline does not pass the significance tests.
-Table~\ref{tab:fa} shows an excerpt of these experimental results.
+Frisian-Dutch parallel corpus was assembled on mostly literary texts, in the scope of another collaborative study between the authors and the Fryske Akademy
+\citep{OERSETTER}. This language pair benefits from high BLEU scores due to the
+high degree of similarity between the two languages. Running our experiments on
+this corpus, both for Dutch to Frisian as well as Frisian to Dutch scores below
+baseline, and the TER score that does exceed baseline does not pass the
+significance tests.  Table~\ref{tab:fa} shows an excerpt of these experimental
+results.
 
 \begin{table}
 \noindent\makebox[\textwidth][c]{%
@@ -1017,10 +1005,10 @@ Are we placing our bets on the wrong horse by focussing solely on $p(t|s)$ and
 experiments that use the replace score weighting method, we find that the
 $p(t|s)$ or $p(t|s,C)$ feature receives the highest weight of the translation
 model scores in $63\%$ of the experiments\footnote{Multiple
-optimiser runs (3) are counted as separate experiments in this test}, the next runner-up with $25\%$ is the forward probability
+optimiser runs (3) are counted as separate experiments in this test}, the next runner-up with $25\%$ being the forward probability
 $p(s|t)$. 
 
-We run the same test for the append score weighting method, which leaves the $p(t|s)$ feature as-is, and
+We run the same test for the append score weighting method, which leaves the $p(t|s)$ feature as is, and
 \emph{appends} the $p(t|s,C)$ feature to the translation model.  We find that
 $p(t|s,C)$ still receives most weight in $33\%$ percent of the experiments.
 The unaltered $p(t|s)$ score wins in $29\%$ of the cases and $p(s|t)$ in
