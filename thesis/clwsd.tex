@@ -5,11 +5,9 @@
 
 In this chapter we apply k-nearest neighbour classifiers to two similar and
 localised translation tasks organized for SemEval 2010: Cross-Lingual Word
-Sense Disambiguation and Cross-Lingual Lexical Substitution. We build
-single-word classifier experts for each target word to be disambiguated. These
-classifiers are constructed using a variety of local and global context
-features, which are mapped onto the translations, i.e.\ the senses, of the
-words. Our system, UvT-WSD1 participates for the two aforementioned tasks and
+Sense Disambiguation and Cross-Lingual Lexical Substitution.  Both tasks aim to
+disambiguate a marked word in context by finding an appropriate translation for
+it in another language. Our system, UvT-WSD1 participates for the two tasks and
 achieves winning scores for the former. With a later rewrite of our system,
 called WSD2, we focus on hyperparameter optimisation and participate again in
 the Cross-Lingual Word-Sense Disambiguation task for SemEval 2013. We then
@@ -20,8 +18,9 @@ overfitting by our optimisation method in this aspect. Feature selection does
 have a modest positive impact.
 
 
-\textsc{This chapter is based on: } \emph{UvT-WSD1: A Cross-Lingual Word Sense
-Disambiguation System} and \emph{WSD2: Parameter optimisation for Memory-based Cross-Lingual Word-Sense Disambiguation}
+\textsc{This chapter is based on the following two publications: } 
+\bibentry{WSD1} 
+\bibentry{WSD2} 
 
 
 \section{Introduction}
@@ -76,10 +75,9 @@ the basis of a variety of local and global context features, discussed in
 Section \ref{sec:features}. At the core of the system are the classifiers, or
 so called ``word experts'', one per target word. These are built using the
 Tilburg Memory Based Learner (TiMBL) \citep{TIMBL}, making use of the IB1
-algorithm, an implementation of the $k$-nearest neighbour classifier. %removed
-IB1 cite
+algorithm, an implementation of the $k$-nearest neighbour classifier. 
 
-The core of the system can be subdivided into roughly three stages. In the
+The core of the system can be subdivided into three stages. In the
 first stage, the word-aligned parallel corpus is read and for each found
 instance of one of the target words, features are extracted to be used in the
 classifier. The class consists of the word aligned to the found instance of the
@@ -93,7 +91,7 @@ search algorithm \citep{PARAMSEARCH} determines the optimal set of classifier
 parameters for each word expert, including for example the value of $k$ and the
 distance weighting metric used.
 
-In the last phase, the classifier output of each word expert is parsed. The
+In the last stage, the classifier output of each word expert is parsed. The
 classifiers yield a distribution of classes per test instance, and these are
 converted to the appropriate formats for ``best'' and ``out of five/ten''
 evaluation. For the latter scoring type, the five/ten highest scoring senses
@@ -244,7 +242,7 @@ baseline & 10.82 \\% & 22.36 \\
 }
 \end{table}
 
-In Table~\ref{tab:task3trailnl},``word'' refers to the surface forms of the
+In Table~\ref{tab:task3trialnl},``word'' refers to the surface forms of the
 words, ``lemma'' denotes lemma features, ``pos'' denotes Part-of-Speech
 information. The subsequent number refers to the local context size. The
 ``global'' configuration refers to global context features.
@@ -272,7 +270,7 @@ observed in Table~\ref{tab:task3trialnl}}. The UvT-g configuration was included
 to judge the efficacy of global context features when used standalone.
 
 Table~\ref{tab:uvtwsd1clls} shows a condensed view of the results for the Cross-Lingual Lexical
-Substitution task. Table~\ref{Tab:uvtwsd1clwsd} shows the final results for the Word-Sense
+Substitution task. Table~\ref{tab:uvtwsd1clwsd} shows the final results for the Word-Sense
 Disambiguation task. Note that UvT-WSD1-v and UvT-WSD1-g are two different
 configurations of the UvT-WSD1 system, and to conserve space these are
 abbreviated as UvT-v and UvT-g respectively. These are also the names used in
@@ -327,7 +325,7 @@ Precision \& Recall  & 43.12 & 42.17 & 40.76 & 38.78 \& 31.81 & 35.84 \& 35.46 \
 Mode Prec. \& Rec. & 43.94 & 40.62 & 44.84 & 40.68 \& 32.38 & 39.01 \& 38.78 \\
 \hline
 \end{tabular}}
-\caption{UvT-WSD1 results in comparison to other participants in the Word-Sense Disambiguation task}
+\caption{UvT-WSD1 results in comparison to other participants in the Word-Sense Disambiguation task. Only whenever two values are given, precision and recall are not equal. }
 \label{tab:uvtwsd1clwsd}
 }
 \end{table*}
@@ -358,7 +356,7 @@ evaluation metrics in the task.
 
 To optimise the choice of hyperparameters per word expert, a heuristic
 parameter search algorithm
-\citep{PARAMSEARCH}\footnote{http://ilk.uvt.nl/paramsearch/} was used that
+\citep{PARAMSEARCH}\footnote{https://github.com/LanguageMachines/paramsearch} was used that
 implements wrapped progressive sampling using cross-validation: it performs a
 large number of experiments with many hyperparameter setting combinations on
 small samples of training data, and then progressively zooms in on combinations
@@ -382,7 +380,7 @@ without.
 %added for thesis:
 It is interesting to put this in contrast with the results from UvT-WSD1 in
 Table~\ref{tab:task3trialnl}, where a context size of two leads to better
-results than context size one.  A change that can only be explained by the
+results than context size one.  This can only be explained by the
 difference in trial data. %TODO: what is the difference in trial data?
 %/
 
@@ -397,7 +395,7 @@ difference in trial data. %TODO: what is the difference in trial data?
 We submitted three configurations of our system to the shared task, the maximum
 number of runs. Adding lemma features to the local context window of three
 words, i.e. left word, focus word and right word, proves beneficial in general.
-This is shown in Table~\ref{tabtrialresults}.  This is therefore the first
+This is shown in Table~\ref{tab:trialresults}.  This is therefore the first
 configuration we submitted (\texttt{c1l}). As second configuration
 (\texttt{c1lN}) we submitted the same configuration without parameter
 optimisation on the classifiers. Note that neither of these include global
@@ -428,7 +426,7 @@ glob.context & 48.09 & 49.68 & 40.87 & 37.70 & 34.47 \\
 \hline
 \end{tabular}}
 \caption{Feature exploration on the trial data}
-\label{tabtrialresults}
+\label{tab:trialresults}
 \end{table}
 
 The third configuration (\texttt{var}) we submitted includes feature selection,
@@ -487,7 +485,7 @@ c1l &  28.40 & 29.88 & 25.43 & 23.14 & 20.70 \\
 c1lN &  28.65 & 30.11 & \textbf{25.66} & \textbf{23.61} & 20.82 \\
 var & 23.3 & 25.89 & 20.38 & 17.17 & 16.2 \\
 varN & 29.05 & \textbf{30.15} & 24.90 & 23.57 & \textbf{21.98} \\
-best.comp & \textbf{32.16} & 28.23 & 24.62 & 22.36 & 19.92 \\ 
+best competitor & \textbf{32.16} & 28.23 & 24.62 & 22.36 & 19.92 \\ 
 \hline
 \textbf{OUT-OF-5} & \textbf{ES} & \textbf{FR} & \textbf{IT} & \textbf{NL} & \textbf{DE} \\
 \hline
@@ -496,7 +494,7 @@ c1l &  58.23 & 59.07 & 52.22 & \textbf{47.83} & 43.17 \\
 c1lN & 57.62 & \textbf{59.80} & 52.73 & 47.62 & 43.24 \\
 var & 55.70 & 59.19 & 51.18 & 46.85 & 41.46 \\
 varN & 58.61 & 59.26 & 50.89 & 50.42 & 43.34 \\
-best.comp & \textbf{61.69} & 58.20 & \textbf{53.57}  & 46.55 & \textbf{43.66} \\ 
+best competitor & \textbf{61.69} & 58.20 & \textbf{53.57}  & 46.55 & \textbf{43.66} \\ 
 \hline
 \end{tabular}}
 \caption{Results on the test set}
@@ -559,7 +557,7 @@ achieved if they are not mixed with the local context features in one
 classifier. For WSD2 in the 2013 task, however, the global context features
 make less an impact than even just the linguistically-uninformed local context
 feature, as became clear from the the feature exploration stage in
-Table~\ref{tab:tabtrialresults}. As the keyword selection algorithm is the same
+Table~\ref{tab:trialresults}. As the keyword selection algorithm is the same
 as in UvT-WSD1, this is surprising and must then be attributed to the dataset.
 Taking into account the earlier discrepancy between the results of UvT-WSD1 and
 WSD2, we may conclude that optimal configurations differ accross datasets.
