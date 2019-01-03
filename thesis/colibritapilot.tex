@@ -35,8 +35,8 @@ morphology, word-order change and long-distance dependencies. Although
 there is a morpho-syntactic component in this research, our
 scope is more constrained; its focus is on the faithful preservation
 of meaning from L1 to L2, akin to the role of the translation model in
-Statistical Machine Translation (SMT). 
-%Our problem is therefore 
+Statistical Machine Translation (SMT).
+%Our problem is therefore
 %more localised compared to SMT and thus evades some of the additional
 %complexities in the syntactic domain.
 
@@ -49,7 +49,7 @@ Yet, this problem arises in a context, not in isolation; the learner may have
 already translated successfully a part of the text into L2 leading up to the
 problematic word or phrase. Dictionaries are not the best source to look up
 context; they may contain example usages, but remain biased towards single
-words or short expressions. 
+words or short expressions.
 
 The proposed application allows code switching and produces context-sensitive
 suggestions as writing progresses. In this research we test the feasibility of
@@ -59,7 +59,7 @@ ideally produce. The parts in bold correspond to respectively the inserted
 fragment and the system translation.
 
 \begin{itemize}
-  \item 
+  \item
     Input (L1=English,L2=Spanish): \emph{“Hoy vamos a \textbf{the swimming
     pool}.”} \\
     Desired output: \emph{“Hoy vamos a \textbf{la piscina}.”}
@@ -169,9 +169,9 @@ of the search space, and again this is not necessary to test our hypothesis.
 
 The output of the algorithm in Figure~\ref{fig:algo} is a modified set of sentence pairs
 $({sentence}_t',{sentence}_t)$, in which the same sentence pair may be used multiple times
-with different L1 substitutions for different fragments. 
+with different L1 substitutions for different fragments.
 %A single L2
-%sentence $t$ may thus occur in multiple sentence pairs.  
+%sentence $t$ may thus occur in multiple sentence pairs.
 The final
 test set is created by randomly sampling the desired number of test
 instances.
@@ -283,13 +283,13 @@ mentioning this negative result.
 
 %The selection of bag-of-word features is computed prior to the
 %extraction of the training instances, as this information is a prerequisite for
-%the successful generation of both training and test instances. 
+%the successful generation of both training and test instances.
 %</paraphrase from earlier paper>
 
 Our full system, including the scripts for data preparation, training, and
 evaluation, is implemented in Python and freely available as open-source from
 \url{https://github.com/proycon/colibrita/} . Version tag \texttt{v0.2.1} is
-representative for the version used in this research. 
+representative for the version used in this research.
 
 
 \subsection{Language Model}
@@ -350,7 +350,7 @@ We also compute a recall metric that measures the number of fragments that the
 system provided a translation for as a fraction of the total number of
 fragments in the input, regardless of whether the fragment is translated
 correctly or not. The system may skip fragments for which it can find no
-solution at all. 
+solution at all.
 
 In addition to these, the system's output can be compared against the
 L2 reference translation(s) using established Machine Translation
@@ -409,7 +409,7 @@ distribution.
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lll}
 \hline
-Fragment & Training instances & Translations \\ 
+Fragment & Training instances & Translations \\
 \hline
 the & 256,772 & la, el, los, las  \\
 of &   139,273 & de, del \\
@@ -455,7 +455,7 @@ Table~\ref{tab:results} shows the results for English to Spanish in
 more detail and adds a comparison with the two baseline systems. The various
 \texttt{lXrY} configurations use the same feature vector setup for all classifier
 experts. Here $X$ indicates the left context size and $Y$ the right context
-size. 
+size.
 %Each of these configurations uses the same feature
 %vector setup across all classifier experts
 The \texttt{auto} configuration
@@ -465,7 +465,7 @@ classifier expert. This shall be further discussed in
 Section~\ref{sec:optim}.
 
 \begin{figure}[t]
-\includegraphics[width=8cm]{colibritapilot_context.png} 
+\includegraphics[width=8cm]{colibritapilot-context.png}
 \caption{Accuracy for different local context sizes, Europarl English to Spanish}
 \label{fig:context}
 \end{figure}
@@ -528,16 +528,16 @@ may have to be tempered somewhat, as the performance of the \texttt{l1r1}
 configuration was found to not be significantly better than that of the
 \texttt{l2r2} configuration. However, \texttt{l1r1} performs significantly
 better than \texttt{l3r3} at $p<0.01$, and \texttt{l2r2} performs significantly
-better than \texttt{l3r3} at $p<0.01$. 
+better than \texttt{l3r3} at $p<0.01$.
 
 % ~/mtevalscripts/paired_bootstrap_v13a/paired_bootstrap_resampling_bleu_v13a.pl pb_l1r1.statsfile pb_baseline.statsfile 5000 0.05
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05                                                                               │···················
 
-%~/mtevalscripts/paired_bootstrap_v13a/paired_bootstrap_resampling_bleu_v13a.pl pb_l1r1lm.statsfile pb_l1r1.statsfile 5000 0.05                                                                                         
-% System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05     
+%~/mtevalscripts/paired_bootstrap_v13a/paired_bootstrap_resampling_bleu_v13a.pl pb_l1r1lm.statsfile pb_l1r1.statsfile 5000 0.05
+% System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
 
-%~/mtevalscripts/paired_bootstrap_v13a/paired_bootstrap_resampling_bleu_v13a.pl pb_lmbaseline.statsfile pb_baseline.statsfile 5000 0.05                                                                                             
-% System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05  
+%~/mtevalscripts/paired_bootstrap_v13a/paired_bootstrap_resampling_bleu_v13a.pl pb_lmbaseline.statsfile pb_baseline.statsfile 5000 0.05
+% System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
 
 % ~/mtevalscripts/paired_bootstrap_v13a/paired_bootstrap_resampling_bleu_v13a.pl pb_al5r5k.statsfile pb_l1r1.statsfile 5000 0.05
 %System 1 BLEU better: 4818 / 5000 = 0.9636 -- BLEU SIGNIFICANT at p = 0.05
@@ -574,7 +574,7 @@ between the most-likely-fragment baseline and our system.
 diferencia , reduciendo la trágica pérdida de vidas en nuestras carreteras . \\
 \textbf{MLF baseline:} Esta Directiva es nuestra oportunidad \textbf{a} marcar una
 verdadera diferencia , reduciendo la trágica pérdida de vidas en nuestras
-carreteras . \\ 
+carreteras . \\
 \textbf{l1r1:} Esta Directiva es nuestra oportunidad \textbf{para} marcar una
 verdadera diferencia , reduciendo la trágica pérdida de vidas en nuestras
 carreteras . \\
@@ -643,7 +643,7 @@ models of other orders.
 %\textbf{l1r1$+$LM}. However, the complementary effect of classifier
 %and language model becomes less pronounced as more context is added to
 %the former, taking much of the added value of a language model away.
- 
+
 %We find that the inclusion of global context keywords (the $l1r1k$
 %configuration) has no noticeable impact, and this trend holds when
 %different language pairs are tested. In one of our English to Dutch
@@ -689,7 +689,7 @@ is two or three; they are now less complementary.
 Table~\ref{tab:autoconf} lists what context sizes have been chosen in the
 automatic feature selection. A context size of one prevails in the vast majority of
 cases, which is not surprising considering the good results we have already
-seen with this configuration. 
+seen with this configuration.
 
 % hier dan wel iets meer over zeggen, anders mag de lezer raden waarom
 % er aandacht en een tabel aan wordt besteed.
@@ -708,7 +708,7 @@ $2.4\%$ & l5r5\\
 \hline
 \end{tabular}}
 \caption{Frequency of automatically selected configurations on English to
-Spanish Europarl dataset} 
+Spanish Europarl dataset}
 \label{tab:autoconf}
 \end{table}
 
@@ -725,7 +725,7 @@ prohibitively so.
 The bottom lines in Table~\ref{tab:results} represent results when
 all right-context is omitted, emulating a real-time prediction when no
 right context is available yet. This has a substantial negative impact on
-results. 
+results.
 %L1 to L2 translation could first be made using
 %such an asymmetric configuration, and the translation choice could be
 %revisited and improved when the user continues typing and adds
@@ -820,7 +820,7 @@ iwslt12ted & zh & en & auto$+$LM & 0.7230 & 0.7428 & 0.9719\\
 \end{tabular}}}
 \caption{Results on different datasets and language pairs. The
 \texttt{iwslt12ted} set is the dataset used in the IWSLT 2012 Evaluation
-Campaign \citep{IWSLT12}, and is formed by a collection of transcriptions of TED talks. Here we used 
+Campaign \citep{IWSLT12}, and is formed by a collection of transcriptions of TED talks. Here we used
 of just over $70,000$ sentences for training. Recall for each of the four
 datasets is $0.9498$ (en-nl), $0.9494$ (en-fr), $0.9386$ (en-zh), and $0.9366$
 (zh-en)}
@@ -851,7 +851,7 @@ better than larger ones. Automated configuration selection had positive
 results, yet the system with context size one and an L2 language model
 component often produces the best results. In static configurations, the
 failure of a wider context window to be more succesful may be attributed to the
-increased sparsity that comes from such an expansion. 
+increased sparsity that comes from such an expansion.
 
 The idea of a comprehensive translation assistance system may extend
 beyond the translation of L1 fragments in an L2 context. There are

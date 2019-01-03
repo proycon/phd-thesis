@@ -1,0 +1,29 @@
+% This file was created by matplotlib v0.1.0.
+% Copyright (c) 2010--2014, Nico Schlömer <nico.schloemer@gmail.com>
+% All rights reserved.
+% 
+% The lastest updates can be retrieved from
+% 
+% https://github.com/nschloe/matplotlib2tikz
+% 
+% where you can also submit bug reports and leavecomments.
+% 
+\begin{tikzpicture}
+
+
+\pgfplotstableread{scorediff2.dat}\scorediffdatatwo
+
+\begin{axis}[
+ybar=-1pt,
+bar width=1,
+xlabel={$\Delta (\pm 0.05)$},
+ylabel={Frequency},
+xmin=-2, xmax=2,
+ymin=50000, ymax=2000000,
+ymode=log,
+width=\figurewidth,
+height=\figureheight]
+  \addplot[color=blue,only marks,mark=*,mark options={mark size=1, mark color=blue}] table[x=x,y=y,col sep=space] {\scorediffdatatwo};
+\end{axis}
+
+\end{tikzpicture}

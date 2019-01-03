@@ -1,7 +1,7 @@
-\newcommand{\wsname}{SemEval-2014}
-\newcommand{\submissionpage}{\url{http://alt.qcri.org/semeval2014/index.php?id=cfp}}
-\newcommand{\filename}{semeval2014}
-\newcommand{\contact}{pnakov qf.org.qa}
+%\newcommand{\wsname}{SemEval-2014}
+%\newcommand{\submissionpage}{\url{http://alt.qcri.org/semeval2014/index.php?id=cfp}}
+%\newcommand{\filename}{semeval2014}
+%\newcommand{\contact}{pnakov qf.org.qa}
 
 \title{SemEval-2014 Task 5: L2 Writing Assistant}
 \chapter{SemEval-2014 Task 5: L2 Writing Assistant}
@@ -29,7 +29,7 @@ Translating L1 fragments in an L2 context allows language learners when writing
 in a target language (L2) to fall back to their native language (L1) whenever
 they are uncertain of the right word or phrase.
 
-\textsc{This chapter is based on: } 
+\textsc{This chapter is based on: }
 \bibentry{SEMEVAL2014TASK5}
 
 %footnote without marker
@@ -42,7 +42,7 @@ they are uncertain of the right word or phrase.
 
 \section{Introduction} %rewritten
 
-\blfootnote{This chapter is licensed under a Creative Commons Attribution 4.0 International Licence: http://creativecommons.org/licenses/by/4.0/}   
+\blfootnote{This chapter is licensed under a Creative Commons Attribution 4.0 International Licence: http://creativecommons.org/licenses/by/4.0/}
 
 We present a new cross-lingual and application-oriented task for SemEval that
 is situated in the area where Word Sense Disambiguation and Machine Translation
@@ -71,14 +71,14 @@ pairs or any subset thereof.
 \section{Task Description}
 
 We frame the task in the context of second language learning, yielding a
-specific practical application. 
+specific practical application.
 
 Participants build a \emph{translation assistance system}\/ rather than a full
 machine translation system. The L1 expression, a word or phrase, is translated
 by the system to L2, given the L2 context already present, including right-side
 context if available. The aim here, as in all translation, is to carry the
 semantics of the L1 fragment over to L2 and find the most suitable L2
-expression given the already present L2 context. 
+expression given the already present L2 context.
 
 Other than a limit on length (6 words), we do not pose explicit constraints on
 the kinds of L1 fragments allowed. The number of L1 fragments is limited to one
@@ -103,11 +103,11 @@ writing progresses. The task tests how effectively participating systems
 accomplish this.
 
 The following examples illustrate the task for the four language pairs we
-offer: 
+offer:
 
 
 \begin{itemize}
-  \item 
+  \item
     Input (L1=English,L2=Spanish): \emph{“Todo ello, \textbf{ in accordance}  con los principios que siempre hemos apoyado.”} \\
     Desired output: \emph{“Todo ello,  \textbf{de conformidad} con los principios que siempre hemos apoyado.”}
   \item
@@ -128,7 +128,7 @@ offer:
 The task can be related to the two tasks that were offered in previous years of
 SemEval and already introduced in Chapter~\ref{clwsd}: Lexical Substitution
 \citep{CLLS} and most notably Cross-lingual Word Sense Disambiguation
-\citep{Lefever2013}. 
+\citep{Lefever2013}.
 
 When comparing our task to the Cross-Lingual Word-Sense Disambiguation task,
 one notable difference is the fact that our task concerns not just words, but
@@ -178,7 +178,7 @@ used to create input sentences in which the L2 fragments are swapped for their
 L1 counterparts, effectively mimicking a fall-back to L1 in an L2 context. The
 full L2 sentence acts as reference sentence. Finally, to ensure all fragments
 are correct and sensible, a manual selection from this automatically generated
-corpus constituted the final trial set. 
+corpus constituted the final trial set.
 
 In the pilot study in Chapter~\ref{chap:colibritapilot}, such a data set, even
 without the manual selection stage, proved adequate to demonstrate the
@@ -214,7 +214,7 @@ A large portion of the test set comes from off-line resources because we wanted
 to make sure that a substantial portion of the test set could not be found
 verbatim on-line. This was done to prevent systems from solving the actual
 problem by just attempting to just look up the sources through the available
-context information. 
+context information.
 
 Note that in general we aimed for the European varieties of the different
 languages. However, for English we did add the US spelling variants as
@@ -240,7 +240,7 @@ Evaluation was conducted against the tokenised version, but our evaluation
 script was designed to be as lenient as possible regarding differences in
 tokenisation. We explicitly took cases into account where participant's
 tokenisers split contractions (such as Spanish ``del'' to ``de'' $+$ ``el''),
-whereas our tokeniser did not. 
+whereas our tokeniser did not.
 
 For a given input fragment, it may well be possible that there are multiple
 correct translations possible. In establishing our test set, we therefore paid
@@ -296,7 +296,7 @@ Cross-Lingual Word Sense Disambiguation tasks:
 \begin{itemize}
      \item \textbf{Best} - The system may only output one, its best, translation;
      \item \textbf{Out of Five} - The system may output up to five alternatives, effectively allowing 5 guesses. Only the best match is counted. This metric does \emph{not} count how many of the five are valid.
-\end{itemize}     
+\end{itemize}
 
 Participants could submit up to three runs per language pair and evaluation type.
 
@@ -507,7 +507,7 @@ Sensible-wtmxling   & 0.096    & 0.112         & 0.214 \\ \hline
 \label{tab:fullresults2}
 \end{table}
 
- 
+
 \begin{figure*}[p]
 \noindent\makebox[\textwidth][c]{%
 \includegraphics[width=16cm]{en-es-best-2.png}}
@@ -530,7 +530,7 @@ Discrepancies might at least be partly due to differences in training data, as
 it is generally well understood in MT that more training data improves results.
 The baselines various participants describe in their system papers provide more
 insight to the merit of their approaches than a comparison between them.
- 
+
 In the creation of the test set, we aimed to mimic intermediate to high-level
 language learners. We also aimed at a fair distribution of different
 part-of-speech categories and phrasal length. The difficulty of the task
@@ -583,14 +583,14 @@ Croatian, a Slavic language which heavily declines nouns. If she did not know
 the English word \emph{``book''} and wanted to write \emph{``He gave the book
 to him''}, she could use either the Croatian word \emph{``knjigu''} in its
 accusative declension or fall back to the normal form \emph{``knjiga''}. A
-proper writing assistant system would have to account for both options. 
+proper writing assistant system would have to account for both options.
 
 We can analyse which of the sentences in the test data participants struggled
 with most. First we look at the number of sentences that produce an average
 word accuracy of zero, measured per sentence over all systems and runs in the
 out-of-five metric. This means no participant was close to the correct output.
 There were 6 such sentences in English-Spanish, 17 in English-German, 6 in
-French-English, and 32 in Dutch-English. 
+French-English, and 32 in Dutch-English.
 
 %discuss user errors:
 A particularly difficult context from the Spanish set is when a subjunctive

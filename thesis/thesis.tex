@@ -1,8 +1,10 @@
 \documentclass[11pt,makeidx,english]{style/phdthesis}
 \usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsopn}
+\usepackage{amsthm}
 \usepackage{classicthesis}
 
-\usepackage{fontspec}
 %\usepackage[utf8]{inputenc}
 %\usepackage[T1]{fontenc}
 
@@ -24,12 +26,9 @@
 \usepackage[font={it}]{caption}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-\usepackage{gb4e}
+\usepackage{gb4e} %this conflicts with underscores in filenames for some obscure reason!!! take care not to use underscores!
 \usepackage{footnote}
-%\usepackage{amsmath}
-%\usepackage{amsopn}
-%\usepackage{amsthm}
-\usepackage{scrextend}
+%\usepackage{scrextend}
 \let\proof\relax
 \let\endproof\relax
 \newtheoremstyle{break}
@@ -43,6 +42,9 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
+\pgfplotsset{compat=newest}
+%\usetikzlibrary{external}
+%\tikzexternalize
 
 % customize section
 \titleformat{\section}%
@@ -95,9 +97,7 @@ Een wetenschappelijke proeve op het gebied van de Letteren
 ter verkrijging van de graad van doctor\\
 aan de Radboud Universiteit Nijmegen\\
 op gezag van de rector magnificus prof. dr. Th.L.M. Engelen,\\
-volgens besluit van het college van decanen,\\
-in het openbaar te verdedigen op ... \\
-om ... uur precies\\
+volgens besluit van het college van decanen.\\
 
 \vspace{2cm}
 
@@ -144,7 +144,7 @@ Manuscriptcommissie: & ... \\
 \include{semeval2014task5}
 \include{colibritafinal}
 \include{sourcecontextinsmt}
-\include{conclusion}
+%\include{conclusion}
 
 \bibliographystyle{apalike}
 \bibliography{thesis}
