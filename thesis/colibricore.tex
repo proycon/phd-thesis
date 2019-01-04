@@ -555,7 +555,7 @@ NLTK\footnote{Natural Language Toolkit, a popular platform for NLP on Python:
     \url{http://www.nltk.org}. Our implementation follows the naive approach
     but uses \texttt{ngrams()} from \texttt{nltk.util} and \texttt{FreqDist} from
 \texttt{nltk.probability}}. Similarly, we include a naive C++ implementation based on
-a \texttt{std::unordered\_map<string,uint32\_t>}. The memory reduction that can be
+a \texttt{std::unordered\_map$<$string,uint32\_t$>$}. The memory reduction that can be
 observed when comparing these against the Colibri Core models is attributed to
 the class encoding scheme we use. These memory optimisations do come with a
 performance drawback that is especially noticeable when no thresholding is
@@ -575,7 +575,7 @@ usage, at the cost of a longer execution time due to the multiple iterations.
 Though Colibri Core is not a Language Modelling toolkit in itself, a comparison
 with a popular third-party LM toolkit may be of interest. We compare an
 unindexed pattern model containing unigrams, bigrams and trigrams to a similar
-model in SRILM \cite{SRILM}. \footnote{SRILM's \texttt{ngram-count} is run in
+model in SRILM \citep{SRILM}. \footnote{SRILM's \texttt{ngram-count} is run in
 vanilla form, i.e. no smoothing or interpolation, with the options
 \texttt{-no-bos -no-eos}. Note that the encoding of classes is a separate step in
 Colibri Core, so our total CPU time should be considered to be a second longer
