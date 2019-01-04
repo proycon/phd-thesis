@@ -81,16 +81,16 @@ Pattern extraction, and with it pattern matching, plays an important role in
 computer science. In the NLP literature, n-grams are a common type of pattern,
 and their modelling is often researched in the context of statistical language
 modelling.  Software that springs from such studies is widespread in the field.
-Examples, by no means exhaustive, are SRILM \cite{SRILM}, IRSTLM \cite{IRSTLM},
-and KenLM \cite{KENLM}. Focus on efficient modelling with regards to memory
+Examples, by no means exhaustive, are SRILM \citep{SRILM}, IRSTLM \citep{IRSTLM},
+and KenLM \citep{KENLM}. Focus on efficient modelling with regards to memory
 consumption and look-up speed is an important component in such studies.
-Others also focus on big data storage in this field \cite{Guthrie2010}, though
+Others also focus on big data storage in this field \citep{Guthrie2010}, though
 this study did not produce a usable open source software solution.
 
 Colibri Core, however, takes a step back and is not a language modelling
 toolkit and therefore can't be readily compared with one. It is, however, very
 suitable to be used as a foundation to that end, which has been done by
-one study already \cite{COCOCPYP}. What we do have in common with language modelling toolkits is
+one study already \citep{COCOCPYP}. What we do have in common with language modelling toolkits is
 that both types of systems contain a store of patterns (i.e. n-grams or beyond)
 and their frequencies, in which quick look-up is essential, and both provide a
 procedure to compute such a model. Both LM toolkits as well as Colibri Core
@@ -103,7 +103,7 @@ non-consecutive patterns such as skipgrams. The issue of skipgram extraction
 and modelling gained more traction in the past decade, see for instance
 \cite{Guthrie06}. The notion of skipgram (or rather flexgram in our terms, as
 shall become apparent later) also plays a part in vector space representations
-\cite{Mikolov08} that have become increasingly popular.
+\citep{Mikolov08} that have become increasingly popular.
 
 We think Colibri Core fills an interesting niche that is not covered by other
 readily available software. It provides solutions for the modelling of n-grams and
@@ -148,18 +148,18 @@ We distinguish three categories of patterns, and define them as follows:
 Our definitions are defined narrowly and, with exception of $n$-grams do not
 necessarily match up precisely to the way the concepts are used in other studies. Some
 may use the term skipgram to include what we call flexgram, or use another term
-such as ``elastigram'' to refer to flexgrams \cite{ForsythS14}.
+such as ``elastigram'' to refer to flexgrams \citep{ForsythS14}.
 
 Skipgrams are used in the field to obtain a higher level of generalisation than
 can be offered by n-grams. They can, for instance, be found as features in
-classification tasks \cite{DHONDT}, or as a means in language modelling to
-decrease perplexity \cite{Guthrie06,COCOCPYP}.
+classification tasks \citep{DHONDT}, or as a means in language modelling to
+decrease perplexity \citep{Guthrie06,COCOCPYP}.
 
 Dealing with word tokens implies that the corpus data has to be in a
 tokenised form. We start from the basis of plain-text corpus data, containing one
 \emph{unit} per line; a unit can correspond to a sentence, paragraph, tweet
 or whatever unit is deemed appropriate for the task at hand. Corpus data can
-alternatively be provided in FoLiA XML format \cite{FOLIAPAPER} as well, although linguistic
+alternatively be provided in FoLiA XML format \citep{FOLIAPAPER} as well, although linguistic
 annotation will be ignored.
 
 Text data is typically stored as a string of characters. The characters
@@ -172,7 +172,7 @@ effectively defines the \emph{vocabulary} of your data, which we call a
 \emph{class encoding}. A pattern is not represented as an array of
 characters, but as an array of these classes instead. Such methods are commonly
 employed in Language Modelling toolkits as well, where 24 or 32-bit integers
-uniquely assigned to words are typically chosen \cite{Guthrie2010}.
+uniquely assigned to words are typically chosen \citep{Guthrie2010}.
 
 In Colibri Core, further lossless compression is achieved by holding this array of
 classes in a dynamic-length byte representation rather than fixed-sized
@@ -254,8 +254,8 @@ algorithm will be addressed later in the section on \emph{Quality Control}.
 \label{sec:skipgramcount}
 
 The computation of skipgrams is parametrised by an upper limit $l\leq m$ in the number of
-tokens, i.e. the total length of the skipgram (including gaps) expressed in tokens. The possible configuration of gaps increase exponentially with the
-total length spanned. A skipgram of size three has only one possible
+tokens, i.e. the total length of the skipgram (including gaps) expressed in tokens. The possible configuration of gaps
+increases exponentially with the total length spanned. A skipgram of size three has only one possible
 gap configuration\footnote{The initial and final token may never be gaps in the extracted skipgrams};
 \texttt{a \_ z}, a skipgram of size four already has three possible configurations;
 \texttt{a \_ \_ z}, \texttt{a b \_ z} or \texttt{a \_ y z}.
@@ -371,7 +371,7 @@ for each pattern, these point to the original corpus data which is held in
 memory.
 
 The use of hash maps can be contrasted to the use of suffix (or prefix) tries
-\cite{Weiner73}, a common datastructure for storing n-grams in which a tree is
+\citep{Weiner73}, a common datastructure for storing n-grams in which a tree is
 constructed and any path in the tree, complete or incomplete, corresponds to a
 suffix (or prefix).  Although suffix tries also benefit from decreased memory
 use due to no overlap in pattern data, the strongly linked nature of tries
@@ -383,13 +383,13 @@ implemented in Colibi Core. The templating, however, does allow for such an
 implementation to be added in the future. This flexibility to abstract over the
 underlying data structure is one of the assets of Colibri Core.
 
-At this point, we need to address suffix arrays \cite{Manber90} as well, which
+At this point, we need to address suffix arrays \citep{Manber90} as well, which
 is a sorted array of suffixes, derived from suffix tries but with significantly
 decreased space requirements. Suffix arrays with longest common prefix (LCP)
 arrays will consume less memory than our hash maps, but are typically much
 slower to construct and query. Though no exhaustive experiment was conducted to
 this end, we did compare a predecessor of Colibri Core with a suffix array
-implementation \cite{Stehouwer10} and found our implementation to be
+implementation \citep{Stehouwer10} and found our implementation to be
 significantly faster in model construction.
 
 We distinguish two types of pattern model, depending on the type of the values,
@@ -555,7 +555,7 @@ NLTK\footnote{Natural Language Toolkit, a popular platform for NLP on Python:
     \url{http://www.nltk.org}. Our implementation follows the naive approach
     but uses \texttt{ngrams()} from \texttt{nltk.util} and \texttt{FreqDist} from
 \texttt{nltk.probability}}. Similarly, we include a naive C++ implementation based on
-a \verb|std::unordered_map<string,uint32_t>|. The memory reduction that can be
+a \texttt{std::unordered\_map<string,uint32\_t>}. The memory reduction that can be
 observed when comparing these against the Colibri Core models is attributed to
 the class encoding scheme we use. These memory optimisations do come with a
 performance drawback that is especially noticeable when no thresholding is
@@ -863,7 +863,7 @@ focused on command-line usage and therefore still requires a certain technical
 expertise from the end-user.
 
 To increase the accessibility of Colibri Core, a RESTful webservice as well as
-generic web interface is already provided through CLAM\cite{CLAMPAPER}. With this we
+generic web interface is already provided through CLAM \citep{CLAMPAPER}. With this we
 hope to meet the needs of less technical end-users, as well as automated
 networked clients. This webservice is hosted at
 \url{https://webservices-lst.science.ru.nl}.
