@@ -37,10 +37,10 @@ translation.
 
 The MT-integrated system described is described in Section~\ref{sec:mtbased}.
 The pure classifier-based approach is mainly described in
-Chapter~\ref{sec:colibritapilot}, we offer a recap in
+Chapter~\ref{chap:colibritapilot}, we offer a recap in
 Section~\ref{sec:classifierbased}. In the present study, it will be re-evaluated on the
 data from our SemEval-2014 ``L2 Translation Assistant'' task
-(Chapter~\ref{chap:semeval2014task5}, which provides a
+described in Chapter~\ref{chap:semeval2014task5}, which provides a
 a representative test set where none existed yet.
 
 Section~\ref{previous} briefly summarises the most important findings from the
@@ -103,7 +103,7 @@ extend it to take classifier output into account.
 
 The remaining participants in the SemEval task do not use a
 traditional MT decoder. Nevertheless, two of them achieve good scores.
-\cite{IUCL}, who finish first for the English -- German pair, build
+\cite{IUCL}, who finish first for the English -- German pair, built
 their own distinct log-linear model for the task, which combines
 various information sources. Amongst the features in this model are
 the translation probability and inverse translation probability,
@@ -171,12 +171,12 @@ features, we also conduct a small experiment with global context features, i.e.
 identifying powerful keywords for a given translation from the entire
 sentential context.
 
-These two aforementioned WSD studies were performed in the context of the
-SemEval Cross-Lingual Word-Sense Disambiguation task in two past instances of
-SemEval \citep{WSD,Lefever2013}, and emerged as the winning system for that
-task. These studies do find a beneficial effect including lemmas as
-part of the local context information, whereas part-of-speech tags do not
-improve results.
+%These two aforementioned WSD studies were performed in the context of the
+%SemEval Cross-Lingual Word-Sense Disambiguation task in two past instances of
+%SemEval \citep{WSD,Lefever2013}, and emerged as the winning system for that
+%task. These studies do find a beneficial effect including lemmas as
+%part of the local context information, whereas part-of-speech tags do not
+%improve results.
 
 \subsection{Data \& Software}
 
@@ -216,7 +216,7 @@ and can be enabled as an extra component in the classifier-based system.
 Both systems are implemented in our software package
 \emph{colibrita}.\footnote{\emph{colibrita} is written in Python 3, is open source
   (GPL v.3), and available from
-  \url{http://github.com/proycon/colibrita/}. Version tag
+  \url{https://github.com/proycon/colibrita/}. Version tag
   \texttt{0.3.1} is representative for the version used in this
   research and includes scripts for running the experiments.
   Colibita dependents on \emph{colibri-core} and \emph{colibri-mt}, both obtainable from the same github source, version tag \texttt{colibrita-v0.3.1} represents the state at
@@ -550,7 +550,7 @@ SemEVal 2010 data (Section~\ref{sec:uvtwsd1}) did. We suspect this may be
 attributed to increased sparsity due to the difference in data, as the systems
 are as good as identical. We put this to the test again by once again
 conducting an extra experiment using global context keywords in the same
-fashion\cite{NgL96}. We find results significantly below our MLF baseline, with
+fashion \citep{NgL96}. We find results significantly below our MLF baseline, with
 a drop in accuracy and word accuracy to $0.4930$ and $0.5686$, respectively.
 
 \section{MT-based hybrid System}
@@ -869,10 +869,9 @@ classifiers making a positive impact for two out of four language pairs.
 
 %When comparing our results to the six participants in the SemEval task, we find that the winning system described in \cite{UEDIN}, remains at the top for all three language pairs it participated in. Our system comes in third for English-Spanish, first for English-German, second for
 
-Table~\ref{tab:comparison}, after \cite{SEMEVAL2014TASK5}, shows the
-results of our best classifier-based and best MT-based hybrid
-run\footnote{For French-English, the best run is the baseline system},
-compared to the other six participants in the SemEval task.
+Table~\ref{tab:comparison}, shows the results of our best classifier-based and best MT-based hybrid run\footnote{For
+French-English, the best run is the baseline system}, compared to the other six participants in the SemEval task as
+described in Chapter~\ref{chap:semeval2014task5}.
 
 \begin{table}[htb]
 \caption{Highest word accuracy per team, per language pair. The best score for each language-pair is marked in bold.}
