@@ -151,9 +151,9 @@ parameter $\lambda_1$ adds a constraint based on the product of the two
 conditional probabilities $(P(f_t|f_s) \cdot P(f_s|f_t))$, and sets a threshold
 that has to be surpassed.  A second parameter $\lambda_2$  further limits the
 considered phrase pairs $(f_s,f_t)$ to have the product of their conditional
-probabilities not not deviate more than a fraction $\lambda_2$ from the joint
+probabilities not deviate more than a fraction $\lambda_2$ from the joint
 probability for the strongest possible pairing for $f_s$, the source fragment.
-$f_{strongest\_t}$ in Figure~\ref{fig:algo} corresponds to the best scoring
+In Figure~{fig:algo}, $f_{strongest\_t}$ corresponds to the best scoring
 translation for a given source fragment $f_s$. This metric thus effectively
 prunes weaker alternative translations in the phrase-translation table from
 being considered if there is a much stronger candidate. Nevertheless, it has to
@@ -187,14 +187,11 @@ to be constructed for the test data is also the reason that the
 parallel corpus split from which the test data is derived has to be
 large enough, ensuring better quality.
 
-We concede that our current way of testing is a mere approximation of
-the real-world scenario. An ideal test corpus would consist of L2
-sentences with L1 fallback as crafted by L2 language learners with an
-L1 background. However, such corpora do not exist as
-yet. Nevertheless, we hope to show that our automated way of test set
-generation is sufficient to test the feasibility of our core
-hypothesis that L1 fragments can be translated to L2 using L2 context
-information.
+We concede that our current way of testing is a mere approximation of the real-world scenario. An ideal test corpus
+would consist of L2 sentences with L1 fallback as crafted by L2 language learners with an L1 background. However, such
+corpora do not exist yet at the time of this research. Nevertheless, we hope to show that our automated way of test set
+generation is sufficient to test the feasibility of our core hypothesis that L1 fragments can be translated to L2 using
+L2 context information.
 
 \section{System}
 
@@ -207,7 +204,7 @@ the L1 word or phrase in its L2 context to its L2 translation. Words or phrases
 that always map to a single translation are stored in a simple mapping table,
 as a classifier would have no added value in such cases. The classifiers use
 the IB1 algorithm \citep{IB1} as implemented in TiMBL
-\citep{TIMBL}.\footnote{\url{http://languagemachines.github.io/timbl}} IB1 implements
+\citep{TIMBL}.\footnote{\url{https://languagemachines.github.io/timbl}} IB1 implements
 $k$-nearest neighbour classification. The choice for this algorithm is
 motivated by the fact that it handles multiple classes with ease, but first and
 foremost because it has been successfully employed for word sense
@@ -242,7 +239,7 @@ global context features. These are a set of L2 contextual keywords for
 each L1 word/phrase and its L2 translation occurring in the same
 sentence, not necessarily in the immediate neighbourhood of the L1
 word/phrase. The keywords are selected to be indicative for a specific
-translation. We used the method of extraction by \cite{NgL96} and
+translation. We used the method of extraction by \cite{NgL96}, as we have seen in Chapter~\ref{chap:clwsd}, and
 encoded all keywords in a binary bag of words model. The experiments
 however showed that inclusion of such keywords did not make any
 noticeable impact on any of the results, so we restrict ourselves to
