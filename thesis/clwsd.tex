@@ -1,21 +1,19 @@
 \chapter{Cross-Lingual Word Sense Disambiguation}
 \label{chap:clwsd}
 
+In this chapter we begin to investigate the use of source-language context to disambiguate a marked word in context, so
+our focus is a localised one. In contrast to later chapters, we also take into account some linguistically enriched
+features.
 
-
-In this chapter we apply k-nearest neighbour classifiers to two similar and
-localised translation tasks organized for SemEval 2010: Cross-Lingual Word
-Sense Disambiguation and Cross-Lingual Lexical Substitution.  Both tasks aim to
-disambiguate a marked word in context by finding an appropriate translation for
-it in another language. Our system, UvT-WSD1 participates for the two tasks and
-achieves winning scores for the former. With a later rewrite of our system,
-called WSD2, we focus on hyperparameter optimisation and participate again in
-the Cross-Lingual Word-Sense Disambiguation task for SemEval 2013. We then
-achieve winning scores for four of the five language pairs, when asked to
-predict the best translation(s). Our final results, however, indicate that
-hyperparameter optimisation did not lead to the best results, indicating
-overfitting by our optimisation method in this aspect. Feature selection does
-have a modest positive impact.
+We apply k-nearest neighbour classifiers to two similar and localised translation tasks
+organized for SemEval 2010: Cross-Lingual Word Sense Disambiguation and Cross-Lingual Lexical Substitution.  Both tasks
+aim to disambiguate a marked word in context by finding an appropriate translation for it in another language. Our
+system, UvT-WSD1 participates for the two tasks and achieves winning scores for the former. With a later rewrite of our
+system, called WSD2, we focus on hyperparameter optimisation and participate again in the Cross-Lingual Word-Sense
+Disambiguation task for SemEval 2013.  We then achieve winning scores for four of the five language pairs, when asked to
+predict the best translation(s). Our final results, however, indicate that hyperparameter optimisation did not lead to
+the best results, indicating overfitting by our optimisation method in this aspect. Feature selection does have a modest
+positive impact.
 
 
 \nobibliography*
@@ -52,16 +50,16 @@ one sense prediction. These are evaluated in two different ways. The scoring
 type ``\textbf{best}'' expects that the system outputs the best senses, in the
 order of its confidence. The scoring type ``\textbf{out of five/ten}'' expects
 five or ten guesses, and each answer weighs the same. These metrics are more
-extensively described in \citep{CLLS}. The UvT-WSD1 system participates in both
+extensively described in \cite{CLLS}. The UvT-WSD1 system participates in both
 scoring types, for both tasks. The system put forth in this paper follows a
-similar approach as described in earlier research by \citep{Hoste+02}.
+similar approach as described in earlier research by \cite{Hoste+02}.
 
 WSD2 is a rewrite and extension of our UvT-WSD1. In WSD2 we introduce and test
 a new level of hyperparameter optimisation. We now participate for all five
 target languages (Dutch, Spanish, Italian, French, and German). The task
 presents twenty polysemous nouns with fifty instances each to be mapped onto
 normalised (lemmatised) translations in all languages. The task is described in
-detail in \citep{CLWSD2013TASKPAPER}.
+detail in \cite{CLWSD2013TASKPAPER}.
 
 Trial data is provided and has been used to optimise system
 parameters. Due to the unsupervised nature of the task, no training data is
@@ -149,8 +147,8 @@ occurrence of the target word. The context in which these keywords are searched
 for is exactly one sentence, i.e. the sentence in which the target word occurs.
 This is due to the test data simply not supplying a wider context.
 
-The method used to extract these keywords ($k$) is proposed by \citep{NgL96} and
-used also in the research of \citep{Hoste+02}. Assume we have a focus word $f$,
+The method used to extract these keywords ($k$) is proposed by \cite{NgL96} and
+used also in the research of \cite{Hoste+02}. Assume we have a focus word $f$,
 more precisely, a lemma and part-of-speech tag pair of one of the target words.
 We also have one of its aligned translations/senses $s$, which in this
 implementation is also a lemma. We can now estimate $P(s|k)$, the probability
@@ -167,7 +165,7 @@ corpus ($N_{k_{corpus}}$), we get:
 P(s|k) = \frac{N_{s,k_{local}}}{N_{k_{local}}}(\frac{1}{N_{k_{corpus}}})
 \end{equation}
 
-\citep{Hoste+02} select a keyword $k$ for inclusion in the bag-of-words
+\cite{Hoste+02} select a keyword $k$ for inclusion in the bag-of-words
 representation if that keyword occurs more than $T_1$ times in that sense $s$,
 and if $P(s|k) \ge T_2$. Both $T_1$ and $T_2$ are predefined thresholds, which
 by default were set to $3$ and $0.001$ respectively. In addition, UvT-WSD1
