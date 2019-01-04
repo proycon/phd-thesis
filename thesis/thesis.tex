@@ -5,8 +5,8 @@
 \usepackage{amsthm}
 \usepackage{classicthesis}
 
-%\usepackage[utf8]{inputenc}
-%\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 
 \usepackage{url}
 \usepackage{natbib}
@@ -20,6 +20,8 @@
 \usepackage{pbox}
 \usepackage{tikz}
 \usepackage{pgfplots}
+\usepackage{microtype}
+%\usepackage{FiraMono}
 \usepackage{listings}
 \usepackage{covington}
 \usepackage{titlesec}
@@ -38,6 +40,7 @@
   {\newline}{}%
 \theoremstyle{break}
 \newtheorem{exmp}{Example}[section]
+\DisableLigatures{encoding = *, family = tt*}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
