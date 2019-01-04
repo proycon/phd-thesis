@@ -22,10 +22,9 @@ a cross-lingual context. Integrating classifiers in such a framework has
 little merit, as there is considerable overlap with the functioning of the L2
 language model.
 
-\textsc{This chapter is based on: } 
-\emph{The Role of Context Information in L2 Translation Assistance} %TODO: replace with proper citation
+\textsc{This chapter appeared in:} the International Journal of Translation (2016), Bahri Publications; we are, however, doubtful that proper peer-review was performed for this publication.
 
-  
+
 \section{Introduction}
 
 In this study we test and compare two approaches to translate L1 fragments in
@@ -34,7 +33,7 @@ the L1 fragments using their L2 context information. The first approach is
 purely classifier-based, whereas the second integrates classifiers in
 phrase-based statistical machine translation. This latter approach enhances the
 translation model component by taking context directly into account in
-translation. 
+translation.
 
 The MT-integrated system described is described in Section~\ref{sec:mtbased}.
 The pure classifier-based approach is mainly described in
@@ -58,7 +57,7 @@ Section~\ref{discuss}.
 Six participants took part in the SemEval task by writing a translation
 assistance system. This provides an interesting basis for comparison,
 although direct comparison is complicated by the fact that the SemEval task did
-not specify a training set. 
+not specify a training set.
 
 The study by SemEval participant \cite{CNRC} shows that a solution based on
 standard Phrase-based Statistical Machine Translation is viable strategy of
@@ -97,7 +96,7 @@ in which L2 is English and L1 is French:
 
 They show that this results in a considerable improvement over a baseline that
 translates just the L1 fragment without any L2 context. In fact, we will see
-later that this simple and intuitive method outperforms the 
+later that this simple and intuitive method outperforms the
 classifier-based method from the pilot study, which does not directly invoke
 an MT decoder. We will therefore expand our system using this method, and
 extend it to take classifier output into account.
@@ -144,7 +143,7 @@ various participants' systems can not be readily compared and assessed on the
 merit of their approach, as training data and training methods differ. In this
 study, we do have two comparable systems. We assess the impact of L2 context
 information in a purely classifier-based system, and in a MT-based hybrid system
-enhanced with similar classifiers. 
+enhanced with similar classifiers.
 
 It has to be strongly emphasised that our focus is on text data in its surface form,
 without any further associated linguistic information requiring external
@@ -177,7 +176,7 @@ SemEval Cross-Lingual Word-Sense Disambiguation task in two past instances of
 SemEval \citep{WSD,Lefever2013}, and emerged as the winning system for that
 task. These studies do find a beneficial effect including lemmas as
 part of the local context information, whereas part-of-speech tags do not
-improve results. 
+improve results.
 
 \subsection{Data \& Software}
 
@@ -185,7 +184,7 @@ The training data for our translation model is composed of two major
 parallel corpora joined together: Europarl v7 \citep{EUROPARL} and
 OpenSubtitles 2012\footnote{http://www.opensubtitles.org}
 \citep{OPUS2012}.  Table~\ref{tab:datasize} lists the size of these
-corpora. 
+corpora.
 
 \begin{table}[htb]
 \caption{Corpora sizes for all of the language pairs}
@@ -212,7 +211,7 @@ as shall be explained in Section~\ref{sec:classifierbased}.
 An L2 language model is generated using SRILM \citep{SRILM}. We use a trigram
 language model with Kneser-Ney smoothing. The model is trained on the L2 side
 of the parallel corpus. It plays an essential role in the MT-based hybrid system,
-and can be enabled as an extra component in the classifier-based system. 
+and can be enabled as an extra component in the classifier-based system.
 
 Both systems are implemented in our software package
 \emph{colibrita}.\footnote{\emph{colibrita} is written in Python 3, is open source
@@ -237,7 +236,7 @@ Chapter~\ref{chap:colibritapilot} we already ascertained that this measure corre
 our task-specific accuracy metrics, but it has little added value because most of the sentence is already
 translated and therefore BLEU scores are unnaturally high.} have been shown in
 Section~\ref{sec:semeval2015task5evaluation}. When matching with multiple reference translations, the highest
-score is taken. 
+score is taken.
 
 \section{Classifier-based System}
 
@@ -273,9 +272,9 @@ in the phrase-translation table itself.  We therefore proceed to construct an
 index of all phrases on either side of the parallel corpus, including only
 those that occur in the phrase-translation table. This is done using
 \emph{colibri-core}\footnote{\url{https://github.com/proycon/colibri-core}},
-introduced in Chapter~\ref{chap:coco}, and constitutes our forward index. 
+introduced in Chapter~\ref{chap:coco}, and constitutes our forward index.
 %We use it to look up the positions for each phrase pair in the phrase
-%translation table. 
+%translation table.
 If both the source phrase and target phrase are found in a sentence pair, we
 assume we found a translation instance. This is an assumption because at this
 stage we do not have the actual word alignments loaded. If multiple translation
@@ -343,7 +342,7 @@ computationally prohibitive.
 
 We conducted a series of experiments to test whether the conclusions from
 Chapter~\ref{chap:colibritapilot} hold on the more representative test set of
-the SemEval Task. 
+the SemEval Task.
 
 Two baselines were created. The first is a ``most likely fragment'' baseline
 (MLF). This baseline does not use any context information and merely selects
@@ -398,7 +397,7 @@ l3r3-lm & 0.649 & 0.729$*$ \\%& 0.9104 \\
 \end{tabular}
 \begin{tabular}{lrr}
 %generated at 2014-10-15 16:20 in /home/proycon/exp/expcolibrita/semeval3/en-de
-%recall: 0.9459 
+%recall: 0.9459
 \hline
 System & Accuracy & W.Acc. \\%& BLEU\\
 \hline
@@ -425,7 +424,7 @@ l3r3-lm & 0.615 & 0.667$*$ \\%&  0.8913 \\
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lrr}
 %generated at 2014-10-15 16:22 in /home/proycon/exp/expcolibrita/semeval3/fr-en
-%recall: 0.8222 
+%recall: 0.8222
 \hline
 System & Accuracy & W.Acc. \\%& BLEU\\
 \hline
@@ -445,7 +444,7 @@ l3r3-lm & 0.503 & 0.598 \\%&  0.917 \\
 \end{tabular}
 \begin{tabular}{lrr}
 %generated at 2014-10-15 16:22 in /home/proycon/exp/expcolibrita/semeval3/nl-en
-%recall: 0.6511 
+%recall: 0.6511
 \hline
 System & Accuracy & W.Acc. \\%& BLEU\\
 \hline
@@ -518,7 +517,7 @@ degree, especially if they model roughly the same size of local context.
 %phrases being fairly easy to resolve in Spanish by a language model. The
 %language model clearly has a much tougher task in German, part of which we may
 %attribute to the notion of grammatical case which typically is not easily
-%derivable from a small local context. 
+%derivable from a small local context.
 
 Regarding the size of the local context window, we see best performance for
 small context sizes, with all of the winning scores in either \emph{l1r1} (one word to
@@ -534,7 +533,7 @@ context window. We therefore conducted a small extra experiment for English --
 German, \emph{l1r1}, with a 5-gram language model with Kneser-Ney smoothing. This does
 not result in a significant improvement over \emph{l1r1-lm}, with a word accuracy of
 $0.6587$, an absolute accuracy of $0.6052$, and does not significantly differ
-from the \emph{l1r1} configuration either (without language model).  %, and a BLEU score of $0.891$, 
+from the \emph{l1r1} configuration either (without language model).  %, and a BLEU score of $0.891$,
 
 One of the main points of contention for this present study is our emphasis on
 simple, and often even small, local context features. Intuitively, there is
@@ -596,7 +595,7 @@ three out of the four language pairs: English -- Spanish, English -- German and
 French -- English. For Dutch -- English we have to resort to another corpus, a
 collection of transcribed bilingual TED talks compiled for the IWSLT 2012
 Evaluation
-Campaign\footnote{\url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html}}. 
+Campaign\footnote{\url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html}}.
 We use 10,000 sentence pairs for each. The choice for these corpora, as opposed
 to a subset of Europarl or Opensubtitles, is motivated by our aim for more
 generalisation.
@@ -625,7 +624,7 @@ received from the classifier and passed to the Moses decoder using XML:
 
 The Moses decoder now deals with the scores derived from the classifier, rather
 than those from the phrase translation table, and is then mainly driven by
-the language model, as the translations are fixed. 
+the language model, as the translations are fixed.
 
 The scores from the classifier are much coarser than those from the
 phrase-translation table, as those in the phrase-translation table consist of
@@ -691,10 +690,10 @@ MLF baseline, and a $\ddagger$ indicates significance with respect to the MT bas
 \hline
 System & Accuracy & W.Acc. \\%& BLEU\\
 \hline
-MLF baseline & 0.544 & 0.651 \\%& 0.8737 \\ %recall: 0.9538 
-MT baseline & 0.651 & 0.750$*$ \\% & 0.9069 \\ %recall: 1.0 
+MLF baseline & 0.544 & 0.651 \\%& 0.8737 \\ %recall: 0.9538
+MT baseline & 0.651 & 0.750$*$ \\% & 0.9069 \\ %recall: 1.0
 \hline
-l2r1-lm & 0.657 & 0.742$*$ \\%& \textbf{0.9135} \\ %recall: 0.9538 
+l2r1-lm & 0.657 & 0.742$*$ \\%& \textbf{0.9135} \\ %recall: 0.9538
 \hline
 l1r1-moses & 0.625 & 0.736$*$ \\%& 0.874 \\
 l1r1-mosescut0.7 & 0.657 & 0.761$*$ \\%& 0.9111 \\
@@ -723,12 +722,12 @@ l3r3-moses & 0.657 & 0.756$*$ \\%& 0.8979 \\
 \hline
 System & Accuracy & W.Acc. \\%& BLEU\\
 \hline
-MLF baseline & 0.571 & 0.627 \\%& 0.8756 \\ %recall: 0.9459 
-MT baseline & \textbf{0.689} & 0.745$*$ \\%& \textbf{0.9106} \\ %recall: 0.998 
+MLF baseline & 0.571 & 0.627 \\%& 0.8756 \\ %recall: 0.9459
+MT baseline & \textbf{0.689} & 0.745$*$ \\%& \textbf{0.9106} \\ %recall: 0.998
 \hline
-l2r1 & 0.635 & 0.690 \\%& 0.8915 \\ %recall: 0.9459 
+l2r1 & 0.635 & 0.690 \\%& 0.8915 \\ %recall: 0.9459
 \hline
-l1r1-moses & 0.603 & 0.672$*\ddagger$ \\%& 0.8793 \\ %recall: 0.998 
+l1r1-moses & 0.603 & 0.672$*\ddagger$ \\%& 0.8793 \\ %recall: 0.998
 l1r1-mosescut0.7 & 0.681 & 0.739$*$ \\%& 0.9086 \\
 %l1r1-mosescut0.8 & 0.6774 & 0.7357 & 0.9077 \\
 %l1r1-mosescut0.9 & 0.6754 & 0.736 & 0.9071 \\
@@ -754,12 +753,12 @@ l3r3-moses & 0.633 & 0.693$*\ddagger$ \\%& 0.8901 \\
 \hline
 System & Accuracy & W.Acc. \\%& BLEU\\
 \hline
-MLF baseline & 0.519 & 0.614 \\%& 0.9159 \\ %recall: 0.8222 
-MT baseline & \textbf{0.620} & \textbf{0.742}$*$ \\%& \textbf{0.9425} \\ %recall: 0.998 
+MLF baseline & 0.519 & 0.614 \\%& 0.9159 \\ %recall: 0.8222
+MT baseline & \textbf{0.620} & \textbf{0.742}$*$ \\%& \textbf{0.9425} \\ %recall: 0.998
 \hline
-l1r1-lm & 0.511 & 0.604 \\%& 0.9201 \\%recall:0.8222 
+l1r1-lm & 0.511 & 0.604 \\%& 0.9201 \\%recall:0.8222
 \hline
-l1r1-moses & 0.568 & 0.709$*\ddagger$ \\%& 0.9357 \\ %recall: 0.998 
+l1r1-moses & 0.568 & 0.709$*\ddagger$ \\%& 0.9357 \\ %recall: 0.998
 l1r1-mosescut0.7 & 0.590 & 0.721$*\ddagger$ \\%& 0.938 \\
 %l1r1-mosescut0.8 & 0.5899 & 0.721 & 0.938 \\
 %l1r1-mosescut0.9 & 0.596 & 0.7251 & 0.9388 \\
@@ -786,12 +785,12 @@ l3r3-moses & 0.570 & 0.707$*\ddagger$ \\%& 0.9347 \\
 \hline
 System & Accuracy & W.Acc \\%& BLEU\\
 \hline
-MLF baseline & 0.419 & 0.480 \\%& 0.921 \\%recall: 0.6511 
-MT baseline & 0.534 & 0.677$*$ \\%& 0.9324 \\%recall: 1.0 
+MLF baseline & 0.419 & 0.480 \\%& 0.921 \\%recall: 0.6511
+MT baseline & 0.534 & 0.677$*$ \\%& 0.9324 \\%recall: 1.0
 \hline
-l2r1 & 0.435 & 0.497 \\%& 0.923 \\%recall: 0.6511 
+l2r1 & 0.435 & 0.497 \\%& 0.923 \\%recall: 0.6511
 \hline
-l1r1-moses & 0.487 & 0.647$*\ddagger$ \\%& 0.9262 \\%recall: 1.0 
+l1r1-moses & 0.487 & 0.647$*\ddagger$ \\%& 0.9262 \\%recall: 1.0
 l1r1-mosescut0.7 & \textbf{0.548} & 0.686$*$ \\%& 0.9333 \\
 %l1r1-mosescut0.8 & 0.5458 & 0.6851 & 0.9333 \\
 %l1r1-mosescut0.9 & 0.5458 & 0.6851 & 0.9333 \\
@@ -868,7 +867,7 @@ classifiers making a positive impact for two out of four language pairs.
 \section{Discussion \& Conclusion}
 \label{discuss}
 
-%When comparing our results to the six participants in the SemEval task, we find that the winning system described in \cite{UEDIN}, remains at the top for all three language pairs it participated in. Our system comes in third for English-Spanish, first for English-German, second for 
+%When comparing our results to the six participants in the SemEval task, we find that the winning system described in \cite{UEDIN}, remains at the top for all three language pairs it participated in. Our system comes in third for English-Spanish, first for English-German, second for
 
 Table~\ref{tab:comparison}, after \cite{SEMEVAL2014TASK5}, shows the
 results of our best classifier-based and best MT-based hybrid
@@ -881,10 +880,10 @@ compared to the other six participants in the SemEval task.
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lllll}
 \hline
-Team & \textbf{en-es} & \textbf{en-de} & \textbf{fr-en} & \textbf{nl-en} \\ 
+Team & \textbf{en-es} & \textbf{en-de} & \textbf{fr-en} & \textbf{nl-en} \\
 \hline
 \textbf{MT-based} & $0.774$ (3$^{rd}$) & \textbf{0.748} (1$^{st}$) & $0.742$ (2$^{nd}$) & $0.687$ (2$^{nd}$) \\
-\textbf{Classifier-based} & $0.742$ (4$^{th}$) & $0.690$ (4$^{th}$) & $0.610$ (4$^{th}$) & $0.497$ (4$^{th}$) \\ 
+\textbf{Classifier-based} & $0.742$ (4$^{th}$) & $0.690$ (4$^{th}$) & $0.610$ (4$^{th}$) & $0.497$ (4$^{th}$) \\
 \hline
 \textbf{CNRC} \citep{CNRC} & 0.745 & 0.717 & 0.694 & 0.610 \\
 \textbf{IUCL} \citep{IUCL}  & 0.720 & 0.722 & 0.682 & 0.679 \\
@@ -1040,7 +1039,7 @@ example by \cite{UEDIN}, and possibly by optimising its parameters.
 Classifiers may be worth reintroducing only when incorporating linguistic
 information from the context, that can not be directly taken into account by
 the SMT decoder. Such approaches, however, often do not produce the expected
-increase in translation quality either \citep{UNAL, IUCL}. 
+increase in translation quality either \citep{UNAL, IUCL}.
 
 In a final experiment, we show that there is still room for improvement
 with regard to choosing the right morpho-syntactic variant in the given
@@ -1055,7 +1054,7 @@ automatic feature selection  as in Chapters~\ref{chap:colibritapilot} and
 \ref{chap:clwsd}. This would allow different classifiers to use different,
 optimised, local context configurations, rather than using a single
 configuration for all classifier experts. That approach, however, proved not to
-scale well and could not cope with the amount of data we use now. 
+scale well and could not cope with the amount of data we use now.
 
 In summary, the main conclusions to draw from this study are that \textbf{1)}
 L2 context information provides valuable cues for translating L1 fragments in
