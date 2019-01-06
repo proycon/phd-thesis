@@ -15,7 +15,7 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{latexsym}
-\special{papersize=210mm,297mm} % to avoid having to use "-t a4" with dvips 
+\special{papersize=210mm,297mm} % to avoid having to use "-t a4" with dvips
 %\setlength\titlebox{6.5cm}  % You can expand the title box if you really have to
 \usepackage{graphicx}
 \usepackage{placeins}
@@ -24,8 +24,8 @@
 \usepackage{amsmath}
 \usepackage{footnote}
 \usepackage{supertabular}
-\usepackage{algorithm} 
-\usepackage{algpseudocode} 
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage{caption}
 \usepackage{gb4e}
 \usepackage{natbib}
@@ -58,8 +58,8 @@
   {\tt proycon@anaproy.nl}}
 \authorrunning{van Gompel and van den Bosch}
 
-\institute{Radboud University  \\ 
-P.O. Box 9103 \\ 
+\institute{Radboud University  \\
+P.O. Box 9103 \\
 NL-6500 HD Nijmegen \\
 The Netherlands}
 
@@ -70,7 +70,7 @@ The Netherlands}
 \begin{document}
 \maketitle
 
-\begin{abstract} 
+\begin{abstract}
   We present a series of experiments focusing on the modelling of source-side
 context to improve Phrase-based Statistical Machine Translation. We attempt to
 independently reproduce a line of existing research and test whether
@@ -85,7 +85,7 @@ word sense disambiguation systems, supertaggers, or parsers, as used by
 previous work. We only observe improvements in translation quality on one
 corpus, and generally fail to surpass the non-contxt informed baseline. Lowering the expectations raised by previous work, we conclude that
 the explicit modeling of source-side context information does not generally add
-much information to that already implicitly available in the decoding process.  
+much information to that already implicitly available in the decoding process.
 \end{abstract}
 
 \section{Introduction}
@@ -169,11 +169,11 @@ WSD systems often employ a variety of linguistic features. The focus of our
 study, however, is to be independent of the explicit computation of
 linguistically abstract features with language-dependent tools such as
 lemmatisers, part-of-speech taggers, supertaggers, or dependency parsers
-\cite{Rejwanul+11}. 
+\cite{Rejwanul+11}.
 %We are interested only in the surface
 %forms, the text as-is, and stay as close as possible to vanilla Phrase-Based
 %Statistical Machine Translation, without using any language-specific external
-%resources. 
+%resources.
 In this fashion, we attempt to assess the merit of source-side
 context information as purely as possible.
 
@@ -293,7 +293,7 @@ In describing our methodology, we first focus on the problem of phrasal
 translation, adding in the source-side context component. This shall be done
 using discriminative classifiers. Then we address how this can be integrated into a
 phrase-based Statistical Machine Translation decoder, which takes care of
-the ordering aspect. 
+the ordering aspect.
 
 
 \subsection{Modelling source-side context with classifiers}
@@ -327,7 +327,7 @@ are tested in a fixed order, computed only once for all features. This order is
 determined using metrics such as \emph{information gain} or \emph{gain
 ratio}\footnote{This is the default that is also used in our experiments}. They
 determine the relative informativeness or disambiguating power of each feature
-and provide a ranking of all features. 
+and provide a ranking of all features.
 
 IGTree's performance relies on the differences in gain ratio between
 features. If these are small then IGTree may perform significantly below IB1
@@ -347,7 +347,7 @@ introduce precisely such a smoothing factor implicitly.
 Given a source phrase and context information, the classifier yields classes
 corresponding to target phrases, with an associated weight. After
 normalization, these can be considered a posterior distribution of
-target phrases. 
+target phrases.
 
 We focus on the modelling of local context, i.e. words in the
 immediate vicinity of the source phrase. Take $w_0$ to be the first word of
@@ -429,14 +429,14 @@ vector.  The algorithm will return a list containing two-tuples $(C,t)$.  }
   \For {$i \in (M_{\text{source}}[s] \cap M_{\text{target}}[t])$}
     \For{$j \in M_{\text{source}}[s][i]$}
         \State $C \gets \langle w_{i,j-n} \ldots w_{i,j-1}, s, w_{i,j+|s|+1} \ldots w_{i,j+|s|+m} \rangle$
-        \State \Call{instances.append}{$(C, t)$} 
+        \State \Call{instances.append}{$(C, t)$}
       \EndFor
   \EndFor
 \EndFor \\
 \Return{instances}
 \end{algorithmic}
 \end{algorithm}
-    
+
 \noindent
 This algorithm is implemented in \emph{colibri-mt}.
 \footnote{\url{https://github.com/proycon/colibri-mt} \\ \texttt{7abeac5a139779ab9c9c4e1b275cf801ed38c232} is the git commit that represents a fair state of the software version during this study.}
@@ -446,7 +446,7 @@ monolithic approach or in separate models for each $s$ for the classifier
 expert approach. A final training phase then computes the feature ranking and
 transforms this data into the instance base format required for TiMBL.
 
-%When extra training data for the classifier(s), 
+%When extra training data for the classifier(s),
 It may well happen that either 1) an $(s,t)$ pair only occurs once, or
 2) a pattern $s$ occurs in multiple contexts but all map to the same
 $t$. In such cases, a context-informed classifier has no added value
@@ -461,7 +461,7 @@ translation hypothesis that maximises a log-linear combination and is sought
 after in a beam-search algorithm. This log-linear combination draws from
 various models, such as a translation model (i.e. the phrase-translation
 table), a target-language model, and optionally additional models such as a
-distortion model and a word-reordering model. 
+distortion model and a word-reordering model.
 
 The SMT model is generally expressed as in Equation~\ref{eq:smtmodel}, taking
 sentence $e$ to be the translation in the target language, and $f$ to be the sentence to be
@@ -475,7 +475,7 @@ translated, in the source language.
 Bayes' rule inverts the problem into two factors\footnote{The normalisator
 denominator p(f) can be dropped as it would not alter the outcome of the
 \emph{argmax} function}, the former corresponding to the translation model, and
-the latter corresponding to the language model. 
+the latter corresponding to the language model.
 
 The translation model is a mapping of the set of source phrases ($S$) to the
 set of target phrases ($T$). Each phrase pair $(s,t)$ where $s \in S$ and $t
@@ -569,14 +569,14 @@ The score weighting of choice is applied and the data is entered into the
 altered phrase-translation table. The source phrase takes the form of a
 sequence of $(i,j)$ indices, rather than the actual words. The test data is
 replaced with a series of consecutive positions as well. These two altered data
-sets are now the input to Moses, which can now run unmodified. 
+sets are now the input to Moses, which can now run unmodified.
 
 \section{Experiments}
 \label{sec:experiments}
 
 We conduct a series of experiments to assess whether integration of
 context-informed classifiers in Statistical Machine Translation leads to
-an improvement in translation quality. 
+an improvement in translation quality.
 
 
 \subsection{Data sets}
@@ -650,7 +650,7 @@ between the system output and reference output. The score thus increases as
 more $n$-grams in the reference translation are found in the system output.
 \item \textbf{NIST} - NIST intends to improve upon BLEU. It takes into account
 how informative a particular $n$-gram is by assigning more weight to rare
-$n$-grams and less to highly-frequent $n$-grams.  
+$n$-grams and less to highly-frequent $n$-grams.
 \item \textbf{METEOR} - METEOR \citep{METEOR} also attempts to improve upon
   BLEU and attempts to emulate human judgement better. Unlike the prior
   metrics, it places emphasis on recall rather than precision.
@@ -658,7 +658,7 @@ $n$-grams and less to highly-frequent $n$-grams.
 minimum edit-distance, i.e. Levenshtein, algorithm. It counts the number of
 substitutions, insertions and deletions necessary to transform the translation
 into the reference sentence, with words as the basic unit. The lower
-the score, the more similar the translation is to the reference.  
+the score, the more similar the translation is to the reference.
 \item \textbf{Position Independent Word Error Rate (PER)} - This is a variant of the
 metric above, but here the order of the words is not taken into account. Any
 ordering of the same words will have the same score. The lower the score, the
@@ -710,7 +710,7 @@ parameter search space and thus the complexity of the problem. As a concession
 for the sake of computability, classifier parameter optimisation can be considered
 independently and assessed through simpler cross-validation or leave-one-out
 methods (depending on the number of instances in the classifier expert).  This
-still introduces a significant computational bottleneck.  
+still introduces a significant computational bottleneck.
 
 Optimisation can be taken a step further by also optimising the local context
 size, i.e. the make up of the feature vector, on a by-classifier basis, as
@@ -779,24 +779,24 @@ also reported positive results.
 \begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
-\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\
 \hline
 \multicolumn{6}{|c|}{IWSLT 2006 -- Chinese$\rightarrow$English} \\
 \hline
-Baseline (replace/M/opt) & 0.2877 & 0.532 & 5.3809 & 57.33 & 47.66 \\ 
+Baseline (replace/M/opt) & 0.2877 & 0.532 & 5.3809 & 57.33 & 47.66 \\
 %l1r1 vs baseline: System 1 BLEU better: 4908 / 5000 = 0.9816 -- BLEU SIGNIFICANT at p = 0.05
 l1r1 (monolithic/replace/opt/tribl2) & 0.2959$*$ & 0.5306 & 5.5294 & 55.69 & 46.41 \\
 %System 1 BLEU better: 4957 / 5000 = 0.9914 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (experts/replace/opt/ib1) & 0.2978$*$ & \textbf{0.5339} & 5.5313 & 55.66 & 46.33 \\ 
+l1r1 (experts/replace/opt/ib1) & 0.2978$*$ & \textbf{0.5339} & 5.5313 & 55.66 & 46.33 \\
 %System 1 BLEU better: 4781 / 5000 = 0.9562 -- BLEU SIGNIFICANT at p = 0.05
-l2r1 (monolithic/replace/opt/tribl2) & 0.2941$*$ & 0.5305 & 5.5192 & 55.29 & 46.23 \\ 
+l2r1 (monolithic/replace/opt/tribl2) & 0.2941$*$ & 0.5305 & 5.5192 & 55.29 & 46.23 \\
 %System 1 BLEU better: 4847 / 5000 = 0.9694 -- BLEU SIGNIFICANT at p = 0.0
-l2r1 (experts/replace/opt/ib1) & 0.2955$*$ & 0.5338 & 5.5391 & 55.53 & 46.23 \\ 
+l2r1 (experts/replace/opt/ib1) & 0.2955$*$ & 0.5338 & 5.5391 & 55.53 & 46.23 \\
 %System 1 BLEU better: 4941 / 5000 = 0.9882 -- BLEU SIGNIFICANT at p = 0.05
-l2r2 (monolithic/replace/opt/tribl2) & 0.2968$*$ & 0.5281 & \textbf{5.5493} & \textbf{55.10} & \textbf{46.09} \\ 
-l2r2 (experts/replace/opt/ib1) & \textbf{0.2986}$*$ & 0.5304 & 5.5467 & 55.47 & 46.36 \\ 
-l3r3 (monolithic/replace/opt/tribl2) & 0.2962$*$ & 0.5275 & 5.5364 & 55.26 & 46.36 \\ 
-l3r3 (experts/replace/opt/ib1) & 0.2950$*$ & 0.5328 & 5.5433 & 55.66 & 46.41 \\ 
+l2r2 (monolithic/replace/opt/tribl2) & 0.2968$*$ & 0.5281 & \textbf{5.5493} & \textbf{55.10} & \textbf{46.09} \\
+l2r2 (experts/replace/opt/ib1) & \textbf{0.2986}$*$ & 0.5304 & 5.5467 & 55.47 & 46.36 \\
+l3r3 (monolithic/replace/opt/tribl2) & 0.2962$*$ & 0.5275 & 5.5364 & 55.26 & 46.36 \\
+l3r3 (experts/replace/opt/ib1) & 0.2950$*$ & 0.5328 & 5.5433 & 55.66 & 46.41 \\
 \hline
 \end{tabular}
 \caption{Results for Chinese to English on IWSLT 2006 Evaluation Campaign data.
@@ -827,7 +827,7 @@ context-informed classifiers may indeed be beneficial, all variants perform
 significantly better than the baseline in terms of BLEU.  The highest results
 are attained with a configuration of two words to the left and two words to the
 right, but the results from the various context configurations are fairly
-close.  
+close.
 
 This positive conclusion, however, can not be easily generalised.
 Table~\ref{tab:europarl250k}, for example, presents a more scattered image,
@@ -841,18 +841,18 @@ baseline.
 \begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
-\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\
 \hline
 \multicolumn{6}{|c|}{europarl250k-nl-en} \\
-\hline 
-Baseline (replace/M/opt) & \textbf{0.2801} & \textbf{0.5181} & 7.4274 & 63.40 & 45.0 \\ 
-l1r1 (monolithic/replace/opt/tribl2) & \textbf{0.2801} & \textbf{0.5181} & 7.4274 & 63.40 & 45.0 \\ 
-l2r1 (monolithic/replace/opt/tribl2) & 0.2713 & 0.509 & 7.4168 & 63.08 & 45.01 \\ 
-l2r1 (experts/replace/opt/ib1) & 0.2722 & 0.5105 & \textbf{7.4344} & 63.05 & \textbf{44.94} \\ 
-l2r2 (monolithic/replace/opt/tribl2) & 0.2696 & 0.5078 & 7.4025 & 63.18 & 45.07 \\ 
-l2r2 (experts/replace/opt/ib1) & 0.271 & 0.5095 & 7.423 & \textbf{63.04} & 44.98 \\ 
-l3r3 (monolithic/replace/opt/tribl2) & 0.2673 & 0.5061 & 7.3826 & 63.29 & 45.16 \\ 
-l3r3 (experts/replace/opt/ib1) & 0.268 & 0.5069 & 7.3879 & 63.18 & 45.1 \\ 
+\hline
+Baseline (replace/M/opt) & \textbf{0.2801} & \textbf{0.5181} & 7.4274 & 63.40 & 45.0 \\
+l1r1 (monolithic/replace/opt/tribl2) & \textbf{0.2801} & \textbf{0.5181} & 7.4274 & 63.40 & 45.0 \\
+l2r1 (monolithic/replace/opt/tribl2) & 0.2713 & 0.509 & 7.4168 & 63.08 & 45.01 \\
+l2r1 (experts/replace/opt/ib1) & 0.2722 & 0.5105 & \textbf{7.4344} & 63.05 & \textbf{44.94} \\
+l2r2 (monolithic/replace/opt/tribl2) & 0.2696 & 0.5078 & 7.4025 & 63.18 & 45.07 \\
+l2r2 (experts/replace/opt/ib1) & 0.271 & 0.5095 & 7.423 & \textbf{63.04} & 44.98 \\
+l3r3 (monolithic/replace/opt/tribl2) & 0.2673 & 0.5061 & 7.3826 & 63.29 & 45.16 \\
+l3r3 (experts/replace/opt/ib1) & 0.268 & 0.5069 & 7.3879 & 63.18 & 45.1 \\
 \hline
 \end{tabular}
 \caption{Results on Europarl 250k, Dutch to English}
@@ -866,21 +866,21 @@ l3r3 (experts/replace/opt/ib1) & 0.268 & 0.5069 & 7.3879 & 63.18 & 45.1 \\
 \begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
-\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\
 \hline
 \multicolumn{6}{|c|}{IWSLT 2012 -- Dutch$\rightarrow$English} \\
-\hline 
-\hline 
-Baseline (replace/M/opt) & 0.3014 & \textbf{0.5577} & 7.2676 & 52.91 & 39.98 \\ 
-l1r1 (monolithic/replace/opt/tribl2) & 0.3008 & 0.5526 & 7.3201 & 52.17 & 39.57 \\ 
+\hline
+\hline
+Baseline (replace/M/opt) & 0.3014 & \textbf{0.5577} & 7.2676 & 52.91 & 39.98 \\
+l1r1 (monolithic/replace/opt/tribl2) & 0.3008 & 0.5526 & 7.3201 & 52.17 & 39.57 \\
 %System 1 BLEU better: 2894 / 5000 = 0.5788
-l1r1 (experts/replace/opt/ib1) & \textbf{0.3018} & 0.5536 & 7.3195 & 52.23 & 39.52 \\ 
-l2r1 (monolithic/replace/opt/tribl2) & 0.2997 & 0.5521 & 7.3253 & 52.1 & 39.48 \\ 
-l2r1 (experts/replace/opt/ib1) & 0.3007 & 0.5532 & 7.3286 & 52.14 & 39.5 \\ 
-l2r2 (monolithic/replace/opt/tribl2) & 0.3000 & 0.5516 & 7.3303 & 51.99 & 39.49 \\ 
-l2r2 (experts/replace/opt/ib1) & 0.3009 & 0.5529 & \textbf{7.3355} & 51.98 & \textbf{39.44} \\ 
-l3r3 (monolithic/replace/opt/tribl2) & 0.2994 & 0.5497 & 7.3264 & \textbf{51.92} & 39.57 \\ 
-l3r3 (experts/replace/opt/ib1) & 0.2995 & 0.5498 & 7.3243 & 51.96 & 39.57 \\ 
+l1r1 (experts/replace/opt/ib1) & \textbf{0.3018} & 0.5536 & 7.3195 & 52.23 & 39.52 \\
+l2r1 (monolithic/replace/opt/tribl2) & 0.2997 & 0.5521 & 7.3253 & 52.1 & 39.48 \\
+l2r1 (experts/replace/opt/ib1) & 0.3007 & 0.5532 & 7.3286 & 52.14 & 39.5 \\
+l2r2 (monolithic/replace/opt/tribl2) & 0.3000 & 0.5516 & 7.3303 & 51.99 & 39.49 \\
+l2r2 (experts/replace/opt/ib1) & 0.3009 & 0.5529 & \textbf{7.3355} & 51.98 & \textbf{39.44} \\
+l3r3 (monolithic/replace/opt/tribl2) & 0.2994 & 0.5497 & 7.3264 & \textbf{51.92} & 39.57 \\
+l3r3 (experts/replace/opt/ib1) & 0.2995 & 0.5498 & 7.3243 & 51.96 & 39.57 \\
 \hline
 \end{tabular}
 \caption{Results on IWSLT 2012, Dutch to English}
@@ -891,7 +891,7 @@ l3r3 (experts/replace/opt/ib1) & 0.2995 & 0.5498 & 7.3243 & 51.96 & 39.57 \\
 
 We observe a high degree of variability between our various experiments.
 Conclusions drawn from one dataset cannot be generalised.
-Further experiments in this section will underline this observation. 
+Further experiments in this section will underline this observation.
 
 The EMEA corpus (Table~\ref{tab:emea}) shows the most positive results. The JRC
 Acquis corpus (Table~\ref{tab:jrc250k}) also shows positive results, although by a small
@@ -905,35 +905,35 @@ defaults for the other components.
 \begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
-\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\
 \hline
 \multicolumn{6}{|c|}{EMEA-en-es} \\
 \hline
-Baseline (replace/M/uni) & 0.6771 & 0.7617 & 12.0214 & 30.87 & 24.23 \\ 
+Baseline (replace/M/uni) & 0.6771 & 0.7617 & 12.0214 & 30.87 & 24.23 \\
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.6935}$*$ & \textbf{0.7726} & \textbf{12.3003} & \textbf{29.39} & \textbf{22.97} \\ 
+l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.6935}$*$ & \textbf{0.7726} & \textbf{12.3003} & \textbf{29.39} & \textbf{22.97} \\
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (experts/replace/uni/ib1) & 0.6895$*$ & 0.7698 & 12.2273 & 29.76 & 23.34 \\ 
-\hline 
-Baseline (append/M/uni) & 0.6826 & 0.7651 & 12.1423 & 30.10 & 23.64 \\ 
+l1r1 (experts/replace/uni/ib1) & 0.6895$*$ & 0.7698 & 12.2273 & 29.76 & 23.34 \\
+\hline
+Baseline (append/M/uni) & 0.6826 & 0.7651 & 12.1423 & 30.10 & 23.64 \\
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (monolithic/append/uni/tribl2) & \textbf{0.6973}$*$ & \textbf{0.7747} & \textbf{12.3746} & \textbf{28.77} & \textbf{22.58} \\ 
+l1r1 (monolithic/append/uni/tribl2) & \textbf{0.6973}$*$ & \textbf{0.7747} & \textbf{12.3746} & \textbf{28.77} & \textbf{22.58} \\
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (experts/append/uni/ib1) & 0.6938$*$ & 0.7723 & 12.317 & 29.13 & 22.85 \\ 
+l1r1 (experts/append/uni/ib1) & 0.6938$*$ & 0.7723 & 12.317 & 29.13 & 22.85 \\
 \hline
 \multicolumn{6}{|c|}{EMEA-en-nl} \\
 \hline
-Baseline (replace/M/uni) & 0.6612 & 0.7502 & 11.5287 & 32.77 & 26.22 \\ 
+Baseline (replace/M/uni) & 0.6612 & 0.7502 & 11.5287 & 32.77 & 26.22 \\
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.6725}$*$ & \textbf{0.7572} & \textbf{11.7539} & \textbf{31.62} & \textbf{25.27} \\ 
+l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.6725}$*$ & \textbf{0.7572} & \textbf{11.7539} & \textbf{31.62} & \textbf{25.27} \\
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (experts/replace/uni/ib1) & 0.6697$*$ & 0.7552 & 11.7028 & 31.88 & 25.52 \\ 
-\hline 
-Baseline (append/M/uni) & 0.6646 & 0.7525 & 11.6214 & 32.27 & 25.81 \\ 
+l1r1 (experts/replace/uni/ib1) & 0.6697$*$ & 0.7552 & 11.7028 & 31.88 & 25.52 \\
+\hline
+Baseline (append/M/uni) & 0.6646 & 0.7525 & 11.6214 & 32.27 & 25.81 \\
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (monolithic/append/uni/tribl2) & \textbf{0.6743}$*$ & \textbf{0.7587} & \textbf{11.8008} & \textbf{31.38} & \textbf{25.07} \\ 
+l1r1 (monolithic/append/uni/tribl2) & \textbf{0.6743}$*$ & \textbf{0.7587} & \textbf{11.8008} & \textbf{31.38} & \textbf{25.07} \\
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (experts/append/uni/ib1) & 0.6718$*$ & 0.7567 & 11.7539 & 31.60 & 25.32 \\ 
+l1r1 (experts/append/uni/ib1) & 0.6718$*$ & 0.7567 & 11.7539 & 31.60 & 25.32 \\
 \hline
 \end{tabular}
 \caption{Results on EMEA, English to Spanish and English to Dutch}
@@ -948,33 +948,33 @@ l1r1 (experts/append/uni/ib1) & 0.6718$*$ & 0.7567 & 11.7539 & 31.60 & 25.32 \\
 \begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
-\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\
 \hline
 \multicolumn{6}{|c|}{JRC250k-en-es (sample 1)} \\
-\hline 
-Baseline (replace/M/uni) & 0.4510 & 0.6241 & 9.6386 & 47.02 & 31.41 \\ 
+\hline
+Baseline (replace/M/uni) & 0.4510 & 0.6241 & 9.6386 & 47.02 & 31.41 \\
 
-l1r1 (monolithic/replace/uni/tribl2) & 0.4503 & 0.6240 & \textbf{9.7726} & \textbf{46.25} & \textbf{30.88} \\ 
-l1r1 (experts/replace/uni/ib1) & \textbf{0.4513} & \textbf{0.6243} & 9.7619 & 46.31 & 30.91 \\ 
-\hline 
-Baseline (append/M/uni) & 0.4526 & 0.6242 & 9.8183 & 45.82 & 30.78 \\ 
-l1r1 (monolithic/append/uni/tribl2) & 0.4513 & 0.6237 & 9.8741 & 45.54 & 30.66 \\ 
+l1r1 (monolithic/replace/uni/tribl2) & 0.4503 & 0.6240 & \textbf{9.7726} & \textbf{46.25} & \textbf{30.88} \\
+l1r1 (experts/replace/uni/ib1) & \textbf{0.4513} & \textbf{0.6243} & 9.7619 & 46.31 & 30.91 \\
+\hline
+Baseline (append/M/uni) & 0.4526 & 0.6242 & 9.8183 & 45.82 & 30.78 \\
+l1r1 (monolithic/append/uni/tribl2) & 0.4513 & 0.6237 & 9.8741 & 45.54 & 30.66 \\
 %System 1 BLEU better: 3089 / 5000 = 0.6178
-l1r1 (experts/append/uni/ib1) & \textbf{0.4527} & \textbf{0.6244} & \textbf{9.8839} & \textbf{45.48} & \textbf{30.61} \\ 
+l1r1 (experts/append/uni/ib1) & \textbf{0.4527} & \textbf{0.6244} & \textbf{9.8839} & \textbf{45.48} & \textbf{30.61} \\
 \hline
 \multicolumn{6}{|c|}{JRC250k2-en-es (sample 2)} \\
 \hline
-Baseline (replace/M/uni) & 0.5268 & 0.6718 & 10.7683 & 40.37 & 26.73 \\ 
+Baseline (replace/M/uni) & 0.5268 & 0.6718 & 10.7683 & 40.37 & 26.73 \\
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.5309}$*$ & \textbf{0.6755} & \textbf{10.9422} & \textbf{39.55} & \textbf{26.07} \\ 
+l1r1 (monolithic/replace/uni/tribl2) & \textbf{0.5309}$*$ & \textbf{0.6755} & \textbf{10.9422} & \textbf{39.55} & \textbf{26.07} \\
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (experts/replace/uni/ib1) & 0.5293$*$ & 0.6744 & 10.9004 & 39.73 & 26.19 \\ 
-\hline 
-Baseline (append/M/uni) & 0.5289 & 0.6733 & 10.905 & 39.60 & 26.28 \\ 
+l1r1 (experts/replace/uni/ib1) & 0.5293$*$ & 0.6744 & 10.9004 & 39.73 & 26.19 \\
+\hline
+Baseline (append/M/uni) & 0.5289 & 0.6733 & 10.905 & 39.60 & 26.28 \\
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (monolithic/append/uni/tribl2) & \textbf{0.5307}$*$ & \textbf{0.6755} & \textbf{11.0163} & \textbf{39.12} & \textbf{25.91} \\ 
+l1r1 (monolithic/append/uni/tribl2) & \textbf{0.5307}$*$ & \textbf{0.6755} & \textbf{11.0163} & \textbf{39.12} & \textbf{25.91} \\
 %System 1 BLEU better: 5000 / 5000 = 1 -- BLEU SIGNIFICANT at p = 0.05
-l1r1 (experts/append/uni/ib1) & 0.5304$*$ & 0.6749 & 10.9971 & 39.18 & 25.99 \\ 
+l1r1 (experts/append/uni/ib1) & 0.5304$*$ & 0.6749 & 10.9971 & 39.18 & 25.99 \\
 \hline
 \end{tabular}
 \caption{Results on two independent samples of JRC-Acquis (both containing 250000 sentences), English to Spanish}
@@ -1075,25 +1075,25 @@ expected, we were unable to exceed the non-context-informed baseline.
 \begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
-\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\
 \hline
 \multicolumn{6}{|c|}{Fryske Akademy -- Frisian$\rightarrow$Dutch} \\
-\hline 
-Baseline (replace/M/opt) & \textbf{0.5572} & \textbf{0.7084} & \textbf{10.3162} & \textbf{29.86} & \textbf{24.73} \\ 
-l1r1 (monolithic/replace/opt/tribl2) & 0.5544 & 0.7066 & 10.2967 & 30.08 & 24.91 \\ 
-l1r1 (experts/replace/opt/ib1) & 0.5566 & 0.7077 & 10.3136 & 29.96 & 24.81 \\ 
+\hline
+Baseline (replace/M/opt) & \textbf{0.5572} & \textbf{0.7084} & \textbf{10.3162} & \textbf{29.86} & \textbf{24.73} \\
+l1r1 (monolithic/replace/opt/tribl2) & 0.5544 & 0.7066 & 10.2967 & 30.08 & 24.91 \\
+l1r1 (experts/replace/opt/ib1) & 0.5566 & 0.7077 & 10.3136 & 29.96 & 24.81 \\
 \hline
 \multicolumn{6}{|c|}{Fryske Akademy -- Dutch$\rightarrow$Frisian} \\
 \hline
-Baseline (replace/M/opt) & \textbf{0.5222} & \textbf{0.6911} & \textbf{9.9762} & \textbf{32.68} & \textbf{27.28} \\ 
-l1r1 (monolithic/replace/opt/tribl2) & 0.5154 & 0.6857 & 9.9122 & 33.09 & 27.71 \\ 
-l1r1 (experts/replace/opt/ib1) & 0.5164 & 0.6869 & 9.9258 & 33.00 & 27.59 \\ 
-l2r1 (monolithic/replace/opt/tribl2) & 0.5145 & 0.6849 & 9.8992 & 33.16 & 27.78 \\ 
-l2r1 (experts/replace/opt/ib1) & 0.5155 & 0.6864 & 9.9110 & 33.05 & 27.65 \\ 
-l2r2 (monolithic/replace/opt/tribl2) & 0.5130 & 0.6841 & 9.8885 & 33.28 & 27.84 \\ 
-l2r2 (experts/replace/opt/ib1) & 0.5157 & 0.6866 & 9.9159 & 33.05 & 27.61 \\ 
-l3r3 (monolithic/replace/opt/tribl2) & 0.5114 & 0.6832 & 9.8656 & 33.41 & 27.97 \\ 
-l3r3 (experts/replace/opt/ib1) & 0.5134 & 0.6852 & 9.8908 & 33.21 & 27.79 \\ 
+Baseline (replace/M/opt) & \textbf{0.5222} & \textbf{0.6911} & \textbf{9.9762} & \textbf{32.68} & \textbf{27.28} \\
+l1r1 (monolithic/replace/opt/tribl2) & 0.5154 & 0.6857 & 9.9122 & 33.09 & 27.71 \\
+l1r1 (experts/replace/opt/ib1) & 0.5164 & 0.6869 & 9.9258 & 33.00 & 27.59 \\
+l2r1 (monolithic/replace/opt/tribl2) & 0.5145 & 0.6849 & 9.8992 & 33.16 & 27.78 \\
+l2r1 (experts/replace/opt/ib1) & 0.5155 & 0.6864 & 9.9110 & 33.05 & 27.65 \\
+l2r2 (monolithic/replace/opt/tribl2) & 0.5130 & 0.6841 & 9.8885 & 33.28 & 27.84 \\
+l2r2 (experts/replace/opt/ib1) & 0.5157 & 0.6866 & 9.9159 & 33.05 & 27.61 \\
+l3r3 (monolithic/replace/opt/tribl2) & 0.5114 & 0.6832 & 9.8656 & 33.41 & 27.97 \\
+l3r3 (experts/replace/opt/ib1) & 0.5134 & 0.6852 & 9.8908 & 33.21 & 27.79 \\
 \hline
 \end{tabular}
 \caption{Results on the Frisian-Dutch parallel corpus}
@@ -1125,7 +1125,7 @@ depends strongly on the language pair. A possible hypothesis here is that
 source-side context modelling stands to gain most when translating from
 morphologically simpler languages to morphologically richer languages, as the
 source-side context information may help in determining the proper
-morphological form. 
+morphological form.
 
 We test this hypothesis by conducting two experiments. All of the positive
 results hitherto have been on language pairs in which the target language was
@@ -1144,19 +1144,19 @@ another data set.
 \begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
-\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\
 \hline
 \multicolumn{6}{c}{Europarl 250k - English $\rightarrow$ Spanish} \\
-\hline 
-Baseline (replace/M/opt) & \textbf{0.3424} & \textbf{0.5718} & 7.9896 & 53.64 & 39.2 \\ 
-l1r1 (monolithic/replace/opt/tribl2) & 0.3360 & 0.5666 & 7.9981 & 53.60 & 39.27 \\ 
-l1r1 (experts/replace/opt/ib1) & 0.3380 & 0.5677 & \textbf{8.0165} & \textbf{53.48} & \textbf{39.19} \\ 
-l2r1 (monolithic/replace/opt/tribl2) & 0.3344 & 0.5651 & 7.9930 & 53.63 & 39.3 \\ 
-l2r1 (experts/replace/opt/ib1) & 0.3357 & 0.5664 & 8.0086 & 53.51 & 39.23 \\ 
-l2r2 (monolithic/replace/opt/tribl2) & 0.3325 & 0.5639 & 7.9843 & 53.60 & 39.36 \\ 
-l2r2 (experts/replace/opt/ib1) & 0.3345 & 0.5649 & 8.000 & 53.55 & 39.32 \\ 
-l3r3 (monolithic/replace/opt/tribl2) & 0.3290 & 0.5611 & 7.9518 & 53.74 & 39.61 \\ 
-l3r3 (experts/replace/opt/ib1) & 0.3298 & 0.5620 & 7.9593 & 53.79 & 39.57 \\ 
+\hline
+Baseline (replace/M/opt) & \textbf{0.3424} & \textbf{0.5718} & 7.9896 & 53.64 & 39.2 \\
+l1r1 (monolithic/replace/opt/tribl2) & 0.3360 & 0.5666 & 7.9981 & 53.60 & 39.27 \\
+l1r1 (experts/replace/opt/ib1) & 0.3380 & 0.5677 & \textbf{8.0165} & \textbf{53.48} & \textbf{39.19} \\
+l2r1 (monolithic/replace/opt/tribl2) & 0.3344 & 0.5651 & 7.9930 & 53.63 & 39.3 \\
+l2r1 (experts/replace/opt/ib1) & 0.3357 & 0.5664 & 8.0086 & 53.51 & 39.23 \\
+l2r2 (monolithic/replace/opt/tribl2) & 0.3325 & 0.5639 & 7.9843 & 53.60 & 39.36 \\
+l2r2 (experts/replace/opt/ib1) & 0.3345 & 0.5649 & 8.000 & 53.55 & 39.32 \\
+l3r3 (monolithic/replace/opt/tribl2) & 0.3290 & 0.5611 & 7.9518 & 53.74 & 39.61 \\
+l3r3 (experts/replace/opt/ib1) & 0.3298 & 0.5620 & 7.9593 & 53.79 & 39.57 \\
 \hline
 \end{tabular}
 \caption{Results on Europarl 250k - English to Spanish}
@@ -1174,12 +1174,12 @@ results that do not support our hypothesis.
 \begin{center}
 \begin{tabular}{|l|ccccc|}
 \hline
-\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\ 
+\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{NIST}  & \textsc{WER}  & \textsc{PER}  \\
 \hline
 \multicolumn{6}{c}{yandex1M - English $\rightarrow$ Russian} \\
 \hline
-Baseline (replace/M/opt) & \textbf{0.1179} & \textbf{0.5579} & \textbf{5.2793} & 74.65 & 63.90 \\ 
-l1r1 (monolithic/replace/opt/tribl2) & 0.1166 & 0.5568 & 5.2558 & \textbf{74.45} & \textbf{63.72} \\ 
+Baseline (replace/M/opt) & \textbf{0.1179} & \textbf{0.5579} & \textbf{5.2793} & 74.65 & 63.90 \\
+l1r1 (monolithic/replace/opt/tribl2) & 0.1166 & 0.5568 & 5.2558 & \textbf{74.45} & \textbf{63.72} \\
 \hline
 \end{tabular}
 \caption{Results on Yandex1M - English to Russian}
@@ -1274,7 +1274,7 @@ partially shown, with fewer than 100 instances. Only a small subset of
 these experts has more than one translation option, seen by the small
 amount of red in the right half of Figure~\ref{fig:histogram}. In
 other words, most ambiguity is present in classifier experts trained on less than
-100 examples of a source phrase in different contexts. 
+100 examples of a source phrase in different contexts.
 %having few translations options, i.e classes, and an immediate sharp drop in
 %frequency as the number of instances or classes increases.
 
@@ -1324,7 +1324,7 @@ JRC-Acquis (Table~\ref{tab:jrc250k}), we see a conflicting image. One sample
 confirms our hypothesis that the classifier experts are better, whereas in the
 other the monolithic classifier has the upper-hand. Moreover, when we look at
 the EMEA data (Table~\ref{tab:emea}), where we had the most significant gains
-above baseline, we find the monolithic system strongest. 
+above baseline, we find the monolithic system strongest.
 
 Despite the results not being unanimous, the case for the classifier experts is
 strong and can be motivated by the fact that feature weights are computed on a
@@ -1364,7 +1364,7 @@ functionally equivalent to just assigning double weight to the feature.
 
 A comparison is complicated by the fact that the $p(t|s,C)$ score is often simply
 equal to the $p(t|s)$ score, by definition so for any source phrases for which no
-classifier was needed, due to not being ambiguous in translation or context. 
+classifier was needed, due to not being ambiguous in translation or context.
 
 We can therefore not draw any satisfactory conclusions on the merit of the
 \emph{append} method versus the \emph{replace} method, given the experiments we
@@ -1381,7 +1381,7 @@ context-informed translation probability and the non-context informed one as
 per Equation~\ref{eqn:scorediff}.
 
 \begin{equation}
-  \Delta = 
+  \Delta =
 \begin{cases}
  \frac{p(t|s,C)}{p(t|s)} - 1, & \text{if } p(t|s,C) \geq p(t|s)  \\
  -(\frac{p(t|s)}{p(t|s,C)} - 1), & \text{otherwise}
@@ -1432,7 +1432,7 @@ it is difficult to make a difference. Nevertheless, $22\%$ differs and results
 in a net gain in translation performance, as seen in Table~\ref{tab:emea}.
 
 The next few examples will show some comparisons in which the context-informed
-improves over the baseline. 
+improves over the baseline.
 
 Example~\ref{ex:QAsynonym} shows three examples of the selection of a better
 translation given the context, matching with the reference translation, even
@@ -1451,7 +1451,7 @@ phrase in the context.
 \textbf{Baseline:} Baraclude reduce la cantidad de virus en su \underline{cuerpo} y mejora el estado del hígado . \\
 \textbf{l1r1:} Baraclude reduce la cantidad de virus en su \underline{organismo} y mejora el estado del hígado  \\
 \textbf{Reference:} Baraclude reduce la cantidad de virus en su \underline{organismo} y mejora el estado del hígado .
-\\ 
+\\
 \noindent\makebox[\linewidth]{\rule{\linewidth}{0.4pt}}
 \textbf{Baseline:} Como consecuencia , el fenilbutirato de sodio , reduce \underline{los niveles plasmáticos} de amonio y glutamina en pacientes con trastornos del ciclo de la urea . \\
 \textbf{l1r1:} Como consecuencia , el fenilbutirato de sodio reduce \underline{las concentraciones plasmáticas elevadas} de amonio y glutamina en pacientes con trastornos del ciclo de la urea .  \\
@@ -1503,7 +1503,7 @@ was not available in this study.
 \end{exe}
 
 
-\section{Conclusions and Discussion} 
+\section{Conclusions and Discussion}
 \label{sec:conclusion}
 
 We have conducted numerous experiments to assess whether surface-form
@@ -1547,7 +1547,7 @@ quality. It is likely that improvement can be more easily achieved through for
 example optimisation of the target-side language model.
 
 Finally, we would like to focus on why the results of our study
-overall do not exceed above the baseline.  There may be an explanation for this
+overall do not exceed the baseline.  There may be an explanation for this
 if we look at the interplay between the SMT decoder and the classifiers. The
 classifier instances are generated with the phrase-translation table as input,
 looking up the context in the corpus. There will therefore never be phrases in
@@ -1569,7 +1569,7 @@ integral part of the phrase.  The target-language model already plays an
 important role here, as it encourages the decoder to choose translation options
 that fit well together. Source-side context modelling, without additional
 linguistic features, seems to only have something to offer for highly formulaic
-corpora. 
+corpora.
 
 
 \bibliographystyle{spbasic}
