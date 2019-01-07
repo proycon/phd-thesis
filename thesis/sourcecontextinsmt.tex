@@ -191,7 +191,7 @@ test. We attempt to reproduce the Chinese--English experiment in this study,
 \cite{CarpuatWu07} also based their research on the same data.
 
 Source-context aware translation has also been attempted outside of the
-predominant SMT framework. For instance, \cite{MBMT} implement a
+predominant SMT paradigm. For instance, \cite{MBMT} implement a
 form of example-based machine translation that is word-based and relies
 chiefly on classifiers for the translation model component. Two studies derive
 from the same concept while transcending a word-based paradigm:
@@ -245,7 +245,7 @@ implementation of $k$-Nearest Neighbour classification; IGTree
 thereof; and TRIBL2, a hybrid between IB1 and IGTree.
 
 These algorithms are all implemented in the software package TiMBL
-\citep{TIMBL}\footnote{\url{http://languagemachines.github.io/timbl}, version 6.4.5 is the
+\citep{TIMBL}\footnote{\url{https://languagemachines.github.io/timbl}, version 6.4.5 is the
 version we used.} and are well-suited for symbolic data and highly multivariate
 class spaces.  Moreover, memory-based classification has been a successful
 method in the field of Word Sense Disambiguation \citep{SENSEVAL2}, and as
@@ -346,7 +346,7 @@ phrase to the locations in the corpus where it occurs.  Additionally, a reverse
 index is included in the model for the target-side of the corpus, which maps
 any given $(sentence, token)$ position to a set of phrases that begins at that
 position.  This is computed using the software package
-\emph{colibri-core},\footnote{\url{http://proycon.github.io/colibri-core},
+\emph{colibri-core},\footnote{\url{https://proycon.github.io/colibri-core},
 release v2.1.2 represents a fair state of the software version during this study, although some experiments were conducted with older versions}, as introduced in
 Chapter~\ref{chap:coco},  which takes care of a losslessly compressed in-memory
 representation for all phrases, and allows us to cope with large corpora. Given
@@ -409,7 +409,7 @@ translated, in the source language.
 \label{eq:smtmodel}
 \end{equation}
 
-Bayes' rule inverts the problem into two factors\footnote{The normalisator
+Bayes' rule inverts the problem into two factors\footnote{The normalisation
 denominator p(f) can be dropped as it would not alter the outcome of the
 \emph{argmax} function}, the former corresponding to the translation model, and
 the latter corresponding to the language model.
@@ -521,7 +521,7 @@ an improvement in translation quality.
 For the translation model, we rely on a parallel corpus as our main source of
 input. Whenever the source is untokenised, we tokenise the data using
 \emph{ucto}.\footnote{An open-source regular-expression based tokeniser with
-unicode support, \url{http://languagemachines.github.io/ucto}, we used version 0.7.0} For the language model, we
+unicode support, \url{https://languagemachines.github.io/ucto}, we used version 0.7.0} For the language model, we
 simply reuse the target-side portion of the parallel corpus; we do not
 introduce additional data for the language model in our experiments.
 
