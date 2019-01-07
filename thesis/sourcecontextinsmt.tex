@@ -387,7 +387,9 @@ transforms this data into the instance base format required for TiMBL.
 It may well happen that either 1) an $(s,t)$ pair only occurs once, or
 2) a pattern $s$ occurs in multiple contexts but all map to the same
 $t$. In such cases, a context-informed classifier has no added value
-and therefore such instances are omitted from the training data.
+and therefore such instances are omitted from the training data, i.e. they are not included in case of the monolithic
+classifier or a classifier expert for them is not generated, meaning the classifier bypass is not needed for such
+instances and normal behaviour suffices.
 
 \subsection{Integration in an SMT Decoder}
 \label{sec:smtintegration}
@@ -1064,7 +1066,9 @@ IWSLT 2006 & Chinese$\rightarrow$English & l1r1  \footnotesize{(mono/replace)}& 
 \hline
 \end{tabular}}
 \caption{The number of phrases in the context-informed test output that are not
-in the non-context-informed baseline.}
+in the non-context-informed baseline. We measure both the number of differing phrase pairs (as a fraction of all phrase
+pairs), as well as the number of differing source phrases without regard for translation (as a fraction of all source
+phrases).}
 \label{tab:decodediff}
 \end{table}
 
@@ -1171,17 +1175,15 @@ replace and append methods have their own respective baselines in the result
 tables seen so far.
 
 For the append method, the $p(t|s,C)$ score is often simply
-equal to the $p(t|s)$ score, this is by definition so for any source phrases for which no
+equal to the $p(t|s)$ score. This is by definition so for any source phrases for which no
 classifier was needed, due to not being ambiguous in translation or context.
 
 As seen before, given the over-all lack of impact above baseline observed across most
 experiments, we can not draw any satisfactory conclusion on the merit of the
 \emph{append} method versus the \emph{replace} method, given the experiments we
-conducted.
-
-We can, however, use the append scoring method to provide further insight into
+conducted. We can, however, use the append scoring method to provide further insight into
 the classifier results. How often does the classifier assign a $p(t|s,C)$ that
-differs from $p(t|s)$? And how big is this difference?
+differs from $p(t|s)$, and how big is this difference?
 
 For each occurrence of each source phrase in a given test set, we gather all
 possible translations from the phrase-translation table and compute the
@@ -1202,11 +1204,12 @@ We compute this on the test data of the JRC-Acquis corpus,
 from English to Spanish, as shown in Figure~\ref{fig:scoredifference}. For
 training we used a reduced subset of $250,000$ sentences. The measurements are taken
 from the phrase-translation table directly so the decoder and optimizer plays
-no role here. Our measurement merely assesses to what extent context-informed classifiers
+no role here. Our measurement merely assesses to what extent context-informed classifiers produce an outcome that
+differs from when no context is taken into consideration.
 
 For Figure~\ref{fig:scoredifference}, we set up bins of size 0.1, so each point
 on the $x$ axis aggregates results of the specified $\Delta \pm 0.05$. A
-value of zero indicates there is no difference whatsoever, this includes all
+value of zero indicates there is no difference whatsoever. This includes all
 source phrases where either translation or context are unambiguous. A spike and
 outlier can be observed at this point, covering $9\%$ of
 all phrase-pairs. We observe that the positive side of the graph drops much
@@ -1248,7 +1251,7 @@ this leads to sub-optimal translation quality, it ensures we compare only the
 effect of the classifier rather than of the optimiser. Out of $5,000$ sentences
 in the test set, $3,863$ ($77\%$) are translated identically. This high number
 again shows that it is difficult to make a difference. Nevertheless, $23\%$
-differs.
+of the test sentences are translated differently.
 
 The next few examples will show some comparisons in which the context-informed
 system improves over the baseline.
@@ -1257,7 +1260,7 @@ Example~\ref{ex:QAsynonym} shows three examples of the selection of a better
 translation given the context, matching with the reference translation, even
 though the baseline translation could be considered correct as well. This is
 the most common type of difference. Example~\ref{ex:QAdrop} shows the dropping
-of a word. Example~\ref{ex:QAgrammar} shows selection of a grammatically better
+of a word. Example~\ref{ex:QAgrammar} illustrates the selection of a grammatically better
 phrase in the context.
 
 

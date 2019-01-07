@@ -36,12 +36,11 @@ WSD task our linguistically-uninformed classifiers easily surpass the
 non-context-informed baselines. In other words, for this task, we find evidence that
 corroborates our main hypothesis and gives positive support to our first and third question.
 
-We extensively experimented with global context features at this stage, as
-opposed to local context features found in the immediate neighbourhood of the
-phrase to be translated. We found a discrepancy in results between the SemEval
-2010 and 2012 runs. Subsequent attempts in later chapters support the SemEval
-2012 findings, in which global context features do not lead to an improvement
-in translation quality.
+As for our second question, what context features prove most effective? We extensively experimented with global context
+features in addition to the local context features found in the immediate neighbourhood of the phrase to be
+translated. We found a discrepancy in results between the SemEval 2010 and 2012 runs. Subsequent attempts in later
+chapters support the SemEval 2012 findings, in which global context features do not lead to an improvement in
+translation quality. In fact, we often find most gains with a small local context window.
 
 The initial successes with translation aided by source-side context information
 led us to propose this technique for a novel application in computer-aided translation
@@ -69,7 +68,7 @@ Machine Translation, i.e. translation of whole sentences. We incorporated
 source-side context information using classifiers in the SMT decoder, using a
 bypass method. We tested various forms of integration, but found that we could
 only really improve upon the baseline for one corpus (IWSLT 2006, Chinese to
-English). All other results turned out on or below baseline, or failed to pass
+English), which was also a positive result in a previous study \citep{Stroppa+07}. All other results turned out on or below baseline, or failed to pass
 rigourous significance tests. Our main hypothesis therefore does not hold for
 full statistical machine translation. We ask ourselves why this is the case and
 suggest that that the information we attempt to explicitly model in the
