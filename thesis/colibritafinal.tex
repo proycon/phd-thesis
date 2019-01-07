@@ -55,10 +55,9 @@ Section~\ref{discuss}.
 \label{previous}
 \label{sec:participants}
 
-Six participants took part in the SemEval task by writing a translation
-assistance system. This provides an interesting basis for comparison,
-although direct comparison is complicated by the fact that the SemEval task did
-not specify a training set.
+As we have seen in Chapter~\ref{chap:semeval2014task5}, six participants took part in the SemEval task by writing a
+translation assistance system. This provides an interesting basis for comparison, although direct comparison is
+complicated by the fact that the SemEval task did not specify a training set.
 
 The study by SemEval participant \cite{CNRC} shows that a solution based on
 standard Phrase-based Statistical Machine Translation is viable strategy of
@@ -75,7 +74,7 @@ entire sentence, i.e the L1 fragment in the L2 context, to the
 decoder. The L2 context is specifically marked to be left untouched by
 the decoder, using XML syntax supported by Moses. In this XML format,
 the L2 context has its translations explicitly passed, and reordering
-walls prevent the decoder from changing the word order, leaving only
+\emph{walls} prevent the decoder from changing the word order, leaving only
 the L1 fragment to be translated. This method was proposed
 earlier in a predecessor of Moses \citep{Cabezas+05}. Consider
 Example~\ref{ex:xml} showing the XML input example from \cite{UEDIN},
@@ -113,15 +112,15 @@ directly taken from a phrase-translation table built using GIZA++
 using the {\em grow-diag-final-and}\/ algorithm.
 
 \cite{UNAL} use a classifier-based approach using Timbl \citep{TIMBL},
-which is the same memory-based classifier as used in the pilot study,
-as well as this present study. \cite{UNAL} hypothesize that the
+which is the same memory-based classifier as used in the pilot study in Chapter~\ref{chap:colibritapilot},
+and upon which we build in this chapter as well. \cite{UNAL} hypothesize that the
 relevance of the context words for determining a correct translation
 is proportional to their syntactic relatedness to the target, rather
 than their physical closeness in the sentence, a hypothesis also
 investigated by \cite{Haque+11}. \cite{UNAL} run a dependency parser
 on the data and use syntax as a feature selector rather than as a
 feature itself. This results in a feature vector of relevant
-words. However, they do not find improvement over their baseline using
+words. However, they do not find improvement over their baseline consisting of
 local context information (2 words left, 2 words right) using this
 method. This team participated only on the English -- Spanish pair,
 but they do rank second. This reconfirms that there is merit in
