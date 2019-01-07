@@ -400,9 +400,9 @@ various models, such as a translation model (i.e. the phrase-translation
 table), a target-language model, and optionally additional models such as a
 distortion model and a word-reordering model.
 
-The SMT model is generally expressed as in Equation~\ref{eq:smtmodel}, taking
-sentence $e$ to be the translation in the target language, and $f$ to be the sentence to be
-translated, in the source language.
+As you may recall from Chapter~\ref{chap:intro}, the SMT model is generally expressed as in Equation~\ref{eq:smtmodel},
+taking sentence $e$ to be the translation in the target language, and $f$ to be the sentence to be translated, in the
+source language.
 
 \begin{equation}
 \argmax_e p(e|f) = \argmax_e p(f|e)p(e)
@@ -1037,7 +1037,7 @@ are not in the baseline, implying that the SMT decoder chose a different
 source-phrase to translate than the baseline did.
 
 For this experiment, however, we had to take the optimiser out of the equation
-by optimising only once on the non-context-informed baseline, and use thise
+by optimising only once on the non-context-informed baseline, and use those
 parameters on the context-informed experiments as well. Although this leads to
 sub-optimal translation quality, it guarantees that the difference we measure
 can be attributed solely to the inclusion of context information:
@@ -1423,7 +1423,7 @@ to unequivocally surpass the baseline. The IWSLT 2006 Chinese-English data set
 was used by both \cite{CarpuatWu07}, as well as \cite{Stroppa+07}, albeit a
 different subset. The study of \cite{CarpuatWu07} reports positive results on
 this data set using various linguistic features from WSD. But most interesting
-is an experiment without linguistic feature conducted by \cite{Stroppa+07}
+is an experiment without linguistic features conducted by \cite{Stroppa+07}
 where they find positive results above baseline, which we in turn have indeed
 reproduced with the same positive result. On their other language pair
 (Italian-English) from the same dataset, however, they too fail to make a
@@ -1457,7 +1457,7 @@ are fairly localised, however, and fail to show in the evaluation metrics or
 pass significance tests. An important factor in this is the lack of multiple
 reference translations, as such datasets are unfortunately rare. More balances
 judgement could be made if we could compare against multiple reference
-translation. Moreover, in longer sentences it often occurs that a modest gain
+translations. Moreover, in longer sentences it often occurs that a modest gain
 at one place may be lost against mistranslations elsewhere.
 
 Finally, we would like to focus deeper on why the results of our study

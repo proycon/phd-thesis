@@ -2,9 +2,9 @@
 \label{chap:conclusion}
 
 In this dissertation, we posited the main hypothesis that inclusion of source-side context information, without
-linguistically informed features, benefits translation quality. We have
-assessed this question from various different angles. We set out to answer
-the following inter-related questions:
+linguistically informed features, benefits translation quality. We have assessed this question from various different
+angles. We set out to answer the following inter-related questions and have indeed largely already done so in
+Section~\ref{sec:conclusion} of Chapter~\ref{chap:sourcecontextinsmt}:
 
 \begin{enumerate}
 \item To what extent can we improve translation by considering source-side
@@ -49,7 +49,7 @@ assistance. In this task, we translate L1 fragments in an L2 context.
 In Chapter~\ref{chap:colibritapilot} we tested the feasibility of this idea and
 found our context-sensitive classifiers improve both upon a non-context informed
 baseline, as well a baseline enriched with a language model. We then
-proposed our task for SemEval 2014 in Chapter~\ref{chap:semeval2014task5}, and gain
+proposed our task for SemEval 2014 in Chapter~\ref{chap:semeval2014task5}, and attracted
 participation by six participants, some of whom achieve high results. It
 becomes apparent, specifically, that phrase-based statistical machine translation is able to
 achieve better results than pure classifier-based approaches, despite the
@@ -87,15 +87,15 @@ When it comes to classifiers and their integration in SMT, future research could
 past studies such as \cite{Rejwanul+11} have already proceeded; that of incorporating linguistic
 features. The technical foundation for such studies is well prepared in this one: The integration and score weighting methods from Chapters~\ref{chap:colibritafinal} and especially
 \ref{chap:sourcecontextinsmt} lay a foundation upon which expansions with specific linguistic features would make this a
-feasible option. We do not think, however, that this is not the most promising line of continued investigation as the
-the novelty of such further studies would be limited, depending on the type of linguistic features
+feasible option. We do not think, however, that this is a promising line of continued investigation as the
+novelty of such further studies would be limited, depending on the type of linguistic features
 investigated and the way they are incorporated. Moreover, results from participants of our SemEval task, show
 that intuitively promising linguistically-informed features, such as dependency features, do not always lead to the
 expected improvement \citep{UNAL,IUCL}.
 
 We especially have to concede that the state-of-the-art in Machine Translation has changed considerably during and after
 the years this research has taken place; techniques such as Neural Machine Translation have appeared on stage and often
-prove superior to the SMT approach we investigated. What the possibilities of source-side context in Neural Machine
+prove superior to the SMT paradigm we employed. What the possibilities of source-side context in Neural Machine
 Translation are, is already an active subject of research \citep{Jean+17,Wang+17,Bawden+17,Maruf+17}. These studies
 do mostly focus on wider discourse context than we did.
 
@@ -103,11 +103,13 @@ The academic merit of our study is primarily in deepening and closing a line of 
 source-side context information, mostly through memory-based classifiers, and integration thereof in Statistical Machine
 Translation. We have dived to considerable depth, beyond that of prior studies, to
 squeeze whatever we could out of these techniques at our disposition, and to study their interplay in various settings.
+At the same time, we subjected our experiments to high standards by testing on a wide variety of corpora, language pairs and incorporating necessary statistical significance tests.
 
-Aside from the answers to the research questions posited in this dissertation, important contributions of this PhD
-project are 1) the Colibri Core software that was developed and described in Chapter~\ref{chap:coco}, application of
-which goes well beyond what it was used for in this research; and 2) the cross-lingual translation assistance task we
-proposed in Chapter~\ref{chap:semeval2014task5} and solutions to which were extensively studied.
+Aside from the answers to the research questions provided by this dissertation, other important contributions of this
+PhD project to the scientific community and future studies are 1) the Colibri Core software that was developed and
+described in Chapter~\ref{chap:coco}, application of which goes well beyond what it was used for in this research; and
+2) the cross-lingual translation assistance task we proposed in Chapter~\ref{chap:semeval2014task5} and solutions to
+which were extensively studied.
 
 
 
