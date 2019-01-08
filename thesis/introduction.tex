@@ -372,9 +372,11 @@ We begin our research on the level of translating simple words in context, and
 gradually move up in complexity and integration with SMT throughout the
 dissertation.
 
+{\nobibliography*
 Before we can go into the matter of translation, Chapter~\ref{chap:coco} first introduces the software that was needed
-to efficiently extract patterns such as n-grams, with their context, from corpus data. This software was explicitly
-written in the scope of this research project and provides a necessary foundation that is in turn used by most of the
+to efficiently extract patterns such as n-grams, with their context, from corpus data. This chapter was published in
+``{\footnotesize\begin{NoHyper}\bibentry{COLIBRICORE}\end{NoHyper}}''. The software
+was explicitly written in the scope of this research project and provides a necessary foundation that is in turn used by most of the
 software of the remaining chapters. It is a chapter of a high technical nature that can optionally be skipped if the
 reader wishes to more quickly proceed to the heart of the matter. At the same time, the chapter offers tools that are
 applicable well beyond the present dissertation.
@@ -382,7 +384,8 @@ applicable well beyond the present dissertation.
 Chapter~\ref{chap:clwsd} introduces \emph{Cross-Lingual Word Sense
 Disambiguation} and presents a classifier-based system employing source-side
 context information. This system, when tested against competing systems, obtains the
-best or near-best accuracy.
+best or near-best accuracy. This chapter is based on two publications,
+``\begin{NoHyper}{\footnotesize\bibentry{WSD1}}'', and ``{\footnotesize\bibentry{WSD2}}\end{NoHyper}''
 
 Chapters~\ref{chap:colibritapilot},~\ref{chap:semeval2014task5}
 and~\ref{chap:colibritafinal} are strongly linked and open up a novel line of
@@ -393,24 +396,23 @@ proceeds to translate these other-language fragments to the language of the cont
 This system changes and investigates the notion of what source-side context is and may
 find practical application in Computer Assisted Translation and Computer Aided
 Language Learning. In Chapter~\ref{chap:colibritapilot} we describe a pilot study to
-assess the feasibility of the idea. It applies the lessons learned from
+assess the feasibility of the idea. This chapter is based on
+``{\footnotesize\begin{NoHyper}\bibentry{COLIBRITAPILOT}\end{NoHyper}}''. It applies the lessons learned from
 Cross-Lingual Word Sense Disambiguation (Chapter~\ref{chap:clwsd}) to a new
 task.  In chapter~\ref{chap:semeval2014task5} we
 manually construct a data set and evaluate
-the performance of several 3rd party participating systems on our data. This is set up as a shared task for the SemEval 2014 conference.
-.  In Chapter~\ref{chap:colibritafinal} we finally present our own reworked
+the performance of several 3rd party participating systems on our data. This is set up as a shared task for the SemEval
+2014 conference and was published as ``{\footnotesize\begin{NoHyper}\bibentry{SEMEVAL2014TASK5}\end{NoHyper}}''.
+ In Chapter~\ref{chap:colibritafinal} we finally present our own reworked
 ``Colibrita'' system on the basis of the pilot study and findings from the
 SemEval participants. Here we present the results and form conclusions
 regarding the role of context and the usefulness of classifiers versus
-Statistical Machine Translation techniques.
+Statistical Machine Translation techniques. This chapter also appeared in ``{\footnotesize the International Journal of Translation
+(2016), Bahri Publications}'', but was not peer-reviewed.
 
 Chapter~\ref{chap:contextinsmt} is an attempt to directly integrate source-side
 context information in Statistical Machine Translation, by means of
-memory-based classifiers.  Chapter~\ref{chap:conclusion} aggregates and
+memory-based classifiers. It has not been published and is a novel contribution to this research. Chapter~\ref{chap:conclusion} aggregates and
 summarizes the conclusions from earlier chapters, and forms a final answer to
 our research questions.
-
-With the exception of Chapter~\ref{chap:contextinsmt}, the other chapters that form the body of this dissertations are
-all based on papers that have been published in scientific journals or conference proceedings. Some modifications have
-been made to reduce redundancy and fit the over-all narrative of the dissertation, but this has been kept to a minimum.
-
+}
