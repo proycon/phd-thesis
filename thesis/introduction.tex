@@ -228,22 +228,22 @@ denominator $p(S)$ as it will be constant throughout the process.
 
 The two factors we end up with in Equation~\ref{eq:introsmt2} correspond
 precisely to the \emph{translation model} ($p(S|T)$) and \emph{language model}
-($p(t)$) respectively.
+($p(T)$) respectively.
 
 \subsubsection{Translation Model}
 
 The translation model is learned from parallel corpus data. A parallel corpus
-has the same text in two or more languages, i.e. the corpora in a parallel corpus are translated versions of one another. Early SMT systems were word-based, i.e.\ the translation model
+has the same text in two or more languages, i.e. the corpora in a parallel corpus are considered translated versions of
+one another\footnote{More accurately; often one side is the original language and the ois a translation thereof}. Early SMT systems were word-based, i.e.\ the translation model
 consisted of probabilities for word translation pairs. These systems have been
 superseded by phrase-based systems, in which multiple words at once may be
 translated as an entity \citep{PBSMT}. This allows for translations in which
-multiple words in the source language translate to just one in the target
-language, or vice versa.
+multiple words in the source language translate to a different number of words in the target language, or vice versa.
 
 The basis for training such a translation model is a parallel corpus, i.e.\ the
-same text in two languages. First a \emph{sentence alignment} is computed
+same text in two versions, i.e. two languages, carrying approximately the same meaning. First a \emph{sentence alignment} is computed
 \citep{TIEDEMANN}. This identifies sentences that are translations of each other
-through statistical means. Subsequently, a \emph{word alignment} is computed,
+through statistical likelihood estimations. Subsequently, a \emph{word alignment} is computed,
 according to a method pioneered by \cite{BROWN}. See also the work of
 \cite{OchNey2003} and \cite{TIEDEMANN}. The word alignment attempts to
 identify words that are translations of each other, by means of an
@@ -256,7 +256,7 @@ in source and respectively target language language. Associated with each pair
 are the phrase-translation probabilities $p(s|t)$ and $p(t|s)$, derived from
 the joint frequency of the pair and the individual frequencies of the parts in
 the data. Additional probabilities, such as lexical weights and word/phrase
-penalties, may be included as well.
+penalties, such as a penalty for long phrases, may be included as well.
 
 At test time, the translation probability $P(S|T)$ for a given translation
 hypothesis is estimated by computing the product over all phrase pairs that
@@ -270,9 +270,8 @@ P(S|T) = \prod_{i=1}^{n} p(s_i|t_i)^{\lambda_1} p(t_i|s_i)^{\lambda_2}
 \label{eq:introsmt3}
 \end{equation}
 
-The value of the weights $\lambda_1$ and $\lambda_2$ for the score function cannot be determined a priori,
-but has to be computed experimentally on held-out tuning data. This essentially
-comes down to trying a huge variety of parameter values and experimentally
+The values of the weights $\lambda_1$ and $\lambda_2$ for the score function cannot be determined a priori,
+but have to be computed experimentally on held-out tuning data. This is heuristcally tackled by trying a huge variety of parameter values and experimentally
 observe which performs best on the data.  This final \emph{parameter
 optimisation} step is an essential part of SMT \citep{MERT}.
 
@@ -285,12 +284,11 @@ the second key component in an SMT system.
 The language model predicts the likelihood of a word given a previous history
 of predecessor words. This is a model of \emph{context}; the difference with
 the context that is the focus in this dissertation, however, is that it models
-the target language rather than source language. Moreover, it is a purely
+the target language rather than the source language. Moreover, it is a purely
 monolingual model whereas our investigation is aimed at modelling source-side
 context for translation directly.
 
-A simple trigram-based language model is shown in equation~\ref{eq:introsmtlm1}, adapted from
-\cite{Cole1997}, where we compute the probability of a sequence of words $W$.
+A simple trigram-based language model is shown in equation~\ref{eq:introsmtlm1}, where we compute the probability of a sequence of words $W$.
 
 \begin{equation}
 p(W) = p(w_1,\ldots,w_n) = \prod_{i=1}^{n} p(w_i|w_{i-2},w_{i-1})
@@ -333,7 +331,7 @@ WSD techniques for localised translation problems.
 \label{sec:overallresearchquestion}
 
 Our intuition is that source-side context information, i.e.\ words in the
-source-language from the surrounding context, provides valuable cues for
+source language from the surrounding context, provides valuable cues for
 translation. The examples we have discussed hitherto aim to illustrate this
 intuition. The over-arching
 question we posit for the dissertation is the following:
@@ -355,8 +353,7 @@ In the first chapters, some linguistically-informed features such as lemma
 features and part-of-speech tags are tested. Our emphasis in the overall study,
 however, is on assessing the efficiency of \emph{linguistically uninformed}
 features, i.e.\ employing only the raw textual data. The reason for this is that we
-aim to assess the merit of the techniques as such, a pure analysis without
-introducing another data dimension. Moreover, by choosing this approach we do
+aim to assess the merit of the techniques as such, as the purest analysis with the rawest data. Moreover, by choosing this approach we do
 not need to rely on external language-specific tools such as as lemmatisers and
 part-of-speech taggers. In subsequent chapters, we will also show that the
 inclusion of linguistically-informed features is something already studied and
@@ -376,9 +373,9 @@ Before we can go into the matter of translation, Chapter~\ref{chap:coco} first i
 to efficiently extract patterns such as n-grams, with their context, from corpus data. This chapter was published in
 ``{\footnotesize\begin{NoHyper}\bibentry{COLIBRICORE}\end{NoHyper}}''. The software
 was explicitly written in the scope of this research project and provides a necessary foundation that is in turn used by most of the
-software of the remaining chapters. It is a chapter of a high technical nature that can optionally be skipped if the
+software of the remaining chapters. It is a technical chapter that can optionally be skipped if the
 reader wishes to more quickly proceed to the heart of the matter. At the same time, the chapter offers tools that are
-applicable well beyond the present dissertation.
+applicable beyond the present dissertation.
 
 Chapter~\ref{chap:clwsd} introduces \emph{Cross-Lingual Word Sense
 Disambiguation} and presents a classifier-based system employing source-side
@@ -407,7 +404,7 @@ the performance of several 3rd party participating systems on our data. This is 
 SemEval participants. Here we present the results and form conclusions
 regarding the role of context and the usefulness of classifiers versus
 Statistical Machine Translation techniques. This chapter also appeared in ``{\footnotesize the International Journal of Translation
-(2016), Bahri Publications}'', but was not peer-reviewed.
+(2016)}''.
 
 Chapter~\ref{chap:contextinsmt} is an attempt to directly integrate source-side
 context information in Statistical Machine Translation, by means of
