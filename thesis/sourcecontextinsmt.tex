@@ -2,7 +2,6 @@
 
 
 \chapter{Uninformed source-side context in Statistical Machine Translation}
-\title{Uninformed source-side context in Statistical Machine Translation}
 \label{chap:contextinsmt}
 \label{chap:sourcecontextinsmt}
 
@@ -72,7 +71,7 @@ surface-form source-language context information in the SMT process. The Languag
 for the target language. Yet in SMT there is no component modelling
 context for the source language, whereas intuitively source-side context may
 provide a powerful cue for translation. Consider the word ``bank'' and its
-Spanish translation in examples~\ref{ex:bank1} and \ref{ex:bank2}.
+Spanish translation in examples~\ref{ex:bank1} and~\ref{ex:bank2}.
 
 \begin{exe} %gb4e package
 \ex \textbf{English:} I don't trust the bank. \\
@@ -206,7 +205,7 @@ linguistically-informed contextual features produces improvements, but not
 always; also, different contextual features have different, unpredictable
 results, some of which positive. The main contrast between our study and theirs
 is that Haque et al focus on a variety of linguistically-informed contextual
-features, whereas we depart from a language-independent angle, i.e. we do not
+features, whereas we depart from a language-independent angle, i.e.\ we do not
 presuppose the presence of natural language processing tools for computing
 linguistically abstract features. Furthermore, we intend to settle the
 conflicting reports on whether this may lead to an improvement in translation
@@ -285,7 +284,7 @@ classifier yields classes corresponding to target phrases, with an associated
 weight. After normalization, these can be considered a posterior distribution
 of target phrases.
 
-We focus on the modelling of local context, i.e. words in the
+We focus on the modelling of local context, i.e.\ words in the
 immediate vicinity of the source phrase. Take $w_0$ to be the first word of
 the source phrase $s$, then for a local context size of $n$ words to the left and
 $m$ to the right we construct the feature vector $C$ as
@@ -387,7 +386,7 @@ transforms this data into the instance base format required for TiMBL.
 It may well happen that either 1) an $(s,t)$ pair only occurs once, or
 2) a pattern $s$ occurs in multiple contexts but all map to the same
 $t$. In such cases, a context-informed classifier has no added value
-and therefore such instances are omitted from the training data, i.e. they are not included in case of the monolithic
+and therefore such instances are omitted from the training data, i.e.\ they are not included in case of the monolithic
 classifier or a classifier expert for them is not generated, meaning the classifier bypass is not needed for such
 instances and normal behaviour suffices.
 
@@ -398,7 +397,7 @@ The task of an SMT decoder is to find the best translation among a pool
 of possible translation hypotheses. The best translation hypothesis is the
 hypothesis that maximises a log-linear combination and is sought
 after in a beam-search algorithm. This log-linear combination draws from
-various models, such as a translation model (i.e. the phrase-translation
+various models, such as a translation model (i.e.\ the phrase-translation
 table), a target-language model, and optionally additional models such as a
 distortion model and a word-reordering model.
 
@@ -481,7 +480,7 @@ phrase-translation table as shown in Algorithm~\ref{alg:contextmoses}.
 \EndFor
 \end{algorithmic}
 \caption{Classifier invocation on test data. Take $M{\footnotesize\text{test}}$ to be the pattern
-model of the test data, i.e. a map of source phrases occuring in the test
+model of the test data, i.e.\ a map of source phrases occuring in the test
 data, and $[(t,p(t|s,C))]$ to be a list of translation options ($t$) with
 associated probability $p(t|s,C)$.}
 \label{alg:contextmoses}
@@ -619,7 +618,7 @@ For BLEU and METEOR, higher scores are better, for TER, however, a lower score
 corresponds with a better translation quality.
 
 For each experiment we construct a non-context-informed baseline. This
-baseline does make use of our full pipeline, i.e. the bypass method described
+baseline does make use of our full pipeline, i.e.\ the bypass method described
 in Section~\ref{sec:smtintegration}, but it does not invoke the
 classifiers.  We do this to ensure the only difference is the actual
 integration of context information, and that differences in results can not be
@@ -689,7 +688,7 @@ decoder, we do not do so for the classifiers. Yet, these too could
 be optimised. Optimisation of classifier parameters comes with a number of challenges.
 Ideally, it should not be independent of the optimisation of the decoder
 parameters, and the classifier parameters should be evaluated on the
-end result, i.e. the full sentential translations, according to one or more MT
+end result, i.e.\\ the full sentential translations, according to one or more MT
 metrics. This, however, is prohibitively expensive as it vastly increases the
 parameter search space and thus the complexity of the problem. As a concession
 for the sake of computability, classifier parameter optimisation can be considered
@@ -703,7 +702,7 @@ overall negative effect, most likely due to overfitting, especially when
 combined with variable context selection.
 
 Optimisation can be taken a step further by also optimising the local context
-size, i.e. the make up of the feature vector, on a by-classifier basis, as
+size, i.e.\ the make up of the feature vector, on a by-classifier basis, as
 opposed to using the same context size for all classifiers.  Variable context selection by itself
 did make a small positive impact in a WSD context (See Section~\ref{sec:wsd2}).
 
@@ -736,11 +735,10 @@ this does not reflect in the translation quality.
 
 Our secondary hypotheses concern the ways in which classifiers can be
 integrated in SMT. We investigate the impact of the classifier type and
-weighting methods.  These are assessed in Sections~\ref{sec:typeopt} and
-\ref{sec:weighting}, respectively. We conclude the results section with a
+weighting methods.  These are assessed in Sections~\ref{sec:typeopt} and~\ref{sec:weighting}, respectively. We conclude the results section with a
 qualitative analysis in Section~\ref{sec:qualanal}.
 
-\subsection{Source-side context vs. no context}
+\subsection{Source-side context vs.\ no context}
 \label{sec:results1}
 
 The primary objective of our study is to assess the role of source-side context
@@ -880,20 +878,20 @@ l3r3 \footnotesize{(mono/append)} & 71.5 (0.5/0.1/p=0.51) & 80.9 (0.4/0.1/p=0.74
 \hline
 \multicolumn{4}{|c|}{EMEA-en-nl} \\
 \hline
-Baseline  \footnotesize{(replace)}& \textbf{68.9} (0.6/0.1/p=-) & \textbf{0.0} (0.0/0.0/p=-) & 28.3 (0.7/0.1/p=-) \\
-l1r1 \footnotesize{(mono/replace)} & \textbf{68.9} (0.6/0.0/p=0.83) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.0/p=0.04) \\
-l2r1 \footnotesize{(mono/replace)} & 68.8 (0.6/0.0/p=0.28) & \textbf{0.0} (0.0/0.0/p=0.0) & 28.3 (0.7/0.1/p=0.2) \\
-l2r2 \footnotesize{(mono/replace)} & 68.8 (0.6/0.0/p=0.32) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.1/p=0.03) \\
-l3r3 \footnotesize{(mono/replace)} & \textbf{68.9} (0.6/0.1/p=0.8) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.0/p=0.01) \\
+Baseline  \footnotesize{(replace)}& \textbf{68.9} (0.6/0.1/p=-) & - & 28.3 (0.7/0.1/p=-) \\
+l1r1 \footnotesize{(mono/replace)} & \textbf{68.9} (0.6/0.0/p=0.83) & - & \textbf{28.2} (0.7/0.0/p=0.04) \\
+l2r1 \footnotesize{(mono/replace)} & 68.8 (0.6/0.0/p=0.28) & - & 28.3 (0.7/0.1/p=0.2) \\
+l2r2 \footnotesize{(mono/replace)} & 68.8 (0.6/0.0/p=0.32) & - & \textbf{28.2} (0.7/0.1/p=0.03) \\
+l3r3 \footnotesize{(mono/replace)} & \textbf{68.9} (0.6/0.1/p=0.8) & - & \textbf{28.2} (0.7/0.0/p=0.01) \\
 \hline
-Baseline  \footnotesize{(append)}& 68.8 (0.6/0.1/p=-) & \textbf{0.0} (0.0/0.0/p=-) & 28.3 (0.7/0.0/p=-) \\
-l1r1 \footnotesize{(mono/append)} & \textbf{68.9} (0.6/0.1/p=0.12) & \textbf{0.0} (0.0/0.0/p=0.0) & 28.3 (0.7/0.1/p=0.56) \\
-l2r1 \footnotesize{(mono/append)} & 68.8 (0.6/0.1/p=0.9) & \textbf{0.0} (0.0/0.0/p=0.0) & 28.3 (0.7/0.1/p=0.32) \\
-l2r2 \footnotesize{(mono/append)} & 68.8 (0.6/0.1/p=0.76) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.1/p=0.02) \\
-l3r3 \footnotesize{(mono/append)} & 68.8 (0.6/0.0/p=0.69) & \textbf{0.0} (0.0/0.0/p=0.0) & \textbf{28.2} (0.7/0.0/p=0.04) \\
+Baseline  \footnotesize{(append)}& 68.8 (0.6/0.1/p=-) & - & 28.3 (0.7/0.0/p=-) \\
+l1r1 \footnotesize{(mono/append)} & \textbf{68.9} (0.6/0.1/p=0.12) & - & 28.3 (0.7/0.1/p=0.56) \\
+l2r1 \footnotesize{(mono/append)} & 68.8 (0.6/0.1/p=0.9) & - & 28.3 (0.7/0.1/p=0.32) \\
+l2r2 \footnotesize{(mono/append)} & 68.8 (0.6/0.1/p=0.76) & - & \textbf{28.2} (0.7/0.1/p=0.02) \\
+l3r3 \footnotesize{(mono/append)} & 68.8 (0.6/0.0/p=0.69) & - & \textbf{28.2} (0.7/0.0/p=0.04) \\
 \hline
 \end{tabular}}
-\caption{Results on EMEA, English to Spanish and English to Dutch}
+\caption{Results on EMEA, English to Spanish and English to Dutch. METEOR scores for the latter were not properly computed due to a glitch in the experiment pipeline.}
 \label{tab:emea}
 \end{table}
 
@@ -966,7 +964,7 @@ l1r1 \footnotesize{(mono/replace)} & 54.9 (0.6/0.0/p=0.0) & -& 28.8 (0.5/0.0/p=0
 l2r1 \footnotesize{(mono/replace)} & 54.9 (0.6/0.1/p=0.0) & -& 28.9 (0.6/0.0/p=0.0) \\
 \hline
 \end{tabular}}
-\caption{An excerpt of the results on the Frisian parallel corpus, Dutch to Frisian and Frisian to Dutch. For the latter, no METEOR scores are available} %TODO: why?
+\caption{An excerpt of the results on the Frisian parallel corpus, Dutch to Frisian and Frisian to Dutch.}
 \label{tab:fa}
 \end{table}
 
@@ -982,16 +980,16 @@ of these results is shown in Table~\ref{tab:yandex}.
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lccc}
 \hline
-\textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{TER} \\
+\textbf{System} & \textsc{BLEU}  & \textsc{TER} \\
 \hline
 \multicolumn{4}{|c|}{Yandex English-Russian} \\
 \hline
-Baseline  \footnotesize{(replace)}& \textbf{15.7} (0.3/0.0/p=-) & -& \textbf{72.0} (0.3/0.0/p=-) \\
-l1r1 \footnotesize{(mono/replace)} & 14.7 (0.3/0.0/p=0.0) & -& 73.3 (0.3/0.0/p=0.0) \\
-l2r1 \footnotesize{(mono/replace)} & 15.0 (0.3/0.0/p=0.0) & -& 73.0 (0.3/0.1/p=0.0) \\
+Baseline  \footnotesize{(replace)}& \textbf{15.7} (0.3/0.0/p=-) & \textbf{72.0} (0.3/0.0/p=-) \\
+l1r1 \footnotesize{(mono/replace)} & 14.7 (0.3/0.0/p=0.0) &  73.3 (0.3/0.0/p=0.0) \\
+l2r1 \footnotesize{(mono/replace)} & 15.0 (0.3/0.0/p=0.0) &  73.0 (0.3/0.1/p=0.0) \\
 \hline
 \end{tabular}}
-\caption{An excerpt of the results on the Yandex corpus, English to Russian. No METEOR scores are available.} %TODO: why?
+\caption{An excerpt of the results on the Yandex corpus, English to Russian.}
 \label{tab:yandex}
 \end{table}
 
@@ -1011,7 +1009,7 @@ We run the same test for the append score weighting method, which leaves the $p(
 \emph{appends} the $p(t|s,C)$ feature to the translation model.  We find that
 $p(t|s,C)$ still receives most weight in $33\%$ percent of the experiments.
 The unaltered $p(t|s)$ score wins in $29\%$ of the cases and $p(s|t)$ in
-$23\%$ \footnote{The remaining probability mass is distributed over the lexical
+$23\%$\footnote{The remaining probability mass is distributed over the lexical
 weighting features}.
 
 These tests show that our focus on this particular feature in the
@@ -1049,7 +1047,7 @@ can be attributed solely to the inclusion of context information:
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lllcc}
 \hline
-\textbf{Corpus} & \textbf{Language Pair} & \textbf{Configuration} & \textbf{Diff. pairs} & \textbf{Diff. source} \\
+\textbf{Corpus} & \textbf{Language Pair} & \textbf{Configuration} & \textbf{Diff.\ pairs} & \textbf{Diff.\ source} \\
 \hline
 %old data, optimized on baseline only (on purpose!):
 Yandex (1M) & English$\rightarrow$Russian & l1r1 \footnotesize{(mono/replace)} & $37.72\%$ & $26.58\%$ \\
