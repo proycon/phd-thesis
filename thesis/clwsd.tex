@@ -4,15 +4,14 @@
 In this chapter we begin to investigate the use of source-language context to disambiguate a marked word in context; so
 our focus is a localised one. In contrast to later chapters, we also take into account some linguistic features.
 
-We apply k-nearest neighbour classifiers to two similar and localised translation tasks
-organized for SemEval 2010: Cross-Lingual Word Sense Disambiguation and Cross-Lingual Lexical Substitution.  Both tasks
-aim to disambiguate a marked word in context by finding an appropriate translation for it in another language. Our
-system, UvT-WSD1 participates for the two tasks and achieves winning scores for the former. With a later rewrite of our
-system, called WSD2, we focus on hyperparameter optimisation and participate again in the Cross-Lingual Word-Sense
-Disambiguation task for SemEval 2013.  We then achieve winning scores for four of the five language pairs, when asked to
-predict the best translation(s). Our final results, however, indicate that hyperparameter optimisation did not lead to
-the best results, indicating overfitting by our optimisation method in this aspect. Feature selection does have a modest
-positive impact.
+We apply k-nearest neighbour classifiers to two similar and localised translation tasks organized for SemEval 2010:
+Cross-Lingual Word Sense Disambiguation and Cross-Lingual Lexical Substitution.  Both tasks aim to disambiguate a marked
+word in context by finding an appropriate translation for it in another language. Our system, UvT-WSD1 participates for
+the two tasks and achieves winning scores for the former. With a later rewrite of our system, called WSD2, we focus on
+hyperparameter optimisation and participate again in the Cross-Lingual Word-Sense Disambiguation task for SemEval 2013.
+We then achieve winning scores for four of the five language pairs, when asked to predict the best translation(s). Our
+final results, however, indicate that hyperparameter optimisation did not lead to the best results, indicating
+overfitting by our optimisation method in this aspect. Feature selection does have a modest positive impact.
 
 
 \nobibliography*
@@ -30,7 +29,27 @@ tasks: Cross-Lingual Word Sense Disambiguation \citep{WSD} and Cross-Lingual
 Lexical Substitution \citep{CLLS}. In each task, a number of polysemous words is
 selected for which the senses are to be determined for a number of instances of
 these words. For each word, a number of samples in context is provided, where
-each sample consists of one sentence, with the word to be disambiguated marked.
+each sample consists of one sentence, with the word to be disambiguated marked. An example adapted from~\cite{WSD} is shown below:
+
+
+\begin{itemize}
+  \item
+      \textsc{Input:} \emph{“\ldots giving fish to the people living on \textbf{the bank} of the river”} \\
+      \textsc{Sense labels:}
+ \subitem Dutch: \emph{oever/dijk}
+ \subitem French: \emph{rives/rivage/bord/bords}
+ \subitem German: \emph{Ufer}
+ \subitem Italian: \emph{riva}
+ \subitem Spanish: \emph{orilla}
+  \item
+      \textsc{Input:} \emph{“The \textbf{bank} of Scotland \ldots”} \\
+      \textsc{Sense labels:}
+ \subitem Dutch: \emph{bank/kredietinstelling}
+ \subitem French: \emph{banque/établissement de crédit}
+ \subitem German: \emph{Bank/Kreditinstitut}
+ \subitem Italian: \emph{banca}
+ \subitem Spanish: \emph{banco}
+\end{itemize}
 
 %This approach suggests that Word Sense Disambiguation and Machine Translation
 %are related disciplines.
@@ -72,7 +91,7 @@ annotators preparing the test data could have never picked.
 Our system uses machine learning techniques to learn what
 senses/translations are associated with any of the target words. It does so on
 the basis of a variety of local and global context features, discussed in
-Section \ref{sec:features}. At the core of the system are the classifiers, or
+Section~\ref{sec:features}. At the core of the system are the classifiers, or
 so called ``word experts'', one per target word. These are built using the
 Tilburg Memory Based Learner (TiMBL) \citep{TIMBL}, making use of the IB1
 algorithm, an implementation of the $k$-nearest neighbour classifier.
@@ -81,7 +100,7 @@ The core of the system can be subdivided into three stages. In the
 first stage, the word-aligned parallel corpus is read and for each found
 instance of one of the target words, features are extracted to be used in the
 classifier. The class consists of the word aligned to the found instance of the
-target word, i.e. the translation/sense. In this way a word expert is built for
+target word, i.e.\ the translation/sense. In this way a word expert is built for
 each of the target words in the task, yielding a total amount of classifiers
 equal to the total amount of target words. The test data is processed in a
 similar way, for each marked occurrence of any of the target words, features
@@ -143,7 +162,7 @@ as the amount of keywords found. A global count over the full corpus is needed
 to find these keywords. Each keyword acts as a binary feature, indicating
 whether or not that particular keyword is found in the context of the
 occurrence of the target word. The context in which these keywords are searched
-for is exactly one sentence, i.e. the sentence in which the target word occurs.
+for is exactly one sentence, i.e.\ the sentence in which the target word occurs.
 This is due to the test data simply not supplying a wider context.
 
 The method used to extract these keywords ($k$) is proposed by \cite{NgL96} and
@@ -361,7 +380,7 @@ implements wrapped progressive sampling using cross-validation: it performs a
 large number of experiments with many hyperparameter setting combinations on
 small samples of training data, and then progressively zooms in on combinations
 estimated to perform well with larger samples of the training data. As a
-control run we also trained word experts with default hyperparameters, i.e.
+control run we also trained word experts with default hyperparameters, i.e.\
 with $k=1$ and with all other hyperparameters at their default values as
 specified in the TiMBL implementation.
 
@@ -394,7 +413,7 @@ difference in trial data. %TODO: what is the difference in trial data?
 
 We submitted three configurations of our system to the shared task, the maximum
 number of runs. Adding lemma features to the local context window of three
-words, i.e. left word, focus word and right word, proves beneficial in general.
+words, i.e.\ left word, focus word and right word, proves beneficial in general.
 This is shown in Table~\ref{tab:trialresults}.  This is therefore the first
 configuration we submitted (\texttt{c1l}). As second configuration
 (\texttt{c1lN}) we submitted the same configuration without parameter
@@ -563,8 +582,7 @@ Taking into account the earlier discrepancy between the results of UvT-WSD1 and
 WSD2, we may conclude that optimal configurations differ accross datasets.
 
 For UvT-WSD1, an arbiter voting approach over multiple classifiers helps to smooth out errors
-and yields the highest scores (see Tables \ref{tab:uvtwsd1clls} and
-\ref{tab:uvtwsd1clwsd}). When compared to the other
+and yields the highest scores (see Tables~\ref{tab:uvtwsd1clls} and~\ref{tab:uvtwsd1clwsd}). When compared to the other
 participants, the UvT-WSD1 system in the voting configuration ranks first in
 the Word Sense Disambiguation task, for the two language pairs in which we
 participated. WSD2 does not use a voting approach, as it already explicitly
