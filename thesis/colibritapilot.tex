@@ -464,9 +464,8 @@ classifier expert. This shall be further discussed in
 Section~\ref{sec:optim}.
 
 \begin{figure}[t]
-\begin{center}
+\centering
 \includegraphics[width=10cm]{colibritapilot-context.png}
-\end{center}
 \caption{Accuracy for different local context sizes, Europarl English to Spanish}
 \label{fig:context}
 \end{figure}
@@ -564,7 +563,7 @@ In Table~\ref{tab:example} we present some illustrative examples from
 the English $\rightarrow$ Spanish Europarl data. We show the difference
 between the most-likely-fragment baseline and our system.
 
-\begin{table*}[tb]
+\begin{table*}[htb]
 \begin{framed}
 \footnotesize
 \textbf{Input:} Mientras no haya prueba en contrario , la financiación de partidos políticos \textbf{European} sólo se justifica , incluso después del tratado de Niza , desde el momento en que concurra a la expresión del sufragio universal , que es la única definición aceptable de un partido político . \\
@@ -607,7 +606,7 @@ which the determiner was duplicated in the baseline}
 \label{tab:example}
 \end{table*}
 
-\begin{table*}[tb]
+\begin{table*}[htb]
 \begin{framed}
 \footnotesize
 \textbf{Input:} Sin ese tipo de protección la gente no aprovechará la oportunidad \textbf{to} vivir , viajar y trabajar donde les parezca en la Unión Europea . \\
@@ -656,6 +655,8 @@ models of other orders.
 %seems to be that simplicity in feature selection pays off and holds
 %for all language pairs we tested.
 
+\FloatBarrier
+
 \subsection{Context optimisation}
 \label{sec:optim}
 
@@ -696,7 +697,7 @@ seen with this configuration.
 % er aandacht en een tabel aan wordt besteed.
 % - done, beetje toegevoegd.
 
-\begin{table}[h]
+\begin{table}[htb]
 %\footnotesize
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{rl}
@@ -828,6 +829,8 @@ datasets is $0.9498$ (en-nl), $0.9494$ (en-fr), $0.9386$ (en-zh), and $0.9366$
 \label{tab:results2}
 \end{table}
 
+
+\FloatBarrier
 
 \section{Discussion and conclusion}
 
