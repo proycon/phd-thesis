@@ -784,6 +784,7 @@ l1r1 \footnotesize{(experts/append)} & 25.9 (1.4/0.5/p=0.02) & 30.0 (0.7/0.0/p=0
 l2r1 \footnotesize{(experts/append)} & \textbf{27.9} (1.4/0.2/p=0.0) & \textbf{30.3} (0.7/0.2/p=0.01) & \textbf{55.6} (1.5/0.4/p=0.0) \\
 l2r2 \footnotesize{(experts/append)} & 27.3 (1.4/0.5/p=0.15) & 30.0 (0.7/0.3/p=0.25) & 56.5 (1.5/0.4/p=0.05) \\
 l3r3 \footnotesize{(experts/append)} & 26.3 (1.4/0.7/p=0.25) & 29.5 (0.7/0.1/p=0.14) & 58.7 (1.5/0.4/p=0.0) \\
+\hline
 \end{tabular}}
 \caption{Results for Chinese to English on IWSLT 2006 Evaluation Campaign data.
 The numbers in the context-aware configurations (l$x$r$y$), refer to the size
@@ -858,6 +859,7 @@ to Dutch. These results are shown in Table~\ref{tab:emea} for EMEA, and Table~\r
 
 \begin{table}
 \noindent\makebox[\textwidth][c]{%
+\begin{savenotes}
 \begin{tabular}{lccc}
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{TER} \\
@@ -878,7 +880,8 @@ l3r3 \footnotesize{(mono/append)} & 71.5 (0.5/0.1/p=0.51) & 80.9 (0.4/0.1/p=0.74
 \hline
 \multicolumn{4}{|c|}{EMEA-en-nl} \\
 \hline
-Baseline  \footnotesize{(replace)}& \textbf{68.9} (0.6/0.1/p=-) & - & 28.3 (0.7/0.1/p=-) \\
+Baseline  \footnotesize{(replace)}& \textbf{68.9} (0.6/0.1/p=-) & -\footnote{METEOR scores for this experiment were not
+properly computed due to an error with the evaluation script} & 28.3 (0.7/0.1/p=-) \\
 l1r1 \footnotesize{(mono/replace)} & \textbf{68.9} (0.6/0.0/p=0.83) & - & \textbf{28.2} (0.7/0.0/p=0.04) \\
 l2r1 \footnotesize{(mono/replace)} & 68.8 (0.6/0.0/p=0.28) & - & 28.3 (0.7/0.1/p=0.2) \\
 l2r2 \footnotesize{(mono/replace)} & 68.8 (0.6/0.0/p=0.32) & - & \textbf{28.2} (0.7/0.1/p=0.03) \\
@@ -890,8 +893,9 @@ l2r1 \footnotesize{(mono/append)} & 68.8 (0.6/0.1/p=0.9) & - & 28.3 (0.7/0.1/p=0
 l2r2 \footnotesize{(mono/append)} & 68.8 (0.6/0.1/p=0.76) & - & \textbf{28.2} (0.7/0.1/p=0.02) \\
 l3r3 \footnotesize{(mono/append)} & 68.8 (0.6/0.0/p=0.69) & - & \textbf{28.2} (0.7/0.0/p=0.04) \\
 \hline
-\end{tabular}}
-\caption{Results on EMEA, English to Spanish and English to Dutch. METEOR scores for the latter were not properly computed due to a glitch in the experiment pipeline.}
+\end{tabular}
+\end{savenotes}}
+\caption{Results on EMEA, English to Spanish and English to Dutch.}
 \label{tab:emea}
 \end{table}
 
@@ -978,11 +982,11 @@ of these results is shown in Table~\ref{tab:yandex}.
 
 \begin{table}
 \noindent\makebox[\textwidth][c]{%
-\begin{tabular}{lccc}
+\begin{tabular}{lcc}
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{TER} \\
 \hline
-\multicolumn{4}{|c|}{Yandex English-Russian} \\
+\multicolumn{3}{|c|}{Yandex English-Russian} \\
 \hline
 Baseline  \footnotesize{(replace)}& \textbf{15.7} (0.3/0.0/p=-) & \textbf{72.0} (0.3/0.0/p=-) \\
 l1r1 \footnotesize{(mono/replace)} & 14.7 (0.3/0.0/p=0.0) &  73.3 (0.3/0.0/p=0.0) \\
@@ -1135,8 +1139,8 @@ Fryske Akademy & 137,937 & Frisian-Dutch & 213,573 \\
 \centering
 \newlength\figureheight
 \newlength\figurewidth
-\setlength\figureheight{6cm}
-\setlength\figurewidth{8cm}
+\setlength\figureheight{8cm}
+\setlength\figurewidth{11cm}
 \input{histogram.tikz}
 \caption{Histogram showing the distribution of the number of instances (blue)
 and number of classes (red) in the classifier experts for IWSLT 2012 TED,
@@ -1220,8 +1224,8 @@ options.
 
 \begin{figure}
 \centering
-\setlength\figureheight{5cm}
-\setlength\figurewidth{5cm}
+\setlength\figureheight{7cm}
+\setlength\figurewidth{7cm}
 \input{scoredifference.tikz} \input{scoredifference2.tikz}
 %\includegraphics[width=90.00mm]{scoredifference.png}
 \caption{Scatter plot (logarithmic scale) illustrating the difference $\Delta$

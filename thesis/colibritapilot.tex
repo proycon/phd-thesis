@@ -465,7 +465,7 @@ Section~\ref{sec:optim}.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=10cm]{colibritapilot-context.png}
+\includegraphics[width=12cm]{colibritapilot-context.png}
 \caption{Accuracy for different local context sizes, Europarl English to Spanish}
 \label{fig:context}
 \end{figure}
@@ -474,7 +474,7 @@ Section~\ref{sec:optim}.
 
 \begin{center}
 \begin{table*}[bt]
-%\footnotesize
+\footnotesize{
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{llllllll}
 \hline
@@ -500,6 +500,7 @@ l2r0 & 0.6960 & 0.7245 & 0.9759 & 0.9724 & 17.1091 & 1.3364 & 1.3193\\
 l2r1 & 0.7624 & 0.7849 & 0.9803 & 0.9748 & 17.1558 & 1.1554 & 1.1378\\
 \hline
 \end{tabular}}
+}
 \caption{Europarl results for English to Spanish (i.e English fallback in
 Spanish context). Recall $ = 0.9422$}
 \label{tab:results}
@@ -749,7 +750,7 @@ Table~\ref{tab:results}. We see that the language model baseline for
 English$\rightarrow$French shows the same substantial improvement over the
 baseline as our English$\rightarrow$Spanish results.  The same holds for the
 Chinese$\rightarrow$English experiment. However, for English$\rightarrow$Dutch
-and English$\rightarrow$Chinese we find that the LM baseline actually performs
+and English$\rightarrow$\-Chinese we find that the LM baseline actually performs
 slightly worse than baseline. Nevertheless, in all these cases, the positive
 effect of including a Language Model to our classifier-based system again
 shows. Also, we note that in all cases our system performs better than the two
@@ -759,7 +760,7 @@ baselines.
 %MAYBE TODO: why is this? (I don't know)
 
 Another discrepancy is found in the BLEU scores of the
-English$\rightarrow$Chinese experiments, where we measure an
+English$\rightarrow$\-Chinese experiments, where we measure an
 unexpected drop in BLEU score under baseline. However, all other
 scores do show the expected improvement. The error rate metrics show
 improvement as well. We therefore attach low importance to this

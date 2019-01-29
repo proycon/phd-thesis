@@ -116,7 +116,8 @@ Figure~\ref{fig:architecture}, from a data flow perspective.  The components
 shown here will be discussed in this section.
 
 \begin{figure}[h]
-\includegraphics[width=14.0cm]{../cocoarch.png}
+\noindent\makebox[\textwidth][c]{%
+\includegraphics[width=14.0cm]{../cocoarch.png}}
 \caption{The Colibri Core architecture; light green squares represent data models, ochre (yellowish) rounded squares represent processes that manipulate data.}
 \label{fig:architecture}
 \end{figure}
@@ -586,6 +587,7 @@ which allow for more specific optimisations.
 
 \begin{table}[h]
 \footnotesize{
+\noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lll}
 Experiment & CPU time & Memory  \\
 \hline
@@ -616,7 +618,7 @@ Indexed Pattern Model (preloaded corpus), with skipgrams & $24.2$ s & $165$ MB (
 \hline
 Unindexed Pattern Model (from file) & $5.9$ s & $152$ MB ($164$ MB) \\
 $\ast$ SRILM ngram-count & $1.5$ s & $80$ MB  \\
-\end{tabular}
+\end{tabular}}
 \caption{Colibri Core performance benchmarks on the IWSLT data set. Performed by the \texttt{colibri-benchmarks} tool and the
 \texttt{benchmarks.py} script for the Python baselines. All non-Colibri Core
 references are marked with an asterisk ($\ast$). Memory usage is measured as the difference in resident memory after training
@@ -647,6 +649,7 @@ $30$ million sentences. These results are shown in Table 2.
 
 \begin{table}[h]
 \footnotesize{
+\noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lll}
 Experiment & CPU time & Memory  \\
 \hline
@@ -674,7 +677,7 @@ Unindexed Pattern Pointer Model (preloaded corpus) & 83m 14s & $12279$ MB ($1531
 \multicolumn{3}{c}{\textbf{Google Billion Words corpus, trigram model ($t=1,l=3$)}} \\
 \hline
 Unindexed Pattern Model (from file) & $25m 16s$ & $16568$ MB ($19788$ MB) \\
-\end{tabular}
+\end{tabular}}
 \caption{Benchmarks on two large data sets. Same setup as Table 1. Parameter $y$ represents the occurrence threshold specifically for skipgrams.}
 }
 \label{tab:bigbenchmarks}
@@ -733,8 +736,8 @@ section ``Feature: Pattern models'', to file:
 
 \begin{verbatim}
 $ colibri-patternmodeller --datafile corpus.tok.colibri.dat \
---outputmodel corpus.colibri.patternmodel \
---threshold 5 --maxlength 8 --skipgrams --skiptypes 3 --flexgrams S
+--outputmodel corpus.colibri.patternmodel --threshold 5 \
+--maxlength 8 --skipgrams --skiptypes 3 --flexgrams S
 \end{verbatim}
 
 We have opted for an indexed pattern model, which gives us more thresholding
@@ -749,7 +752,8 @@ statistical report summarising counts for various groups of patterns, and
 \emph{3)} a histogram of pattern frequencies:
 
 \begin{verbatim}
-$ colibri-patternmodeller --inputmodel corpus.colibri.patternmodel \
+$ colibri-patternmodeller \
+--inputmodel corpus.colibri.patternmodel \
 --classfile corpus.tok.colibri.cls \
 --print --report --histogram
 \end{verbatim}
