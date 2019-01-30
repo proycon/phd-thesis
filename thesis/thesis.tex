@@ -30,6 +30,34 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{gb4e} %this conflicts with underscores in filenames for some obscure reason!!! take care not to use underscores!
+\usepackage{titletoc}
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\normalfont\Huge}{\centering\thepart}{1em}{\centering}%
+  [\setcounter{chapter}{0}]% <- added to reset the chapter counter for each part
+
+\contentsmargin{0pt}%<- added (as suggested by jvd in a comment)
+
+\titlecontents{part}[10mm]% <- changed
+  {\vspace{12pt}\large\normalfont\bfseries}
+  {\contentslabel{10mm}}{}
+  {\hfill\thecontentspage}
+
+\titlecontents{chapter}[10mm]
+  {\vspace{4pt}\normalsize\normalfont\bfseries}
+  {\contentslabel{10mm}}{}
+  {\hfill\thecontentspage}
+
+\titlecontents{section}[22.3mm]
+  {\vspace{0pt}\normalsize\normalfont}
+  {\contentslabel[\thecontentslabel]{12.3mm}}{}
+  {\titlerule*[.75em]{.}\thecontentspage}
+
+\titlecontents{subsection}[28.3mm]
+  {\vspace{0pt}\normalsize\normalfont}
+  {\contentslabel[\thecontentslabel]{12.3mm}}{}
+  {\titlerule*[.75em]{.}\thecontentspage}
+
 \usepackage{footnote}
 \makesavenoteenv{tabular}
 \makesavenoteenv{table}
