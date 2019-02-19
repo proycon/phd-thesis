@@ -180,7 +180,7 @@ sentential context.
 
 The training data for our translation model is composed of two major
 parallel corpora joined together: Europarl v7 \citep{EUROPARL} and
-OpenSubtitles 2012\footnote{http://www.opensubtitles.org}
+OpenSubtitles 2012\footnote{\url{http://www.opensubtitles.org}}
 \citep{OPUS2012}.  Table~\ref{tab:datasize} lists the size of these
 corpora.
 
@@ -217,11 +217,11 @@ Both systems are implemented in our software package
   \url{https://github.com/proycon/colibrita/}. Version tag
   \texttt{0.3.1} is representative for the version used in this
   research and includes scripts for running the experiments.
-  Colibita dependents on \emph{colibri-core} and \emph{colibri-mt}, both obtainable from the same github source, version tag \texttt{colibrita-v0.3.1} represents the state at
+  Colibrita dependents on \emph{colibri-core} and \emph{colibri-mt}, both obtainable from the same github source, version tag \texttt{colibrita-v0.3.1} represents the state at
   the time of research.
   }
 All input and output data of our experiments is also available for
-download. \footnote{Freely available through Academic Torrents: \url{http://academictorrents.com/details/ab6e61059b7f7879e027ca33fb0f9e82980cd855} }
+download. \footnote{Available through Academic Torrents: \url{http://academictorrents.com/details/ab6e61059b7f7879e027ca33fb0f9e82980cd855} }
 
 \subsection{Evaluation}
 
@@ -467,7 +467,7 @@ baseline as well as the LM baseline. We see that this former conclusion holds
 for two out of four language pairs: English -- Spanish and English -- German.
 For the remaining two language pairs, it is either below baseline or fails to
 pass significance tests.\footnote{All mentions of significance in this chapter are
-statistically backed using a paired t-test with $p<0.05$} This puts the
+statistically backed using a paired t-test with $p<0.05$.} This puts the
 conclusion from the pilot study in question.  Similarly, improvement over LM
 baseline is only observed in two out for four language pairs.
 
@@ -492,7 +492,7 @@ For the last two language pairs, both translating to English, the classifiers
 make no significant impact over the MLF baseline whatsoever. We speculate that
 morphological richness may be a factor here: when translating from a
 morphologically simpler language to a morphologically richer\footnote{i.e.
-distinguishing a higher diversity of surface forms for a given lemma} language,
+distinguishing a higher diversity of surface forms for a given lemma.} language,
 such as English to Spanish and English to German, the classifiers have a bigger
 role to perform and may prove beneficial. That being said, we can not jump to
 this conclusion too quickly, as the different sets do not just differ in
@@ -627,7 +627,7 @@ the language model, as the translations are fixed.
 The scores from the classifier are much coarser than those from the
 phrase-translation table, as those in the phrase-translation table consist of
 four components,\footnote{conditional probabililies $p(s|t)$, $p(t|s)$ and
-corresponding lexical weights} and we are tweaking only a single component,
+corresponding lexical weights.} and we are tweaking only a single component,
 namely $p(t|s)$. As this would result in a skewed integration of classifier
 scores, we implement a ``weighted'' method that performs part of the decoder's
 log-linear equation, parametrised by the weights obtained from MERT, and passes
@@ -868,7 +868,7 @@ classifiers making a positive impact for two out of four language pairs.
 %When comparing our results to the six participants in the SemEval task, we find that the winning system described in \cite{UEDIN}, remains at the top for all three language pairs it participated in. Our system comes in third for English-Spanish, first for English-German, second for
 
 Table~\ref{tab:comparison}, shows the results of our best classifier-based and best MT-based hybrid run\footnote{For
-French-English, the best run is the baseline system}, compared to the other six participants in the SemEval task as
+French-English, the best run is the baseline system.}, compared to the other six participants in the SemEval task as
 described in Chapter~\ref{chap:semeval2014task5}.
 
 \begin{table}[htb]
@@ -911,7 +911,7 @@ scores. We confirm this by running an enriched MT-baseline experiment on
 English -- Spanish with a substantially larger five-gram language
 model\footnote{Trained on four corpora: Europarl, OpenSubtitles, MultiUN
 (\url{http://www.euromatrixplus.net/multi-un/}) and NewsCrawl
-(\url{http://www.statmt.org/wmt13/translation-task.html})}, and indeed
+(\url{http://www.statmt.org/wmt13/translation-task.html}).}, and indeed
 obtain scores that are higher than our standard MT-baseline.
 
 This confirms the important role of the language model. We already saw
@@ -926,7 +926,7 @@ The role of the language model can also be assessed by inspecting the
 weight it has received from the MERT parameter tuning algorithm. We express this
 score relative to the weight of the $p(t|s)$ component of the translation
 model\footnote{The $p(t|s)$ component of the translation model consistently has
-a higher weight than the other (three) components} and obtain $1.12$ for
+a higher weight than the other (three) components.} and obtain $1.12$ for
 English -- Spanish, $1.37$ for English -- German, $0.62$ for French -- English
 and $0.90$ for Dutch -- English. Overall, this means the language model weight
 and translation model weight are fairly balanced and, as expected, both are

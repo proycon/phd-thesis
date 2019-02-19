@@ -388,8 +388,8 @@ training and test sets. The final test sets are a randomly sampled
 $5,000$ sentence pairs from the $200,000$-sentence test split for each
 language pair.
 
-All input data for the experiments in this section are publicly available\footnote{Download and
-unpack \url{http://lst.science.ru.nl/~proycon/colibrita-acl2014-data.zip}}.
+All input and output data for the experiments in this section are publicly available\footnote{Obtain all experimental input data
+with corresponding output and evaluation results from \url{https://lst.science.ru.nl/~proycon/colibrita-acl2014-data.zip}}.
 
 Let us first zoom in to convey a sense of scale on a specific
 language pair. The actual Europarl training set we generate for
@@ -424,7 +424,7 @@ of the & 22,361 & de la, de los\\
 \hline
 \end{tabular}}
 \caption{The top eleven classifier experts for English to Spanish. The eleventh
-entry is included as an example of a common phrasal fragment}
+entry is included as an example of a common phrasal fragment.}
 \label{tab:topexperts}
 \end{table}
 
@@ -466,7 +466,7 @@ Section~\ref{sec:optim}.
 \begin{figure}[t]
 \centering
 \includegraphics[width=12cm]{colibritapilot-context.png}
-\caption{Accuracy for different local context sizes, Europarl English to Spanish}
+\caption{Accuracy for different local context sizes, Europarl English to Spanish.}
 \label{fig:context}
 \end{figure}
 
@@ -502,7 +502,7 @@ l2r1 & 0.7624 & 0.7849 & 0.9803 & 0.9748 & 17.1558 & 1.1554 & 1.1378\\
 \end{tabular}}
 }
 \caption{Europarl results for English to Spanish (i.e English fallback in
-Spanish context). Recall $ = 0.9422$}
+Spanish context). Recall $ = 0.9422$.}
 \label{tab:results}
 \end{table*}
 \end{center}
@@ -603,7 +603,7 @@ concerned are highlighted in bold. The first example shows our system
 correcting for number agreement, the second a correction in selecting the right preposition, and the
 third shows that the English word \emph{last} can be translated in different ways, only one of which
 is correct in this context. The last example shows a phrasal translation, in
-which the determiner was duplicated in the baseline}
+which the determiner was duplicated in the baseline.}
 \label{tab:example}
 \end{table*}
 
@@ -711,7 +711,7 @@ $2.4\%$ & l5r5\\
 \hline
 \end{tabular}}
 \caption{Frequency of automatically selected configurations on English to
-Spanish Europarl dataset}
+Spanish Europarl dataset.}
 \label{tab:autoconf}
 \end{table}
 
@@ -826,7 +826,7 @@ iwslt12ted & zh & en & auto$+$LM & 0.7230 & 0.7428 & 0.9719\\
 Campaign \citep{IWSLT12}, and is formed by a collection of transcriptions of TED talks. Here we used
 of just over $70,000$ sentences for training. Recall for each of the four
 datasets is $0.9498$ (en-nl), $0.9494$ (en-fr), $0.9386$ (en-zh), and $0.9366$
-(zh-en)}
+(zh-en).}
 \label{tab:results2}
 \end{table}
 

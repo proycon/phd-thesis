@@ -262,7 +262,7 @@ training time, and issues look-ups in this tree structure at test time. Unlike
 other top-down induced decision tree methods such as C4.5, features in IGTree
 are tested in a fixed order, computed only once for all features. This order is
 determined using metrics such as \emph{information gain} or \emph{gain
-ratio}\footnote{This is the default that is also used in our experiments}. They
+ratio}\footnote{This is the default that is also used in our experiments.}. They
 determine the relative informativeness or disambiguating power of each feature
 and provide a ranking of all features.
 
@@ -289,7 +289,7 @@ immediate vicinity of the source phrase. Take $w_0$ to be the first word of
 the source phrase $s$, then for a local context size of $n$ words to the left and
 $m$ to the right we construct the feature vector $C$ as
 follows\footnote{For context words out of the sentence's bounds, placeholders
-are used instead}:
+are used instead.}:
 
 \begin{equation}
   C = \langle w_{-n} .. w_{-1} , s , w_{|s|+1} .. w_{|s|+m} \rangle
@@ -346,7 +346,8 @@ index is included in the model for the target-side of the corpus, which maps
 any given $(sentence, token)$ position to a set of phrases that begins at that
 position.  This is computed using the software package
 \emph{colibri-core},\footnote{\url{https://proycon.github.io/colibri-core},
-release v2.1.2 represents a fair state of the software version during this study, although some experiments were conducted with older versions}, as introduced in
+release v2.1.2 represents a fair state of the software version during this study, although some experiments were
+conducted with older versions.}, as introduced in
 Chapter~\ref{chap:coco},  which takes care of a losslessly compressed in-memory
 representation for all phrases, and allows us to cope with large corpora. Given
 these two pattern models $M_{source}$ and $M_{target}$ we can extract the
@@ -412,7 +413,7 @@ source language.
 
 Bayes' rule inverts the problem into two factors\footnote{The normalisation
 denominator p(f) can be dropped as it would not alter the outcome of the
-\emph{argmax} function}, the former corresponding to the translation model, and
+\emph{argmax} function.}, the former corresponding to the translation model, and
 the latter corresponding to the language model.
 
 The translation model is a mapping of the set of source phrases ($S$) to the
@@ -522,7 +523,7 @@ an improvement in translation quality.
 For the translation model, we rely on a parallel corpus as our main source of
 input. Whenever the source is untokenised, we tokenise the data using
 \emph{ucto}.\footnote{An open-source regular-expression based tokeniser with
-unicode support, \url{https://languagemachines.github.io/ucto}, we used version 0.7.0} For the language model, we
+unicode support, \url{https://languagemachines.github.io/ucto}, we used version 0.7.0.} For the language model, we
 simply reuse the target-side portion of the parallel corpus; we do not
 introduce additional data for the language model in our experiments.
 
@@ -550,7 +551,7 @@ Agency} \citep{OPUS2012} } \\
 \multicolumn{3}{l}{\pbox{12cm}{\textbf{Fryske Akademy Parallel Corpus} -
 \emph{A collection of texts in
 Frisian and Dutch, contains numerous books and other sources} \citep{OERSETTER}
-\footnote{This corpus is not publicly available unfortunately} } } \\
+\footnote{This corpus is not publicly available.}}} \\
  & Dutch to Frisian & $137,937$ / $2000$ / $2000$ \\
  & Frisian to Dutch & $137,937$ / $2000$ / $2000$ \\
 \hline
@@ -579,8 +580,8 @@ set, respectively.}
 \label{tab:datasets}
 \end{table}
 
-All our experimental end results and all non-restricted data sets used can be
-freely downloaded.\footnote{Download archive of all experimental data \& results:
+All our experimental end results and all non-restricted data sets used are available for
+download.\footnote{Downloadable archive of all experimental data and results:
 \url{http://academictorrents.com/details/3cc11d076c62bfa0480afc187a4bb6e4759e5c16}}
 %TODO: update with new results!!
 
@@ -881,7 +882,7 @@ l3r3 \footnotesize{(mono/append)} & 71.5 (0.5/0.1/p=0.51) & 80.9 (0.4/0.1/p=0.74
 \multicolumn{4}{|c|}{EMEA-en-nl} \\
 \hline
 Baseline  \footnotesize{(replace)}& \textbf{68.9} (0.6/0.1/p=-) & -\footnote{METEOR scores for this experiment were not
-properly computed due to an error with the evaluation script} & 28.3 (0.7/0.1/p=-) \\
+properly computed due to an error with the evaluation script..} & 28.3 (0.7/0.1/p=-) \\
 l1r1 \footnotesize{(mono/replace)} & \textbf{68.9} (0.6/0.0/p=0.83) & - & \textbf{28.2} (0.7/0.0/p=0.04) \\
 l2r1 \footnotesize{(mono/replace)} & 68.8 (0.6/0.0/p=0.28) & - & 28.3 (0.7/0.1/p=0.2) \\
 l2r2 \footnotesize{(mono/replace)} & 68.8 (0.6/0.0/p=0.32) & - & \textbf{28.2} (0.7/0.1/p=0.03) \\
@@ -1006,7 +1007,7 @@ Are we placing our bets on the wrong horse by focussing solely on $p(t|s)$ and
 experiments that use the replace score weighting method, we find that the
 $p(t|s)$ or $p(t|s,C)$ feature receives the highest weight of the translation
 model scores in $63\%$ of the experiments\footnote{Multiple
-optimiser runs (3) are counted as separate experiments in this test}, the next runner-up with $25\%$ being the forward probability
+optimiser runs (3) are counted as separate experiments in this test.}, the next runner-up with $25\%$ being the forward probability
 $p(s|t)$.
 
 We run the same test for the append score weighting method, which leaves the $p(t|s)$ feature as is, and
@@ -1014,7 +1015,7 @@ We run the same test for the append score weighting method, which leaves the $p(
 $p(t|s,C)$ still receives most weight in $33\%$ percent of the experiments.
 The unaltered $p(t|s)$ score wins in $29\%$ of the cases and $p(s|t)$ in
 $23\%$\footnote{The remaining probability mass is distributed over the lexical
-weighting features}.
+weighting features.}.
 
 These tests show that our focus on this particular feature in the
 translation model is justified.

@@ -256,7 +256,7 @@ algorithm will be addressed later in the section on \emph{Quality Control}.
 The computation of skipgrams is parametrised by an upper limit $l\leq m$ in the number of
 tokens, i.e. the total length of the skipgram (including gaps) expressed in tokens. The possible configuration of gaps
 increases exponentially with the total length spanned. A skipgram of size three has only one possible
-gap configuration\footnote{The initial and final token may never be gaps in the extracted skipgrams};
+gap configuration\footnote{The initial and final token may never be gaps in the extracted skipgrams.};
 \texttt{a \_ z}, a skipgram of size four already has three possible configurations;
 \texttt{a \_ \_ z}, \texttt{a b \_ z} or \texttt{a \_ y z}.
 
@@ -360,13 +360,13 @@ conservative as possible, to allow handling of big data.
 The underlying C++ library allows for choosing the actual underlying container
 implementation and value type through \emph{templating}. The default container
 datatype is a hash map\footnote{using the \texttt{unordered\_map} STL container
-in C++11}, which guarantees $O(1)$ access and update times under ideal hashing
+in C++11.}, which guarantees $O(1)$ access and update times under ideal hashing
 conditions. The hash\footnote{Spooky Hash v2 is used for hashing:
-http://burtleburtle.net/bob/hash/spooky.html} is computed directly from the
+\url{http://burtleburtle.net/bob/hash/spooky.html}} is computed directly from the
 binary representation of a pattern. Storing each pattern individually results
 in a lot of redundant information to be stored, as patterns overlap to a large
 degree. To conserve memory, the models can store pattern pointers\footnote{Each
-pattern pointer takes up 16 bytes} instead. Instead of duplicating the content
+pattern pointer takes up 16 bytes.} instead. Instead of duplicating the content
 for each pattern, these point to the original corpus data which is held in
 memory.
 
@@ -457,7 +457,7 @@ corpus. Our implementation follows the methodology
 of~\cite{Rayson00comparingcorpora}. They compute the log-likelihood ($L$)
 given the frequency of a pattern in corpus 1 ($a$), and corpus 2 ($b$) as
 follows\footnote{Here, $E_i$ expresses expected values, $N_i$ is the
-total amount of tokens in the respective corpus}:
+total amount of tokens in the respective corpus.}:
 
 \begin{equation}
 L = 2a(\log \frac{a}{E_1}) + b(\log \frac{b}{E_2})\text{, where } E_i = \frac{N_i(a+b)}{N_1 + N_2}
@@ -543,7 +543,7 @@ translations of TED talks of $127,806$ sentences and $2,330,075$
 words\footnote{The data is from the IWSLT 2012 Evaluation Campaign,
     \url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html\#MTtrack}.
 Tokenisation was performed using ucto,
-\url{https://languagemachines.github.io/ucto}.}.
+\url{https://languagemachines.github.io/ucto}, version v0.5.3.}.
 
 We perform tests without thresholding as well as with an occurrence threshold
 of $2$, and extract anything from unigrams to $8$-grams.
@@ -554,7 +554,7 @@ the values integers. We also include a comparable implementation that uses
 NLTK\footnote{Natural Language Toolkit, a popular platform for NLP on Python:
     \url{http://www.nltk.org}. Our implementation follows the naive approach
     but uses \texttt{ngrams()} from \texttt{nltk.util} and \texttt{FreqDist} from
-\texttt{nltk.probability}}. Similarly, we include a naive C++ implementation based on
+\texttt{nltk.probability}. We used version 2.0.4.}. Similarly, we include a naive C++ implementation based on
 a \texttt{std::unordered\_map$<$string,uint32\_t$>$}. The memory reduction that can be
 observed when comparing these against the Colibri Core models is attributed to
 the class encoding scheme we use. These memory optimisations do come with a
@@ -579,7 +579,7 @@ model in SRILM \citep{SRILM}. \footnote{SRILM's \texttt{ngram-count} is run in
 vanilla form, i.e. no smoothing or interpolation, with the options
 \texttt{-no-bos -no-eos}. Note that the encoding of classes is a separate step in
 Colibri Core, so our total CPU time should be considered to be a second longer
-than reported for a more fair comparison.}. Due to the many other features
+than reported for a more fair comparison.} Due to the many other features
 Colibri Core offers regarding thresholding, indexing, skipgrams and flexgrams, it
 can not yet rival the performance and memory efficiency of dedicated LM systems,
 which allow for more specific optimisations.
@@ -637,7 +637,7 @@ The C++ library allows for easy swapping of the underlying datastructure for
 pattern models. The default hashmap (\texttt{std::unordered\_map}) solution can
 be contrasted to a pattern model using using an ordered map
 (\texttt{std::map}\footnote{the hash key is still computed as it determines the
-ordering}). As expected, the ordered map proves to be significantly slower and
+ordering.}). As expected, the ordered map proves to be significantly slower and
 does not yield a memory advantage either.
 
 As Colibri Core is suited for the processing of large data sets, provided sensible
@@ -743,7 +743,7 @@ We have opted for an indexed pattern model, which gives us more thresholding
 options such as \texttt{--skiptypes}, and makes skipgram extraction more
 efficient, but at the cost of a much higher memory footprint compared to
 the simpler unindexed models\footnote{Use the \texttt{--unindexed} flag to
-build an unindexed model}.
+build an unindexed model.}.
 
 We can now read the model from file and produce output to standard output in
 the form of \emph{1)} a print of all patterns in the model, \emph{2)} a
@@ -811,7 +811,7 @@ algorithms. A 64-bit architecture is required, 32-bit is not supported.
 Colibri Core relies on the standard C/C++ library and a full build environment including autoconf and
 automake; Python 2.7 or 3; Cython 0.23 or above. Support for reading the
 \emph{FoLiA} XML format for text is entirely optional and requires the \texttt{libfolia}
-library.\footnote{https://proycon.github.io/folia}
+library.\footnote{\url{https://proycon.github.io/folia}}
 
 \subsection*{List of contributors}
 
