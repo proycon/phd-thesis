@@ -122,7 +122,7 @@ shown here will be discussed in this section.
 \end{figure}
 
 We will present the various features and optimisations that are implemented in
-Colibri Core. We start with a introduction of patterns and their encoding, Then
+Colibri Core. We start with a introduction of patterns and their encoding, then
 discuss the implemented optimisation we use to count n-grams, and subsequently
 skipgrams. We then discuss more advanced parametrisation and end with a section
 on the computation of flexgrams.
@@ -139,7 +139,7 @@ We distinguish three categories of patterns, and define them as follows:
         placeholders/wildcards with total length $n$ ($n=p+q$), the
         placeholders constitute gaps, or skips, and a skipgram can contain
         multiple of these. In turn, a gap can span one or more tokens. For
-    example: ``\texttt{``to \_ or \_ \_ be}''
+    example: ``\texttt{to \_ or \_ \_ be}''
     \item Flexgrams -- A sequence with one or more gaps of variable length,
         which implies the pattern by itself is of undefined length. For example:
         ``\texttt{to * or * be}''
