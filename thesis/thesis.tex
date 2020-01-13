@@ -14,6 +14,7 @@
 \usepackage{bibentry}
 \usepackage{supertabular}
 \usepackage{tabularx}
+\usepackage{longtable,tabu}
 \usepackage{latexsym}
 \usepackage{graphicx}
 \usepackage{placeins}
@@ -64,6 +65,7 @@
 \usepackage{footnote}
 \makesavenoteenv{tabular}
 \makesavenoteenv{table}
+\makesavenoteenv{longtable}
 %\usepackage{scrextend}
 \let\proof\relax
 \let\endproof\relax
@@ -170,7 +172,7 @@ Manuscriptcommissie: & \\
 \vspace{7cm}
 
 \noindent{
-\includegraphics[width=2.0cm]{siks.zw.eps} \\
+\includegraphics[width=2.0cm]{siks.png} \\
 SIKS Dissertation Series No. 2020-04 \\
 The research reported in this thesis has been carried out under the auspices of SIKS, the Dutch Research School for
 Information and Knowledge Systems.
@@ -218,8 +220,11 @@ Written in (neo)vim on Arch Linux, typeset in \LaTeX. \\
 \bibliographystyle{apalike}
 \bibliography{thesis}
 
+\appendix
+\pagestyle{headings}
 \include{summary}
+\include{samenvatting}
 \include{cv}
-\include{siks_dissertations}
+\include{siks}
 
 \end{document}

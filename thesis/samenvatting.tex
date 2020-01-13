@@ -1,0 +1,50 @@
+\chapter*{Samenvatting}
+\addcontentsline{toc}{chapter}{Samenvatting}
+
+Dit proefschrift, getiteld \emph{Context as Linguistic Bridges}, richt zich op het onderzoeken van de rol van
+context in automatische vertaalsystemen. Het onderliggende idee is dat de context waarin een woord of zinssnede zich
+bevindt belangrijke informatie geeft voor de vertaling van dat woord of die zinssnede; het helpt om ambiguïteit op te
+lossen.
+Neem, bijvoorbeeld, het Nederlandse woord ``bank'', dit kan een financieel instituut betekenen of een bank om op te
+ziten. In zinnen zoals ``Ik zet mijn geld op de bank'' en ``De hond mag niet op de bank'', helpt de context ons om de
+juiste betekenis te identificeren. Dit wordt, met een engelse term, ook wel Word Sense Disambiguation (WSD) genoemd. In
+dit proefschrift onderzoeken we technieken om dit te doen op een automatische manier. Vervolgens proberen we deze
+oplossingen te integreren in een automatische vertaalsysteem. Het is namelijk zo dat als we deze woorden zouden vertalen
+naar bijvoorbeeld het Engels, we een andere vertaling krijgen bij een andere betekenis. In dit voorbeeld zouden we
+respectievelijk ``bank'' en ``sofa'' of ``couch'' krijgen.
+
+We onderzoeken twee bepaalde technieken om twee verschillende problemen op te lossen en proberen deze dan te
+combineren: Geheugen-gebaseerde classificatiesystemen blijken succes te hebben bij Word Sense Disambiguation, en
+frase-gebaseerde statistische vertaalsystemen waren ten tijde dat ons onderzoek begon de beste oplossing voor
+automatische vertaling (maar zijn inmiddels gepasseerd door diepe neurale netwerken). Deze twee technieken combineren we
+om onze hoofdvraag te beantwoorden:
+
+\begin{quote}
+In hoeverre kunnen we automatische vertaling verbeteren door contextinformatie uit de brontaal mee te nemen?
+\end{quote}
+
+Dit onderzoek slaat ook nog een extra zijspoor in door een apart soort vertaalprobleem te beschouwen, namelijk het vertalen
+van een woord of zinssnede in een anderstalige context. Dit is fenomeen wat ook wel als codewisseling bekend staat. Neem
+bijvoorbeeld een fransman die Nederlands (L2) probeert te spreken maar niet geheel de juiste woorden kan vinden en
+daarom voor een deel terugvalt op zijn moedertaal (L1): ``Ik ga .. eh.. \emph{rentre à la maison}... omdat ik moe ben''.
+We proberen dit L1 fragment in een L2 context automatisch naar L2 om te zetten.
+
+In onze zoektocht naar een antwoord op de hoofdvraag, komen er ook een aantal gerelateerde vragen aan bod:
+
+\begin{itemize}
+\item \emph{Welke contextinformatie is het meest effectief?} - Welke informatie uit de context in de brontaal draagt het
+    meeste bij voor een juiste vertaling?
+\item \emph{In hoeverre is niet-linguïstisch geinformeerde informatie voldoende?} - We willen zo dicht mogelijk bij de
+    brontekst bljiven als mogelijk, zonder al te veel extra linguïstische informatie zoals woordsoort en lemma toe te
+    hoeven voegen. We onderzoeken wel wat voor een verschil bepaalde soorten linguïstische verrijking uitmaakt.
+\item \emph{Hoe kunnen classificatiesystemen geintegreerd worden in automatische vertaalsystemen?} - Er zijn
+    verschillende manieren waarop deze integratie gedaan kan worden en verschillende keuzes te maken, we onderzoeken er een aantal.
+\end{itemize}
+
+We moeten uiteindelijk concluderen dat de integratie van context-gevoelige classificatiesystemen in een automatisch
+vertaalsysteem niet leidt tot enige significante verbetering, in tegenstelling tot onze aanvankelijke hypothese. Dit
+doet an sich geen afbreuk aan het feit dat contextinformatie in de brontaal nuttige informatie oplevert voor
+classificatie, zoals we in ons WSD onderzoek aantonen, maar het betekent dat het expliciet modelleren van deze
+informatie in een automatisch vertaalsysteem geen meerwaarde ten opzichte van de al beschikbare vertaalmodellen. We
+leiden daaruit af dat er al voldoende van deze informatie impliciet beschikbaar is deze bestaande modellen.
+

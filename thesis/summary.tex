@@ -1,12 +1,11 @@
-\appendix{Summary*}
+\chapter*{Summary}
+\addcontentsline{toc}{chapter}{Summary}
 
 \emph{Context as Linguistic Bridges} is a study that focusses on the role of
 context information in machine translation, i.e. translation by computers.  The
 underlying intuition is that the context in which a word or phrase appears is
 an important cue for the translation of that word or phrase; it helps in
-resolving ambiguity. We apply solutions that have proven themselves within the
-field of Word Sense Disambiguation, a field in which automated systems seek to
-distinguish the same word that can have multiple meanings.
+resolving ambiguity.
 
 Consider, for instance, the English word \emph{``bank''}, which can refer to a
 financial institution or the bank of a river. In sentences such as \emph{``I
@@ -16,7 +15,7 @@ Disambiguation (WSD) and in this research we develop techniques to do this
 in an automated fashion and attempt to apply these same techniques in a Machine
 Translation context. After all, if we were to translated these two distinct
 word senses to another language, we would likely obtain different words. For
-dutch we would get \emph{``bank''} and \emph``oever''}, respectively.
+dutch we would get \emph{``bank''} and \emph{``oever''}, respectively.
 
 We look into two particular solutions to solve two different problems and then
 try to combine these into one: \emph{Memory-based Classification} proves
@@ -34,12 +33,12 @@ In this sense, ``source-side context'' refers to the fact that we use
 information from the input in the source language, which is to be translated
 into the target language.
 
-We also add a twist to this research as we investigate a very peculiar type of
-translation from context; the translation of a word or phrase in a
+We also add a twist to this research as we investigate a special type of
+translation using source-side context; the translation of a word or phrase in a
 cross-lingual context; a phenomenon also known as code-switching. Consider a
 frenchman attempting to speak English (L2), but not finding quite the right
 words for everything so reverting back to his native language (L1) for that
-fragment: ``I go ...eh.... \textbf{rentre à la maison}... because I am tired.''
+fragment: ``I go ...eh.... \emph{rentre à la maison}... because I am tired.''
 . We try to automatically translate this L1 fragment in an L2 context to L2.
 
 In our search for an answer to the main question, we can distinguish three subquestions that will be addressed:
