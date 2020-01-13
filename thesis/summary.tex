@@ -1,0 +1,62 @@
+\appendix{Summary*}
+
+\emph{Context as Linguistic Bridges} is a study that focusses on the role of
+context information in machine translation, i.e. translation by computers.  The
+underlying intuition is that the context in which a word or phrase appears is
+an important cue for the translation of that word or phrase; it helps in
+resolving ambiguity. We apply solutions that have proven themselves within the
+field of Word Sense Disambiguation, a field in which automated systems seek to
+distinguish the same word that can have multiple meanings.
+
+Consider, for instance, the English word \emph{``bank''}, which can refer to a
+financial institution or the bank of a river. In sentences such as \emph{``I
+put my money on the bank''} and \emph{``The ship got stuck on the bank''}, the
+context helps to disambiguate the word. This is known as Word Sense
+Disambiguation (WSD) and in this research we develop techniques to do this
+in an automated fashion and attempt to apply these same techniques in a Machine
+Translation context. After all, if we were to translated these two distinct
+word senses to another language, we would likely obtain different words. For
+dutch we would get \emph{``bank''} and \emph``oever''}, respectively.
+
+We look into two particular solutions to solve two different problems and then
+try to combine these into one: \emph{Memory-based Classification} proves
+succesful in Word Sense Disambiguation tasks, and \emph{Phrase-based
+Statistical Machine Translation} used to be the state-of-the-art in machine
+translation when this research began (but has been superseded since by deep
+learning). We combine these two techniques and attempt to answer the main
+question:
+
+\begin{quote}
+To what extent can we improve translation by considering source-side context information?
+\end{quote}
+
+In this sense, ``source-side context'' refers to the fact that we use
+information from the input in the source language, which is to be translated
+into the target language.
+
+We also add a twist to this research as we investigate a very peculiar type of
+translation from context; the translation of a word or phrase in a
+cross-lingual context; a phenomenon also known as code-switching. Consider a
+frenchman attempting to speak English (L2), but not finding quite the right
+words for everything so reverting back to his native language (L1) for that
+fragment: ``I go ...eh.... \textbf{rentre à la maison}... because I am tired.''
+. We try to automatically translate this L1 fragment in an L2 context to L2.
+
+In our search for an answer to the main question, we can distinguish three subquestions that will be addressed:
+
+\begin{itemize}
+\item \emph{What context features prove most effective?} - What exactly in the source-side context provides the most valuable cue for a succesful disambiguation?
+\item \emph{To what extent are linguistically uninformed features effective?} -  Our aim is to stay as close to the pure textual data as possible, not aided by further linguistic information such as part-of-speech tags or lemmas. We do conduct various experiments to see what difference such linguistic information makes.
+\item \emph{How can source-side classifiers be used in translation tasks?} - How exactly do we integrate classifiers inside a phrase-based statistical machine translation system? There are various possibilities and choices to make and we investigateand compare several.
+\end{itemize}
+
+We have to conclude that the integration of context-aware classifiers in a
+phrase-based statistical machine translation system, does not lead to any
+significant improvement, contrary to our initial hypothesis. This does not
+discredit the idea that source-side context provides valuable cues for
+translation or disambiguation, as we show in our WSD research.  It shows only
+that modelling this source-side context information explicitly provides no
+extra benefit over the already existing statistical machine translation model, and we infer
+that the information is already available implicitly to a sufficient degree in the
+existing statistical machine translation model.
+
