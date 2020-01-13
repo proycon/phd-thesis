@@ -11,7 +11,7 @@ integrate these in a statistical machine translation system.  Our main question 
 automated translation by explicitly modelling such context information.
 
 We find, however, no significant improvement over already existing models, and we infer that the information we model
-and add explicitly must already have been implicitly available.
+and add explicitly must already be implicitly and sufficiently available to the existing models.
 
 Korte samenvatting
 -------------------
@@ -25,6 +25,8 @@ We hebben classificatiesystemen ontwikkeld die goed werken in disambiguatietaken
 integreren deze in een statistisch automatisch vertaalsysteem. Onze hoofdvraag is te onderzoeken in hoeverre we de
 vertaalkwaliteit kunnen verbeteren door deze informatie expliciet te modelleren.
 
-Onze bevindingen, echter, tonen aan dat er geen significate verbetering te behalen valt ten opzichte van de al bestaande
+Onze bevindingen, echter, tonen aan dat er geen significante verbetering te behalen valt ten opzichte van de al bestaande
+modellen en leiden hieruit af dat de informatie die we expliciet proberen toe te voegen, al impliciet en in voldoende
+mate aanwezig is in de bestaande modellen.
 
 
