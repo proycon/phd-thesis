@@ -32,6 +32,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{gb4e} %this conflicts with underscores in filenames for some obscure reason!!! take care not to use underscores!
+\usepackage{substr}
 \usepackage{chngcntr}
 \counterwithout{footnote}{chapter}
 \usepackage{titletoc}
@@ -102,6 +103,9 @@
 {0pt}% horizontal sep
 {}% before
 
+\newcommand{\withdate}[1]{%
+    \IfSubStringInString{\detokenize{withdate}}{\jobname}{#1}{}%
+}
 
 
 %\thesistitle{Context as Linguistic Bridges}
@@ -135,6 +139,7 @@ ter verkrijging van de graad van doctor\\
 aan de Radboud Universiteit Nijmegen\\
 op gezag van de rector magnificus prof. dr. J.H.J.M van Krieken,\\
 volgens besluit van het college van decanen.\\
+\withdate{\input{datetime}}
 
 \vspace{2cm}
 
