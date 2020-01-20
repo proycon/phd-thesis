@@ -1,0 +1,3 @@
+[submodule "thesis/classicthesis"]
+	path = thesis/classicthesis
+	url = https://bitbucket.org/amiede/classicthesis

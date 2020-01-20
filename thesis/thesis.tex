@@ -1,10 +1,14 @@
-\documentclass[11pt,makeidx,english]{style/phdthesis}
+\documentclass[11pt,makeidx,english,g5paper,openright]{style/phdthesis}
 \usepackage[english]{babel}
 
 \usepackage{amsmath}
 \usepackage{amsopn}
 \usepackage{amsthm}
-\usepackage[floatperchapter]{classicthesis}
+\usepackage[floatperchapter,paper=g5]{classicthesis}
+
+%explicitly set g5 paper margins because the above options did not suffice;
+\usepackage[verbose]{geometry}
+\geometry{paperheight=23.9cm,paperwidth=16.9cm,inner=3cm,outer=2.5cm,bottom=3cm}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -122,15 +126,12 @@
 \pagestyle{plain}
 
 
+\newpage
 
 \begin{titlepage}
 \begin{center}
 \vspace{8cm}
 {\Huge Context as Linguistic Bridges}
-
-
-\vspace{1cm}
-Een wetenschappelijke proeve op het gebied van de Letteren
 
 \vspace{6cm}
 {\LARGE Proefschrift }\\
@@ -144,9 +145,7 @@ volgens besluit van het college van decanen.\\
 \vspace{2cm}
 
 door\\
-\vspace{1cm}
-{\LARGE Maarten van Gompel}\\
-\vspace{0.5cm}
+Maarten van Gompel\\
 geboren op 15 december 1982\\
 te Etten-Leur
 
@@ -174,7 +173,7 @@ Manuscriptcommissie: & \\
 \end{tabular}
 
 
-\vspace{7cm}
+\vspace{5cm}
 
 \noindent{
 \includegraphics[width=2.0cm]{siks.png} \\

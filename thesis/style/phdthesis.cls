@@ -35,6 +35,7 @@
    \PassOptionsToClass{\CurrentOption}{book}
 }
 \newcommand{\@papersizeopt}{a4paper}
+\DeclareOption{g5paper}{\renewcommand{\@papersizeopt}{g5paper}}
 \DeclareOption{a4paper}{\renewcommand{\@papersizeopt}{a4paper}}
 \DeclareOption{a5paper}{\renewcommand{\@papersizeopt}{a5paper}}
 \DeclareOption{b5paper}{\renewcommand{\@papersizeopt}{b5paper}}
@@ -46,7 +47,7 @@
 \LoadClass[\@papersizeopt,\@typesizeopt]{book}
 \RequirePackage{epsfig}
 %
-%       To provide backwards compatibility with versions of the book class that 
+%       To provide backwards compatibility with versions of the book class that
 %       do not define \@openbib@code, \newblock, \paperwidth or \paperheight:
 %
 \providecommand{\@openbib@code}{}
@@ -84,8 +85,8 @@
 %       Note that, as opposed to in book.cls, here the definition
 %       of \@makechapterhead does _not_ end with a \nobreak command
 %       but with a \mbox{}, since we'd rather not have the chapter
-%       head move to the next page even if that would result in 
-%       the chapter head being the _only_ thing on the page. 
+%       head move to the next page even if that would result in
+%       the chapter head being the _only_ thing on the page.
 %
 \newlength{\@spacebeforechapterhead}
 \setmlength{\@spacebeforechapterhead}{\@mult}{15pt}
@@ -161,8 +162,8 @@
   \item[\hspace{\labelsep}{\upshape\bfseries #2.}\ {\scshape #1\ ({#3}).}]%
 }
 %
-%   Chapters, sections and other environments are redefined here to no 
-%       longer cause uppercased headings. Headings are italized instead of 
+%   Chapters, sections and other environments are redefined here to no
+%       longer cause uppercased headings. Headings are italized instead of
 %       slanted. The bibliography and index appear in the table of contents.
 %
 \if@twoside
@@ -173,7 +174,7 @@
       \let\@mkboth\markboth
       \def\chaptermark##1{\markboth{%
          \ifnum \c@secnumdepth >\m@ne
-            \if@mainmatter \@chapapp\ \thechapter. \ \fi 
+            \if@mainmatter \@chapapp\ \thechapter. \ \fi
          \fi
          ##1}{}}%
       \def\sectionmark##1{\markright{%
@@ -188,7 +189,7 @@
       \def\chaptermark##1{\markright{%
          \ifnum \c@secnumdepth >\m@ne
             \if@mainmatter \@chapapp\ \thechapter. \ \fi
-	
+
          \fi
          ##1}}
    }
