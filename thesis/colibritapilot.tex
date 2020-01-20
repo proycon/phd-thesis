@@ -435,6 +435,13 @@ corpus, though this threshold is made configurable and could have been
 set higher to limit the number of classifiers. The remaining $246,380$
 unambiguous mappings are stored in a separate mapping table.
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=10cm]{colibritapilot-context.png}
+\caption{Accuracy for different local context sizes, Europarl English to Spanish.}
+\label{fig:context}
+\end{figure}
+
 For the classifier-based system, we tested various different feature
 vector configurations. The first experiment, of which the results are
 shown in Figure~\ref{fig:context}, sets a fixed and symmetric local
@@ -450,6 +457,8 @@ all the MT metrics.
 %translation in the test set, but in different ways and focussing on
 %different aspects.
 
+\FloatBarrier
+
 Table~\ref{tab:results} shows the results for English to Spanish in
 more detail and adds a comparison with the two baseline systems. The various
 \texttt{lXrY} configurations use the same feature vector setup for all classifier
@@ -463,17 +472,11 @@ experts but instead seeks to find the optimal setup per
 classifier expert. This shall be further discussed in
 Section~\ref{sec:optim}.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=12cm]{colibritapilot-context.png}
-\caption{Accuracy for different local context sizes, Europarl English to Spanish.}
-\label{fig:context}
-\end{figure}
 
 
 
 \begin{center}
-\begin{table*}[bt]
+\begin{table*}[hbt]
 \footnotesize{
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{llllllll}

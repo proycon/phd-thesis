@@ -456,7 +456,7 @@ feature selection on the trial data, we by definition obtain the highest scores
 on this trial data, but this carries the risk of overfitting. Results on the
 trial data are shown in Table~\ref{tabpar}.
 
-\begin{table}
+\begin{table}[h]
 \footnotesize
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lrrrrr}
@@ -480,19 +480,7 @@ varN & \textbf{52.91} & 53.61 & \textbf{45.92} & 44.32 & 39.40 \\
 \label{tabpar}
 \end{table}
 
-The hyperparameter optimisation on classifier accuracy has a slightly negative
-impact, suggesting overfitting on the training data. Therefore a fourth
-configuration (\texttt{varN}) was tried later to independently assess the idea
-of feature selection, without hyperparameter optimisation on the classifiers.
-This proves to be a good idea. However, the fourth configuration was not yet
-available for the actual competition. This incidentally would have had no
-impact on the final ranking between competitors. When we run these systems on
-the actual test data of the shared task, we obtain the results in
-Table~\ref{tabfinal}. The best score amongst the other competitors is mentioned
-in the last row for reference, this is the HLTDI team \citep{HLTDI} for all but
-Best-Spanish, which goes to the NRC contribution \citep{CARPUAT}.
-
-\begin{table}[tbh]
+\begin{table}[h]
 \footnotesize
 \noindent\makebox[\textwidth][c]{%
 \begin{tabular}{lrrrrr}
@@ -520,6 +508,19 @@ best competitor & \textbf{61.69} & 58.20 & \textbf{53.57}  & 46.55 & \textbf{43.
 \label{tabfinal}
 \end{table}
 
+The hyperparameter optimisation on classifier accuracy has a slightly negative
+impact, suggesting overfitting on the training data. Therefore a fourth
+configuration (\texttt{varN}) was tried later to independently assess the idea
+of feature selection, without hyperparameter optimisation on the classifiers.
+This proves to be a good idea. However, the fourth configuration was not yet
+available for the actual competition. This incidentally would have had no
+impact on the final ranking between competitors. When we run these systems on
+the actual test data of the shared task, we obtain the results in
+Table~\ref{tabfinal}. The best score amongst the other competitors is mentioned
+in the last row for reference, this is the HLTDI team \citep{HLTDI} for all but
+Best-Spanish, which goes to the NRC contribution \citep{CARPUAT}.
+
+
 A major factor in this task is the accuracy of lemmatisation, and to lesser
 extent of PoS tagging. We conducted additional experiments on German and French
 without lemmatisation, tested on the trial data. Results immediately fell below
@@ -538,6 +539,7 @@ discard ineffective options in this task. The grow-diag-final heuristic
 incorporates unaligned words to the end of a translation in the translation
 option, a bad idea for CLWSD.
 
+\FloatBarrier
 
 \section{Discussion and Conclusion}
 

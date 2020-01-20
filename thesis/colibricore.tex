@@ -241,7 +241,7 @@ pattern model in memory, with unigrams already counted in the more trivial fashi
 \end{algorithmic}
 \end{algorithm}
 
-Though not expressed in the simplified algorithm above, the actual
+Though not expressed in the simplified algorithm shown in Algorithm~\ref{alg:ngramcounting}, the actual
 implementation accounts for more parameters, such as setting a lower bound to
 $n$. The amount of back-off, going all the way up to $m-1$ here, can also be
 fine-tuned.
@@ -538,7 +538,7 @@ Comparisons can be made between Colibri Core's
 unindexed vs indexed models, between the optimised pointer models vs
 standard pattern models, and between preloading a corpus in memory or reading
 it directly from file.  For the experiments, shown in
-Table 1, we used a corpus of Dutch
+Table~\ref{tab:benchmarks}, we used a corpus of Dutch
 translations of TED talks of $127,806$ sentences and $2,330,075$
 words\footnote{The data is from the IWSLT 2012 Evaluation Campaign,
     \url{http://hltc.cs.ust.hk/iwslt/index.php/evaluation-campaign/ted-task.html\#MTtrack}.
@@ -554,8 +554,8 @@ the values integers. We also include a comparable implementation that uses
 NLTK\footnote{Natural Language Toolkit, a popular platform for NLP on Python:
     \url{http://www.nltk.org}. Our implementation follows the naive approach
     but uses \texttt{ngrams()} from \texttt{nltk.util} and \texttt{FreqDist} from
-\texttt{nltk.probability}. We used version 2.0.4.}. Similarly, we include a naive C++ implementation based on
-a \texttt{std::unordered\_map$<$string,uint32\_t$>$}. The memory reduction that can be
+\texttt{nltk.probability}. We used version 2.0.4.}. Similarly, we include a naive C++ implementation based on \\
+\texttt{std::unordered\_map$<$string,uint32\_t$>$}. The memory reduction that can be
 observed when comparing these against the Colibri Core models is attributed to
 the class encoding scheme we use. These memory optimisations do come with a
 performance drawback that is especially noticeable when no thresholding is
@@ -625,16 +625,16 @@ and before training. Peak memory usage is measured absolutely as reported by
 the OS and included in parentheses. All experiments were performed on a Linux system
 with an Intel Xeon CPU (E5-2630L v3) at 1.80GHz and 256GB RAM. Parameter $t$ refers to the occurrence threshold, $l$ to the maximum pattern length.
 }
-}
 \label{tab:benchmarks}
+}
 \end{table}
 
 Indexed Pattern Models are by definition larger in memory than unindexed
 models, but they do offer a significant speed benefit in the computation of
-skipgrams, both of this can be observed in Table 1.
+skipgrams, both of this can be observed in Table~\ref{tab:benchmarks}.
 
 The C++ library allows for easy swapping of the underlying datastructure for
-pattern models. The default hashmap (\texttt{std::unordered\_map}) solution can
+pattern models. The default hashmap \\ (\texttt{std::unordered\_map}) solution can
 be contrasted to a pattern model using using an ordered map
 (\texttt{std::map}\footnote{the hash key is still computed as it determines the
 ordering.}). As expected, the ordered map proves to be significantly slower and
@@ -644,7 +644,7 @@ As Colibri Core is suited for the processing of large data sets, provided sensib
 thresholds are set, we conduct extra experiments on the JRC-Acquis corpus,
 containing $31.3$ million words in over $850,000$ sentences, and on a portion
 of the Google Billion Word corpus, where we use a set of $768$ million words in
-$30$ million sentences. These results are shown in Table 2.
+$30$ million sentences. These results are shown in Table~\ref{tab:benchmarks2}.
 
 \begin{table}[h]
 \footnotesize{
@@ -677,9 +677,9 @@ Unindexed Pattern Pointer Model (preloaded corpus) & 83m 14s & $12279$ MB ($1531
 \hline
 Unindexed Pattern Model (from file) & $25m 16s$ & $16568$ MB ($19788$ MB) \\
 \end{tabular}}
-\caption{Benchmarks on two large data sets. Same setup as Table 1. Parameter $y$ represents the occurrence threshold specifically for skipgrams.}
+\caption{Benchmarks on two large data sets. Same setup as Table~\ref{tab:benchmarks}. Parameter $y$ represents the occurrence threshold specifically for skipgrams.}
+\label{tab:benchmarks2}
 }
-\label{tab:bigbenchmarks}
 \end{table}
 
 Noticeable in the big data experiments is the explosion in memory consumption
