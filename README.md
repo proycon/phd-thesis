@@ -1,3 +1,5 @@
+The actual thesis can be found here: https://github.com/proycon/phd-thesis/blob/master/thesis/thesis.pdf
+
 Short Summary
 -------------
 
@@ -28,5 +30,6 @@ vertaalkwaliteit kunnen verbeteren door deze informatie expliciet te modelleren.
 Onze bevindingen, echter, tonen aan dat er geen significante verbetering te behalen valt ten opzichte van de al bestaande
 modellen en leiden hieruit af dat de informatie die we expliciet proberen toe te voegen, al impliciet en in voldoende
 mate aanwezig is in de bestaande modellen.
+
 
 
