@@ -1,0 +1,82 @@
+\documentclass[11pt]{article}
+%width =  pagewidth * 2  + (pagethickness*pages/2) + bleed*2
+%width = 170 * 2 + (0.108*213/2) + 0*2 =
+\usepackage[paperwidth=351mm,paperheight=240mm,margin=0mm]{geometry}
+\usepackage[dvipsnames,prologue,table]{pstricks}
+\usepackage{pst-text}
+\usepackage{pst-grad}
+\usepackage{graphicx}
+
+
+\begin{document}
+\pagestyle{empty}
+
+\definecolor{ferngreen}{rgb}{0.31,0.47,0.26}
+\definecolor{greenwhite}{rgb}{0.68,0.78,0.67}
+
+\newsavebox\IBox
+\sbox\IBox{\includegraphics[width=130mm]{drawing.eps}}
+
+%set up the picture environment
+\psset{unit=1mm}\noindent
+\begin{pspicture}(351mm,240mm)
+% set up the fonts we use
+
+
+\DeclareFixedFont{\PT}{T1}{ppl}{b}{n}{24pt}
+\DeclareFixedFont{\PTsmall}{T1}{ppl}{b}{it}{20pt}
+\DeclareFixedFont{\PTauthor}{T1}{ppl}{n}{n}{18pt}
+\DeclareFixedFont{\PTsmallest}{T1}{ppl}{b}{it}{0.3in}
+\DeclareFixedFont{\PTtext}{T1}{ppl}{b}{it}{11pt}
+\DeclareFixedFont{\Logo}{T1}{pbk}{m}{n}{0.3in}
+
+% create a background
+\psframe[fillstyle=solid,fillcolor=ferngreen,linecolor=ferngreen](0,0)(351,240)
+
+% white box for the drawing
+\psframe[fillstyle=solid,fillcolor=white,linecolor=white](181,80)(351,240)
+
+% place the front cover picture
+\rput[lb](201,100){\usebox\IBox}
+% put the text on the front cover
+\rput[lb](200,60){\PT \color{white}{Co}\color{greenwhite}{nstructions} \color{greenwhite}{as} \color{white}{Li}\color{greenwhite}{nguistic} \color{white}{Bri}\color{greenwhite}{dges}}
+\rput[lb](277,50){\PTauthor \color{white}{Maarten van Gompel}}
+%\rput[lb](239,15){\PTsmallest \color{black}{Lughdunum Press}}
+
+% put the text on the spine (note the rotation over 270 degrees)
+\rput[l]{270}(175,227){\PTsmall\color{white}{Constructions as Linguistic Bridges} \hspace{3cm} \color{greenwhite}{Maarten van Gompel}}
+
+% Create a Box containing the text for the back cover
+\newsavebox\Summarybox
+\sbox\Summarybox{\begin{minipage}{85mm}
+
+{
+\textcolor{white}{\textbf{Context as Linguistic Bridges}} \textcolor{greenwhite}{ is a study that focusses on the role of context information in machine translation, i.e.
+automated translation by computers.  The underlying intuition is that the context in which a word or phrase appears is
+an important cue for the translation of that word or phrase. Consider, for example, the two different meanings of the word
+\emph{``bank''} in the sentences \emph{``I put my money on the bank''} and \emph{``The ship got stuck on the bank''}.
+}
+
+\vspace{5mm}
+
+\textcolor{greenwhite}{
+We developed classifier-based solutions that work well in Word Sense Disambiguation tasks like the above example, and
+integrate these in a statistical machine translation system.  Our main question is to find to what extent can we improve
+automated translation by explicitly modelling such context information.
+}
+
+\vspace{5mm}
+
+\textcolor{greenwhite}{
+We developed classifier-based solutions that work well in Word Sense Disambiguation tasks like the above example, and
+We find, however, no significant improvement over already existing models, and we infer that the information we model
+ad add explicitly must already be implicitly and sufficiently available in the existing models.
+}}
+\end{minipage}}
+
+% And position the box
+\rput[tl](42.5,213){\usebox\Summarybox}
+
+% Then we close all open environments
+\end{pspicture}
+\end{document}
