@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+%width =  pagewidth * 2  + (pagethickness*pages/2) + bleed*2
+%width = 170 * 2 + (0.108*213/2) + 0*2 =
+\usepackage[paperwidth=170mm,paperheight=240mm,margin=0mm]{geometry}
+\usepackage[dvipsnames,prologue,table]{pstricks}
+\usepackage{pst-text}
+\usepackage{pst-grad}
+\usepackage{graphicx}
+
+
+\begin{document}
+\pagestyle{empty}
+
+\definecolor{ferngreen}{rgb}{0.31,0.47,0.26}
+\definecolor{greenwhite}{rgb}{0.68,0.78,0.67}
+
+\newsavebox\IBox
+\sbox\IBox{\includegraphics[width=130mm]{drawing.eps}}
+
+%set up the picture environment
+\psset{unit=1mm}\noindent
+\begin{pspicture}(170mm,240mm)
+% set up the fonts we use
+
+
+\DeclareFixedFont{\PT}{T1}{ppl}{b}{n}{24pt}
+\DeclareFixedFont{\PTsmall}{T1}{ppl}{b}{it}{20pt}
+\DeclareFixedFont{\PTauthor}{T1}{ppl}{n}{n}{18pt}
+\DeclareFixedFont{\PTsmallest}{T1}{ppl}{b}{it}{0.3in}
+\DeclareFixedFont{\PTtext}{T1}{ppl}{b}{it}{11pt}
+\DeclareFixedFont{\Logo}{T1}{pbk}{m}{n}{0.3in}
+
+% create a background
+\psframe[fillstyle=solid,fillcolor=ferngreen,linecolor=ferngreen](0,0)(170,240)
+
+% white box for the drawing
+\psframe[fillstyle=solid,fillcolor=white,linecolor=white](0,80)(170,240)
+
+% place the front cover picture
+\rput[lb](20,100){\usebox\IBox}
+% put the text on the front cover
+\rput[lb](19,60){\PT \color{white}{Co}\color{greenwhite}{nstructions} \color{greenwhite}{as} \color{white}{Li}\color{greenwhite}{nguistic} \color{white}{Bri}\color{greenwhite}{dges}}
+\rput[lb](96,50){\PTauthor \color{white}{Maarten van Gompel}}
+%\rput[lb](239,15){\PTsmallest \color{black}{Lughdunum Press}}
+
+
+% Then we close all open environments
+\end{pspicture}
+\end{document}
