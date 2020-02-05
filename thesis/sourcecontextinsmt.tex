@@ -540,8 +540,9 @@ sentence pairs we used for training, development and testing.
 %& English to Spanish & $250,000$ / $2000$ / $2000$ \\
 %& English to Dutch & $250,000$ / $5000$ / $5000$ \\
 %\hline
-\multicolumn{3}{l}{\textbf{EMEA} -- \emph{Documents of the European Medicines
-Agency} \citep{OPUS2012} } \\
+\multicolumn{3}{l}{\pbox{12cm}{\textbf{EMEA} -- \emph{Documents of the European Medicines
+Agency} \citep{OPUS2012}
+}} \\
  & Spanish to English & $1,088,333$ / $5000$ / $5000$ \\
  & English to Dutch & $1,080,894$ / $5000$ / $5000$ \\
 \hline
@@ -552,14 +553,15 @@ Frisian and Dutch, contains numerous books and other sources} \citep{OERSETTER}
  & Dutch to Frisian & $137,937$ / $2000$ / $2000$ \\
  & Frisian to Dutch & $137,937$ / $2000$ / $2000$ \\
 \hline
-\multicolumn{3}{l}{\textbf{JRC-Acquis} - \emph{A collection of legislative documents of the
-European Union} \citep{OPUS2012} } \\
+\multicolumn{3}{l}{\pbox{12cm}{\textbf{JRC-Acquis} - \emph{A collection of legislative documents of the
+European Union} \citep{OPUS2012}
+}} \\
  & English to Spanish & $1,233,670$ / $5000$ / $5000$ \\
  & English to Spanish & $250,000$ / $5000$ / $5000$ \\
 \hline
 \multicolumn{3}{l}{\pbox{12cm}{\textbf{IWLST 2012 TED Talks} - \emph{Transcripts and translations of TED
 talks, used for subtitling, as used in the IWSLT 2012 Evaluation Campaign}
-    \citep{WIT3,IWSLT12} } } \\
+    \citep{WIT3,IWSLT12} }} \\
  & English to Dutch & $127,806$ / $885$ / $1569$ \\
 \hline
 \multicolumn{3}{l}{\pbox{12cm}{\textbf{IWLST 2006 Evaluation Campaign} -
@@ -763,27 +765,26 @@ variance, and p-value with respect to the baseline.
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{TER}  \\
 \hline
-Baseline \footnotesize{(replace)} & 26.8 (1.4/0.6) & 29.8 (0.7/0.2/-) & 56.8 (1.5/1.2/-) \\
-l1r1 \footnotesize{(mono/replace)} & 27.7 (1.4/1.1/p=.01) & \textbf{30.2} (0.7/0.1/p=.01) &
-\textbf{55.5}(1.5/1.6/p$<$.01) \\
-l2r1 \footnotesize{(mono/replace)} & 27.2 (1.4/0.3/p=.15) & 29.9 (0.7/0.2/p=.47) & 56.5 (1.5/0.6/p=.56) \\
-l2r2 \footnotesize{(mono/replace)} & \textbf{28.0} (1.5/0.4/p$<$.01) & 30.0 (0.7/0.2/p=.26) & 55.8 (1.5/0.6/p=.02) \\
-l3r3 \footnotesize{(mono/replace)} & 27.2 (1.4/0.3/p=.28) & 29.8 (0.7/0.1/p=.95) & 57.6 (1.5/0.4/p=.06) \\
-l1r1 \footnotesize{(experts/replace)} & 26.6 (1.4/0.2/p=.58) & \textbf{30.2} (0.7/0.1/p=.03) & 57.0 (1.5/0.1/p=.57) \\
-l2r1 \footnotesize{(experts/replace)} & 27.0 (1.4/0.8/p=.50) & 30.0 (0.7/0.1/p=.39) & 56.9 (1.5/0.8/p=.71) \\
-l2r2 \footnotesize{(experts/replace)}& 27.2 (1.4/0.3/p=.21) & 30.1 (0.7/0.2/p=.09) & 56.6 (1.5/0.9/p=.70) \\
-l3r3 \footnotesize{(experts/replace)}& 26.2 (1.4/0.5/p=.20) & 29.8 (0.7/0.2/p=.83) & 58.1 (1.5/0.8/p$<$.01) \\
+Baseline \footnotesize{(replace)} & 26.8 \footnotesize{(1.4/0.6)} & 29.8 \footnotesize{(0.7/0.2/-)} & 56.8 \footnotesize{(1.5/1.2/-)} \\
+l1r1 \footnotesize{(mono/replace)} & 27.7 \footnotesize{(1.4/1.1/p=.01)} & \textbf{30.2} \footnotesize{(0.7/0.1/p=.01)} &
+\textbf{55.5} \footnotesize{(1.5/1.6/p$<$.01)} \\
+l2r1 \footnotesize{(mono/replace)} & 27.2 \footnotesize{(1.4/0.3/p=.15)} & 29.9 \footnotesize{(0.7/0.2/p=.47)} & 56.5 \footnotesize{(1.5/0.6/p=.56)} \\
+l2r2 \footnotesize{(mono/replace)} & \textbf{28.0} \footnotesize{(1.5/0.4/p$<$.01)} & 30.0 \footnotesize{(0.7/0.2/p=.26)} & 55.8 \footnotesize{(1.5/0.6/p=.02)} \\
+l3r3 \footnotesize{(mono/replace)} & 27.2 \footnotesize{(1.4/0.3/p=.28)} & 29.8 \footnotesize{(0.7/0.1/p=.95)} & 57.6 \footnotesize{(1.5/0.4/p=.06)} \\
+l1r1 \footnotesize{(experts/replace)} & 26.6 \footnotesize{(1.4/0.2/p=.58)} & \textbf{30.2} \footnotesize{(0.7/0.1/p=.03)} & 57.0 \footnotesize{(1.5/0.1/p=.57)} \\
+l2r1 \footnotesize{(experts/replace)} & 27.0 \footnotesize{(1.4/0.8/p=.50)} & 30.0 \footnotesize{(0.7/0.1/p=.39)} & 56.9 \footnotesize{(1.5/0.8/p=.71)} \\
+l2r2 \footnotesize{(experts/replace)}& 27.2 \footnotesize{(1.4/0.3/p=.21)} & 30.1 \footnotesize{(0.7/0.2/p=.09)} & 56.6 \footnotesize{(1.5/0.9/p=.70)} \\
+l3r3 \footnotesize{(experts/replace)}& 26.2 \footnotesize{(1.4/0.5/p=.20)} & 29.8 \footnotesize{(0.7/0.2/p=.83)} & 58.1 \footnotesize{(1.5/0.8/p$<$.01)} \\
 \hline
-Baseline \footnotesize{(append)} & 26.8 (1.4/0.5/-) & 29.8 (0.7/0.1/-) & 57.2 (1.5/0.6/-) \\
-l1r1 \footnotesize{(mono/append)} & 26.8 (1.4/0.3/p=.92) & 30.0 (0.7/0.1/p=.23) & 57.3 (1.5/0.5/p=.84) \\
-l2r1 \footnotesize{(mono/append)}& 27.6 (1.4/0.2/p=.01) & 30.2 (0.7/0.0/p=.04) & 55.9 (1.5/0.2/p$<$.01) \\
-l2r2 \footnotesize{(mono/append)}& 27.4 (1.4/0.8/p=.09) & 29.7 (0.7/0.2/p=.44) & 57.0 (1.5/0.9/p=.62) \\
-l3r3 \footnotesize{(mono/append)}& 27.1 (1.4/0.8/p=.35) & 29.8 (0.7/0.2/p=.91) & 57.2 (1.5/1.3/p=.93) \\
-l1r1 \footnotesize{(experts/append)} & 25.9 (1.4/0.5/p=.02) & 30.0 (0.7/0.0/p=.34) & 57.6 (1.5/0.7/p=.37) \\
-l2r1 \footnotesize{(experts/append)} & \textbf{27.9} (1.4/0.2/p$<$.01) & \textbf{30.3} (0.7/0.2/p=.01) & \textbf{55.6}
-(1.5/0.4/p$<$.01) \\
-l2r2 \footnotesize{(experts/append)} & 27.3 (1.4/0.5/p=.15) & 30.0 (0.7/0.3/p=.25) & 56.5 (1.5/0.4/p=.05) \\
-l3r3 \footnotesize{(experts/append)} & 26.3 (1.4/0.7/p=.25) & 29.5 (0.7/0.1/p=.14) & 58.7 (1.5/0.4/p$<$.01) \\
+Baseline \footnotesize{(append)} & 26.8 \footnotesize{(1.4/0.5/-)} & 29.8 \footnotesize{(0.7/0.1/-)} & 57.2 \footnotesize{(1.5/0.6/-)} \\
+l1r1 \footnotesize{(mono/append)} & 26.8 \footnotesize{(1.4/0.3/p=.92)} & 30.0 \footnotesize{(0.7/0.1/p=.23)} & 57.3 \footnotesize{(1.5/0.5/p=.84)} \\
+l2r1 \footnotesize{(mono/append)}& 27.6 \footnotesize{(1.4/0.2/p=.01)} & 30.2 \footnotesize{(0.7/0.0/p=.04)} & 55.9 \footnotesize{(1.5/0.2/p$<$.01)} \\
+l2r2 \footnotesize{(mono/append)}& 27.4 \footnotesize{(1.4/0.8/p=.09)} & 29.7 \footnotesize{(0.7/0.2/p=.44)} & 57.0 \footnotesize{(1.5/0.9/p=.62)} \\
+l3r3 \footnotesize{(mono/append)}& 27.1 \footnotesize{(1.4/0.8/p=.35)} & 29.8 \footnotesize{(0.7/0.2/p=.91)} & 57.2 \footnotesize{(1.5/1.3/p=.93)} \\
+l1r1 \footnotesize{(experts/append)} & 25.9 \footnotesize{(1.4/0.5/p=.02)} & 30.0 \footnotesize{(0.7/0.0/p=.34)} & 57.6 \footnotesize{(1.5/0.7/p=.37)} \\
+l2r1 \footnotesize{(experts/append)} & \textbf{27.9} \footnotesize{(1.4/0.2/p$<$.01)} & \textbf{30.3} \footnotesize{(0.7/0.2/p=.01)} & \textbf{55.6} \footnotesize{(1.5/0.4/p$<$.01)} \\
+l2r2 \footnotesize{(experts/append)} & 27.3 \footnotesize{(1.4/0.5/p=.15)} & 30.0 \footnotesize{(0.7/0.3/p=.25)} & 56.5 \footnotesize{(1.5/0.4/p=.05)} \\
+l3r3 \footnotesize{(experts/append)} & 26.3 \footnotesize{(1.4/0.7/p=.25)} & 29.5 \footnotesize{(0.7/0.1/p=.14)} & 58.7 \footnotesize{(1.5/0.4/p$<$.01)} \\
 \hline
 \end{tabular}}
 \caption{Results for Chinese to English on IWSLT 2006 Evaluation Campaign data.
@@ -826,25 +827,25 @@ an acceptable degree of significance.
 \hline
 \textbf{System} & \textsc{BLEU}  & \textsc{METEOR}  & \textsc{TER}  \\
 \hline
-Baseline \footnotesize{(replace)} & \textbf{31.3} (0.5/0.2/p=-) & \textbf{32.7} (0.2/0.1/p=-) & 47.9 (0.5/0.6/p=-) \\
+Baseline \footnotesize{(replace)} & \textbf{31.3} \footnotesize{(0.5/0.2/p=-)} & \textbf{32.7} \footnotesize{(0.2/0.1/p=-)} & 47.9 \footnotesize{(0.5/0.6/p=-)} \\
 %TODO: l1r1M is missing
-l2r1 \footnotesize{(mono/replace)} & 30.8 (0.5/0.1/p$<$.01) & 32.5 (0.2/0.0/p$<$.01) & 48.1 (0.5/0.2/p=.04) \\
-l2r2 \footnotesize{(mono/replace)} & 30.5 (0.5/0.1/p$<$.01) & 32.4 (0.2/0.0/p$<$.01) & 48.5 (0.4/0.2/p$<$.01) \\
-l3r3 \footnotesize{(mono/replace)} & 30.4 (0.5/0.1/p$<$.01) & 32.3 (0.2/0.1/p$<$.01) & 48.4 (0.4/0.2/p$<$.01) \\
-l1r1 \footnotesize{(experts/replace)} & \textbf{31.3} (0.5/0.0/p=.63) & 32.6 (0.2/0.0/p=.05) & \textbf{47.1} (0.4/0.3/p$<$.01) \\
-l2r1 \footnotesize{(experts/replace)} & 30.9 (0.5/0.1/p$<$.01) & 32.5 (0.2/0.0/p$<$.01) & 48.3 (0.5/0.1/p$<$.01) \\
-l2r2 \footnotesize{(experts/replace)} & 31.0 (0.5/0.1/p$<$.01) & 32.5 (0.2/0.1/p$<$.01) & 47.9 (0.5/0.1/p=.82) \\
-l3r3 \footnotesize{(experts/replace)} & 30.8 (0.5/0.2/p$<$.01) & 32.4 (0.2/0.1/p$<$.01) & 48.2 (0.5/0.4/p=.04) \\
+l2r1 \footnotesize{(mono/replace)} & 30.8 \footnotesize{(0.5/0.1/p$<$.01)} & 32.5 \footnotesize{(0.2/0.0/p$<$.01)} & 48.1 \footnotesize{(0.5/0.2/p=.04)} \\
+l2r2 \footnotesize{(mono/replace)} & 30.5 \footnotesize{(0.5/0.1/p$<$.01)} & 32.4 \footnotesize{(0.2/0.0/p$<$.01)} & 48.5 \footnotesize{(0.4/0.2/p$<$.01)} \\
+l3r3 \footnotesize{(mono/replace)} & 30.4 \footnotesize{(0.5/0.1/p$<$.01)} & 32.3 \footnotesize{(0.2/0.1/p$<$.01)} & 48.4 \footnotesize{(0.4/0.2/p$<$.01)} \\
+l1r1 \footnotesize{(experts/replace)} & \textbf{31.3} \footnotesize{(0.5/0.0/p=.63)} & 32.6 \footnotesize{(0.2/0.0/p=.05)} & \textbf{47.1} \footnotesize{(0.4/0.3/p$<$.01)} \\
+l2r1 \footnotesize{(experts/replace)} & 30.9 \footnotesize{(0.5/0.1/p$<$.01)} & 32.5 \footnotesize{(0.2/0.0/p$<$.01)} & 48.3 \footnotesize{(0.5/0.1/p$<$.01)} \\
+l2r2 \footnotesize{(experts/replace)} & 31.0 \footnotesize{(0.5/0.1/p$<$.01)} & 32.5 \footnotesize{(0.2/0.1/p$<$.01)} & 47.9 \footnotesize{(0.5/0.1/p=.82)} \\
+l3r3 \footnotesize{(experts/replace)} & 30.8 \footnotesize{(0.5/0.2/p$<$.01)} & 32.4 \footnotesize{(0.2/0.1/p$<$.01)} & 48.2 \footnotesize{(0.5/0.4/p=.04)} \\
 \hline
-Baseline \footnotesize{(append)} & 31.1 (0.5/0.3/p=-) & 32.6 (0.2/0.0/p=-) & 48.1 (0.5/0.7/p=-) \\
+Baseline \footnotesize{(append)} & 31.1 \footnotesize{(0.5/0.3/p=-)} & 32.6 \footnotesize{(0.2/0.0/p=-)} & 48.1 \footnotesize{(0.5/0.7/p=-)} \\
 %TODO: l1r1M is missing
-l2r1 \footnotesize{(mono/append)} & 30.8 (0.5/0.1/p$<$.01) & 32.4 (0.2/0.0/p$<$.01) & 47.4 (0.4/0.4/p$<$.01) \\
-l2r2 \footnotesize{(mono/append)} & 30.6 (0.5/0.4/p$<$.01) & 32.4 (0.2/0.1/p$<$.01) & 48.3 (0.4/1.1/p=.12) \\
-l3r3 \footnotesize{(mono/append)} & 30.5 (0.5/0.1/p$<$.01) & 32.3 (0.2/0.0/p$<$.01) & 48.5 (0.4/0.1/p$<$.01) \\
-l1r1 \footnotesize{(experts/append)} & \textbf{31.3} (0.5/0.1/p=.11) & \textbf{32.6} (0.2/0.0/p=.49) & \textbf{47.1} (0.4/0.5/p$<$.01) \\
-l2r1 \footnotesize{(experts/append)} & 30.9 (0.5/0.3/p=.05) & 32.5 (0.2/0.0/p$<$.01) & 47.9 (0.5/0.8/p=.01) \\
-l2r2 \footnotesize{(experts/append)} & 30.6 (0.5/0.3/p$<$.01) & 32.4 (0.2/0.1/p$<$.01) & 48.4 (0.5/0.8/p=.01) \\
-l3r3 \footnotesize{(experts/append)} & 30.7 (0.5/0.2/p$<$.01) & 32.4 (0.2/0.0/p$<$.01) & 48.3 (0.4/0.2/p=.08) \\
+l2r1 \footnotesize{(mono/append)} & 30.8 \footnotesize{(0.5/0.1/p$<$.01)} & 32.4 \footnotesize{(0.2/0.0/p$<$.01)} & 47.4 \footnotesize{(0.4/0.4/p$<$.01)} \\
+l2r2 \footnotesize{(mono/append)} & 30.6 \footnotesize{(0.5/0.4/p$<$.01)} & 32.4 \footnotesize{(0.2/0.1/p$<$.01)} & 48.3 \footnotesize{(0.4/1.1/p=.12)} \\
+l3r3 \footnotesize{(mono/append)} & 30.5 \footnotesize{(0.5/0.1/p$<$.01)} & 32.3 \footnotesize{(0.2/0.0/p$<$.01)} & 48.5 \footnotesize{(0.4/0.1/p$<$.01)} \\
+l1r1 \footnotesize{(experts/append)} & \textbf{31.3} \footnotesize{(0.5/0.1/p=.11)} & \textbf{32.6} \footnotesize{(0.2/0.0/p=.49)} & \textbf{47.1} \footnotesize{(0.4/0.5/p$<$.01)} \\
+l2r1 \footnotesize{(experts/append)} & 30.9 \footnotesize{(0.5/0.3/p=.05)} & 32.5 \footnotesize{(0.2/0.0/p$<$.01)} & 47.9 \footnotesize{(0.5/0.8/p=.01)} \\
+l2r2 \footnotesize{(experts/append)} & 30.6 \footnotesize{(0.5/0.3/p$<$.01)} & 32.4 \footnotesize{(0.2/0.1/p$<$.01)} & 48.4 \footnotesize{(0.5/0.8/p=.01)} \\
+l3r3 \footnotesize{(experts/append)} & 30.7 \footnotesize{(0.5/0.2/p$<$.01)} & 32.4 \footnotesize{(0.2/0.0/p$<$.01)} & 48.3 \footnotesize{(0.4/0.2/p=.08)} \\
 \hline
 \end{tabular}}
 \caption{Results on IWSLT 2012, Dutch to English}
@@ -866,32 +867,32 @@ to Dutch. These results are shown in Table~\ref{tab:emea} for EMEA, and Table~\r
 \hline
 \multicolumn{4}{|c|}{EMEA-en-es} \\
 \hline
-Baseline \footnotesize{(replace)} & 71.5 (0.5/0.0/p=-) & 80.9 (0.4/0.0/p=-) & 25.8 (0.6/0.0/p=-) \\
-l1r1 \footnotesize{(mono/replace)} & 71.5 (0.5/0.0/p=.89) & \textbf{81.0} (0.4/0.1/p=.49) & \textbf{25.7} (0.6/0.1/p=.02) \\
-l2r1 \footnotesize{(mono/replace)} & 71.5 (0.5/0.0/p=.43) & 80.9 (0.4/0.0/p=.75) & 25.8 (0.6/0.1/p=.78) \\
-l2r2 \footnotesize{(mono/replace)} & 71.5 (0.5/0.1/p=.65) & 80.9 (0.4/0.1/p=.62) & 25.8 (0.6/0.1/p=.44) \\
-l3r3 \footnotesize{(mono/replace)} & 71.5 (0.5/0.0/p=.72) & 80.9 (0.4/0.1/p=.93) & 25.8 (0.6/0.1/p=.32) \\
+Baseline \footnotesize{(replace)} & 71.5 \footnotesize{(0.5/0.0/p=-)} & 80.9 \footnotesize{(0.4/0.0/p=-)} & 25.8 \footnotesize{(0.6/0.0/p=-)} \\
+l1r1 \footnotesize{(mono/replace)} & 71.5 \footnotesize{(0.5/0.0/p=.89)} & \textbf{81.0} \footnotesize{(0.4/0.1/p=.49)} & \textbf{25.7} \footnotesize{(0.6/0.1/p=.02)} \\
+l2r1 \footnotesize{(mono/replace)} & 71.5 \footnotesize{(0.5/0.0/p=.43)} & 80.9 \footnotesize{(0.4/0.0/p=.75)} & 25.8 \footnotesize{(0.6/0.1/p=.78)} \\
+l2r2 \footnotesize{(mono/replace)} & 71.5 \footnotesize{(0.5/0.1/p=.65)} & 80.9 \footnotesize{(0.4/0.1/p=.62)} & 25.8 \footnotesize{(0.6/0.1/p=.44)} \\
+l3r3 \footnotesize{(mono/replace)} & 71.5 \footnotesize{(0.5/0.0/p=.72)} & 80.9 \footnotesize{(0.4/0.1/p=.93)} & 25.8 \footnotesize{(0.6/0.1/p=.32)} \\
 \hline
-Baseline \footnotesize{(append)} & 71.5 (0.5/0.0/p=-) & 80.9 (0.4/0.0/p=-) & 25.8 (0.6/0.0/p=-) \\
-l1r1 \footnotesize{(mono/append)} & 71.5 (0.5/0.0/p=.74) & 80.9 (0.4/0.1/p=.43) & 25.8 (0.6/0.1/p=.92) \\
-l2r1 \footnotesize{(mono/append)} & \textbf{71.6} (0.5/0.0/p=.03) & \textbf{81.0} (0.4/0.0/p=.42) & 25.8 (0.6/0.1/p=.39) \\
-l2r2 \footnotesize{(mono/append)} & 71.5 (0.5/0.1/p=.40) & 80.9 (0.4/0.0/p=.07) & 25.9 (0.6/0.1/p=.17) \\
-l3r3 \footnotesize{(mono/append)} & 71.5 (0.5/0.1/p=.51) & 80.9 (0.4/0.1/p=.74) & 25.8 (0.6/0.1/p=.90) \\
+Baseline \footnotesize{(append)} & 71.5 \footnotesize{(0.5/0.0/p=-)} & 80.9 \footnotesize{(0.4/0.0/p=-)} & 25.8 \footnotesize{(0.6/0.0/p=-)} \\
+l1r1 \footnotesize{(mono/append)} & 71.5 \footnotesize{(0.5/0.0/p=.74)} & 80.9 \footnotesize{(0.4/0.1/p=.43)} & 25.8 \footnotesize{(0.6/0.1/p=.92)} \\
+l2r1 \footnotesize{(mono/append)} & \textbf{71.6} \footnotesize{(0.5/0.0/p=.03)} & \textbf{81.0} \footnotesize{(0.4/0.0/p=.42)} & 25.8 \footnotesize{(0.6/0.1/p=.39)} \\
+l2r2 \footnotesize{(mono/append)} & 71.5 \footnotesize{(0.5/0.1/p=.40)} & 80.9 \footnotesize{(0.4/0.0/p=.07)} & 25.9 \footnotesize{(0.6/0.1/p=.17)} \\
+l3r3 \footnotesize{(mono/append)} & 71.5 \footnotesize{(0.5/0.1/p=.51)} & 80.9 \footnotesize{(0.4/0.1/p=.74)} & 25.8 \footnotesize{(0.6/0.1/p=.90)} \\
 \hline
 \multicolumn{4}{|c|}{EMEA-en-nl} \\
 \hline
-Baseline  \footnotesize{(replace)}& \textbf{68.9} (0.6/0.1/p=-) & -\footnote{METEOR scores for this experiment were not
-properly computed due to an error with the evaluation script..} & 28.3 (0.7/0.1/p=-) \\
-l1r1 \footnotesize{(mono/replace)} & \textbf{68.9} (0.6/0.0/p=.83) & - & \textbf{28.2} (0.7/0.0/p=.04) \\
-l2r1 \footnotesize{(mono/replace)} & 68.8 (0.6/0.0/p=.28) & - & 28.3 (0.7/0.1/p=.20) \\
-l2r2 \footnotesize{(mono/replace)} & 68.8 (0.6/0.0/p=.32) & - & \textbf{28.2} (0.7/0.1/p=.03) \\
-l3r3 \footnotesize{(mono/replace)} & \textbf{68.9} (0.6/0.1/p=.80) & - & \textbf{28.2} (0.7/0.0/p=.01) \\
+Baseline  \footnotesize{(replace)}& \textbf{68.9} \footnotesize{(0.6/0.1/p=-)} & -\footnote{METEOR scores for this experiment were not
+properly computed due to an error with the evaluation script..} & 28.3 \footnotesize{(0.7/0.1/p=-)} \\
+l1r1 \footnotesize{(mono/replace)} & \textbf{68.9} \footnotesize{(0.6/0.0/p=.83)} & - & \textbf{28.2} \footnotesize{(0.7/0.0/p=.04)} \\
+l2r1 \footnotesize{(mono/replace)} & 68.8 \footnotesize{(0.6/0.0/p=.28)} & - & 28.3 \footnotesize{(0.7/0.1/p=.20)} \\
+l2r2 \footnotesize{(mono/replace)} & 68.8 \footnotesize{(0.6/0.0/p=.32)} & - & \textbf{28.2} \footnotesize{(0.7/0.1/p=.03)} \\
+l3r3 \footnotesize{(mono/replace)} & \textbf{68.9} \footnotesize{(0.6/0.1/p=.80)} & - & \textbf{28.2} \footnotesize{(0.7/0.0/p=.01)} \\
 \hline
-Baseline  \footnotesize{(append)}& 68.8 (0.6/0.1/p=-) & - & 28.3 (0.7/0.0/p=-) \\
-l1r1 \footnotesize{(mono/append)} & \textbf{68.9} (0.6/0.1/p=.12) & - & 28.3 (0.7/0.1/p=.56) \\
-l2r1 \footnotesize{(mono/append)} & 68.8 (0.6/0.1/p=.90) & - & 28.3 (0.7/0.1/p=.32) \\
-l2r2 \footnotesize{(mono/append)} & 68.8 (0.6/0.1/p=.76) & - & \textbf{28.2} (0.7/0.1/p=.02) \\
-l3r3 \footnotesize{(mono/append)} & 68.8 (0.6/0.0/p=.69) & - & \textbf{28.2} (0.7/0.0/p=.04) \\
+Baseline  \footnotesize{(append)}& 68.8 \footnotesize{(0.6/0.1/p=-)} & - & 28.3 \footnotesize{(0.7/0.0/p=-)} \\
+l1r1 \footnotesize{(mono/append)} & \textbf{68.9} \footnotesize{(0.6/0.1/p=.12)} & - & 28.3 \footnotesize{(0.7/0.1/p=.56)} \\
+l2r1 \footnotesize{(mono/append)} & 68.8 \footnotesize{(0.6/0.1/p=.90)} & - & 28.3 \footnotesize{(0.7/0.1/p=.32)} \\
+l2r2 \footnotesize{(mono/append)} & 68.8 \footnotesize{(0.6/0.1/p=.76)} & - & \textbf{28.2} \footnotesize{(0.7/0.1/p=.02)} \\
+l3r3 \footnotesize{(mono/append)} & 68.8 \footnotesize{(0.6/0.0/p=.69)} & - & \textbf{28.2} \footnotesize{(0.7/0.0/p=.04)} \\
 \hline
 \end{tabular}
 \end{savenotes}}
@@ -908,26 +909,25 @@ l3r3 \footnotesize{(mono/append)} & 68.8 (0.6/0.0/p=.69) & - & \textbf{28.2} (0.
 \hline
 \multicolumn{4}{|c|}{JRC-en-es} \\
 \hline
-Baseline  \footnotesize{(replace)}& 57.6 (0.5/0.2/p=-) & \textbf{73.1} (0.4/0.0/p=-) & 32.7 (0.5/0.2/p=-) \\
-l1r1 \footnotesize{\footnotesize{(mono/replace)}} & 57.2 (0.5/0.1/p$<$.01) & 72.2 (0.4/0.1/p$<$.01) & 33.1 (0.5/0.4/p$<$.01) \\
-l2r1 \footnotesize{(mono/replace)} & 57.6 (0.5/0.1/p=.74) & 72.5 (0.4/0.1/p$<$.01) & 32.7 (0.5/0.2/p=.86) \\
-l2r2 \footnotesize{(mono/replace)} & 57.7 (0.5/0.1/p$<$.01) & 72.6 (0.4/0.1/p$<$.01) & 32.8 (0.5/0.2/p=.23) \\
-l3r3 \footnotesize{(mono/replace)} & \textbf{57.8} (0.5/0.0/p=.01) & 72.7 (0.4/0.0/p$<$.01) & \textbf{32.5}
-(0.5/0.2/p$<$.01) \\
-l1r1 \footnotesize{(experts/replace)} & 57.2 (0.5/0.1/p$<$.01) & 72.1 (0.4/0.0/p$<$.01) & 33.4 (0.5/0.2/p$<$.01) \\
-l2r1 \footnotesize{(experts/replace)} & 57.0 (0.5/0.4/p$<$.01) & 72.2 (0.4/0.1/p$<$.01) & 33.5 (0.5/0.4/p$<$.01) \\
-l2r2 \footnotesize{(experts/replace)} & 57.6 (0.5/0.2/p=.26) & 72.5 (0.4/0.1/p$<$.01) & 32.8 (0.5/0.4/p=.03) \\
-l3r3 \footnotesize{(experts/replace)} & \textbf{57.8} (0.5/0.0/p$<$.01) & 72.7 (0.4/0.1/p$<$.01) & 32.7 (0.5/0.1/p=.89) \\
+Baseline  \footnotesize{(replace)}& 57.6 \footnotesize{(0.5/0.2/p=-)} & \textbf{73.1} \footnotesize{(0.4/0.0/p=-)} & 32.7 \footnotesize{(0.5/0.2/p=-)} \\
+l1r1 \footnotesize{\footnotesize{(mono/replace)}} & 57.2 \footnotesize{(0.5/0.1/p$<$.01)} & 72.2 \footnotesize{(0.4/0.1/p$<$.01)} & 33.1 \footnotesize{(0.5/0.4/p$<$.01)} \\
+l2r1 \footnotesize{(mono/replace)} & 57.6 \footnotesize{(0.5/0.1/p=.74)} & 72.5 \footnotesize{(0.4/0.1/p$<$.01)} & 32.7 \footnotesize{(0.5/0.2/p=.86)} \\
+l2r2 \footnotesize{(mono/replace)} & 57.7 \footnotesize{(0.5/0.1/p$<$.01)} & 72.6 \footnotesize{(0.4/0.1/p$<$.01)} & 32.8 \footnotesize{(0.5/0.2/p=.23)} \\
+l3r3 \footnotesize{(mono/replace)} & \textbf{57.8} \footnotesize{(0.5/0.0/p=.01)} & 72.7 \footnotesize{(0.4/0.0/p$<$.01)} & \textbf{32.5} \footnotesize{(0.5/0.2/p$<$.01)} \\
+l1r1 \footnotesize{(experts/replace)} & 57.2 \footnotesize{(0.5/0.1/p$<$.01)} & 72.1 \footnotesize{(0.4/0.0/p$<$.01)} & 33.4 \footnotesize{(0.5/0.2/p$<$.01)} \\
+l2r1 \footnotesize{(experts/replace)} & 57.0 \footnotesize{(0.5/0.4/p$<$.01)} & 72.2 \footnotesize{(0.4/0.1/p$<$.01)} & 33.5 \footnotesize{(0.5/0.4/p$<$.01)} \\
+l2r2 \footnotesize{(experts/replace)} & 57.6 \footnotesize{(0.5/0.2/p=.26)} & 72.5 \footnotesize{(0.4/0.1/p$<$.01)} & 32.8 \footnotesize{(0.5/0.4/p=.03)} \\
+l3r3 \footnotesize{(experts/replace)} & \textbf{57.8} \footnotesize{(0.5/0.0/p$<$.01)} & 72.7 \footnotesize{(0.4/0.1/p$<$.01)} & 32.7 \footnotesize{(0.5/0.1/p=.89)} \\
 \hline
-Baseline  \footnotesize{(append)}& 57.6 (0.5/0.1/p=-) & \textbf{73.1} (0.4/0.0/p=-) & 32.8 (0.5/0.1/p=-) \\
-l1r1 \footnotesize{(mono/append)} & 57.6 (0.5/0.1/p=.07) & 72.7 (0.4/0.0/p$<$.01) & 32.7 (0.5/0.1/p=.18) \\
-l2r1 \footnotesize{(mono/append)} & 57.6 (0.5/0.1/p=.02) & 72.8 (0.4/0.1/p$<$.01) & 32.7 (0.5/0.2/p=.05) \\
-l2r2 \footnotesize{(mono/append)} & 57.5 (0.5/0.1/p=.25) & 72.7 (0.4/0.1/p$<$.01) & 32.9 (0.5/0.0/p=.04) \\
-l3r3 \footnotesize{(mono/append)} & 57.5 (0.5/0.3/p=.58) & 72.7 (0.4/0.1/p$<$.01) & 32.9 (0.5/0.3/p=.02) \\
-l1r1 \footnotesize{(experts/append)} & \textbf{57.7} (0.5/0.1/p=.07) & 72.8 (0.4/0.1/p$<$.01) & 32.7 (0.5/0.1/p=.29) \\
-l2r1 \footnotesize{(experts/append)} & \textbf{57.7} (0.5/0.1/p$<$.01) & 72.8 (0.4/0.0/p$<$.01) & \textbf{32.6} (0.5/0.2/p$<$.01) \\
-l2r2 \footnotesize{(experts/append)} & 57.5 (0.5/0.3/p=.44) & 72.7 (0.4/0.1/p$<$.01) & 32.9 (0.5/0.2/p=.01) \\
-l3r3 \footnotesize{(experts/append)} & 57.6 (0.5/0.3/p$<$.01) & 72.8 (0.4/0.0/p$<$.01) & 32.7 (0.5/0.4/p=.05) \\
+Baseline  \footnotesize{(append)}& 57.6 \footnotesize{(0.5/0.1/p=-)} & \textbf{73.1} \footnotesize{(0.4/0.0/p=-)} & 32.8 \footnotesize{(0.5/0.1/p=-)} \\
+l1r1 \footnotesize{(mono/append)} & 57.6 \footnotesize{(0.5/0.1/p=.07)} & 72.7 \footnotesize{(0.4/0.0/p$<$.01)} & 32.7 \footnotesize{(0.5/0.1/p=.18)} \\
+l2r1 \footnotesize{(mono/append)} & 57.6 \footnotesize{(0.5/0.1/p=.02)} & 72.8 \footnotesize{(0.4/0.1/p$<$.01)} & 32.7 \footnotesize{(0.5/0.2/p=.05)} \\
+l2r2 \footnotesize{(mono/append)} & 57.5 \footnotesize{(0.5/0.1/p=.25)} & 72.7 \footnotesize{(0.4/0.1/p$<$.01)} & 32.9 \footnotesize{(0.5/0.0/p=.04)} \\
+l3r3 \footnotesize{(mono/append)} & 57.5 \footnotesize{(0.5/0.3/p=.58)} & 72.7 \footnotesize{(0.4/0.1/p$<$.01)} & 32.9 \footnotesize{(0.5/0.3/p=.02)} \\
+l1r1 \footnotesize{(experts/append)} & \textbf{57.7} \footnotesize{(0.5/0.1/p=.07)} & 72.8 \footnotesize{(0.4/0.1/p$<$.01)} & 32.7 \footnotesize{(0.5/0.1/p=.29)} \\
+l2r1 \footnotesize{(experts/append)} & \textbf{57.7} \footnotesize{(0.5/0.1/p$<$.01)} & 72.8 \footnotesize{(0.4/0.0/p$<$.01)} & \textbf{32.6} \footnotesize{(0.5/0.2/p$<$.01)} \\
+l2r2 \footnotesize{(experts/append)} & 57.5 \footnotesize{(0.5/0.3/p=.44)} & 72.7 \footnotesize{(0.4/0.1/p$<$.01)} & 32.9 \footnotesize{(0.5/0.2/p=.01)} \\
+l3r3 \footnotesize{(experts/append)} & 57.6 \footnotesize{(0.5/0.3/p$<$.01)} & 72.8 \footnotesize{(0.4/0.0/p$<$.01)} & 32.7 \footnotesize{(0.5/0.4/p=.05)} \\
 \hline
 \end{tabular}}
 \caption{Results on JRC, English to Spanish}
@@ -958,15 +958,15 @@ results.
 \hline
 \multicolumn{4}{|c|}{FryskeAkademy-nl-fy} \\
 \hline
-Baseline  \footnotesize{(replace)}& \textbf{60.7} (0.6/0.1/p=-) & \textbf{73.9} (0.4/0.0/p=-) & 33.6 (0.6/0.1/p=-) \\
-l1r1 \footnotesize{(mono/replace)} & 60.3 (0.6/0.1/p$<$.01) & 73.7 (0.5/0.0/p$<$.01) & \textbf{33.5} (0.6/0.1/p=.20) \\
-l2r1 \footnotesize{(mono/replace)} & 60.3 (0.6/0.1/p$<$.01) & 73.7 (0.5/0.0/p$<$.01) & \textbf{33.5} (0.6/0.1/p=.20) \\
+Baseline  \footnotesize{(replace)}& \textbf{60.7} \footnotesize{(0.6/0.1/p=-)} & \textbf{73.9} \footnotesize{(0.4/0.0/p=-)} & 33.6 \footnotesize{(0.6/0.1/p=-)} \\
+l1r1 \footnotesize{(mono/replace)} & 60.3 \footnotesize{(0.6/0.1/p$<$.01)} & 73.7 \footnotesize{(0.5/0.0/p$<$.01)} & \textbf{33.5} \footnotesize{(0.6/0.1/p=.20)} \\
+l2r1 \footnotesize{(mono/replace)} & 60.3 \footnotesize{(0.6/0.1/p$<$.01)} & 73.7 \footnotesize{(0.5/0.0/p$<$.01)} & \textbf{33.5} \footnotesize{(0.6/0.1/p=.20)} \\
 \hline
 \multicolumn{4}{|c|}{FryskeAkademy-fy-nl} \\
 \hline
-Baseline  \footnotesize{(replace)}& \textbf{55.3} (0.7/0.0/p=-) & - & \textbf{28.6} (0.6/0.0/p=-) \\
-l1r1 \footnotesize{(mono/replace)} & 54.9 (0.6/0.0/p$<$.01) & -& 28.8 (0.5/0.0/p$<$.01) \\
-l2r1 \footnotesize{(mono/replace)} & 54.9 (0.6/0.1/p$<$.01) & -& 28.9 (0.6/0.0/p$<$.01) \\
+Baseline  \footnotesize{(replace)}& \textbf{55.3} \footnotesize{(0.7/0.0/p=-)} & - & \textbf{28.6} \footnotesize{(0.6/0.0/p=-)} \\
+l1r1 \footnotesize{(mono/replace)} & 54.9 \footnotesize{(0.6/0.0/p$<$.01)} & -& 28.8 \footnotesize{(0.5/0.0/p$<$.01)} \\
+l2r1 \footnotesize{(mono/replace)} & 54.9 \footnotesize{(0.6/0.1/p$<$.01)} & -& 28.9 \footnotesize{(0.6/0.0/p$<$.01)} \\
 \hline
 \end{tabular}}
 \caption{An excerpt of the results on the Frisian parallel corpus, Dutch to Frisian and Frisian to Dutch.}
