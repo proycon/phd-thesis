@@ -45,5 +45,37 @@
 
 
 % Then we close all open environments
+
+\end{pspicture}
+
+\newpage
+\pagestyle{empty}
+\psset{unit=1mm}\noindent
+\begin{pspicture}(170mm,240mm)
+\psframe[fillstyle=solid,fillcolor=ferngreen,linecolor=ferngreen](0,0)(170,240)
+% Create a Box containing the text for the back cover
+\newsavebox\Summarybox
+\sbox\Summarybox{\begin{minipage}{85mm}
+
+{
+\textcolor{white}{\textbf{Context as Linguistic Bridges}} \textcolor{greenwhite}{ is a study that focusses on the role of context information in machine translation, i.e.
+automated translation by computers.  The underlying intuition is that the context in which a word or phrase appears is
+an important cue for the translation of that word or phrase. Consider, for example, the two different meanings of the word
+\emph{``bank''} in the sentences \emph{``I put my money on the bank''} and \emph{``The ship got stuck on the bank''}.
+}
+
+\vspace{5mm}
+
+\textcolor{greenwhite}{
+We developed classifier-based solutions that work well in Word Sense Disambiguation tasks like the above example, and
+integrate these in a Statistical Machine Translation system.  Our main question is to find to what extent can we improve
+automated translation by explicitly modelling such context information.
+}
+
+}
+\end{minipage}}
+
+% And position the box
+\rput[tl](42.5,213){\usebox\Summarybox}
 \end{pspicture}
 \end{document}
