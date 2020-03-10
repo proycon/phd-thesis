@@ -1,0 +1,136 @@
+\documentclass[8pt]{beamer}
+\usepackage[dutch]{babel}
+\usepackage{lmodern}
+\usetheme{Madrid}
+
+
+% Change base colour beamer@blendedblue (originally RGB: 0.2,0.2,0.7)
+\colorlet{beamer@blendedblue}{green!40!black}
+
+\title{\textbf{Co}ntext as \textbf{Li}nguistic \textbf{Bri}dges}
+\author{Maarten van Gompel}
+\date{\vspace{-10ex} {24 maart 2020}}
+\usepackage{graphicx}
+\usepackage{placeins}
+
+
+
+\def\raccoon{
+\makebox[\linewidth][c]{\includegraphics[width=70pt]{/home/proycon/Pictures/All/raccoon.pdf}\FloatBarrier}
+}
+\def\smallraccoon{
+\makebox[\linewidth][c]{\includegraphics[width=30pt]{/home/proycon/Pictures/All/raccoon.pdf}\FloatBarrier}
+}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+    \makebox[\linewidth][c]{\includegraphics[width=6cm]{../thesis/drawing-eps-converted-to.pdf}\FloatBarrier}
+\end{frame}
+
+\section{Inleiding}
+
+\begin{frame}{Inleiding}
+
+	\begin{block}{Context}
+        \begin{itemize}
+            %Algemene intuitie
+            \item \textbf{Intuïtie:} \emph{``Context speelt een belangrijke rol in taal''}
+            \item Betekenis van woorden, zinsneden, zinnen etc... is afhankelijk van de context waarin ze verschijnen
+            \item Context helpt eventuele ambiguïteit in betekenis op te lossen
+        \end{itemize}
+	\end{block}
+
+    \begin{block}{Voorbeeld: een woord}
+        {\Large\textbf{``bank''}}
+
+        Volgens van Dale:
+        \begin{enumerate}
+            \item zitmeubel voor meer dan één persoon
+            \item verkooptafel: toonbank
+            \item werktafel: draaibank
+            \item door de natuur gevormde ondiepte
+            \item instelling die gelden beheert en uitleent
+            \item (bij kansspelen) inzet van de hoofdspeler tegen alle andere samen
+            \item centrale bewaar- en uitwisselingsplaats; = opslagplaats: bloedbank, vacaturebank
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+
+    \begin{block}{Voorbeeld 1: een woord in context}
+        {\Large\textbf{``bank''}}
+        \begin{itemize}
+            \item \emph{``De \textbf{bank} heeft al mijn geld verloren.''}
+            \item \emph{``De hond mag op de \textbf{bank} liggen.''}
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Word Sense Disambiguation}
+        \begin{itemize}
+            \item Context helpt bij het vinden van de betekenis
+            \item Het automatisch disambigueren van de juiste betekenis van een woord heet \textbf{Word Sense Disambiguation}.
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+
+\begin{frame}
+
+    \begin{block}{Voorbeeld 1: Een woord in context}
+        {\Large\textbf{``bank''}}
+        \begin{itemize}
+            \item \emph{``De \textbf{bank} heeft al mijn geld verloren.''}
+            \begin{itemize}
+                \item<2-> \emph{``La \textbf{banque} à perdu tout mon argent.''}
+            \end{itemize}
+            \item \emph{``De hond mag op de \textbf{bank} liggen.''}
+            \begin{itemize}
+                \item<2-> \emph{``Le chien peut se mettre sur \textbf{le canapé}.''}
+            \end{itemize}
+        \end{itemize}
+    \end{block}
+
+    \begin{block}{Betekenis en Vertalingen}
+        \begin{itemize}
+            \item Het vinden van de juiste betekenis is belangrijk bij vertalen
+            \item Een woord kan anders vertalen naar gelang de betekenis
+        \end{itemize}
+    \end{block}
+
+
+\end{frame}
+
+\begin{frame}
+
+    \begin{block}{Voorbeeld 2: Een woord in context}
+        {\Large\textbf{``tempo''}} (portugees)
+        \begin{itemize}
+            \item \emph{``Faz bom \textbf{tempo} hoje.``}
+            \begin{itemize}
+                \item<2-> \emph{``Het is lekker \textbf{weer} vandaag``}
+            \end{itemize}
+            \item \emph{``Ele tem \textbf{tempo} para mim.''}
+            \begin{itemize}
+                \item<2-> \emph{``Hij heeft \textbf{tijd} voor mij.``}
+            \end{itemize}
+        \end{itemize}
+    \end{block}
+
+\end{frame}
+
+\begin{frame}
+
+	\begin{block}{Onderzoek}
+        \begin{itemize}
+            \item test
+
+        \end{itemize}
+	\end{block}
+
+\end{frame}
+
+\end{document}
+
