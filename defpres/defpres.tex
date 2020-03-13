@@ -87,18 +87,18 @@
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}{Inleiding}
 
     \begin{block}{Voorbeeld 1: Een woord in context}
         {\Large\textbf{``bank''}}
         \begin{itemize}
             \item \emph{``De \textbf{bank} heeft al mijn geld verloren.''}
             \begin{itemize}
-                \item<2-> \emph{``La \textbf{banque} à perdu tout mon argent.''}
+                \item \emph{``La \textbf{banque} à perdu tout mon argent.''}
             \end{itemize}
             \item \emph{``De hond mag op de \textbf{bank} liggen.''}
             \begin{itemize}
-                \item<2-> \emph{``Le chien peut se mettre sur \textbf{le canapé}.''}
+                \item \emph{``Le chien peut se mettre sur \textbf{le canapé}.''}
             \end{itemize}
         \end{itemize}
     \end{block}
@@ -113,31 +113,31 @@
 
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Inleiding}
 
     \begin{block}{Voorbeeld 2: Een woord in context}
         {\Large\textbf{``tempo''}} (portugees)
         \begin{itemize}
             \item \emph{``Faz bom \textbf{tempo} hoje.``}
             \begin{itemize}
-                \item<2-> \emph{``Het is lekker \textbf{weer} vandaag``}
+                \item \emph{``Het is lekker \textbf{weer} vandaag``}
             \end{itemize}
             \item \emph{``Ele tem \textbf{tempo} para mim.''}
             \begin{itemize}
-                \item<2-> \emph{``Hij heeft \textbf{tijd} voor mij.``}
+                \item \emph{``Hij heeft \textbf{tijd} voor mij.``}
             \end{itemize}
         \end{itemize}
     \end{block}
 
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Inleiding}
 
 	\begin{block}{Onderzoek}
         \begin{itemize}
             \item De rol van contextinformatie in automatische vertaling
             \item \textbf{Hoofdvraag:} In hoeverre kunnen we automatische vertaling verbeteren door contextinformatie uit de brontaal mee te nemen?
-            \item Empirische studie: Schrijven van softwaresystemen, trainen op trainingsdata, testen op testdata,
+            \item Empirische studie: Schrijven van software, trainen op trainingsdata, testen op testdata,
                 vergelijken met anderen, conclusies afleiden
         \end{itemize}
 	\end{block}
@@ -145,30 +145,30 @@
 \end{frame}
 
 
-\section{Word Sense Disambiguation (hfd 3)}
+\section{Cross-Lingual Word Sense Disambiguation (hfd 3)}
 
-\begin{frame}{Word Sense Disambiguation}
+\begin{frame}{Cross-Lingual Word Sense Disambiguation (hfd 3)}
 
-	\begin{block}{SemEval taken}
+
+	\begin{block}{Aanpak WSD}
         \begin{itemize}
-            %in deze eerste fase van het onderzoek..
-            \item Vertalen van gemarkeerde fragmenten in context
-            %gecontroleerde versimpelde setting, goed om onze hypothese uit te testen
-            \item Drie SemEval taken:
+            \item We bouwen een \textbf{classifier-gebaseerd} cross-lingual WSD systeem in navolging van eerdere studies \citep{Hoste+02,Hendrickx+02}
             \begin{itemize}
-                \item SemEval 2010: Cross Lingual Lexical Substitution (Engels naar Spaans) \citep{CLLS}
-                \begin{itemize}
-                    \item<2-> (Alleen zelfstandige naamwoorden, lemmas als vertaling)
-                \end{itemize}
-                \item SemEval 2010: Cross Lingual Word Sense Disambiguation (Engels naar Nederlands/Spaans) \citep{WSD}
-                \begin{itemize}
-                    \item<2-> (Ook werkwoorden, adjectieven/bijwoorden, lemmas als vertaling)
-                \end{itemize}
-                \item SemEval 2013: Cross Lingual Word Sense Disambiguation (Engels naar
-                    Nederlands/Spaans/Frans/Duits/Italiaans) \citep{CLWSD2013TASKPAPER}
-                \begin{itemize}
-                    \item<2-> (Alleen zelfstandige naamwoorden, lemmas als vertaling)
-                \end{itemize}
+                \item \color{teal} memory-based learning / TiMBL software / IB1 algoritme
+            \end{itemize}
+            \item Het systeem leert op basis van voorbeelden hoe een woord met bepaalde \textbf{contextuele kenmerken}
+                vertaald wordt.
+            \begin{itemize}
+                \item \color{teal} Lokale contextinformatie (woordvorm): $x$ woorden links, $y$ woorden rechts
+                \item Linguïstisch verrijkte lokale contextinformatie (PoS$+$lemma)
+                \item Globale contextinformatie (woordvorm) \footnotesize{(binary bag of word features)}
+            \end{itemize}
+            \item Deelname aan drie SemEval taken
+            \begin{itemize}
+                \item SemEval 2010: Cross Lingual Lexical Substitution {\footnotesize(Engels naar Spaans)} \citep{CLLS}
+                \item SemEval 2010: Cross Lingual Word Sense Disambiguation {\footnotesize(Engels naar Nederlands/Spaans)} \citep{WSD}
+                \item SemEval 2013: Cross Lingual Word Sense Disambiguation {\footnotesize(Engels naar
+                    Nederlands/Spaans/Frans/Duits/Italiaans)} \citep{CLWSD2013TASKPAPER}
             \end{itemize}
         \end{itemize}
 	\end{block}
@@ -176,68 +176,49 @@
 \end{frame}
 
 
-\begin{frame}
-    \begin{block}{Het WSD systeem: Hoe kunnen we context gebruiken voor vertaling?}
-        \begin{itemize}
-            \item \textbf{Memory-based machine learning}: Een classifier-gebaseerd systeem (Timbl, IB1)
-            \item We leren op basis van trainingsdata hoe een woord met bepaalde \textbf{context-features} vertaald
-                wordt:
-            %voor (pos_s,lemma_s)
-            \begin{itemize}
-                \item Lokale contextinformatie (woordvorm): $x$ woorden links, $y$ woorden rechts
-                \item Linguïstisch verrijkte lokale contextinformatie (PoS$+$lemma)
-                \item Globale contextinformatie (woordvorm) \footnotesize{(binary bag of word features)}
-            \end{itemize}
-            \item \textbf{Word/classifier experts:} We bouwen een classifier voor elk woord (PoS,lemma) dat vertaald
-                moet worden
-        \end{itemize}
-    \end{block}
-
-\end{frame}
-
-
-\begin{frame}
+\begin{frame}{Cross-Lingual Word Sense Disambiguation (hfd 3)}
     \begin{block}{Deelvragen \& Resultaten}
         \begin{enumerate}
             \item Welke informatie draagt het meeste bij tot een juiste vertaling?
             \begin{itemize}
-                \item Linguïstisch-geïnformeerd of niet?
+                \item \color{teal} Linguïstisch-geïnformeerd of niet?
                 \begin{itemize}
-                    \item<2-> Lemmas features helpen, PoS juist niet
+                    \item \color{teal} Lemmas features helpen, PoS juist niet
                 \end{itemize}
                 \item Lokale en/of globale features?
                 \begin{itemize}
-                    \item<2-> In eerste instantie (WSD1) wat positief effect van globale features, maar later (WSD2) niet
+                    \item \color{teal} Globale features vallen tegen ondanks wat eerdere succesen
                 \end{itemize}
                 \item Contextgrootte?
                 \begin{itemize}
-                    \item<2-> Kleine contextgrootte werkt het best (1 links, 1 rechts)
+                    \item \color{teal} Kleine contextgrootte werkt het best (1 links, 1 rechts)
                 \end{itemize}
             \end{itemize}
             \item Welke optimalisatietechnieken kunnen we toepassen?
             \begin{itemize}
-                \item<2-> Arbiter Voting (WSD1, 2010)
-                \item<2-> Automatische feature selectie (WSD2, 2013)
-                \item<2-> Classifier parameteroptimalisatie (WSD2, 2013)
+                \item \color{teal} Arbiter Voting (WSD1, 2010)
+                \item \color{teal} Automatische feature selectie (WSD2, 2013)
+                \item \color{teal} Classifier parameteroptimalisatie (WSD2, 2013)
             \end{itemize}
         \end{enumerate}
     \end{block}
     \begin{block}{Competitie Resultaten}
         \begin{itemize}
-            \item<2-> Winnende scores in de Cross Lingual WSD taak (2010), later ook een aantal winnende scores in 2013
+            \item Winnende scores in de Cross Lingual WSD taak (2010), later ook een aantal winnende scores in 2013
         \end{itemize}
     \end{block}
 \end{frame}
 
 \section{Vertalen van L1 fragmenten in een L2 context}
 
-
 \begin{frame}{Vertalen van L1 fragmenten in een L2 context (hfd 4-6)}
     \begin{block}{Een nieuwe insteek}
         \begin{enumerate}
-            \item \textbf{codewisseling/code switching}: het overspringen tussen twee talen
+            \item kunnen we zulke automatisch vertalen met een \textbf{anderstalige context} daarbij gebruiken?
+            \begin{itemize}
             \item het gebruiken van korte fragmenten van de ene taal in een anderstalige context (bv. zin)
-            \item kunnen we zulke vertalingen automatiseren en de anderstalige context daarbij gebruiken?
+            \end{itemize}
+            \item \textbf{codewisseling/code switching}: het overspringen tussen twee talen
         \end{enumerate}
     \end{block}
 
@@ -258,26 +239,25 @@
     \end{block}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Vertalen van L1 fragmenten in een L2 context (hfd 4-6)}
     \begin{block}{Opzet}
         \begin{itemize}
             \item Zit er waarde in dit idee?
             \begin{itemize}
                 \item Ja, denk aan vertaalhulp systemen
             \end{itemize}
-            \item Kunnen we dit net als voorheen met classifiers oplossen? $\rightarrow$
-                \textbf{pilot study} (hfd 4)
+            \item Kunnen we dit net als voorheen met classifiers oplossen? $\rightarrow$ \textbf{pilot study} (hfd 4)
             \begin{itemize}
-                \item<2-> Ja
-                \item<2-> Maar; we hebben geen echte representatieve data om op te testen
+                \item Ja
+                \item Maar; we hebben geen echte representatieve data om op te testen
             \end{itemize}
-        \item<3-> Testdata samenstellen en daarmee een nieuwe SemEval taak organizeren (hfd 5)
+            \item Testdata samengesteld en daarmee een nieuwe SemEval taak organizeren (hfd 5)
             \begin{itemize}
-                \item<3-> 4 taalparen (L1-L2): Engels-Spaans, Engels-Duits, Frans-Engels, Nederlands-Engels
-                \item<3-> Handmatige dataverzameling uit verschillende bronnen
-                \item<3-> 6 kandidaten doen mee met onze taak
+                \item 4 taalparen (L1-L2): Engels-Spaans, Engels-Duits, Frans-Engels, Nederlands-Engels
+                \item Handmatige dataverzameling uit verschillende bronnen
+                \item 6 kandidaten doen mee met onze taak
             \end{itemize}
-            \item<3-> Hiermee ons eigen systeem \emph{(colibrita)} opnieuw testen en verbeteren (hfd 6)
+            \item Met de nieuwe testdata ons eigen systeem \emph{(colibrita)} opnieuw testen en verbeteren (hfd 6)
         \end{itemize}
     \end{block}
 \end{frame}
@@ -292,53 +272,29 @@
             \item Naar mate we langere fragmenten bezien begeven we ons steeds meer op de het terrein van de SMT
             \item Kunnen SMT technieken ook toegepast worden in het code-switching scenario?
             \begin{itemize}
-                \item<2-> Ja, twee deelnemers aan onze taak laten dit duidelijk zien
-                \item<2-> Resultaten beter dan pure classifier aanpak
+                \item Ja, twee deelnemers aan onze taak laten dit duidelijk zien
+                \item Resultaten beter dan pure classifier aanpak
             \end{itemize}
             \item \textbf{Beste van beide werelden?} Kunnen we de expliciete modellering van de classifiers integreren in SMT en heeft dat meerwaarde? (hfd 6,7)
            \begin{itemize}
-               \item<2-> We vergelijken classifiers, classifiers geïntegreerd in SMT, en pure SMT
+               \item We vergelijken classifiers, classifiers geïntegreerd in SMT, en pure SMT
            \end{itemize}
 
         \end{itemize}
     \end{block}
 \end{frame}
 
-
-\begin{frame}
-    \begin{block}{Phrase-based Statistical Machine Translation}
-        \begin{itemize}
-            \item Een spel van waarschijnlijkheden, vind de meest waarschijnlijke reeks woorden in de doeltaal gegeven
-                een reeks woorden in de brontaal.
-            \item Twee modellen modelleren dit: \textbf{vertaalmodel} en \textbf{taalmodel}
-                {\footnotesize ($\hat{T} = \argmax_T p(T|S) = \argmax_T \frac{p(S|T)p(T)}{p(S)} = \argmax_T p(S|T)p(T)$)
-                }
-            \item De twee modellen worden getraind op respectievelijk een \textbf{parallel corpus} en een \textbf{monolinguaal corpus}
-            \begin{itemize}
-                \item Welke woorden komen vaak samen voor? \emph{(word alignment)}
-                \item Welke \textbf{frasen} kunnen daaruit geextraheerd worden? \emph{(phrase extraction)} $\rightarrow$
-                    \textbf{phrase-translation table}
-            \end{itemize}
-        \end{itemize}
-    \end{block}
-
-	\begin{center}
-	 \includegraphics[width=45.0mm]{../align1.png} \includegraphics[width=45.0mm]{../align2.png}
-	\end{center}
-
-\end{frame}
-
-\begin{frame}
+\begin{frame}{Statistical Machine Translation (hfd 6-7)}
     \begin{block}{Integratie van classifiers in SMT}
         \begin{itemize}
             \item Op welke manieren kunnen we classifiers in SMT integreren?
             \begin{itemize}
-                \item \footnotesize{(\emph{classifiertype:} classifier experts vs. monolithisch) , (\emph{weegmethode:} replace vs append)}
-                \item<2-> Minimale verschillen met weinig effect in het algemeen, geen eenduidige conclusie te vormen
+                \item \color{teal} \footnotesize{(\emph{classifiertype:} classifier experts vs. monolithisch) , (\emph{weegmethode:} replace vs append)}
+                \item Minimale verschillen met weinig effect in het algemeen, geen eenduidige conclusie te vormen
             \end{itemize}
             \item Heeft data zonder linguïstische verrijking een maarwaarde in deze opstelling?
             \begin{itemize}
-                \item<2-> Nee, de \textbf{hoofdconclusie} is dat we expliciet proberen te modelleren wat de bestaande modellen
+                \item Nee, \color{teal} de \textbf{hoofdconclusie} is dat we expliciet proberen te modelleren wat de bestaande modellen
                     (vertaalmodel + taalmodel) impliciet al goed genoeg dekken. Daar waar contextinformatie uit de
                     brontaal een disambiguerende rol kan spelen, is hij al potentieel beschikbaar in het vertaalmodel.
            \end{itemize}
@@ -352,14 +308,14 @@
             \item Contextinformatie is nuttig voor vertaling (ook met anderstalige context)
             \item We sluiten een lijn van onderzoek
                 \citep{Stroppa+07,Rejwanul+11}
-                {\footnotesize (de integratie van niet-linguïstische-geinformeerde
+                {\color{teal} \footnotesize (de integratie van niet-linguïstische-geinformeerde
                 classifier-gebaseerde WSD technieken in (PB)SMT)}
-                en concluderen dat deze oplossing geen meerwaarde
+                en concluderen dat deze integratie geen meerwaarde
                 biedt.
                 %meer voor de hand ligt het LM verbeteren
-            \item We creëren vaak marginale lokale verschillen en concluderen dat een gedegen evaluatie op automatische
+            \item \color{teal} We creëren vaak marginale lokale verschillen en concluderen dat een gedegen evaluatie op automatische
                 metrieken en bij een gebrek aan meerdere referentievertalingen erg lastig is.
-            \item We benadrukken het belang van testen op meerdere datasets, meerdere taalparen, en het doen van
+            \item \color{teal} We benadrukken het belang van testen op meerdere datasets, meerdere taalparen, en het doen van
                 significantietests om niet te snel conclusies te trekken.
         \end{enumerate}
     \end{block}
